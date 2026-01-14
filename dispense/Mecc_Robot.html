@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa di Meccanica dei Robot</title>
+    <style>
+        @media print {
+            body { 
+                margin: 0; 
+                padding: 10mm; /* Margini minimi per stampa A4 */
+            }
+            .page-break { page-break-after: always; }
+            
+            /* Evita righe orfane e vedove */
+            p, li, div {
+                orphans: 2;
+                widows: 2;
+            }
+            
+            /* Evita interruzioni di pagina indesiderate */
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+            
+            /* Mantieni insieme definizioni e esempi */
+            .definition, .equation, .important {
+                page-break-inside: avoid;
+            }
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.3; /* Ridotto da 1.6 a 1.3 */
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 10mm; /* Ridotto da 20mm a 10mm */
+            background: white;
+            font-size: 12pt;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            font-size: 24pt;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            font-size: 18pt;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+            font-size: 14pt;
+            font-weight: bold;
+        }
+        
+        h4 {
+            color: #34495e;
+            margin-top: 15px;
+            font-size: 12pt;
+            font-weight: bold;
+        }
+        
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        
+        .equation {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+            font-family: 'Courier New', monospace;
+            font-size: 11pt;
+        }
+        
+        .definition {
+            background: #e8f5e8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .important {
+            background: #fff3cd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .matrix {
+            font-family: 'Courier New', monospace;
+            font-size: 11pt;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .formula {
+            font-style: italic;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .toc {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h4 style="color: #2c3e50; margin-bottom: 5px; font-weight: bold; font-size: 16pt;">UNIVERSITÀ DEGLI STUDI DI PALERMO</h4>
+        <h4 style="color: #2c3e50; margin-bottom: 20px; font-weight: bold; font-size: 16pt;">FACOLTÀ DI INGEGNERIA</h4>
+        
+        <h1 style="margin: 20px 0;">Dispensa di Meccanica dei Robot</h1>
+        
+        <table style="margin: 20px auto; text-align: left; font-size: 12pt; line-height: 1.5;">
+            <tr>
+                <td style="padding: 3px 15px; font-weight: bold;">Sviluppatori:</td>
+                <td style="padding: 3px 15px;">Petrone Kevin</td>
+            </tr>
+            <tr>
+                <td style="padding: 3px 15px; font-weight: bold;">Matricola:</td>
+                <td style="padding: 3px 15px;">0774409</td>
+            </tr>
+            <tr>
+                <td style="padding: 3px 15px; font-weight: bold;">Docente:</td>
+                <td style="padding: 3px 15px;">Castellano Antonella</td>
+            </tr>
+            <tr>
+                <td style="padding: 3px 15px; font-weight: bold;">Corso:</td>
+                <td style="padding: 3px 15px;">Ing. Robotica</td>
+            </tr>
+            <tr>
+                <td style="padding: 3px 15px; font-weight: bold;">Anno Accademico:</td>
+                <td style="padding: 3px 15px;">2024/2025</td>
+            </tr>
+            <tr>
+                <td style="padding: 3px 15px; font-weight: bold;">Data:</td>
+                <td style="padding: 3px 15px;">Luglio 2025</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="toc">
+        <h2>Indice</h2>
+        <ul>
+            <li><a href="#fondamenti-di-robotica">0. FONDAMENTI DI ROBOTICA</a></li>
+            <li><a href="#cinematica">1. CINEMATICA</a></li>
+            <li><a href="#cinematica-differenziale">2. CINEMATICA DIFFERENZIALE</a></li>
+            <li><a href="#analisi-velocita">3. ANALISI DELLE VELOCITÀ</a></li>
+            <li><a href="#statica">4. STATICA</a></li>
+            <li><a href="#dinamica">5. DINAMICA</a></li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="fondamenti-di-robotica">0. FONDAMENTI DI ROBOTICA</h2>
+
+    <h2>0.1 Definizioni Fondamentali</h2>
+
+    <div class="definition">
+        <strong>Robot:</strong> Una macchina, cioè un sistema costituito da corpi collegati tra loro in modo tale che il moto relativo risulti definito.
+    </div>
+
+    <h3>0.1.1 Classificazione dei Robot per Struttura</h3>
+    <ul>
+        <li><strong>Cartesiano:</strong> PPP (3 giunti prismatici ortogonali)</li>
+        <li><strong>Cilindrico:</strong> RPP (1 giunto rotoidale, 2 prismatici)</li>
+        <li><strong>Sferico:</strong> RRP (2 giunti rotoidali, 1 prismatico)</li>
+        <li><strong>SCARA:</strong> RRP (configurazione planare)</li>
+        <li><strong>Antropomorfo:</strong> RRR (3 giunti rotoidali)</li>
+    </ul>
+
+    <div class="definition">
+        <strong>Studio meccanico di una macchina:</strong> Comprende lo studio del moto relativo fra le diverse parti (cinematica applicata) e l'analisi delle forze in gioco durante il funzionamento (dinamica).
+    </div>
+
+    <h3>0.1.2 Componenti di una Macchina</h3>
+
+    <div class="definition">
+        <strong>Membri di una macchina:</strong> Sono le varie parti della macchina quando sono in moto relativo fra loro.
+    </div>
+
+    <div class="definition">
+        <strong>Vincolo/Giunto:</strong> È un particolare accorgimento costruttivo che realizza materialmente la connessione tra due membri di una macchina. Il vincolo ha la fondamentale funzione di:
+        <ul>
+            <li>Condizionare il moto relativo fra due membri</li>
+            <li>Consentire fra essi la mutua trasmissione delle forze</li>
+            <li>Sottrarre possibilità di movimento (gradi di libertà)</li>
+        </ul>
+    </div>
+
+    <h2>0.2 Coppie Cinematiche</h2>
+
+    <div class="definition">
+        <strong>Coppia cinematica:</strong> In una macchina, due superfici (una del primo membro e una del secondo membro) prendono il nome di superfici coniugate. L'insieme delle due superfici a contatto prende il nome di COPPIA.
+    </div>
+
+    <h3>0.2.1 Coppie Inferiori (Elementari)</h3>
+
+    <div class="definition">
+        <strong>Coppia inferiore:</strong> Si definisce INFERIORE, o elementare, se lascia all'altro membro un solo grado di mobilità. In questo tipo di coppia entrambi i membri devono essere rigidi e le superfici devono poter scorrere fra loro senza deformarsi.
+    </div>
+
+    <h4>Tipi di coppie inferiori:</h4>
+    <ul>
+        <li><strong>Prismatiche (traslazionali):</strong> Il vincolo consente unicamente una traslazione lungo l'asse della coppia</li>
+        <li><strong>Rotoidali:</strong> Il vincolo consente unicamente rotazioni relative attorno all'asse della coppia</li>
+        <li><strong>Elicoidali:</strong> L'accoppiamento consente al membro due, rispetto al membro uno, un moto traslatorio lungo l'asse della coppia ed uno rotatorio intorno allo stesso asse, legati fra loro da un rapporto di proporzionalità</li>
+    </ul>
+
+    <h2>0.3 Catene Cinematiche</h2>
+
+    <div class="definition">
+        <strong>Catena cinematica:</strong> Serie di membri tra di loro collegati.
+    </div>
+
+    <h3>0.3.1 Classificazione per Disposizione degli Assi</h3>
+    <ul>
+        <li><strong>Catene cinematiche piane:</strong> Gli assi di rotazione delle coppie sono tutti paralleli fra loro</li>
+        <li><strong>Catene cinematiche sferiche:</strong> Gli assi di rotazione delle coppie sono tutti concorrenti in un unico punto</li>
+        <li><strong>Catene cinematiche spaziali:</strong> Gli assi di rotazione delle coppie sono comunque disposti nello spazio</li>
+    </ul>
+
+    <h3>0.3.2 Catene Aperte vs Chiuse</h3>
+
+    <div class="definition">
+        <strong>Catena cinematica aperta:</strong> Una sequenza di corpi collegati da giunti, dove:
+        <ul>
+            <li>Esiste una sola via tra la base (fissa) e l'estremità (end effector)</li>
+            <li>I movimenti degli attuatori si propagano in modo unidirezionale verso l'estremità</li>
+            <li><strong>Esempio:</strong> Braccio robotico industriale</li>
+        </ul>
+    </div>
+
+    <div class="definition">
+        <strong>Catena cinematica chiusa:</strong> Una struttura in cui:
+        <ul>
+            <li>Gli estremi della catena si ricongiungono formando uno o più cicli</li>
+            <li>Esistono più percorsi chiusi tra due punti della struttura</li>
+            <li>Il movimento di un giunto influenza direttamente gli altri tramite vincoli interni</li>
+            <li><strong>Esempio:</strong> Robot paralleli</li>
+        </ul>
+    </div>
+
+    <h3>0.3.3 Inversione di un Meccanismo</h3>
+
+    <div class="definition">
+        <strong>Inversione di un meccanismo:</strong> L'operazione in cui si rende mobile il corpo precedentemente fisso (la base) e si fissa un altro corpo della catena. Il meccanismo risultante ha:
+        <ul>
+            <li>La stessa struttura cinematica</li>
+            <li>Possibile comportamento cinematico differente</li>
+            <li>Forma fisica invariata</li>
+            <li>Movimenti relativi non alterati (solo il moto assoluto cambia)</li>
+        </ul>
+    </div>
+
+    <h2>0.4 Struttura Meccanica dei Robot</h2>
+
+    <div class="definition">
+        <strong>Struttura fondamentale:</strong> La struttura fondamentale dei robot manipolatori è una catena cinematica, aperta o chiusa, formata da un certo numero di membri mobili (links) vincolati reciprocamente e con il telaio tramite coppie cinematiche (joints) di tipo rotazionale o traslazionale.
+    </div>
+
+    <h4>Configurazione tipica:</h4>
+    <ul>
+        <li><strong>Link 0:</strong> Uno dei membri di estremità viene vincolato ad un supporto fisso</li>
+        <li><strong>End-effector:</strong> L'altra estremità rimane libera ed è dotata di utensile adatto alla lavorazione</li>
+        <li><strong>Configurazione standard:</strong> 6 link totali
+            <ul>
+                <li><strong>Braccio:</strong> Primi 3 link, determinano il posizionamento di massima</li>
+                <li><strong>Polso:</strong> Altri 3 link, determinano l'orientamento preciso dell'end effector</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>0.5 Gradi di Libertà e Mobilità</h2>
+
+    <div class="definition">
+        <strong>Gradi di libertà (DoF):</strong> Numero di variabili indipendenti necessarie per descrivere la posizione e l'orientamento dell'organo terminale (end effector) per lo specifico compito da svolgere (task).
+    </div>
+
+    <div class="definition">
+        <strong>Gradi di mobilità:</strong> Numero di gradi di libertà del meccanismo intero, cioè la possibilità di movimento date dai giunti (m).
+    </div>
+
+    <h3>0.5.1 Formule di Grübler-Kutzbach</h3>
+
+    <div class="equation">
+        <strong>Nel piano (2D):</strong><br>
+        - Ogni corpo rigido in movimento ha 3 DoF<br>
+        - Ogni coppia inferiore (giunto semplice) impone 2 vincoli → lascia 1 DoF<br><br>
+        <strong>Formula:</strong> m = 3b - 2(p + r)<br><br>
+        Dove:<br>
+        • m: gradi di mobilità totali del meccanismo<br>
+        • b: numero di corpi mobili (inclusi effettore, esclusa base fissa)<br>
+        • p: numero di coppie prismatiche<br>
+        • r: numero di coppie rotanti
+    </div>
+
+    <div class="equation">
+        <strong>Nello spazio (3D):</strong><br>
+        - Ogni corpo rigido ha 6 DoF (3 traslazioni + 3 rotazioni)<br>
+        - Ogni coppia inferiore impone 5 vincoli → lascia 1 DoF<br><br>
+        <strong>Formula:</strong> m = 6b - 5(p + r)
+    </div>
+
+    <h2>0.6 Teorema di Chasles</h2>
+
+    <div class="definition">
+        <strong>Teorema di Chasles (nel moto piano):</strong> Il centro delle velocità di un rigido in un moto piano si trova sull'intersezione delle normali alle traiettorie dei punti del rigido stesso.
+    </div>
+
+    <h4>Interpretazione fisica:</h4>
+    <p>Se prendi due punti qualsiasi su un corpo rigido in moto piano, le velocità dei due punti sono perpendicolari alle loro traiettorie; il punto di intersezione di queste normali è il <strong>centro istantaneo (C)</strong> delle velocità: il punto attorno al quale il corpo ruota in quell'istante.</p>
+
+    <div class="equation">
+        <strong>Formulazione matematica:</strong><br>
+        V_A = ω × (A - C)<br>
+        V_B = ω × (B - C)<br><br>
+        Quindi: V_B - V_A = ω × (B - C - A + C) = ω × (B - A)<br><br>
+        <strong>Equazione fondamentale della cinematica:</strong><br>
+        V_B = V_A + V_BA<br><br>
+        Dove V_BA è la velocità di B rispetto ad A, la velocità che B avrebbe se il corpo rigido ruotasse con velocità angolare ω attorno ad A e non attorno a C.
+    </div>
+
+    <div class="important">
+        <strong>Applicazione pratica:</strong> Il teorema di Chasles è fondamentale per l'analisi cinematica dei meccanismi, permettendo di determinare velocità e accelerazioni di punti del sistema conoscendo il centro istantaneo di rotazione.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="cinematica">1. CINEMATICA</h2>
+
+    <h3>1.1 Cinematica Diretta</h3>
+    
+    <div class="definition">
+        <strong>Definizione:</strong> Descrive il moto dell'end effector (TCP - Tool Center Point) a partire dal moto dei giunti.
+    </div>
+    
+    <h4>Caratteristiche:</h4>
+    <ul>
+        <li><strong>Input:</strong> Angoli di giunto θᵢ noti</li>
+        <li><strong>Output:</strong> Posizione e orientamento del TCP (x, y, z, orientamenti) incogniti</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Equazione generale:</strong> X = f(θ₁, θ₂, ..., θₙ)
+    </div>
+    
+    <p>La cinematica diretta permette di determinare dove si trova l'end effector dato lo stato di tutti i giunti del robot.</p>
+
+    <h3>1.2 Cinematica Inversa</h3>
+    
+    <div class="definition">
+        <strong>Definizione:</strong> Date le posizioni del TCP, ricavare le variabili di giunto θᵢ.
+    </div>
+    
+    <h4>Caratteristiche:</h4>
+    <ul>
+        <li><strong>Input:</strong> Posizione e orientamento del TCP noti</li>
+        <li><strong>Output:</strong> Angoli di giunto θᵢ incogniti</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Equazione generale:</strong> θ = f⁻¹(X)
+    </div>
+    
+    <div class="important">
+        <strong>Nota:</strong> Problema più complesso della cinematica diretta, può avere soluzioni multiple o nessuna soluzione.
+    </div>
+
+    <h3>1.3 Matrici di Trasformazione</h3>
+    
+    <div class="definition">
+        <strong>Definizione:</strong> Matrici 4×4 che descrivono la posizione e l'orientamento di un sistema di riferimento rispetto a un altro.
+    </div>
+    
+    <h4>Notazione:</h4>
+    <ul>
+        <li><strong>A</strong> = Matrice di Trasformazione singola</li>
+        <li><strong>T</strong> = Prodotto di matrici di trasformazione</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Forma generale di A:</strong><br>
+        A = [R  p]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[0ᵀ 1]<br><br>
+        Dove R è la matrice di rotazione 3×3 e p è il vettore posizione 3×1
+    </div>
+    
+    <h4>Tipi di trasformazioni:</h4>
+    
+    <p><strong>1. Roto-traslazionale (completa):</strong></p>
+    <div class="matrix">
+        A = [R  p]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[0ᵀ 1]
+    </div>
+    
+    <p><strong>2. Solo traslazionale:</strong></p>
+    <div class="matrix">
+        A = [I  p]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[0ᵀ 1]<br>
+        Dove I è la matrice identità 3×3
+    </div>
+    
+    <p><strong>3. Solo rotazionale:</strong></p>
+    <div class="matrix">
+        A = [R  0]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[0ᵀ 1]<br>
+        Dove il vettore posizione è nullo
+    </div>
+    
+    <div class="equation">
+        <strong>Prodotto di matrici:</strong><br>
+        T = A₀₁ · A₁₂ · ... · Aₙ₋₁,ₙ<br><br>
+        Da questo prodotto T si ricava lo Jacobiano geometrico.
+    </div>
+
+    <h3>1.4 Composizione in Assi Fissi</h3>
+    
+    <div class="equation">
+        <strong>Principio:</strong> R₀₂ = R₁₂ · R₀₁
+    </div>
+    
+    <p>Per due rotazioni successive:</p>
+    <ul>
+        <li><strong>Prima rotazione:</strong> R₀₁</li>
+        <li><strong>Seconda rotazione:</strong> R₁₂</li>
+        <li><strong>Rotazione totale:</strong> R₀₂ = R₁₂ · R₀₁</li>
+    </ul>
+    
+    <div class="important">
+        <strong>Importante:</strong> L'ordine delle moltiplicazioni è fondamentale nelle rotazioni.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h3>1.5 Parametri di Denavit-Hartenberg</h3>
+    
+    <div class="definition">
+        <strong>Obiettivo:</strong> Rappresentare la cinematica di un manipolatore attraverso quattro parametri per ogni giunto.
+    </div>
+    
+    <h4>Convenzioni DH:</h4>
+    <p>Le convenzioni DH stabiliscono regole precise per posizionare i sistemi di riferimento su ogni link del manipolatore:</p>
+    
+    <ol>
+        <li><strong>Asse zᵢ:</strong> Coincide sempre con l'asse di rotazione del giunto i+1 (o direzione di traslazione per giunti prismatici)</li>
+        <li><strong>Asse xᵢ:</strong> È perpendicolare sia a zᵢ₋₁ che a zᵢ. Se zᵢ₋₁ e zᵢ sono paralleli, xᵢ può essere scelto arbitrariamente nel piano perpendicolare</li>
+        <li><strong>Origine Oᵢ:</strong> Si trova all'intersezione tra l'asse xᵢ e l'asse zᵢ</li>
+        <li><strong>Asse yᵢ:</strong> Si determina usando la regola della mano destra (xᵢ × yᵢ = zᵢ)</li>
+    </ol>
+    
+    <h4>Parametri DH:</h4>
+    <ul>
+        <li><strong>aᵢ:</strong> distanza fra zᵢ₋₁ e zᵢ lungo xᵢ</li>
+        <li><strong>αᵢ:</strong> quanto deve ruotare zᵢ₋₁ attorno xᵢ per allinearsi a zᵢ</li>
+        <li><strong>dᵢ:</strong> distanza fra xᵢ₋₁ e xᵢ lungo zᵢ₋₁</li>
+        <li><strong>θᵢ:</strong> quanto deve ruotare xᵢ₋₁ attorno zᵢ₋₁ per allinearsi a xᵢ</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Matrice di trasformazione DH:</strong><br>
+        Aᵢ = Rot(z,θᵢ) · Trans(z,dᵢ) · Trans(x,aᵢ) · Rot(x,αᵢ)
+    </div>
+    
+    <div class="equation" style="font-family: monospace; line-height: 1.3;">
+        <strong>Forma esplicita:</strong><br><br>
+        A<sub>i</sub> = 
+        <table style="border-collapse: collapse; display: inline-table; vertical-align: top; margin-left: 8px;">
+            <!-- Riga 1 -->
+            <tr>
+                <td>[</td>
+                <td style="padding: 0 12px;">cos(θ<sub>i</sub>)</td>
+                <td style="padding: 0 12px;">−sin(θ<sub>i</sub>)cos(α<sub>i</sub>)</td>
+                <td style="padding: 0 12px;">sin(θ<sub>i</sub>)sin(α<sub>i</sub>)</td>
+                <td style="border-left: 2px solid black; padding: 0 12px;">a<sub>i</sub>cos(θ<sub>i</sub>)</td>
+                <td>]</td>
+            </tr>
+            <!-- Riga 2 -->
+            <tr>
+                <td>[</td>
+                <td style="padding: 0 12px;">sin(θ<sub>i</sub>)</td>
+                <td style="padding: 0 12px;">cos(θ<sub>i</sub>)cos(α<sub>i</sub>)</td>
+                <td style="padding: 0 12px;">−cos(θ<sub>i</sub>)sin(α<sub>i</sub>)</td>
+                <td style="border-left: 2px solid black; padding: 0 12px;">a<sub>i</sub>sin(θ<sub>i</sub>)</td>
+                <td>]</td>
+            </tr>
+            <!-- Riga 3 -->
+            <tr>
+                <td>[</td>
+                <td style="padding: 0 12px;">0</td>
+                <td style="padding: 0 12px;">sin(α<sub>i</sub>)</td>
+                <td style="padding: 0 12px;">cos(α<sub>i</sub>)</td>
+                <td style="border-left: 2px solid black; padding: 0 12px;">d<sub>i</sub></td>
+                <td>]</td>
+            </tr>
+            <!-- Linea orizzontale sottile -->
+            <tr>
+                <td colspan="6" style="border-top: 1px solid black; padding: 0; height: 4px;"></td>
+            </tr>
+            <!-- Riga 4 -->
+            <tr>
+                <td>[</td>
+                <td style="padding: 0 12px;">0</td>
+                <td style="padding: 0 12px;">0</td>
+                <td style="padding: 0 12px;">0</td>
+                <td style="border-left: 2px solid black; padding: 0 12px;">1</td>
+                <td>]</td>
+            </tr>
+        </table>
+    
+        <br><br>
+        <div style="font-size: 0.85em; font-style: italic; max-width: 500px;">
+            <strong>Note:</strong><br>
+            - Le prime tre colonne rappresentano la matrice di rotazione 3×3 (componenti x, y, z).<br>
+            - La quarta colonna (dopo la linea verticale) rappresenta il vettore di traslazione <em>p</em>.<br>
+            - L’ultima riga [0 0 0 | 1] è la riga omogenea che permette trasformazioni affine nello spazio 3D.
+        </div>
+    </div>    
+    
+    <h4>Passaggi per arrivare ai parametri DH:</h4>
+    <ol>
+        <li><strong>Identificare gli assi dei giunti</strong> - Determinare gli assi di rotazione (o traslazione) di ogni giunto</li>
+        <li><strong>Definire i sistemi di riferimento</strong> secondo le convenzioni DH:
+            <ul>
+                <li>Posizionare gli assi z secondo le regole DH</li>
+                <li>Determinare le normali comuni (assi x)</li>
+                <li>Completare con gli assi y usando la regola della mano destra</li>
+            </ul>
+        </li>
+        <li><strong>Misurare le distanze e gli angoli</strong> tra i sistemi di riferimento consecutivi:
+            <ul>
+                <li>Misurare aᵢ, αᵢ, dᵢ, θᵢ per ogni giunto</li>
+            </ul>
+        </li>
+        <li><strong>Costruire le matrici di trasformazione</strong> Aᵢ per ogni giunto usando i parametri DH</li>
+        <li><strong>Moltiplicare le matrici</strong> per ottenere la cinematica diretta: T₀ₙ = A₁ · A₂ · ... · Aₙ</li>
+    </ol>
+    
+    <h4>Casi particolari:</h4>
+    <ul>
+        <li><strong>Giunti rotoidali:</strong> θᵢ è variabile, dᵢ è costante</li>
+        <li><strong>Giunti prismatici:</strong> dᵢ è variabile, θᵢ è costante</li>
+        <li><strong>Assi paralleli:</strong> αᵢ = 0°</li>
+        <li><strong>Assi perpendicolari:</strong> αᵢ = ±90°</li>
+        <li><strong>Assi intersecanti:</strong> aᵢ = 0</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2 id="cinematica-differenziale">2. CINEMATICA DIFFERENZIALE</h2>
+
+    <h3>2.1 Definizione</h3>
+    
+    <div class="definition">
+        <strong>Definizione concettuale:</strong> Lo Jacobiano geometrico è la matrice che dice come le velocità dei giunti influenzano la velocità dell'end effector.
+    </div>
+    
+    <div class="equation">
+        <strong>Equazione fondamentale:</strong><br>
+        V = J(q) · q̇
+    </div>
+    
+    <p><strong>Dove:</strong></p>
+    <ul>
+        <li><strong>V:</strong> velocità dell'end effector (lineare + angolare)</li>
+        <li><strong>J(q):</strong> matrice Jacobiana geometrica (6×n)</li>
+        <li><strong>q̇:</strong> velocità dei giunti (n×1)</li>
+    </ul>
+    
+    <div class="important">
+        <strong>Interpretazione fisica:</strong>
+        <ul>
+            <li><strong>Ogni colonna</strong> dello Jacobiano rappresenta come il movimento di UN singolo giunto influenza la velocità dell'end effector</li>
+            <li><strong>Ogni riga</strong> rappresenta una componente della velocità dell'end effector (x, y, z, ωₓ, ωᵧ, ωᵤ)</li>
+        </ul>
+    </div>
+    
+    <h4>Proprietà fondamentali:</h4>
+    <ul>
+        <li><strong>Dimensione:</strong> 6×n (6 componenti di velocità, n giunti)</li>
+        <li><strong>Dipendenza dalla configurazione:</strong> J(q) cambia con la posizione dei giunti</li>
+        <li><strong>Singolarità:</strong> Quando det(J) = 0, il robot perde gradi di libertà</li>
+        <li><strong>Dualità cinetostatica:</strong> J^T trasforma forze dell'end effector in coppie ai giunti</li>
+    </ul>
+    
+    <div class="equation" style="font-family: monospace; line-height: 1.2; white-space: nowrap;">
+        <strong>Forma esplicita dello Jacobiano geometrico:</strong><br><br>
+        <span>V =</span>
+        <table style="border-collapse: collapse; display: inline-table; vertical-align: middle; margin-left: 2px; margin-right: 2px;">
+          <tr>
+            <td>[</td>
+            <td style="padding: 0 1px; text-align: center;">ṗ</td>
+            <td>]</td>
+          </tr>
+          <tr>
+            <td>[</td>
+            <td style="padding: 0 1px; text-align: center;">ω</td>
+            <td>]</td>
+          </tr>
+        </table>
+        = J(q) · q̇ =
+        <table style="border-collapse: collapse; display: inline-table; vertical-align: middle; margin-left: 2px; margin-right: 2px;">
+          <tr>
+            <td>[</td>
+            <td style="padding: 0 1px; text-align: center;">z<sub>0</sub>×(P - P<sub>0</sub>)</td>
+            <td style="padding: 0 1px; text-align: center;">z<sub>1</sub>×(P - P<sub>1</sub>)</td>
+            <td style="padding: 0 1px; text-align: center;">...</td>
+            <td style="padding: 0 1px; text-align: center;">z<sub>n-1</sub>×(P - P<sub>n-1</sub>)</td>
+            <td>]</td>
+          </tr>
+          <tr>
+            <td>[</td>
+            <td style="padding: 0 1px; text-align: center;">z<sub>0</sub></td>
+            <td style="padding: 0 1px; text-align: center;">z<sub>1</sub></td>
+            <td style="padding: 0 1px; text-align: center;">...</td>
+            <td style="padding: 0 1px; text-align: center;">z<sub>n-1</sub></td>
+            <td>]</td>
+          </tr>
+        </table>
+        &nbsp;· q̇
+      </div>      
+    
+    <h4>Come ricavare i termini dal prodotto T:</h4>
+    <ul>
+        <li><strong>zᵢ₋₁:</strong> si prende dalla terza colonna della matrice Rᵢ₋₁ (dove Rᵢ₋₁ è la parte rotazionale 3×3 di T₀,ᵢ₋₁)</li>
+        <li><strong>P:</strong> primi tre elementi della quarta colonna della matrice T₀ₙ (posizione end effector)</li>
+        <li><strong>Pᵢ₋₁:</strong> primi tre elementi della quarta colonna della matrice T₀,ᵢ₋₁ (posizione giunto i-1)</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Struttura della matrice T₀,ᵢ₋₁:</strong><br><br>
+        T₀,ᵢ₋₁ =
+        <table style="border-collapse: collapse; display: inline-table; vertical-align: middle; margin-left: 4px; margin-right: 4px; font-family: monospace; line-height: 1.2;">
+            <tr>
+                <td>[</td>
+                <td style="padding: 0 4px; text-align: center;">Rᵢ₋₁</td>
+                <td style="padding: 0 4px; text-align: center;">Pᵢ₋₁</td>
+                <td>]</td>
+            </tr>
+            <tr>
+                <td>[</td>
+                <td colspan="2" style="padding: 0 4px; text-align: center;">0          1</td>
+                <td>]</td>
+            </tr>
+        </table>
+        <br><br>
+        Dove Rᵢ₋₁ è la sottomatrice rotazionale 3×3 e Pᵢ₋₁ è il vettore posizione 3×1.
+    </div>    
+
+    <h3>2.2 Jacobiano Analitico</h3>
+    
+    <div class="definition">
+        <strong>Definizione:</strong> Matrice che mette in relazione le velocità dei giunti con le velocità dell'end effector nello spazio operativo.
+    </div>
+    
+    <div class="equation">
+        V = [ṗ] = J(q) · q̇<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[ω]
+    </div>
+    
+    <h4>Proprietà:</h4>
+    <ul>
+        <li><strong>Dimensione:</strong> 6×n (per manipolatori spaziali)</li>
+        <li><strong>Dipende dalla configurazione q</strong></li>
+        <li><strong>Può essere singolare</strong> (determinante = 0)</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2 id="analisi-velocita">3. ANALISI DELLE VELOCITÀ</h2>
+
+    <h3>3.1 Forma Vettoriale</h3>
+    
+    <h4>Procedimento:</h4>
+    <ol>
+        <li><strong>Individuare le coppie cinematiche</strong></li>
+        <li><strong>Calcolare i gradi di mobilità:</strong>
+            <ul>
+                <li>2D: m = 3b - 2(r + p)</li>
+                <li>3D: m = 6b - 5(r + p)</li>
+            </ul>
+            Dove b = numero di membri, r = giunti rotoidali, p = giunti prismatici
+        </li>
+        <li><strong>Scrivere l'equazione fondamentale</strong> della cinematica per ogni membro</li>
+        <li><strong>Attenzione alle incognite:</strong> usare il triangolo delle velocità</li>
+    </ol>
+    
+    <div class="equation">
+        <strong>Equazioni fondamentali:</strong><br>
+        Vᵦ = Vₐ + ω × (B - A): velocità di un punto B di un corpo rigido<br>
+        Vₚ₍ₐ₎ = Vₚ₍ᵤ₎ + Vₚ₍ₜ₎: velocità assoluta = velocità di trascinamento + velocità relativa<br>
+        aₚ₍ₐ₎ = aₚ₍ᵤ₎ + aₚ₍ₜ₎ + aₚ₍c₎: accelerazione con termine di Coriolis
+    </div>
+
+    <h3>3.2 Forma Analitica con Equazioni di Chiusura</h3>
+    
+    <h4>Procedimento:</h4>
+    <ol>
+        <li><strong>Sistema di riferimento:</strong> Definire un s.d.r. fisso</li>
+        <li><strong>Vettori:</strong> Associare un vettore a ogni membro che congiunge coppie cinematiche</li>
+        <li><strong>Poligono chiuso:</strong> Disporre i vettori per ottenere un poligono chiuso</li>
+        <li><strong>Angoli θ:</strong> Mettere angoli θ antiorario positivi dalla coda di riferimento al s.d.r.</li>
+        <li><strong>Equazioni di chiusura:</strong> Scrivere le equazioni vettoriali</li>
+        <li><strong>Scomposizione:</strong> Scomporre lungo x e y</li>
+        <li><strong>Gradi di mobilità:</strong> Calcolare
+            <ul>
+                <li>2D: m = 3b - 2(r + p)</li>
+                <li>3D: m = 6b - 5(r + p)</li>
+            </ul>
+            Dove b = numero di membri, r = giunti rotoidali, p = giunti prismatici
+        </li>
+        <li><strong>Risoluzione:</strong> a₁, a₂, ... sono noti, risolvere il sistema</li>
+    </ol>
+
+    <h3>3.3 Metodo Newton-Raphson</h3>
+    
+    <div class="important">
+        <strong>Differenza con l'analisi precedente:</strong> Il sistema si eguaglia a zero.
+    </div>
+    
+    <h4>Procedimento:</h4>
+    <ol>
+        <li><strong>Stessi passaggi</strong> dell'analisi con equazioni di chiusura</li>
+        <li><strong>Sistema:</strong> f(θ) = 0</li>
+        <li><strong>Parametri:</strong> Identificare parametri noti e incogniti</li>
+        <li><strong>Teorema di Carnot:</strong> Applicare dove necessario per risolvere triangoli nel meccanismo</li>
+    </ol>
+    
+    <div class="equation">
+        <strong>Teorema di Carnot (Legge dei Coseni):</strong><br>
+        In un triangolo con lati a, b, c e angolo γ opposto al lato c:<br>
+        c² = a² + b² - 2ab·cos(γ)
+    </div>
+    
+    <h4>Applicazioni nel metodo Newton-Raphson:</h4>
+    <ul>
+        <li><strong>Triangoli nel meccanismo:</strong> Quando i membri del meccanismo formano triangoli, il teorema di Carnot permette di trovare relazioni tra le lunghezze dei lati e gli angoli</li>
+        <li><strong>Equazioni di vincolo:</strong> Il teorema genera equazioni aggiuntive che legano i parametri geometrici del meccanismo</li>
+        <li><strong>Risoluzione di configurazioni:</strong> Utile per determinare posizioni quando si conoscono alcune lunghezze e angoli</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Esempio pratico:</strong><br>
+        cos(θ) = (a² + b² - c²)/(2ab)<br><br>
+        Questa relazione diventa parte del sistema di equazioni f(θ) = 0 da risolvere con Newton-Raphson.
+    </div>
+    
+    <ol start="5">
+        <li><strong>Risoluzione iterativa:</strong>
+            <ul>
+                <li><strong>Jacobiano:</strong> J = [∂f₁/∂θ₁ ∂f₁/∂θ₂ ...]</li>
+                <li><strong>Vettore:</strong> b = [∂f₁/∂q₁ ∂f₁/∂q₂ ...] (q parametri liberi)</li>
+                <li><strong>Iterazione:</strong> θₖ₊₁ = θₖ - J⁻¹(θₖ) · f(θₖ)</li>
+            </ul>
+        </li>
+        <li><strong>Derivazione:</strong> Per velocità e accelerazioni derivare le equazioni</li>
+    </ol>
+
+    <div class="page-break"></div>
+
+    <h2 id="statica">4. STATICA</h2>
+
+    <h3>4.1 Forze Esterne ed Interne</h3>
+    
+    <ul>
+        <li><strong>Forze esterne:</strong> Agiscono dall'ambiente esterno sul sistema</li>
+        <li><strong>Forze interne:</strong> Agiscono tra i componenti del sistema (si elidono nell'equilibrio globale)</li>
+    </ul>
+
+    <h3>4.2 Autoequilibrio</h3>
+    
+    <div class="definition">
+        <strong>Definizione:</strong> Condizione in cui un sistema di forze si mantiene in equilibrio senza vincoli esterni.
+    </div>
+
+    <h3>4.3 Classificazione delle Forze</h3>
+    
+    <h4>Forze Motrici e Resistenti:</h4>
+    <ul>
+        <li><strong>Motrici:</strong> Favoriscono il moto del sistema</li>
+        <li><strong>Resistenti:</strong> Si oppongono al moto del sistema</li>
+    </ul>
+    
+    <h4>Forze Attive e Reattive:</h4>
+    <ul>
+        <li><strong>Attive:</strong> Applicate dall'esterno o generate internamente</li>
+        <li><strong>Reattive vincolari:</strong> Generate dai vincoli
+            <ul>
+                <li><strong>Coppia prismatica:</strong> Forza lungo l'asse, momento perpendicolare</li>
+                <li><strong>Coppia rotoidale:</strong> Momento lungo l'asse, forza perpendicolare</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>4.4 Forza d'Inerzia</h3>
+    
+    <div class="equation">
+        <strong>Definizione:</strong> F' = -ma (principio di d'Alembert)
+    </div>
+
+    <h3>4.5 Equilibrio dei Sistemi</h3>
+    
+    <div class="equation">
+        <strong>Principio di d'Alembert:</strong> F + F' = 0<br>
+        Dove F sono le forze applicate e F' le forze d'inerzia.
+    </div>
+    
+    <div class="equation">
+        <strong>Equazioni Cardinali della Statica:</strong><br>
+        1. Prima equazione: ΣF = 0 (equilibrio delle forze)<br>
+        2. Seconda equazione: ΣM = 0 (equilibrio dei momenti)
+    </div>
+    
+    <div class="equation">
+        <strong>Principio dei Lavori Virtuali:</strong><br>
+        δW = Σ(Fᵢ · δrᵢ) + Σ(Mᵢ · δθᵢ) = 0<br>
+        Per spostamenti virtuali compatibili con i vincoli.
+    </div>
+
+    <h3>4.6 Statica dei Manipolatori</h3>
+    
+    <div class="equation">
+        <strong>Equazione fondamentale:</strong><br>
+        τ = J^T(q) · γ
+    </div>
+    
+    <p><strong>Dove:</strong></p>
+    <ul>
+        <li><strong>τ:</strong> vettore delle coppie/forze ai giunti</li>
+        <li><strong>J^T(q):</strong> trasposta dello Jacobiano</li>
+        <li><strong>γ:</strong> forze/momenti applicati all'end effector</li>
+    </ul>
+    
+    <h4>Interpretazione fisica:</h4>
+    <ul>
+        <li><strong>τ = J^T(q) · γ:</strong> "Forza che il TCP applica all'esterno"</li>
+        <li><strong>τ = J^T(q) · f_ext:</strong> Forze esterne trasformate ai giunti</li>
+    </ul>
+
+    <h3>4.7 Dualità Cinetostatica</h3>
+    
+    <div class="important">
+        <strong>Principio:</strong> Esiste una dualità tra cinematica e statica tramite lo Jacobiano:
+    </div>
+    
+    <div class="equation">
+        <strong>Cinematica:</strong> V = J(q) · q̇<br>
+        <strong>Statica:</strong> τ = J^T(q) · F
+    </div>
+
+    <h3>4.8 Equilibrio delle Catene Chiuse Piane</h3>
+    
+    <h4>Notazione:</h4>
+    <ul>
+        <li><strong>f_{e,2}:</strong> Forza dall'esterno verso l'interno (membro 2)</li>
+        <li><strong>f_{2,e}:</strong> Forza dal membro 2 verso l'esterno</li>
+    </ul>
+    
+    <div class="important">
+        <strong>Principio:</strong> Per ogni nodo, la somma delle forze deve essere zero.
+    </div>
+    
+    <h4>Calcolo del Momento:</h4>
+    <div class="equation">
+        <strong>Formula generale:</strong><br>
+        M = r × F<br><br>
+        Dove:<br>
+        - r è il vettore posizione dal punto di applicazione al centro di rotazione<br>
+        - F è la forza applicata<br>
+        - × indica il prodotto vettoriale
+    </div>
+    
+    <div class="equation">
+        <strong>In forma scalare (2D):</strong><br>
+        M = r · F · sin(θ)<br><br>
+        Dove θ è l'angolo tra r e F
+    </div>
+
+    <h3>4.9 Esempio Pratico: Catena RRP con Forza Esterna</h3>
+    
+    <div class="definition">
+        <strong>Configurazione:</strong> Catena cinematica aperta RRP (Rotoidale-Rotoidale-Prismatica)<br>
+        <strong>Condizioni:</strong> Forza f_{e,2} dall'alto verso il basso sulla barra 2, end effector scarico
+    </div>
+    
+    <div class="equation">
+        <strong>Schema della catena:</strong><br>
+        <pre>
+                | f_{e,2} 
+                ↓ 
+        R-------2-----P 
+        |             |3 
+        1             | 
+        |            |-| 
+        R fissa
+        </pre>
+    </div>
+    
+    <h4>Procedimento di Calcolo:</h4>
+    <ol>
+        <li><strong>Identificare le forze esterne:</strong>
+            <ul>
+                <li>f_{e,2}: forza verticale verso il basso sulla barra 2</li>
+                <li>End effector scarico: nessuna forza all'estremità</li>
+            </ul>
+        </li>
+        
+        <li><strong>Applicare il principio dell'equilibrio statico:</strong>
+            <div class="equation">
+                τ = J^T(q) · F_{ext}
+            </div>
+        </li>
+        
+        <li><strong>Calcolare lo Jacobiano geometrico:</strong>
+            <ul>
+                <li>Per il giunto 1 (rotoidale): contributo rotazionale</li>
+                <li>Per il giunto 2 (rotoidale): contributo rotazionale</li>
+                <li>Per il giunto 3 (prismatico): contributo traslazionale</li>
+            </ul>
+        </li>
+        
+        <li><strong>Determinare le componenti di τ:</strong>
+            <div class="equation">
+                τ = [τ₁, τ₂, τ₃]^T
+            </div>
+            Dove:
+            <ul>
+                <li><strong>τ₁:</strong> Coppia necessaria al giunto 1 per equilibrare la forza</li>
+                <li><strong>τ₂:</strong> Coppia necessaria al giunto 2 per equilibrare la forza</li>
+                <li><strong>τ₃:</strong> Forza necessaria al giunto 3 per equilibrare la forza</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>Cosa Succede nel Sistema:</h4>
+    <ul>
+        <li><strong>Giunto 1 (base rotoidale):</strong> Deve fornire una coppia τ₁ per bilanciare il momento creato dalla forza f_{e,2} rispetto all'asse di rotazione</li>
+        
+        <li><strong>Giunto 2 (rotoidale intermedio):</strong> Deve fornire una coppia τ₂ per bilanciare il momento locale creato dalla forza</li>
+        
+        <li><strong>Giunto 3 (prismatico):</strong> Deve fornire una forza τ₃ per bilanciare la componente della forza f_{e,2} lungo l'asse prismatico</li>
+    </ul>
+    
+    <div class="important">
+        <strong>Risultato:</strong> La forza esterna f_{e,2} si "distribuisce" tra tutti i giunti del manipolatore attraverso lo Jacobiano trasposto. Ogni giunto contribuisce secondo la sua capacità di contrastare l'effetto della forza esterna.
+    </div>
+    
+    <h4>Considerazioni Pratiche:</h4>
+    <ul>
+        <li><strong>Propagazione delle forze:</strong> La forza si propaga attraverso la catena cinematica fino alla base</li>
+        <li><strong>Equilibrio globale:</strong> Il sistema deve essere in equilibrio statico con la forza di reazione alla base</li>
+        <li><strong>Efficienza energetica:</strong> La distribuzione delle coppie dipende dalla configurazione geometrica del manipolatore</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2 id="dinamica">5. DINAMICA</h2>
+
+    <h3>5.1 Dinamica dei Manipolatori</h3>
+    
+    <div class="definition">
+        <strong>Due problemi fondamentali:</strong>
+    </div>
+    
+    <h4>1. Dinamica Diretta:</h4>
+    <ul>
+        <li><strong>Input:</strong> Coppie ai giunti τ</li>
+        <li><strong>Output:</strong> Accelerazioni dei giunti q̈</li>
+        <li><strong>Equazione:</strong> q̈ = f(q, q̇, τ)</li>
+    </ul>
+    
+    <h4>2. Dinamica Inversa:</h4>
+    <ul>
+        <li><strong>Input:</strong> Traiettoria desiderata q, q̇, q̈</li>
+        <li><strong>Output:</strong> Coppie necessarie τ</li>
+        <li><strong>Equazione:</strong> τ = f(q, q̇, q̈)</li>
+    </ul>
+    
+    <div class="equation">
+        <strong>Equazione di Lagrange:</strong><br>
+        τ = M(q)q̈ + C(q,q̇)q̇ + G(q)
+    </div>
+    
+    <p><strong>Dove:</strong></p>
+    <ul>
+        <li><strong>M(q):</strong> matrice d'inerzia</li>
+        <li><strong>C(q,q̇):</strong> matrice dei termini centrifughi e di Coriolis</li>
+        <li><strong>G(q):</strong> vettore delle forze gravitazionali</li>
+    </ul>
+
+    <h3>5.2 Relazioni Fondamentali</h3>
+    
+    <div class="equation">
+        <strong>Statica dei manipolatori (ripetizione per completezza):</strong><br>
+        τ = J^T · γ: Relazione tra forze all'end effector e coppie ai giunti<br>
+        τ = J^T · f: Trasformazione delle forze esterne
+    </div>
+    
+    <p><strong>Queste equazioni sono fondamentali per:</strong></p>
+    <ul>
+        <li>Controllo di forza</li>
+        <li>Pianificazione di traiettorie</li>
+        <li>Analisi della manipolabilità</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+</body>
+</html>
