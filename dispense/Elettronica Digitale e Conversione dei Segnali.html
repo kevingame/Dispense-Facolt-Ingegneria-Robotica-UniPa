@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elettronica Digitale e Conversione dei Segnali</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #5a67d8;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #6b46c1;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        .formula-box {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+        }
+        
+        .formula-box strong {
+            color: #764ba2;
+        }
+        
+        .info-box {
+            background: #fff5e6;
+            border: 2px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box h4 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+        
+        .logic-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .logic-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+        }
+        
+        .example-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .example-box h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        
+        .symbol {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .gate-symbol {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #764ba2;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ ELETTRONICA DIGITALE E CONVERSIONE DEI SEGNALI</h1>
+        
+        <h2>1. Algebra di Boole e Operazioni Logiche</h2>
+        
+        <h3>1.1 Introduzione all'Algebra Booleana</h3>
+        <p>
+            L'<strong>algebra di Boole</strong> (o <strong>Boolean algebra</strong>) è un sistema matematico che opera con variabili che possono assumere solo <strong>due valori</strong>: <span class="highlight">VERO (1)</span> o <span class="highlight">FALSO (0)</span>.
+        </p>
+        <p>
+            A differenza dell'algebra tradizionale dove le operazioni fondamentali sono addizione e sottrazione, nell'algebra di Boole le operazioni fondamentali sono gli <strong>operatori logici</strong>.
+        </p>
+        
+        <h3>1.2 Operatori Logici Fondamentali</h3>
+        
+        <div class="logic-box">
+            <h4>🔹 CONGIUNZIONE (Prodotto Logico)</h4>
+            <p><strong>Simboli:</strong> · (punto) oppure <span class="gate-symbol">AND</span></p>
+            <p><strong>Notazione:</strong> Y = A · B oppure Y = A AND B</p>
+            <p><strong>Significato:</strong> L'uscita è 1 solo se TUTTI gli ingressi sono 1</p>
+        </div>
+        
+        <div class="logic-box">
+            <h4>🔹 DISGIUNZIONE (Somma Logica)</h4>
+            <p><strong>Simboli:</strong> + (più) oppure <span class="gate-symbol">OR</span></p>
+            <p><strong>Notazione:</strong> Y = A + B oppure Y = A OR B</p>
+            <p><strong>Significato:</strong> L'uscita è 1 se ALMENO UNO degli ingressi è 1</p>
+        </div>
+        
+        <div class="logic-box">
+            <h4>🔹 NEGAZIONE (Complementazione)</h4>
+            <p><strong>Simboli:</strong> barra sopra la variabile (Ā) oppure <span class="gate-symbol">NOT</span></p>
+            <p><strong>Notazione:</strong> Y = Ā oppure Y = NOT A</p>
+            <p><strong>Significato:</strong> L'uscita è l'opposto dell'ingresso (inverte il valore)</p>
+        </div>
+        
+        <h3>1.3 Proprietà dell'Algebra di Boole</h3>
+        
+        <div class="formula-box">
+            <strong>PROPRIETÀ FONDAMENTALI:</strong><br><br>
+            
+            <strong>1. Identità:</strong><br>
+            • A + 0 = A<br>
+            • A · 1 = A<br><br>
+            
+            <strong>2. Elemento Nullo:</strong><br>
+            • A + 1 = 1<br>
+            • A · 0 = 0<br><br>
+            
+            <strong>3. Idempotenza:</strong><br>
+            • A + A = A<br>
+            • A · A = A<br><br>
+            
+            <strong>4. Complemento:</strong><br>
+            • A + Ā = 1<br>
+            • A · Ā = 0<br><br>
+            
+            <strong>5. Doppia Negazione:</strong><br>
+            • Ā̄ = A<br><br>
+            
+            <strong>6. Commutativa:</strong><br>
+            • A + B = B + A<br>
+            • A · B = B · A<br><br>
+            
+            <strong>7. Associativa:</strong><br>
+            • (A + B) + C = A + (B + C)<br>
+            • (A · B) · C = A · (B · C)<br><br>
+            
+            <strong>8. Distributiva:</strong><br>
+            • A · (B + C) = (A · B) + (A · C)<br>
+            • A + (B · C) = (A + B) · (A + C)
+        </div>
+        
+        <h3>1.4 Principio di Dualità</h3>
+        <p>
+            Il <strong>principio di dualità</strong> afferma che se in un'espressione booleana sostituiamo:
+        </p>
+        <ul>
+            <li>Ogni operatore <code>+</code> con <code>·</code> e viceversa</li>
+            <li>Ogni <code>0</code> con <code>1</code> e viceversa</li>
+        </ul>
+        <p>
+            L'espressione risultante (duale) è anch'essa valida. Ad esempio, se <code>A + 0 = A</code> è vera, allora anche <code>A · 1 = A</code> è vera.
+        </p>
+        
+        <h2>2. Porte Logiche</h2>
+        
+        <h3>2.1 Introduzione alle Porte Logiche</h3>
+        <p>
+            Le <strong>porte logiche</strong> sono circuiti elettronici che implementano fisicamente gli operatori logici dell'algebra di Boole. Sono i mattoni fondamentali dell'elettronica digitale.
+        </p>
+        
+        <h3>2.2 Porte Logiche Fondamentali</h3>
+        
+        <h4>NOT (Invertitore)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta NOT</h4>
+            <p><strong>Funzione:</strong> Y = Ā</p>
+            <p><strong>Descrizione:</strong> Inverte il segnale di ingresso</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>Y = Ā</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h4>AND (Congiunzione)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta AND</h4>
+            <p><strong>Funzione:</strong> Y = A · B</p>
+            <p><strong>Descrizione:</strong> Uscita alta solo se TUTTI gli ingressi sono alti</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>Y = A · B</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h4>OR (Disgiunzione)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta OR</h4>
+            <p><strong>Funzione:</strong> Y = A + B</p>
+            <p><strong>Descrizione:</strong> Uscita alta se ALMENO UN ingresso è alto</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>Y = A + B</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h4>XOR (OR Esclusivo)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta XOR</h4>
+            <p><strong>Funzione:</strong> Y = A ⊕ B = A·B̄ + Ā·B</p>
+            <p><strong>Descrizione:</strong> Uscita alta se gli ingressi sono DIVERSI</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>Y = A ⊕ B</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h3>2.3 Porte Logiche Universali</h3>
+        
+        <h4>NAND (NOT-AND)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta NAND</h4>
+            <p><strong>Funzione:</strong> Y = (A · B)̄</p>
+            <p><strong>Descrizione:</strong> AND negato - Uscita bassa solo se TUTTI gli ingressi sono alti</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>Y = (A · B)̄</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+            </table>
+            <p><strong>⚡ Nota:</strong> La porta NAND è <span class="highlight">universale</span> - qualsiasi funzione logica può essere implementata usando solo NAND!</p>
+        </div>
+        
+        <h4>NOR (NOT-OR)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta NOR</h4>
+            <p><strong>Funzione:</strong> Y = (A + B)̄</p>
+            <p><strong>Descrizione:</strong> OR negato - Uscita alta solo se TUTTI gli ingressi sono bassi</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>Y = (A + B)̄</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+            </table>
+            <p><strong>⚡ Nota:</strong> Anche la porta NOR è <span class="highlight">universale</span>!</p>
+        </div>
+        
+        <h4>XNOR (Equivalenza)</h4>
+        <div class="example-box">
+            <h4>🚪 Porta XNOR</h4>
+            <p><strong>Funzione:</strong> Y = (A ⊕ B)̄ = A·B + Ā·B̄</p>
+            <p><strong>Descrizione:</strong> Uscita alta se gli ingressi sono UGUALI</p>
+            <table>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>Y = (A ⊕ B)̄</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>3. Circuiti Digitali</h2>
+        
+        <h3>3.1 Circuiti Combinatori</h3>
+        <div class="info-box">
+            <h4>📊 Circuito Combinatorio</h4>
+            <p>
+                Un <strong>circuito combinatorio</strong> è un circuito digitale in cui l'uscita dipende <strong>SOLO</strong> dagli ingressi attuali, e NON da stati precedenti.
+            </p>
+            <p><strong>Caratteristiche:</strong></p>
+            <ul>
+                <li>Non hanno memoria</li>
+                <li>Non contengono elementi di retroazione (feedback)</li>
+                <li>L'uscita cambia immediatamente quando cambiano gli ingressi</li>
+            </ul>
+            <p><strong>Esempi:</strong> Decoder, Encoder, Multiplexer, Demultiplexer, Sommatori, Comparatori</p>
+        </div>
+        
+        <h3>3.2 Circuiti Sequenziali</h3>
+        <div class="info-box">
+            <h4>🔄 Circuito Sequenziale</h4>
+            <p>
+                Un <strong>circuito sequenziale</strong> è un circuito digitale in cui l'uscita dipende sia dagli ingressi attuali che dalla <strong>storia passata</strong> (stato precedente).
+            </p>
+            <p><strong>Caratteristiche:</strong></p>
+            <ul>
+                <li>Hanno memoria (mantengono lo stato)</li>
+                <li>Contengono elementi di retroazione</li>
+                <li>Possono essere sincroni (con clock) o asincroni</li>
+            </ul>
+            <p><strong>Esempi:</strong> Latch, Flip-Flop, Registri, Contatori, Memorie</p>
+        </div>
+        
+        <h2>4. Tecnologia CMOS</h2>
+        
+        <h3>4.1 Il Transistor come Interruttore</h3>
+        <p>
+            Nei <strong>circuiti digitali</strong> e in elettronica di potenza, i transistor vengono impiegati come <strong>interruttori elettronici</strong>. A seconda della tensione applicata al gate, il transistor può operare in due modalità:
+        </p>
+        
+        <div class="logic-box">
+            <h4>⚡ Regioni di Funzionamento del MOSFET</h4>
+            <ul>
+                <li><strong>Regione di Triodo (ON):</strong> Il transistor si comporta come un interruttore chiuso, con resistenza molto bassa (R<sub>ON</sub> o r<sub>DS</sub>)</li>
+                <li><strong>Interdizione (OFF):</strong> Il transistor si comporta come un circuito aperto, non passa corrente</li>
+            </ul>
+        </div>
+        
+        <h4>Comportamento NMOS</h4>
+        <p>
+            Quando applichiamo una <strong>tensione di gate elevata (V<sub>DD</sub>)</strong> ad un NMOS:
+        </p>
+        <ul>
+            <li>Il transistor si comporta da <strong>interruttore chiuso</strong></li>
+            <li>Mostra una piccola resistenza (R<sub>ON</sub>)</li>
+        </ul>
+        <p>
+            Quando applichiamo una <strong>tensione di gate bassa (massa, 0V)</strong>:
+        </p>
+        <ul>
+            <li>Il transistor è <strong>interdetto</strong></li>
+            <li>Si comporta da <strong>circuito aperto</strong></li>
+        </ul>
+        
+        <h4>Comportamento PMOS</h4>
+        <p>
+            Il <strong>PMOS</strong> lavora in modo <span class="highlight">complementare</span> all'NMOS:
+        </p>
+        <ul>
+            <li>Conduce quando V<sub>G</sub> = 0V (gate a massa)</li>
+            <li>È interdetto quando V<sub>G</sub> = V<sub>DD</sub> (gate alto)</li>
+        </ul>
+        
+        <div class="info-box">
+            <h4>🔌 Convenzioni Logiche</h4>
+            <p>
+                Il terminale di <strong>gate</strong> è il terminale di controllo e rappresenta l'<strong>ingresso</strong> della porta logica.
+            </p>
+            <p><strong>Convenzione standard:</strong></p>
+            <ul>
+                <li><strong>Valore logico 1:</strong> tensione di alimentazione (V<sub>DD</sub>)</li>
+                <li><strong>Valore logico 0:</strong> massa (GND, 0V)</li>
+            </ul>
+        </div>
+        
+        <h3>4.2 Invertitore CMOS</h3>
+        <p>
+            L'<strong>invertitore logico digitale</strong> è l'elemento fondamentale per l'elettronica digitale (come lo era l'amplificatore per l'elettronica analogica).
+        </p>
+        <p>
+            L'invertitore <strong>inverte</strong> il valore logico in ingresso:
+        </p>
+        <ul>
+            <li><strong>Ingresso alto (1)</strong> → <strong>Uscita bassa (0)</strong></li>
+            <li><strong>Ingresso basso (0)</strong> → <strong>Uscita alta (1)</strong></li>
+        </ul>
+        <p>
+            Implementa la funzione logica <span class="highlight">NOT</span>.
+        </p>
+        
+        <div class="example-box">
+            <h4>🔧 Struttura dell'Invertitore CMOS</h4>
+            <p>
+                L'invertitore CMOS è composto da:
+            </p>
+            <ul>
+                <li>Un transistor <strong>PMOS</strong> collegato tra V<sub>DD</sub> e l'uscita (pull-up)</li>
+                <li>Un transistor <strong>NMOS</strong> collegato tra l'uscita e massa (pull-down)</li>
+                <li>I gate di entrambi i transistor sono collegati all'ingresso</li>
+            </ul>
+            <p><strong>Funzionamento:</strong></p>
+            <ul>
+                <li>Quando V<sub>IN</sub> = 0: PMOS ON, NMOS OFF → V<sub>OUT</sub> = V<sub>DD</sub> (1)</li>
+                <li>Quando V<sub>IN</sub> = V<sub>DD</sub>: PMOS OFF, NMOS ON → V<sub>OUT</sub> = 0</li>
+            </ul>
+        </div>
+        
+        <h3>4.3 Caratteristica di Trasferimento in Tensione (VTC)</h3>
+        <p>
+            La <strong>VTC (Voltage Transfer Characteristic)</strong> rappresenta graficamente la relazione tra tensione di ingresso e tensione di uscita di una porta logica.
+        </p>
+        
+        <h4>VTC Ideale</h4>
+        <div class="formula-box">
+            <strong>Invertitore Ideale:</strong><br><br>
+            • V<sub>OUT</sub> = V<sub>DD</sub> se V<sub>IN</sub> < V<sub>DD</sub>/2<br>
+            • V<sub>OUT</sub> = 0 se V<sub>IN</sub> > V<sub>DD</sub>/2<br><br>
+            Transizione istantanea a V<sub>IN</sub> = V<sub>DD</sub>/2
+        </div>
+        
+        <h4>VTC Reale</h4>
+        <p>
+            Nella realtà, la transizione non è istantanea ma avviene in una <strong>regione di transizione</strong> dove entrambi i transistor possono condurre parzialmente, causando:
+        </p>
+        <ul>
+            <li>Margini di rumore finiti</li>
+            <li>Consumo di corrente durante la commutazione</li>
+            <li>Tempo di propagazione non nullo</li>
+        </ul>
+        
+        <h3>4.4 Logica CMOS: PUN e PDN</h3>
+        <p>
+            Le porte logiche CMOS complesse sono composte da due reti complementari:
+        </p>
+        
+        <div class="logic-box">
+            <h4>📐 PUN (Pull-Up Network)</h4>
+            <p>
+                La <strong>rete di pull-up</strong> è composta da transistor <strong>PMOS</strong> collegati tra V<sub>DD</sub> e l'uscita.
+            </p>
+            <p><strong>Funzione:</strong> Porta l'uscita al valore logico alto (1) quando attivata</p>
+        </div>
+        
+        <div class="logic-box">
+            <h4>📐 PDN (Pull-Down Network)</h4>
+            <p>
+                La <strong>rete di pull-down</strong> è composta da transistor
+<parameter name="content"> <strong>NMOS</strong> collegati tra l'uscita e massa.
+</p>
+<p><strong>Funzione:</strong> Porta l'uscita al valore logico basso (0) quando attivata</p>
+</div>
+    <div class="warning-box">
+        <h4>⚠️ Regola Fondamentale: Complementarità</h4>
+        <p>
+            Le reti PUN e PDN devono essere <span class="highlight">complementari</span>: quando una conduce, l'altra deve essere spenta, e viceversa.
+        </p>
+        <p>Questo garantisce:</p>
+        <ul>
+            <li>Nessun percorso diretto tra V<sub>DD</sub> e massa (no corrente statica)</li>
+            <li>Uscita sempre definita (non flottante)</li>
+            <li>Basso consumo di potenza statico</li>
+        </ul>
+    </div>
+    
+    <h3>4.5 Regole di Implementazione CMOS</h3>
+    <div class="formula-box">
+        <strong>REGOLE PER PUN e PDN:</strong><br><br>
+        
+        <strong>Per mettere gli ingressi in AND:</strong><br>
+        • Nella PUN: PMOS in <span class="highlight">SERIE</span><br>
+        • Nella PDN: NMOS in <span class="highlight">PARALLELO</span><br><br>
+        
+        <strong>Per mettere gli ingressi in OR:</strong><br>
+        • Nella PUN: PMOS in <span class="highlight">PARALLELO</span><br>
+        • Nella PDN: NMOS in <span class="highlight">SERIE</span>
+    </div>
+    
+    <h3>4.6 Esempio: Porta a Due Ingressi</h3>
+    <div class="example-box">
+        <h4>🔧 Porta NOR CMOS</h4>
+        <p><strong>Funzione:</strong> 
+        Y = <span style="text-decoration: overline;">(A + B)</span> = 
+        <span style="text-decoration: overline;">A</span> · 
+        <span style="text-decoration: overline;">B</span>
+    	</p>
+        
+        <p><strong>Implementazione PUN (PMOS):</strong></p>
+        <ul>
+            <li>Due PMOS in <strong>SERIE</strong> tra V<sub>DD</sub> e uscita</li>
+            <li>Conduce solo quando A=0 <strong>AND</strong> B=0</li>
+            <li>In questo caso Y = 1</li>
+        </ul>
+        
+        <p><strong>Implementazione PDN (NMOS):</strong></p>
+        <ul>
+            <li>Due NMOS in <strong>PARALLELO</strong> tra uscita e massa</li>
+            <li>Conduce quando A=1 <strong>OR</strong> B=1</li>
+            <li>In questo caso Y = 0</li>
+        </ul>
+        
+        <p><strong>Verifica Complementarità:</strong></p>
+        <ul>
+            <li>Se A=0 e B=0: PUN ON, PDN OFF → Y=1 ✓</li>
+            <li>Se A=1 o B=1: PUN OFF, PDN ON → Y=0 ✓</li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <h4>🔧 Porta NAND CMOS</h4>
+        <p><strong>Funzione:</strong> 
+        Y = <span style="text-decoration: overline;">(A * B)</span> = 
+        <span style="text-decoration: overline;">A</span> + 
+        <span style="text-decoration: overline;">B</span>
+    	</p>
+        
+        <p><strong>Implementazione PUN (PMOS):</strong></p>
+        <ul>
+            <li>Due PMOS in <strong>PARALLELO</strong> tra V<sub>DD</sub> e uscita</li>
+            <li>Conduce solo quando A=0 <strong>OR</strong> B=0</li>
+            <li>In questo caso Y = 1</li>
+        </ul>
+        
+        <p><strong>Implementazione PDN (NMOS):</strong></p>
+        <ul>
+            <li>Due NMOS in <strong>SERIE</strong> tra uscita e massa</li>
+            <li>Conduce quando A=1 <strong>AND</strong> B=1</li>
+            <li>In questo caso Y = 0</li>
+        </ul>
+        
+        <p><strong>Verifica Complementarità:</strong></p>
+        <ul>
+            <li>Se A=0 o B=0: PUN ON, PDN OFF → Y=1 ✓</li>
+            <li>Se A=1 e B=1: PUN OFF, PDN ON → Y=0 ✓</li>
+        </ul>
+    </div>
+    
+    <h3>4.7 Transmission Gate</h3>
+    <p>
+        Il <strong>transmission gate</strong> (porta di trasmissione) è un interruttore bidirezionale realizzato con un NMOS e un PMOS in parallelo, controllati da segnali complementari.
+    </p>
+    
+    <div class="info-box">
+        <h4>🔀 Caratteristiche del Transmission Gate</h4>
+        <ul>
+            <li><strong>Bidirezionale:</strong> può trasmettere il segnale in entrambe le direzioni</li>
+            <li><strong>Bassa resistenza:</strong> quando chiuso, presenta una resistenza molto bassa per tutta la gamma di tensioni</li>
+            <li><strong>Controllo complementare:</strong> NMOS comandato da C, PMOS comandato da C̄</li>
+        </ul>
+        <p><strong>Applicazioni:</strong> Multiplexer, memorie dinamiche, circuiti sample-and-hold</p>
+    </div>
+    
+    <h3>4.8 Dissipazione di Potenza nei Circuiti CMOS</h3>
+    <p>
+        La tecnologia CMOS è apprezzata per il suo <strong>basso consumo di potenza</strong>. La potenza dissipata si compone di tre contributi:
+    </p>
+    
+    <div class="formula-box">
+        <strong>POTENZA TOTALE:</strong><br><br>
+        P<sub>TOT</sub> = P<sub>STATICA</sub> + P<sub>DINAMICA</sub> + P<sub>SHORT-CIRCUIT</sub><br><br>
+        
+        <strong>1. Potenza Statica:</strong><br>
+        • Dovuta a correnti di leakage (perdita)<br>
+        • Trascurabile nei processi tecnologici più vecchi<br>
+        • Aumenta con la miniaturizzazione<br><br>
+        
+        <strong>2. Potenza Dinamica (dominante):</strong><br>
+        P<sub>DIN</sub> = C<sub>L</sub> · V<sub>DD</sub>² · f · α<br>
+        dove:<br>
+        • C<sub>L</sub> = capacità di carico<br>
+        • V<sub>DD</sub> = tensione di alimentazione<br>
+        • f = frequenza di clock<br>
+        • α = activity factor (0-1)<br><br>
+        
+        <strong>3. Potenza di Short-Circuit:</strong><br>
+        • Dovuta alla corrente che scorre quando entrambi i transistor<br>
+          conducono parzialmente durante la transizione<br>
+        • Dipende dal tempo di salita/discesa del segnale
+    </div>
+    
+    <h2>5. Componenti Digitali Combinatori</h2>
+    
+    <h3>5.1 Decoder (Decodificatore)</h3>
+    <div class="info-box">
+        <h4>🔓 Decoder</h4>
+        <p>
+            Un <strong>decoder</strong> è un circuito combinatorio che converte un codice binario di <strong>n bit</strong> in <strong>2<sup>n</sup></strong> linee di uscita, di cui solo una è attiva alla volta.
+        </p>
+        <p><strong>Esempio Decoder 2-to-4:</strong></p>
+        <ul>
+            <li>2 ingressi (A, B)</li>
+            <li>4 uscite (Y0, Y1, Y2, Y3)</li>
+            <li>In base al valore AB, si attiva una sola uscita</li>
+        </ul>
+        <p><strong>Applicazioni:</strong> Selezione di memoria, demultiplexing, controllo di dispositivi</p>
+    </div>
+    
+    <h3>5.2 Encoder (Codificatore)</h3>
+    <div class="info-box">
+        <h4>🔐 Encoder</h4>
+        <p>
+            Un <strong>encoder</strong> esegue l'operazione inversa del decoder: converte <strong>2<sup>n</sup></strong> linee di ingresso in un codice binario di <strong>n bit</strong>.
+        </p>
+        <p><strong>Encoder con priorità:</strong> Quando più ingressi sono attivi, codifica quello con priorità più alta</p>
+        <p><strong>Applicazioni:</strong> Tastiere, compressione dati, interrupt controller</p>
+    </div>
+    
+    <h3>5.3 Multiplexer (MUX)</h3>
+    <div class="info-box">
+        <h4>🔀 Multiplexer</h4>
+        <p>
+            Un <strong>multiplexer</strong> (o <strong>selettore dati</strong>) è un circuito che seleziona uno tra <strong>2<sup>n</sup></strong> ingressi e lo invia all'uscita, in base al valore degli <strong>n bit di selezione</strong>.
+        </p>
+        <p><strong>Esempio MUX 4-to-1:</strong></p>
+        <ul>
+            <li>4 ingressi dati (D0, D1, D2, D3)</li>
+            <li>2 segnali di selezione (S0, S1)</li>
+            <li>1 uscita Y</li>
+        </ul>
+        <p><strong>Funzione:</strong> Y = D<sub>i</sub> dove i è il valore binario di S1S0</p>
+        <p><strong>Applicazioni:</strong> Routing di segnali, implementazione di funzioni logiche, multiplazione nel tempo</p>
+    </div>
+    
+    <h3>5.4 Demultiplexer (DEMUX)</h3>
+    <div class="info-box">
+        <h4>🔀 Demultiplexer</h4>
+        <p>
+            Un <strong>demultiplexer</strong> esegue l'operazione inversa del multiplexer: instrada un singolo ingresso verso una delle <strong>2<sup>n</sup></strong> uscite, selezionata dai bit di selezione.
+        </p>
+        <p><strong>Nota:</strong> Un demultiplexer con ingresso fisso a 1 è equivalente a un decoder!</p>
+        <p><strong>Applicazioni:</strong> Distribuzione di segnali, demultiplazione nel tempo, routing</p>
+    </div>
+    
+    <h2>6. Circuiti Sequenziali</h2>
+    
+    <h3>6.1 Latch SR (Set-Reset)</h3>
+    <div class="logic-box">
+        <h4>🔒 Latch SR</h4>
+        <p>
+            Il <strong>Latch SR</strong> è il più semplice elemento di memoria bistabile. Ha due ingressi (S e R) e due uscite complementari (Q e Q̄).
+        </p>
+        
+        <table>
+            <tr>
+                <th>S</th>
+                <th>R</th>
+                <th>Q<sub>next</sub></th>
+                <th>Azione</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>Q</td>
+                <td>Mantiene stato</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>Reset (azzera)</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>Set (imposta)</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>X</td>
+                <td>Proibito!</td>
+            </tr>
+        </table>
+        
+        <p><strong>Problema:</strong> La condizione S=R=1 è proibita perché porta a uno stato indeterminato</p>
+        <p><strong>Implementazione:</strong> Può essere realizzato con porte NOR o NAND in retroazione</p>
+    </div>
+    
+    <h3>6.2 Flip-Flop JK</h3>
+    <div class="logic-box">
+        <h4>🔄 Flip-Flop JK</h4>
+        <p>
+            Il <strong>Flip-Flop JK</strong> risolve il problema dello stato proibito del Latch SR introducendo uno stato di <strong>toggle</strong> (commutazione).
+        </p>
+        
+        <table>
+            <tr>
+                <th>J</th>
+                <th>K</th>
+                <th>Q<sub>next</sub></th>
+                <th>Azione</th>
+            </tr>
+	    <tr>
+                <td>X</td>
+                <td>X</td>
+                <td>Q</td>
+                <td>Mantiene stato</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>Q</td>
+                <td>Mantiene stato</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>Reset</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>Set</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>Q̄</td>
+                <td>Toggle (inverte)</td>
+            </tr>
+        </table>
+        
+        <p><strong>Equazione caratteristica:</strong> Q<sub>next</sub> = J·Q̄ + K̄·Q</p>
+        <p><strong>Caratteristica principale:</strong> Quando J=K=1, inverte lo stato ad ogni impulso di clock</p>
+    </div>
+    
+    <h3>6.3 Flip-Flop D (Data/Delay)</h3>
+    <div class="logic-box">
+        <h4>💾 Flip-Flop D</h4>
+        <p>
+            Il <strong>Flip-Flop D</strong> è il più usato nella pratica. Ha un solo ingresso dati (D) e memorizza il valore presente su D al fronte di clock.
+        </p>
+        
+        <table>
+            <tr>
+                <th>D</th>
+                <th>Q<sub>next</sub></th>
+                <th>Azione</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>Memorizza 0</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>Memorizza 1</td>
+            </tr>
+        </table>
+        
+        <p><strong>Equazione caratteristica:</strong> Q<sub>next</sub> = D</p>
+        <p><strong>Funzionamento:</strong> Al fronte di clock (salita o discesa), copia il valore di D in Q</p>
+        <p><strong>Applicazioni:</strong> Registri, memorie, pipeline, sincronizzazione segnali</p>
+    </div>
+    
+    <h3>6.4 Flip-Flop T (Toggle)</h3>
+    <div class="logic-box">
+        <h4>🔀 Flip-Flop T</h4>
+        <p>
+            Il <strong>Flip-Flop T</strong> ha un solo ingresso di controllo (T). Quando T=1, inverte lo stato; quando T=0, mantiene lo stato.
+        </p>
+        
+        <table>
+            <tr>
+                <th>T</th>
+                <th>Q<sub>next</sub></th>
+                <th>Azione</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>Q</td>
+                <td>Mantiene stato</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Q̄</td>
+                <td>Toggle (inverte)</td>
+            </tr>
+        </table>
+        
+        <p><strong>Equazione caratteristica:</strong> Q<sub>next</sub> = T·Q̄ + T̄·Q = T ⊕ Q</p>
+        <p><strong>Applicazioni:</strong> Divisori di frequenza, contatori binari</p>
+    </div>
+    
+    <h3>6.5 Registri</h3>
+    <p>
+        Un <strong>registro</strong> è un gruppo di Flip-Flop (tipicamente D) che memorizza un dato multi-bit. I registri possono operare in diverse modalità di trasferimento dati:
+    </p>
+    
+    <h4>SISO (Serial In Serial Out)</h4>
+    <div class="example-box">
+        <h4>📝 Registro SISO</h4>
+        <p><strong>Caratteristiche:</strong></p>
+        <ul>
+            <li>Ingresso seriale (un bit alla volta)</li>
+            <li>Uscita seriale (un bit alla volta)</li>
+            <li>Usato come linea di ritardo</li>
+        </ul>
+        <p><strong>Applicazioni:</strong> Comunicazioni seriali, shift di dati</p>
+    </div>
+    
+    <h4>SIPO (Serial In Parallel Out)</h4>
+    <div class="example-box">
+        <h4>📝 Registro SIPO</h4>
+        <p><strong>Caratteristiche:</strong></p>
+        <ul>
+            <li>Ingresso seriale</li>
+            <li>Uscita parallela (tutti i bit disponibili contemporaneamente)</li>
+            <li>Conversione seriale → parallelo</li>
+        </ul>
+        <p><strong>Applicazioni:</strong> Interfacce seriali, espansione I/O</p>
+    </div>
+    
+    <h4>PISO (Parallel In Serial Out)</h4>
+    <div class="example-box">
+        <h4>📝 Registro PISO</h4>
+        <p><strong>Caratteristiche:</strong></p>
+        <ul>
+            <li>Ingresso parallelo (caricamento simultaneo di tutti i bit)</li>
+            <li>Uscita seriale</li>
+            <li>Conversione parallelo → seriale</li>
+        </ul>
+        <p><strong>Applicazioni:</strong> Trasmissione seriale, compressione dati</p>
+    </div>
+    
+    <h4>PIPO (Parallel In Parallel Out)</h4>
+    <div class="example-box">
+        <h4>📝 Registro PIPO</h4>
+        <p><strong>Caratteristiche:</strong></p>
+        <ul>
+            <li>Ingresso parallelo</li>
+            <li>Uscita parallela</li>
+            <li>Memorizzazione temporanea di dati multi-bit</li>
+        </ul>
+        <p><strong>Applicazioni:</strong> Registri CPU, buffer dati, latch di uscita</p>
+    </div>
+    
+    <h3>6.6 Contatori</h3>
+    <p>
+        I <strong>contatori</strong> sono circuiti sequenziali che generano una sequenza di stati predeterminata, tipicamente la sequenza dei numeri binari.
+    </p>
+    
+    <h4>Contatori a Cascata (Asincroni o Ripple)</h4>
+    <div class="info-box">
+        <h4>⛓️ Contatore Asincrono</h4>
+        <p><strong>Struttura:</strong> Flip-Flop T connessi in cascata, dove l'uscita di ogni stadio pilota il clock del successivo</p>
+        <p><strong>Vantaggi:</strong></p>
+        <ul>
+            <li>Semplice da implementare</li>
+            <li>Pochi collegamenti</li>
+        </ul>
+        <p><strong>Svantaggi:</strong></p>
+        <ul>
+            <li>Ritardo di propagazione cumulativo (ritardo "ripple")</li>
+            <li>Frequenza massima limitata</li>
+            <li>Output non cambia simultaneamente</li>
+        </ul>
+    </div>
+    
+    <h4>Contatori Sincroni</h4>
+    <div class="info-box">
+        <h4>⚡ Contatore Sincrono</h4>
+        <p><strong>Struttura:</strong> Tutti i Flip-Flop sono pilotati dallo stesso segnale di clock</p>
+        <p><strong>Vantaggi:</strong></p>
+        <ul>
+            <li>Tutti gli output cambiano simultaneamente</li>
+            <li>Frequenza massima più elevata</li>
+            <li>Ritardo fisso (un solo stadio)</li>
+            <li>Migliore per applicazioni ad alta velocità</li>
+        </ul>
+        <p><strong>Svantaggi:</strong></p>
+        <ul>
+            <li>Logica combinatoria più complessa</li>
+            <li>Maggiore consumo di potenza</li>
+        </ul>
+    </div>
+    
+    <h3>6.7 Resistenze di Pull-Up e Pull-Down</h3>
+    <div class="info-box">
+        <h4>🔌 Pull-Up e Pull-Down</h4>
+        <p>
+            Le <strong>resistenze di pull-up e pull-down</strong> sono utilizzate per garantire uno stato logico definito quando un ingresso è lasciato flottante (non connesso).
+        </p>
+        
+        <p><strong>Resistenza di Pull-Up:</strong></p>
+        <ul>
+            <li>Collega l'ingresso a V<sub>DD</sub> attraverso una resistenza</li>
+            <li>Quando l'ingresso è disconnesso → stato logico 1</li>
+            <li>Valore tipico: 1kΩ - 100kΩ</li>
+        </ul>
+        
+        <p><strong>Resistenza di Pull-Down:</strong></p>
+        <ul>
+            <li>Collega l'ingresso a massa attraverso una resistenza</li>
+            <li>Quando l'ingresso è disconnesso → stato logico 0</li>
+            <li>Valore tipico: 1kΩ - 100kΩ</li>
+        </ul>
+        
+        <p><strong>Scopo:</strong> Prevenire stati indeterminati, ridurre il rumore, garantire funzionamento affidabile</p>
+    </div>
+    
+    <h2>7. Multivibratori e Timer NE555</h2>
+    
+    <h3>7.1 Multivibratori</h3>
+    <p>
+        I <strong>multivibratori</strong> sono circuiti oscillatori che generano forme d'onda non sinusoidali. Esistono tre tipi:
+    </p>
+    
+    <div class="logic-box">
+        <h4>🔄 Tipi di Multivibratori</h4>
+        <ul>
+            <li><strong>Astabile:</strong> Non ha stati stabili, oscilla continuamente tra due stati (genera onda quadra)</li>
+            <li><strong>Monostabile:</strong> Ha uno stato stabile, genera un impulso di durata prefissata quando triggerato</li>
+            <li><strong>Bistabile:</strong> Ha due stati stabili (è un Latch o Flip-Flop)</li>
+        </ul>
+    </div>
+    
+    <h3>7.2 Timer NE555</h3>
+    <p>
+        Il <strong>NE555</strong> è un circuito integrato timer versatile, uno dei chip più popolari mai prodotti. Può essere configurato in modalità monostabile o astabile.
+    </p>
+    
+    <h4>NE555 in Configurazione Monostabile</h4>
+    <div class="example-box">
+        <h4>⏱️ Monostabile</h4>
+        <p>
+            In modalità <strong>monostabile</strong>, il NE555 genera un singolo impulso di durata controllata quando riceve un trigger.
+        </p>
+        
+        <div class="formula-box">
+            <strong>Durata dell'impulso:</strong><br><br>
+            T = 1,1 · R · C<br><br>
+            dove:<br>
+            • R = resistenza in Ω<br>
+            • C = capacità in F<br>
+            • T = durata impulso in secondi
+        </div>
+        
+        <p><strong>Applicazioni:</strong> Temporizzatori, ritardatori, generatori di impulsi calibrati</p>
+    </div>
+    
+    <h4>NE555 in Configurazione Astabile</h4>
+    <div class="example-box">
+        <h4>🔁 Astabile</h4>
+        <p>
+            In modalità <strong>astabile</strong>, il NE555 genera continuamente un'onda quadra oscillante.
+        </p>
+        
+        <div class="formula-box">
+            <strong>Frequenza di oscillazione:</strong><br><br>
+            f = 1,44 / [(R<sub>A</sub> + 2R<sub>B</sub>) · C]<br><br>
+            
+            <strong>Duty cycle:</strong><br><br>
+            D = R<sub>B</sub> / (R<sub>A</sub> + 2R<sub>B</sub>)<br><br>
+            
+            <strong>Tempi:</strong><br>
+            • T<sub>HIGH</sub> = 0,693 · (R<sub>A</sub> + R<sub>B</sub>) · C<br>
+            • T<sub>LOW</sub> = 0,693 · R<sub>B</sub> · C<br>
+            • T<sub>TOTALE</sub> = T<sub>HIGH</sub> + T<sub>LOW</sub>
+        </div>
+        
+        <p><strong>Applicazioni:</strong> Oscillatori, generatori di clock, lampeggiatori LED, PWM</p>
+    </div>
+    
+    <h2>8. Conversione Analogico-Digitale (A/D)</h2>
+    
+    <h3>8.1 Generalità sulla Conversione A/D</h3>
+    <p>
+        La <strong>conversione analogico-digitale (ADC)</strong> è il processo di trasformazione di un segnale analogico continuo in una rappresentazione digitale discreta. Questo processo comporta tre operazioni fondamentali:
+    </p>
+    <ul>
+        <li><strong>Campionamento:</strong> Prelievo di valori del segnale a istanti discreti nel tempo</li>
+        <li><strong>Quantizzazione:</strong> Approssimazione del valore campionato al livello discreto più vicino</li>
+        <li><strong>Codifica:</strong> Rappresentazione del livello quantizzato in formato binario</li>
+    </ul>
+    
+    <h3>8.2 Sample and Hold Amplifier (SHA)</h3>
+    <p>
+        Il circuito <strong>Sample and Hold</strong> (campiona e mantieni) è essenziale per "congelare" il valore del segnale analogico durante la conversione, evitando che cambi mentre l'ADC sta lavorando.
+    </p>
+    
+    <div class="info-box">
+        <h4>🎯 Funzionamento SHA</h4>
+        <p><strong>Fase di SAMPLE (campionamento):</strong></p>
+        <ul>
+            <li>L'interruttore si chiude</li>
+            <li>Il condensatore si carica al valore del segnale di ingresso</li>
+            <li>L'uscita segue l'ingresso</li>
+        </ul>
+        
+        <p><strong>Fase di HOLD (mantenimento):</strong></p>
+        <ul>
+            <li>L'interruttore si apre</li>
+            <li>Il condensatore mantiene la carica (e quindi la tensione)</li>
+            <li>L'uscita rimane costante mentre l'ADC effettua la conversione</li>
+        </ul>
+    </div>
+    
+    <h4>Prestazioni di un SHA</h4>
+    <div class="formula-box">
+        <strong>PARAMETRI CHIAVE:</strong><br><br>
+        
+        <strong>1. Acquisition Time (tempo di acquisizione):</strong><br>
+        • Tempo necessario per caricare il condensatore<br>
+        • Dipende dalla costante di tempo RC<br><br>
+        
+        <strong>2. Aperture Time (tempo di apertura):</strong><br>
+        • Incertezza nel momento esatto di apertura dell'interruttore<br>
+        • Introduce jitter nel campionamento<br><br>
+        
+        <strong>3. Droop Rate (tasso di scarica):</strong><br>
+        • Velocità di scarica del condensatore durante la fase di hold<br>
+        • Dovuta a correnti di leakage<br>
+        • Deve essere molto piccola<br><br>
+        
+        <strong>4. Feedthrough:</strong><br>
+        • Accoppiamento capacitivo tra ingresso e uscita<br>
+        • Può causare variazioni indesiderate durante hold
+    </div>
+    
+    <h3>8.3 ADC Parallelo (Flash Converter)</h3>
+    <p>
+        L'<strong>ADC parallelo</strong> o <strong>flash converter</strong> è il tipo di convertitore più veloce, ma richiede molti componenti hardware.
+    </p>
+    
+    <div class="logic-box">
+        <h4>⚡ ADC Flash - Come Lavora</h4>
+        <p><strong>Architettura:</strong></p>
+        <ul>
+            <li><strong>2<sup>n</sup> - 1 comparatori</strong> (per un ADC a n bit)</li>
+            <li><strong>Scala di resistenze</strong> che generano le tensioni di riferimento</li>
+            <li><strong>Encoder</strong> che converte l'uscita dei comparatori in codice binario</li>
+        </ul>
+        
+        <p><strong>Funzionamento:</strong></p>
+        <ol>
+            <li>Il segnale di ingresso V<sub>IN</sub> viene confrontato simultaneamente con tutti i livelli di riferimento</li>
+            <li>Ogni comparatore produce 1 se V<sub>IN</sub> > V<sub>REF</sub> del comparatore, altrimenti 0</li>
+            <li>L'encoder converte il codice termometrico dei comparatori in codice binario</li>
+        </ol>
+    </div>
+    
+    <h4>Elementi Circuitali dell'ADC Flash</h4>
+    <ul>
+        <li><strong>Tensione di riferimento (V<sub>REF</sub>):</strong> Definisce il fondo scala</li>
+        <li><strong>
+Partitore resistivo (R):</strong> Genera 2<sup>n</sup> - 1 tensioni di soglia equispaziate</li>
+<li><strong>Comparatori:</strong> Confrontano V<sub>IN</sub> con ogni soglia</li>
+<li><strong>Encoder (o Priority Encoder):</strong> Converte l'uscita dei comparatori in codice binario</li>
+</ul>
+    <h4>Parametri e Prestazioni</h4>
+    <div class="formula-box">
+        <strong>FORMULE FONDAMENTALI ADC:</strong><br><br>
+        
+        <strong>Quanto (o Risoluzione o LSB):</strong><br>
+        Q = V<sub>FS</sub> / 2<sup>n</sup> = V<sub>IN,min</sub><br>
+        • Minima variazione di tensione rilevabile<br>
+        • Determina l'errore di quantizzazione<br><br>
+        
+        <strong>Relazione tensione-codice:</strong><br>
+        N = V<sub>IN</sub> · 2<sup>n</sup> / V<sub>FS</sub><br>
+        oppure:<br>
+        V<sub>IN</sub> = N · V<sub>FS</sub> / 2<sup>n</sup><br><br>
+        
+        <strong>Tensione massima rappresentabile:</strong><br>
+        V<sub>IN,max</sub> = V<sub>FS</sub> - Q = V<sub>FS</sub> - V<sub>FS</sub>/2<sup>n</sup><br>
+        • Il codice massimo (tutti 1) rappresenta V<sub>FS</sub> - Q<br>
+        • Non si può rappresentare esattamente V<sub>FS</sub>
+    </div>
+    
+    <h4>Vantaggi e Limitazioni del Flash ADC</h4>
+    <div class="warning-box">
+        <h4>⚖️ Pro e Contro</h4>
+        <p><strong>✅ Vantaggi:</strong></p>
+        <ul>
+            <li>Velocissimo (conversione in un solo ciclo di clock)</li>
+            <li>Tempo di conversione costante</li>
+            <li>Ideale per applicazioni ad altissima velocità</li>
+        </ul>
+        
+        <p><strong>❌ Limitazioni:</strong></p>
+        <ul>
+            <li>Hardware molto complesso: servono 2<sup>n</sup> - 1 comparatori</li>
+            <li>Alto consumo di potenza</li>
+            <li>Costo elevato</li>
+            <li>Pratico solo per basse risoluzioni (6-8 bit tipicamente)</li>
+            <li>Esempio: ADC a 8 bit richiede 255 comparatori!</li>
+        </ul>
+    </div>
+    
+    <h3>8.4 Campionamento e Teorema di Shannon</h3>
+    <p>
+        Il <strong>campionamento</strong> è il processo di conversione di un segnale continuo nel tempo in una sequenza discreta di valori. Affinché il campionamento sia corretto e il segnale originale possa essere ricostruito, deve essere rispettato il <strong>teorema di Shannon-Nyquist</strong>.
+    </p>
+    
+    <div class="warning-box">
+        <h4>📡 Teorema di Shannon-Nyquist</h4>
+        <div class="formula-box">
+            <strong>f<sub>S</sub> ≥ 2 · f<sub>MAX</sub></strong><br><br>
+            dove:<br>
+            • f<sub>S</sub> = frequenza di campionamento<br>
+            • f<sub>MAX</sub> = massima frequenza contenuta nel segnale
+        </div>
+        
+        <p><strong>Significato:</strong> La frequenza di campionamento deve essere almeno il doppio della massima frequenza del segnale per poterlo ricostruire senza perdita di informazione.</p>
+        
+        <p><strong>Conseguenze:</strong></p>
+        <ul>
+            <li>Se f<sub>S</sub> < 2·f<sub>MAX</sub> → si verifica <strong>aliasing</strong> (sovrapposizione spettrale)</li>
+            <li>L'aliasing introduce distorsione irreversibile</li>
+            <li>Nella pratica si usa f<sub>S</sub> = (2,5-5) · f<sub>MAX</sub> per margine di sicurezza</li>
+        </ul>
+    </div>
+    
+    <h3>8.5 Requisiti del Sample and Hold</h3>
+    <p>
+        Per garantire un campionamento corretto con un ADC a n bit, il circuito Sample and Hold deve soddisfare requisiti stringenti di velocità.
+    </p>
+    
+    <div class="formula-box">
+        <strong>VINCOLI TEMPORALI SHA:</strong><br><br>
+        
+        <strong>Massima velocità di variazione:</strong><br>
+        (dV/dt)<sub>MAX</sub> ≤ V<sub>FS</sub> / (2<sup>n</sup> · T<sub>C</sub>) = Q / T<sub>C</sub><br><br>
+        
+        dove:<br>
+        • T<sub>C</sub> = tempo di conversione dell'ADC<br>
+        • Q = quanto (risoluzione)<br>
+        • V<sub>FS</sub> = tensione di fondo scala<br><br>
+        
+        <strong>Per segnali sinusoidali:</strong><br>
+        V<sub>IN</sub>(t) = V<sub>P</sub> · sin(ωt)<br>
+        dV/dt = ω · V<sub>P</sub> · cos(ωt)<br>
+        (dV/dt)<sub>MAX</sub> = ω · V<sub>P</sub><br><br>
+        
+        <strong>Quindi:</strong><br>
+        ω · V<sub>P</sub> ≤ V<sub>FS</sub> / (2<sup>n</sup> · T<sub>C</sub>)<br><br>
+        
+        <strong>Espresso in frequenza:</strong><br>
+        f ≤ 1 / (2<sup>n</sup> · π · T<sub>C</sub>)<br><br>
+        
+        Questo definisce la <strong>massima frequenza</strong> del segnale che può essere convertito accuratamente.
+    </div>
+    
+    <h2>9. Conversione Digitale-Analogica (DAC)</h2>
+    
+    <h3>9.1 Principio della Conversione D/A</h3>
+    <p>
+        Un <strong>convertitore digitale-analogico (DAC)</strong> trasforma un codice binario in una tensione (o corrente) analogica proporzionale. È l'operazione inversa dell'ADC.
+    </p>
+    
+    <div class="formula-box">
+        <strong>RELAZIONE FONDAMENTALE DAC:</strong><br><br>
+        
+        <strong>Numero decimale da binario:</strong><br>
+        N = B<sub>n-1</sub>·2<sup>n-1</sup> + B<sub>n-2</sub>·2<sup>n-2</sup> + ... + B<sub>1</sub>·2<sup>1</sup> + B<sub>0</sub>·2<sup>0</sup><br><br>
+        
+        Notazione compatta:<br>
+        N = Σ (i=0 a n-1) B<sub>i</sub> · 2<sup>i</sup><br><br>
+        
+        dove B<sub>i</sub> ∈ {0, 1} è l'i-esimo bit
+    </div>
+    
+    <div class="formula-box">
+        <strong>TENSIONE DI USCITA DAC:</strong><br><br>
+        
+        <strong>Forma generale:</strong><br>
+        V<sub>O</sub> = K · N<br><br>
+        
+        dove K è una costante di proporzionalità<br><br>
+        
+        <strong>Espansione:</strong><br>
+        V<sub>O</sub> = K · (B<sub>n-1</sub>·2<sup>n-1</sup> + ... + B<sub>1</sub>·2<sup>1</sup> + B<sub>0</sub>·2<sup>0</sup>)<br><br>
+        
+        <strong>Forma normalizzata (frazione):</strong><br>
+        V<sub>O</sub> = K · 2<sup>n</sup> · (B<sub>n-1</sub>/2 + B<sub>n-2</sub>/4 + ... + B<sub>1</sub>/2<sup>n-1</sup> + B<sub>0</sub>/2<sup>n</sup>)<br><br>
+        
+        Dove K·2<sup>n</sup> = V<sub>FS</sub> (tensione di fondo scala)
+    </div>
+    
+    <h3>9.2 DAC a Resistori Pesati</h3>
+    <p>
+        Il <strong>DAC a resistori pesati</strong> è una delle implementazioni più semplici di un convertitore D/A. Può essere costruito con un amplificatore operazionale, n deviatori (uno per bit) e n+1 resistenze.
+    </p>
+    
+    <div class="example-box">
+        <h4>🔧 Struttura DAC a Resistori Pesati (4 bit)</h4>
+        <p><strong>Componenti:</strong></p>
+        <ul>
+            <li>4 bit di entrata: B<sub>0</sub>, B<sub>1</sub>, B<sub>2</sub>, B<sub>3</sub></li>
+            <li>4 deviatori analogici comandati dai bit</li>
+            <li>5 resistenze dimensionate in rapporto binario</li>
+            <li>1 amplificatore operazionale in configurazione invertente</li>
+            <li>Tensione di riferimento V<sub>REF</sub></li>
+        </ul>
+        
+        <p><strong>Funzionamento dei deviatori:</strong></p>
+        <ul>
+            <li>Se B<sub>i</sub> = 1 → deviatore collegato a V<sub>REF</sub></li>
+            <li>Se B<sub>i</sub> = 0 → deviatore collegato a massa</li>
+        </ul>
+        
+        <p><strong>Dimensionamento resistenze:</strong></p>
+        <ul>
+            <li>R<sub>3</sub> = 2R (bit più significativo, MSB)</li>
+            <li>R<sub>2</sub> = 4R</li>
+            <li>R<sub>1</sub> = 8R</li>
+            <li>R<sub>0</sub> = 16R (bit meno significativo, LSB)</li>
+            <li>R<sub>feedback</sub> = R</li>
+        </ul>
+    </div>
+    
+    <div class="formula-box">
+        <strong>CORRENTI NEI RAMI (DAC 4 bit):</strong><br><br>
+        
+        Se B<sub>i</sub> = 1, nella resistenza circola corrente:<br><br>
+        
+        • I<sub>3</sub> = V<sub>REF</sub> / 2R (se B<sub>3</sub> = 1)<br>
+        • I<sub>2</sub> = V<sub>REF</sub> / 4R (se B<sub>2</sub> = 1)<br>
+        • I<sub>1</sub> = V<sub>REF</sub> / 8R (se B<sub>1</sub> = 1)<br>
+        • I<sub>0</sub> = V<sub>REF</sub> / 16R (se B<sub>0</sub> = 1)<br><br>
+        
+        <strong>Corrente totale:</strong><br>
+        I<sub>O</sub> = (V<sub>REF</sub>/2R)·B<sub>3</sub> + (V<sub>REF</sub>/4R)·B<sub>2</sub> + (V<sub>REF</sub>/8R)·B<sub>1</sub> + (V<sub>REF</sub>/16R)·B<sub>0</sub><br><br>
+        
+        I<sub>O</sub> = (V<sub>REF</sub>/R) · (B<sub>3</sub>/2 + B<sub>2</sub>/4 + B<sub>1</sub>/8 + B<sub>0</sub>/16)<br><br>
+        
+        <strong>Tensione di uscita (a meno del segno):</strong><br>
+        V<sub>O</sub> = -R · I<sub>O</sub><br><br>
+        
+        V<sub>O</sub> = -V<sub>REF</sub> · (B<sub>3</sub>/2 + B<sub>2</sub>/4 + B<sub>1</sub>/8 + B<sub>0</sub>/16)
+    </div>
+    
+    <h3>9.3 Analisi Casi Particolari del DAC</h3>
+    
+    <div class="formula-box">
+        <strong>CASO A] Tutti i bit a 0:</strong><br>
+        B<sub>0</sub> = B<sub>1</sub> = B<sub>2</sub> = B<sub>n-1</sub> = 0<br>
+        → V<sub>O</sub> = 0<br><br>
+        
+        <strong>CASO B] Solo LSB (bit meno significativo) a 1:</strong><br>
+        B<sub>1</sub> = B<sub>2</sub> = ... = B<sub>n-1</sub> = 0 e B<sub>0</sub> = 1<br>
+        → V<sub>O,min</sub> = V<sub>FS</sub> / 2<sup>n</sup> = Q<br><br>
+        
+        Dove Q è il <strong>quanto</strong> (o passo o risoluzione) del DAC<br><br>
+        
+        <strong>CASO C] Solo MSB (bit più significativo) a 1:</strong><br>
+        B<sub>n-1</sub> = 1 e tutti gli altri a 0<br>
+        → V<sub>O</sub> = V<sub>FS</sub> · (B<sub>n-1</sub>/2 + 0 + ... + 0)<br>
+        → V<sub>O</sub> = V<sub>FS</sub> / 2<br><br>
+        
+        <strong>CASO D] Tutti i bit a 1:</strong><br>
+        Tutti i bit = 1<br>
+        → V<sub>O</sub> = K · N = K · (2<sup>n-1</sup> + 2<sup>n-2</sup> + ... + 2<sup>1</sup> + 2<sup>0</sup>)<br>
+        → V<sub>O</sub> = K · (2<sup>n</sup> - 1)<br>
+        → V<sub>O</sub> = (K · 2<sup>n</sup>/2<sup>n</sup>) · (2<sup>n</sup> - 1)<br>
+        → V<sub>O,max</sub> = V<sub>FS</sub> - V<sub>FS</sub>/2<sup>n</sup> = V<sub>FS</sub> - Q<br><br>
+        
+        La massima tensione è sempre <strong>un quanto</strong> inferiore al fondo scala!
+    </div>
+    
+    <div class="formula-box">
+        <strong>RELAZIONI GENERALI:</strong><br><br>
+        
+        V<sub>O</sub> · 2<sup>n</sup> = V<sub>FS</sub> · (2<sup>n</sup> - 1)<br><br>
+        
+        V<sub>O</sub> · 2<sup>n</sup> = V<sub>FS</sub> · N<br><br>
+        
+        Oppure:<br>
+        V<sub>FS</sub> · N = V<sub>O</sub> · 2<sup>n</sup>
+    </div>
+    
+    <h4>Svantaggi del DAC a Resistori Pesati</h4>
+    <div class="warning-box">
+        <h4>⚠️ Problemi Pratici</h4>
+        <ul>
+            <li><strong>Ampio range di valori resistivi:</strong> Per un DAC a 16 bit, il rapporto tra R<sub>MAX</sub> e R<sub>MIN</sub> è 2<sup>15</sup> = 32768:1</li>
+            <li><strong>Tolleranze:</strong> Difficile ottenere rapporti precisi con componenti reali</li>
+            <li><strong>Deriva termica:</strong> I coefficienti termici diversi causano errori</li>
+            <li><strong>Praticità limitata:</strong> Usato solo per basse risoluzioni (4-6 bit)</li>
+        </ul>
+        <p><strong>Soluzione:</strong> Per risoluzioni maggiori si usa il <strong>DAC con rete R-2R</strong></p>
+    </div>
+    
+    <h3>9.4 DAC con Rete R-2R</h3>
+    <p>
+        Il <strong>DAC con scala R-2R</strong> risolve i problemi del DAC a resistori pesati utilizzando solo <strong>due valori di resistenza</strong>: R e 2R.
+    </p>
+    
+    <div class="info-box">
+        <h4>✅ Vantaggi della Rete R-2R</h4>
+        <ul>
+            <li><strong>Solo 2 valori di resistenza:</strong> R e 2R (facilmente abbinabili)</li>
+            <li><strong>Precisione elevata:</strong> Facile ottenere rapporti 2:1 precisi</li>
+            <li><strong>Comportamento termico migliore:</strong> Resistenze simili hanno derive termiche simili</li>
+            <li><strong>Scalabile:</strong> Può essere facilmente esteso a qualsiasi numero di bit</li>
+            <li><strong>Integrazione:</strong> Ideale per realizzazione in circuiti integrati</li>
+        </ul>
+        
+        <p><strong>Principio:</strong> La rete crea una divisione binaria della corrente in ogni nodo, mantenendo l'impedenza vista da ogni deviatore costante e uguale a 2R</p>
+    </div>
+    
+    <h2>10. Riepilogo Formule Essenziali</h2>
+    
+    <div class="formula-box">
+        <strong>CONVERSIONE A/D:</strong><br><br>
+        
+        • Quanto: Q = V<sub>FS</sub> / 2<sup>n</sup><br>
+        • Codice digitale: N = V<sub>IN</sub> · 2<sup>n</sup> / V<sub>FS</sub><br>
+        • V<sub>IN,max</sub> = V<sub>FS</sub> - Q<br>
+        • Teorema Shannon: f<sub>S</sub> ≥ 2 · f<sub>MAX</sub><br>
+        • Vincolo SHA: (dV/dt)<sub>MAX</sub> ≤ Q / T<sub>C</sub><br>
+        • Per sinusoidi: f ≤ 1 / (2<sup>n</sup> · π · T<sub>C</sub>)<br><br>
+        
+        <strong>CONVERSIONE D/A:</strong><br><br>
+        
+        • V<sub>O</sub> = K · N<br>
+        • V<sub>O</sub> = V<sub>FS</sub> · N / 2<sup>n</sup><br>
+        • V<sub>O,min</sub> = Q = V<sub>FS</sub> / 2<sup>n</sup><br>
+        • V<sub>O,max</sub> = V<sub>FS</sub> - Q<br>
+        • Relazione generale: V<sub>FS</sub> · N = V<sub>O</sub> · 2<sup>n</sup>
+    </div>
+    
+    <div class="info-box">
+        <h4>🎯 Concetti Chiave da Ricordare</h4>
+        <ul>
+            <li>L'algebra di Boole opera solo con valori 0 e 1</li>
+            <li>Le porte NAND e NOR sono universali</li>
+            <li>I circuiti combinatori non hanno memoria, i sequenziali sì</li>
+            <li>La tecnologia CMOS ha basso consumo statico</li>
+            <li>PUN e PDN devono essere complementari</li>
+            <li>Il teorema di Shannon è fondamentale per il campionamento</li>
+            <li>Il quanto Q rappresenta la risoluzione del convertitore</li>
+            <li>Il valore massimo rappresentabile è sempre V<sub>FS</sub> - Q</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html></parameter>
