@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Dispense Facoltà Ingegneria Robotica - UniPa</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    background: #003366;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.section {
+    display: none;
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+}
+
+.materia {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.missing {
+    color: #a00;
+    font-style: italic;
+}
+</style>
+
+<script>
+function toggle(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === "none" ? "block" : "none";
+}
+</script>
+</head>
+
+<body>
+
+<h1>Dispense Facoltà Ingegneria Robotica – UniPa<br>
+<small>Kevin Petrone</small></h1>
+
+<!-- ================= 1 ANNO ================= -->
+<h2 onclick="toggle('anno1')">📘 1° Anno</h2>
+<div id="anno1" class="section">
+
+<div class="materia">
+<b>Analisi 1</b><br>
+<a href="analisi1.html"><button>HTML</button></a>
+<a href="analisi1.pdf"><button>PDF</button></a>
+</div>
+
+<div class="materia">
+<b>Analisi 2</b><br>
+<span class="missing">Molto probabilmente devo ancora darmela 😅</span>
+</div>
+
+<div class="materia">
+<b>Reti Logiche</b><br>
+<a href="reti_logiche.pdf"><button>PDF</button></a>
+</div>
+
+<div class="materia">
+<b>Programmazione C</b><br>
+<a href="prog_c.html"><button>HTML</button></a>
+</div>
+
+<div class="materia">
+<b>Fisica I</b><br>
+<a href="#"><button disabled>PDF</button></a>
+<span class="missing">Se non hai trovato nulla, o è easy, o non ho fatto nulla 😎</span>
+</div>
+
+<div class="materia">
+<b>Geometria</b><br>
+<a href="geometria.pdf"><button>PDF</button></a>
+</div>
+
+<div class="materia">
+<b>Modellazione e Visualizzazione per la Robotica</b><br>
+<span class="missing">Work in progress 🤖</span>
+</div>
+
+</div>
+
+<!-- ================= 2 ANNO ================= -->
+<h2 onclick="toggle('anno2')">📗 2° Anno</h2>
+<div id="anno2" class="section">
+
+<div class="materia"><b>Algoritmi e Strutture Dati</b><br>
+<a href="#"><button disabled>PDF</button></a>
+<span class="missing">Molto probabilmente devo ancora darmela</span>
+</div>
+
+<div class="materia"><b>Controlli Automatici</b><br>
+<a href="controlli.pdf"><button>PDF</button></a>
+</div>
+
+<div class="materia"><b>Elettrotecnica</b><br>
+<a href="#"><button disabled>PDF</button></a>
+<span class="missing">Ancora nulla ⚡</span>
+</div>
+
+<div class="materia"><b>Fisica II</b><br>
+<a href="#"><button disabled>PDF</button></a>
+</div>
+
+<div class="materia"><b>Meccanica Razionale</b><br>
+<a href="#"><button disabled>PDF</button></a>
+</div>
+
+<div class="materia"><b>Meccanica dei Robot</b><br>
+<a href="meccanica_robot.pdf"><button>PDF</button></a>
+</div>
+
+<div class="materia"><b>Macchine Elettriche</b><br>
+<span class="missing">Easy? No. Fatta? Nemmeno.</span>
+</div>
+
+<div class="materia"><b>Programmazione di Robot – Sistemi Operativi</b><br>
+<a href="robot_os.html"><button>HTML</button></a>
+</div>
+
+<div class="materia"><b>Programmazione di Robot – Sistemi Software</b><br>
+<a href="robot_sw.html"><button>HTML</button></a>
+</div>
+
+<div class="materia"><b>Reti Wireless per la Robotica</b><br>
+<a href="#"><button disabled>PDF</button></a>
+</div>
+
+</div>
+
+<!-- ================= 3 ANNO ================= -->
+<h2 onclick="toggle('anno3')">📙 3° Anno</h2>
+<div id="anno3" class="section">
+
+<div class="materia"><b>Applicazioni di Robotica in Ambito Manifatturiero</b><br>
+<a href="#"><button disabled>PDF</button></a>
+</div>
+
+<div class="materia"><b>Elettronica per i Sistemi Robotici</b><br>
+<a href="#"><button disabled>PDF</button></a>
+</div>
+
+<div class="materia"><b>Fondamenti di Elettronica</b><br>
+<span class="missing">Non pervenuta 🔌</span>
+</div>
+
+<div class="materia"><b>Intelligenza Artificiale per la Robotica</b><br>
+<a href="ai_robotica.pdf"><button>PDF</button></a>
+</div>
+
+<div class="materia"><b>Reti e Cyber-Sicurezza</b><br>
+<a href="#"><button disabled>PDF</button></a>
+</div>
+
+<div class="materia"><b>Sistemi Robotici</b><br>
+<a href="sistemi_robotici.html"><button>HTML</button></a>
+</div>
+
+</div>
+
+</body>
+</html>
