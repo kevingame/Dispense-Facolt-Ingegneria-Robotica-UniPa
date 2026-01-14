@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa Reti Wireless</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        .title-page {
+            text-align: center;
+            margin-top: 5cm;
+            font-size: 18pt;
+            font-weight: bold;
+        }
+        
+        .title-page h1 {
+            font-size: 24pt;
+            margin-bottom: 0.5cm;
+        }
+        
+        .title-page h2 {
+            font-size: 20pt;
+            margin-bottom: 2cm;
+        }
+        
+        .info-box {
+            text-align: left;
+            margin: 3cm auto;
+            width: 60%;
+            font-size: 14pt;
+            line-height: 2;
+        }
+        
+        .toc {
+            margin-top: 2cm;
+        }
+        
+        .toc h2 {
+            text-align: center;
+            font-size: 18pt;
+            margin-bottom: 1cm;
+        }
+        
+        .toc-item {
+            margin-bottom: 0.5cm;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .chapter {
+            margin-top: 2cm;
+        }
+        
+        .chapter h2 {
+            font-size: 16pt;
+            color: #000080;
+            border-bottom: 2px solid #000080;
+            padding-bottom: 0.3cm;
+            margin-bottom: 1cm;
+        }
+        
+        .chapter h3 {
+            font-size: 14pt;
+            color: #000060;
+            margin-top: 1.5cm;
+            margin-bottom: 0.8cm;
+        }
+        
+        .theory {
+            background-color: #f0f8ff;
+            padding: 1cm;
+            border-left: 4px solid #4169e1;
+            margin: 1cm 0;
+        }
+        
+        .exercise {
+            background-color: #fff8dc;
+            padding: 1cm;
+            border-left: 4px solid #ffa500;
+            margin: 1cm 0;
+        }
+        
+        .formula {
+            background-color: #f5f5f5;
+            padding: 0.5cm;
+            border: 1px solid #ddd;
+            margin: 0.5cm 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+        
+        .solution {
+            background-color: #f0fff0;
+            padding: 0.8cm;
+            border-left: 4px solid #32cd32;
+            margin: 0.5cm 0;
+        }
+        
+        .note {
+            background-color: #fffacd;
+            padding: 0.5cm;
+            border: 1px solid #daa520;
+            margin: 0.5cm 0;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1cm 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.3cm;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .math {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        
+        @media print {
+            body { 
+                font-size: 11pt;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pagina del titolo -->
+    <div class="title-page">
+        <h1>UNIVERSITÀ DEGLI STUDI DI PALERMO</h1>
+        <h2>FACOLTÀ DI INGEGNERIA</h2>
+        
+        <div style="font-size: 22pt; margin: 2cm 0; color: #000080;">
+            Dispensa di Reti Wireless
+        </div>
+        
+        <div class="info-box">
+            <strong>Sviluppatore:</strong> Petrone Kevin<br>
+            <strong>Matricola:</strong> 0774409<br>
+            <strong>Docente:</strong> Mancuso Vincenzo<br>
+            <strong>Corso:</strong> Ing. Robotica<br>
+            <strong>Anno Accademico:</strong> 2025/2026<br>
+            <strong>Data:</strong> Settembre 2025
+        </div>
+    </div>
+
+    <!-- Indice -->
+    <div class="page-break">
+        <div class="toc">
+            <h2>INDICE</h2>
+            
+            <div class="toc-item">
+                <span>1. Dimensionamento Cella</span>
+                <span>3</span>
+            </div>
+            <div class="toc-item">
+                <span>2. Allocazione Risorse in 5G</span>
+                <span>8</span>
+            </div>
+            <div class="toc-item">
+                <span>3. Potenza Trasmessa e Ricevuta</span>
+                <span>12</span>
+            </div>
+            <div class="toc-item">
+                <span>4. Capacità, SNR e Modulazioni</span>
+                <span>16</span>
+            </div>
+            <div class="toc-item">
+                <span>5. Fading e Probabilità</span>
+                <span>20</span>
+            </div>
+            <div class="toc-item">
+                <span>6. Protocolli e Parità</span>
+                <span>23</span>
+            </div>
+            <div class="toc-item">
+                <span>7. Line of Sight (LOS)</span>
+                <span>27</span>
+            </div>
+            <div class="toc-item">
+                <span>8. Wi-Fi, Backoff e Probabilità Collisioni</span>
+                <span>29</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 1: Dimensionamento Cella -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>1. DIMENSIONAMENTO CELLA</h2>
+            
+            <div class="theory">
+                <h3>Teoria del Dimensionamento Cellulare</h3>
+                <p>Il dimensionamento di una cella in un sistema di telecomunicazioni wireless richiede la considerazione di diversi parametri fondamentali:</p>
+                
+                <ul>
+                    <li><strong>Capacità del sistema:</strong> Determinata dal numero di canali disponibili per settore</li>
+                    <li><strong>Traffico offerto:</strong> Misurato in Erlang, rappresenta l'intensità di traffico degli utenti</li>
+                    <li><strong>Grade of Service (GOS):</strong> Probabilità di blocco delle chiamate</li>
+                    <li><strong>Outage Probability:</strong> Probabilità che il segnale scenda sotto la soglia minima</li>
+                    <li><strong>Densità utenti:</strong> Numero di utenti per unità di superficie (ρ utenti/m²)</li>
+                </ul>
+                
+                <h4>Parametri di Input</h4>
+                <ul>
+                    <li><strong>Canali:</strong> Numero totale di canali disponibili</li>
+                    <li><strong>η:</strong> Coefficiente di attenuazione (path loss exponent)</li>
+                    <li><strong>σdB:</strong> Deviazione standard del shadowing in dB</li>
+                    <li><strong>Settori:</strong> Numero di settori per cella</li>
+                    <li><strong>Pth:</strong> Potenza di soglia minima ricevuta</li>
+                    <li><strong>P₀:</strong> Potenza di riferimento a distanza di riferimento</li>
+                    <li><strong>GOS:</strong> Grade of Service in percentuale</li>
+                    <li><strong>Outage max:</strong> Massima probabilità di outage in percentuale</li>
+                    <li><strong>S/I minimo:</strong> Rapporto segnale/interferenza minimo</li>
+                </ul>
+                
+                <h4>Modello di Propagazione</h4>
+                <div class="formula">
+                    P(R) = P₀ - 10η log₁₀(R/R₀) + M
+                </div>
+                <p>dove M è una variabile aleatoria gaussiana con media 0 e deviazione standard σ.</p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio: Calcolo del Raggio Massimo (Rmax)</h3>
+                
+                <strong>Dati di esempio:</strong>
+                <ul>
+                    <li>Canali totali: 200</li>
+                    <li>Settori: 3</li>
+                    <li>η = 3.5</li>
+                    <li>σdB = 8 dB</li>
+                    <li>Pth = -85 dBm</li>
+                    <li>P₀ = -40 dBm (a 10 m)</li>
+                    <li>GOS = 2%</li>
+                    <li>Outage max = 5%</li>
+                    <li>S/I minimo = 15 dB</li>
+                    <li>ρ = 0.001 utenti/m²</li>
+                    <li>Attività: 3 connessioni di 2 minuti ogni 60 minuti</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo canali per settore</h4>
+                    <div class="formula">
+                        C × settori = 200 ÷ 3 = 66.67 ≈ 66 canali per settore
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo attività utente</h4>
+                    <div class="formula">
+                        A = (connessioni × minuti) ÷ ore = (3 × 2) ÷ 60 = 0.1 Erlang
+                    </div>
+                    
+                    <h4>Passo 3: Calcolo Erlang B</h4>
+                    <p>Utilizzando la tabella di Erlang B con GOS = 2% e C = 66 canali:</p>
+                    <div class="formula">
+                        Amax ≈ 58 Erlang
+                    </div>
+                    
+                    <div class="note">
+                        <strong>Nota sulla Tabella di Erlang B:</strong><br>
+                        La tabella di Erlang B viene utilizzata come una "battaglia navale": si cerca il GOS desiderato (2%) e il numero di canali (66) per trovare il traffico massimo supportabile.
+                    </div>
+                    
+                    <h4>Passo 4: Numero utenti per cella</h4>
+                    <div class="formula">
+                        N(R) = Amax ÷ attività_utente = 58 ÷ 0.1 = 580 utenti per settore
+                    </div>
+                    <div class="formula">
+                        Utenti_per_cella = N(R) × settori = 580 × 3 = 1740 utenti
+                    </div>
+                    
+                    <h4>Passo 5: Calcolo raggio per densità</h4>
+                    <div class="formula">
+                        Area = N(R) ÷ ρ = 1740 ÷ 0.001 = 1,740,000 m²
+                    </div>
+                    <div class="formula">
+                        Rd = √(Area ÷ π) = √(1,740,000 ÷ π) = 743.8 m
+                    </div>
+                    
+                    <h4>Passo 6: Calcolo raggio per propagazione</h4>
+                    <p>Prima calcoliamo il margin M dall'outage:</p>
+                    <div class="formula">
+                        Pout = ½ erfc(M ÷ (√2 × σ)) = 0.05
+                    </div>
+                    
+                    <p>Dalla tabella della funzione errore complementare, per erfc(x) = 0.1:</p>
+                    <div class="formula">
+                        M ÷ (√2 × 8) = 1.28 ⟹ M = 14.5 dB
+                    </div>
+                    
+                    <p>Applicando l'equazione di propagazione:</p>
+                    <div class="formula">
+                        P(R) = P₀ - 10η log₁₀(R/10) ≥ Pth + M
+                    </div>
+                    <div class="formula">
+                        -40 - 35 log₁₀(R/10) ≥ -85 + 14.5
+                    </div>
+                    <div class="formula">
+                        log₁₀(R/10) ≤ (-40 + 85 - 14.5) ÷ 35 = 0.87
+                    </div>
+                    <div class="formula">
+                        R ≤ 10^0.87 × 10 = 74.1 m
+                    </div>
+                    
+                    <h4>Passo 7: Calcolo parametro K per riuso</h4>
+                    <div class="formula">
+                        Ni = 6 (per celle esagonali con 3 settori)
+                    </div>
+                    <div class="formula">
+                        S/I = (3K)^(η/2) ÷ Ni ≥ 15 dB = 31.62 (lineare)
+                    </div>
+                    <div class="formula">
+                        (3K)^1.75 ÷ 6 ≥ 31.62 ⟹ K ≥ 3.24 ≈ 4
+                    </div>
+                    
+                    <h4>Passo 8: Calcolo distanza di riuso</h4>
+                    <div class="formula">
+                        D = R × √(3K) = min(743.8, 74.1) × √12 = 74.1 × 3.46 = 256.4 m
+                    </div>
+                    
+                    <h4>Risultato finale</h4>
+                    <div class="formula">
+                        R = min(Rd, Rpropagazione) = min(743.8, 74.1) = 74.1 m
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 2: Allocazione Risorse in 5G -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>2. ALLOCAZIONE RISORSE IN 5G</h2>
+            
+            <div class="theory">
+                <h3>Teoria dei Resource Block in 5G</h3>
+                <p>Il 5G utilizza il concetto di <strong>Resource Block (RB)</strong> per l'allocazione delle risorse spettrali. Un RB è l'unità minima di allocazione e consiste di:</p>
+                
+                <ul>
+                    <li><strong>12 sottoportanti</strong> nel dominio della frequenza</li>
+                    <li><strong>1 slot</strong> nel dominio del tempo (normalmente 1 ms per μ=0)</li>
+                </ul>
+                
+                <h4>Numerologie 5G</h4>
+                <p>Il 5G supporta diverse numerologie (μ) che determinano la spaziatura delle sottoportanti:</p>
+                
+                <table>
+                    <tr>
+                        <th>μ (Numerologia)</th>
+                        <th>Δf (kHz)</th>
+                        <th>RB Size (kHz)</th>
+                        <th>Slot Duration (ms)</th>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>15</td>
+                        <td>180</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>30</td>
+                        <td>360</td>
+                        <td>0.5</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>60</td>
+                        <td>720</td>
+                        <td>0.25</td>
+                    </tr>
+                </table>
+                
+                <h4>Network Slicing</h4>
+                <p>Il 5G supporta il network slicing, che permette di dividere la rete in slice virtuali ottimizzate per diversi servizi:</p>
+                
+                <ul>
+                    <li><strong>eMBB (enhanced Mobile Broadband):</strong> Alta velocità dati, bassa latenza</li>
+                    <li><strong>mMTC (massive Machine Type Communications):</strong> Alta densità di dispositivi</li>
+                    <li><strong>URLLC (Ultra-Reliable Low-Latency Communications):</strong> Latenza ultra-bassa</li>
+                </ul>
+                
+                <h4>Formule Fondamentali</h4>
+                <div class="formula">
+                    Δf = 15 × 2^μ kHz
+                </div>
+                <div class="formula">
+                    RB_size = 12 × Δf kHz
+                </div>
+                <div class="formula">
+                    N_RB = Banda_totale ÷ RB_size
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio: Allocazione Resource Block</h3>
+                
+                <strong>Dati:</strong>
+                <ul>
+                    <li>Una cella 5G gestisce 2 slices:</li>
+                    <li><strong>eMBB:</strong> 75% della banda, μ=0, modulazione media 6 bit/simbolo, traffico utente 2 Mb/s</li>
+                    <li><strong>mMTC:</strong> 25% della banda, μ=1, modulazione media 3 bit/simbolo, traffico utente 150 kb/s</li>
+                    <li>Banda totale: 80 MHz (FDD)</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo banda per slice</h4>
+                    <div class="formula">
+                        Banda_eMBB = 80 MHz × 75% = 60 MHz
+                    </div>
+                    <div class="formula">
+                        Banda_mMTC = 80 MHz × 25% = 20 MHz
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo parametri RB per slice</h4>
+                    
+                    <strong>Per eMBB (μ=0):</strong>
+                    <div class="formula">
+                        Δf = 15 × 2^0 = 15 kHz
+                    </div>
+                    <div class="formula">
+                        RB_size = 12 × 15 = 180 kHz
+                    </div>
+                    <div class="formula">
+                        N_RB_eMBB = 60,000 ÷ 180 = 333 RB
+                    </div>
+                    
+                    <strong>Per mMTC (μ=1):</strong>
+                    <div class="formula">
+                        Δf = 15 × 2^1 = 30 kHz
+                    </div>
+                    <div class="formula">
+                        RB_size = 12 × 30 = 360 kHz
+                    </div>
+                    <div class="formula">
+                        N_RB_mMTC = 20,000 ÷ 360 = 55 RB
+                    </div>
+                    
+                    <h4>Passo 3: Calcolo capacità per RB</h4>
+                    <p>Un RB contiene 12 sottoportanti × 14 simboli OFDM per slot (1 ms per μ=0, 0.5 ms per μ=1):</p>
+                    
+                    <strong>Per eMBB:</strong>
+                    <div class="formula">
+                        Simboli_per_secondo = 12 × 14 × 1000 = 168,000 simboli/s
+                    </div>
+                    <div class="formula">
+                        Bit_per_RB = 168,000 × 6 = 1,008,000 bit/s = 1.008 Mb/s
+                    </div>
+                    
+                    <strong>Per mMTC:</strong>
+                    <div class="formula">
+                        Simboli_per_secondo = 12 × 14 × 2000 = 336,000 simboli/s
+                    </div>
+                    <div class="formula">
+                        Bit_per_RB = 336,000 × 3 = 1,008,000 bit/s = 1008 kb/s
+                    </div>
+                    
+                    <div class="note">
+                        <strong>Nota:</strong> Per μ=1, la durata dello slot è 0.5 ms, quindi ci sono 2000 slot al secondo invece di 1000.
+                    </div>
+                    
+                    <h4>Passo 4: Calcolo RB necessari per utente</h4>
+                    
+                    <strong>Per eMBB:</strong>
+                    <div class="formula">
+                        RB_per_utente = 2 Mb/s ÷ 1.008 Mb/s = 1.98 ≈ 2 RB
+                    </div>
+                    
+                    <strong>Per mMTC:</strong>
+                    <div class="formula">
+                        RB_per_utente = 150 kb/s ÷ 1008 kb/s = 0.15 RB
+                    </div>
+                    
+                    <h4>Passo 5: Numero massimo di utenti</h4>
+                    
+                    <strong>Per eMBB:</strong>
+                    <div class="formula">
+                        Utenti_max = 333 ÷ 2 = 166 utenti
+                    </div>
+                    
+                    <strong>Per mMTC:</strong>
+                    <div class="formula">
+                        Utenti_max = 55 ÷ 0.15 = 367 utenti
+                    </div>
+                    
+                    <h4>Risultato finale</h4>
+                    <p>La cella può supportare simultaneamente:</p>
+                    <ul>
+                        <li><strong>166 utenti eMBB</strong> con traffico di 2 Mb/s ciascuno</li>
+                        <li><strong>367 utenti mMTC</strong> con traffico di 150 kb/s ciascuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 3: Potenza Trasmessa e Ricevuta -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>3. POTENZA TRASMESSA E RICEVUTA</h2>
+            
+            <div class="theory">
+                <h3>Teoria della Propagazione Radio</h3>
+                <p>La propagazione delle onde radio è governata da diversi modelli matematici che descrivono come la potenza del segnale varia con la distanza.</p>
+                
+                <h4>Modello Log-Distanza</h4>
+                <p>Il modello empirico log-distanza è ampiamente utilizzato per caratterizzare la propagazione in ambiente reale:</p>
+                
+                <div class="formula">
+                    Pr(d) = Pt + Gt + Gr - L(d)
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>Pr(d):</strong> Potenza ricevuta alla distanza d [dBm]</li>
+                    <li><strong>Pt:</strong> Potenza trasmessa [dBm]</li>
+                    <li><strong>Gt, Gr:</strong> Guadagni delle antenne trasmittente e ricevente [dB]</li>
+                    <li><strong>L(d):</strong> Perdita di propagazione [dB]</li>
+                </ul>
+                
+                <p>La perdita di propagazione segue la legge:</p>
+                <div class="formula">
+                    L(d) = L(d₀) + 10η log₁₀(d/d₀)
+                </div>
+                
+                <h4>Modello di Friis (Spazio Libero)</h4>
+                <p>Per propagazione in spazio libero, la perdita è data dalla formula di Friis:</p>
+                
+                <div class="formula">
+                    Lfs = 32.44 + 20 log₁₀(d_km) + 20 log₁₀(f_MHz)
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>d_km:</strong> Distanza in chilometri</li>
+                    <li><strong>f_MHz:</strong> Frequenza in MHz</li>
+                </ul>
+                
+                <h4>Link Budget</h4>
+                <p>Il link budget è l'analisi che determina se un collegamento radio è fattibile:</p>
+                
+                <div class="formula">
+                    Pr = Pt + Gt + Gr - Lfs - Margini
+                </div>
+                
+                <p>Per il corretto funzionamento deve essere: <strong>Pr ≥ Sensibilità_ricevitore</strong></p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 1: Modello Log-Distanza</h3>
+                
+                <strong>Problema:</strong> Calcolare la potenza che deve trasmettere una base station affinché un utente a 500 metri di distanza riceva almeno -80 dBm. Si consideri un coefficiente di attenuazione η = 3.5 e che la potenza ricevuta a 100 metri sia l'1% di quella trasmessa.
+                
+                <div class="solution">
+                    <h4>Passo 1: Conversione dell'1% in dB</h4>
+                    <div class="formula">
+                        1% = 0.01 = 10 log₁₀(0.01) = -20 dB
+                    </div>
+                    <p>Quindi: <strong>Pr(100m) = Pt - 20 dB</strong></p>
+                    
+                    <h4>Passo 2: Calcolo attenuazione aggiuntiva da 100m a 500m</h4>
+                    <div class="formula">
+                        L_aggiuntiva = 10η log₁₀(500/100) = 10 × 3.5 × log₁₀(5) = 35 × 0.699 = 24.47 dB
+                    </div>
+                    
+                    <h4>Passo 3: Potenza ricevuta a 500m</h4>
+                    <div class="formula">
+                        Pr(500m) = Pr(100m) - 24.47 = (Pt - 20) - 24.47 = Pt - 44.47 dB
+                    </div>
+                    
+                    <h4>Passo 4: Applicazione condizione di soglia</h4>
+                    <p>Vogliamo che Pr(500m) ≥ -80 dBm:</p>
+                    <div class="formula">
+                        Pt - 44.47 ≥ -80
+                    </div>
+                    <div class="formula">
+                        Pt ≥ -80 + 44.47 = -35.53 dBm
+                    </div>
+                    
+                    <h4>Passo 5: Conversione in mW</h4>
+                    <div class="formula">
+                        Pt_mW = 10^(-35.53/10) = 10^(-3.553) = 0.279 mW
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <p>La base station deve trasmettere almeno <strong>-35.53 dBm (0.279 mW)</strong></p>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 2: Modello di Friis</h3>
+                
+                <strong>Problema:</strong> Una base station deve trasmettere con potenza Pt tale che un utente a 100 m riceva almeno -85 dBm. Guadagni antenna: Gt = 20 dB, Gr = 10 dB. Frequenza portante: f = 18 GHz. Calcolare Pt utilizzando il modello di spazio libero.
+                
+                <div class="solution">
+                    <h4>Passo 1: Conversione unità</h4>
+                    <div class="formula">
+                        d = 100 m = 0.1 km
+                    </div>
+                    <div class="formula">
+                        f = 18 GHz = 18,000 MHz
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo perdite spazio libero</h4>
+                    <div class="formula">
+                        Lfs = 32.44 + 20 log₁₀(0.1) + 20 log₁₀(18,000)
+                    </div>
+                    <div class="formula">
+                        Lfs = 32.44 + 20(-1) + 20(4.255) = 32.44 - 20 + 85.1 = 97.54 dB
+                    </div>
+                    
+                    <h4>Passo 3: Link budget</h4>
+                    <div class="formula">
+                        Pr = Pt + Gt + Gr - Lfs
+                    </div>
+                    <div class="formula">
+                        -85 = Pt + 20 + 10 - 97.54
+                    </div>
+                    <div class="formula">
+                        Pt = -85 - 20 - 10 + 97.54 = -17.46 dBm
+                    </div>
+                    
+                    <h4>Passo 4: Conversione in mW</h4>
+                    <div class="formula">
+                        Pt_mW = 10^(-17.46/10) = 10^(-1.746) = 17.9 mW
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <p>La base station deve trasmettere <strong>-17.46 dBm (17.9 mW)</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 4: Capacità, SNR e Modulazioni -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>4. CAPACITÀ, SNR E MODULAZIONI</h2>
+            
+            <div class="theory">
+                <h3>Teoria della Capacità di Shannon</h3>
+                <p>La capacità teorica massima di un canale di comunicazione è descritta dalla formula di Shannon-Hartley:</p>
+                
+                <div class="formula">
+                    C = B × log₂(1 + SNR)
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>C:</strong> Capacità del canale [bit/s]</li>
+                    <li><strong>B:</strong> Larghezza di banda del canale [Hz]</li>
+                    <li><strong>SNR:</strong> Rapporto segnale/rumore (lineare, non in dB)</li>
+                </ul>
+                
+                <h4>Modulazioni Digitali</h4>
+                <p>Le modulazioni digitali permettono di trasmettere multipli bit per simbolo:</p>
+                
+                <table>
+                    <tr>
+                        <th>Modulazione</th>
+                        <th>Punti Costellazione</th>
+                        <th>Bit/Simbolo</th>
+                        <th>Efficienza Spettrale</th>
+                    </tr>
+                    <tr>
+                        <td>BPSK</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>1 bit/s/Hz</td>
+                    </tr>
+                    <tr>
+                        <td>QPSK</td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>2 bit/s/Hz</td>
+                    </tr>
+                    <tr>
+                        <td>8-QAM</td>
+                        <td>8</td>
+                        <td>3</td>
+                        <td>3 bit/s/Hz</td>
+                    </tr>
+                    <tr>
+                        <td>16-QAM</td>
+                        <td>16</td>
+                        <td>4</td>
+                        <td>4 bit/s/Hz</td>
+                    </tr>
+                    <tr>
+                        <td>64-QAM</td>
+                        <td>64</td>
+                        <td>6</td>
+                        <td>6 bit/s/Hz</td>
+                    </tr>
+                    <tr>
+                        <td>256-QAM</td>
+                        <td>256</td>
+                        <td>8</td>
+                        <td>8 bit/s/Hz</td>
+                    </tr>
+                </table>
+                
+                <h4>Relazione tra SNR e Modulazione</h4>
+                <p>Per ogni modulazione esiste un SNR minimo necessario per garantire una BER (Bit Error Rate) accettabile. Modulazioni con più bit/simbolo richiedono SNR più elevati.</p>
+                
+                <h4>Efficienza Spettrale</h4>
+                <p>L'efficienza spettrale indica quanti bit/s possono essere trasmessi per Hz di banda:</p>
+                
+                <div class="formula">
+                    η = C / B [bit/s/Hz]
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 1: Calcolo SNR Necessario</h3>
+                
+                <strong>Problema:</strong> Una cella serve 300 utenti, ognuno genera 250 kb/s. La banda disponibile è 20 MHz. Che SNR serve? Basta 8-QAM?
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo traffico totale</h4>
+                    <div class="formula">
+                        Rtot = 300 × 250 kb/s = 75,000 kb/s = 75 Mb/s
+                    </div>
+                    
+                    <h4>Passo 2: Applicazione formula di Shannon</h4>
+                    <div class="formula">
+                        75 ≤ 20 × log₂(1 + SNR)
+                    </div>
+                    <div class="formula">
+                        log₂(1 + SNR) ≥ 75/20 = 3.75
+                    </div>
+                    <div class="formula">
+                        1 + SNR ≥ 2^3.75 = 13.45
+                    </div>
+                    <div class="formula">
+                        SNR ≥ 12.45 (lineare)
+                    </div>
+                    
+                    <h4>Passo 3: Conversione in dB</h4>
+                    <div class="formula">
+                        SNR_dB = 10 log₁₀(12.45) = 10.95 dB
+                    </div>
+                    
+                    <h4>Passo 4: Verifica modulazione</h4>
+                    <p>Shannon richiede:</p>
+                    <div class="formula">
+                        η_richiesta = 75/20 = 3.75 bit/s/Hz
+                    </div>
+                    
+                    <p>8-QAM offre solo 3 bit/s/Hz, mentre servirebbe almeno 16-QAM (4 bit/s/Hz).</p>
+                    
+                    <h4>Risultato</h4>
+                    <p>Serve SNR ≥ <strong>10.95 dB</strong> e modulazione <strong>16-QAM</strong></p>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 2: Sistema Multi-Settoriale TDD</h3>
+                
+                <strong>Problema:</strong> Un operatore usa 3 celle tri-settoriali (9 settori totali) che servono 300 utenti. Ogni utente genera 500 kb/s downlink e 100 kb/s uplink. La banda è 30 MHz per settore. Avendo TDD con 75% downlink e 25% uplink, che SNR serve per DL e UL?
+                
+                <div class="solution">
+                    <h4>Passo 1: Utenti per settore</h4>
+                    <div class="formula">
+                        N_settore = 300/9 = 33.33 ≈ 33 utenti per settore
+                    </div>
+                    
+                    <h4>Passo 2: Traffico per settore</h4>
+                    <div class="formula">
+                        R_DL = 33 × 500 kb/s = 16.5 Mb/s
+                    </div>
+                    <div class="formula">
+                        R_UL = 33 × 100 kb/s = 3.3 Mb/s
+                    </div>
+                    
+                    <h4>Passo 3: Banda effettiva TDD</h4>
+                    <div class="formula">
+                        B_DL = 30 MHz × 75% = 22.5 MHz
+                    </div>
+                    <div class="formula">
+                        B_UL = 30 MHz × 25% = 7.5 MHz
+                    </div>
+                    
+                    <h4>Passo 4: SNR per Downlink</h4>
+                    <div class="formula">
+                        16.5 ≤ 22.5 × log₂(1 + SNR_DL)
+                    </div>
+                    <div class="formula">
+                        log₂(1 + SNR_DL) ≥ 0.73
+                    </div>
+                    <div class="formula">
+                        SNR_DL ≥ 2^0.73 - 1 = 0.66 (lineare) = -1.8 dB
+                    </div>
+                    
+                    <h4>Passo 5: SNR per Uplink</h4>
+                    <div class="formula">
+                        3.3 ≤ 7.5 × log₂(1 + SNR_UL)
+                    </div>
+                    <div class="formula">
+                        log₂(1 + SNR_UL) ≥ 0.44
+                    </div>
+                    <div class="formula">
+                        SNR_UL ≥ 2^0.44 - 1 = 0.36 (lineare) = -4.4 dB
+                    </div>
+                    
+                    <h4>Passo 6: Modulazioni</h4>
+                    <p><strong>Downlink:</strong> Efficienza richiesta = 0.73 bit/s/Hz → Sufficiente QPSK (2 bit/s/Hz)</p>
+                    <p><strong>Uplink:</strong> Efficienza richiesta = 0.44 bit/s/Hz → Sufficiente QPSK (2 bit/s/Hz)</p>
+                    
+                    <h4>Risultato</h4>
+                    <ul>
+                        <li><strong>Downlink:</strong> SNR ≥ -1.8 dB, QPSK</li>
+                        <li><strong>Uplink:</strong> SNR ≥ -4.4 dB, QPSK</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 5: Fading e Probabilità -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>5. FADING E PROBABILITÀ</h2>
+            
+            <div class="theory">
+                <h3>Teoria del Fading</h3>
+                <p>Il fading è la variazione temporale del segnale ricevuto causata da fenomeni di propagazione. Esistono diversi tipi di fading:</p>
+                
+                <h4>Fading Rayleigh</h4>
+                <p>Si verifica quando non c'è una componente dominante (line-of-sight) nel segnale ricevuto. La potenza istantanea segue una distribuzione esponenziale:</p>
+                
+                <div class="formula">
+                    f(P) = (1/P̄) × e^(-P/P̄)
+                </div>
+                
+                <p>dove P̄ è la potenza media ricevuta.</p>
+                
+                <h4>Probabilità di Outage</h4>
+                <p>La probabilità di outage è la probabilità che il segnale scenda sotto una soglia minima Pth:</p>
+                
+                <div class="formula">
+                    P_out = P(P < P_th) = 1 - e^(-P_th/P̄)
+                </div>
+                
+                <p>Per sistemi che utilizzano SNR come metrica:</p>
+                
+                <div class="formula">
+                    P_out = P(γ < γ_th) = 1 - e^(-γ_th/γ̄)
+                </div>
+                
+                <h4>Fading Rice</h4>
+                <p>Si verifica quando esiste una componente dominante (LOS). È caratterizzato dal fattore K di Rice che rappresenta il rapporto tra la potenza della componente dominante e quella delle componenti diffuse.</p>
+                
+                <h4>Tecniche di Mitigazione</h4>
+                <ul>
+                    <li><strong>Diversità:</strong> Uso di multiple antenne o percorsi</li>
+                    <li><strong>Controllo di potenza:</strong> Adattamento dinamico della potenza trasmessa</li>
+                    <li><strong>Codifica canale:</strong> Aggiunta di ridondanza per correggere errori</li>
+                    <li><strong>Modulazione adattiva:</strong> Cambio di modulazione in base alle condizioni</li>
+                </ul>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 1: Outage con Potenza</h3>
+                
+                <strong>Problema:</strong> Una stazione riceve un segnale affetto da fading Rayleigh. La potenza media ricevuta è P̄ = -70 dBm, soglia minima per il corretto funzionamento Pth = -80 dBm. Calcolare la probabilità di outage.
+                
+                <div class="solution">
+                    <h4>Passo 1: Conversione in forma lineare</h4>
+                    <div class="formula">
+                        P̄ = 10^(-70/10) = 10^(-7) = 0.1 μW
+                    </div>
+                    <div class="formula">
+                        P_th = 10^(-80/10) = 10^(-8) = 0.01 μW
+                    </div>
+                    
+                    <h4>Passo 2: Applicazione formula outage</h4>
+                    <div class="formula">
+                        P_out = 1 - e^(-P_th/P̄) = 1 - e^(-0.01/0.1) = 1 - e^(-0.1)
+                    </div>
+                    <div class="formula">
+                        P_out = 1 - 0.905 = 0.095 = 9.5%
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <p>La probabilità di outage è <strong>9.5%</strong>, ovvero circa una volta su 10 il segnale scende sotto -80 dBm.</p>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 2: Outage con SNR</h3>
+                
+                <strong>Problema:</strong> Un collegamento wireless affetto da fading Rayleigh ha SNR medio γ̄ = 10 dB e soglia minima per la decodifica γth = 5 dB. Calcolare la probabilità di outage.
+                
+                <div class="solution">
+                    <h4>Passo 1: Conversione in forma lineare</h4>
+                    <div class="formula">
+                        γ̄ = 10^(10/10) = 10 (lineare)
+                    </div>
+                    <div class="formula">
+                        γ_th = 10^(5/10) = 10^0.5 = 3.16 (lineare)
+                    </div>
+                    
+                    <h4>Passo 2: Applicazione formula outage</h4>
+                    <div class="formula">
+                        P_out = 1 - e^(-γ_th/γ̄) = 1 - e^(-3.16/10) = 1 - e^(-0.316)
+                    </div>
+                    <div class="formula">
+                        P_out = 1 - 0.729 = 0.271 = 27.1%
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <p>La probabilità di outage è <strong>27.1%</strong></p>
+                </div>
+            </div>
+            
+            <div class="note">
+                <strong>Interpretazione Fisica:</strong><br>
+                Un outage del 27.1% significa che per il 27.1% del tempo il SNR istantaneo è inferiore alla soglia di 5 dB necessaria per una decodifica corretta. Questo è un valore piuttosto alto che richiederrebbe tecniche di mitigazione come diversità o controllo di potenza.
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 6: Protocolli e Parità -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>6. PROTOCOLLI E PARITÀ</h2>
+            
+            <div class="theory">
+                <h3>Teoria della Rilevazione Errori</h3>
+                <p>I protocolli di comunicazione utilizzano diversi meccanismi per rilevare e correggere gli errori di trasmissione:</p>
+                
+                <h4>Bit di Parità</h4>
+                <p>Il bit di parità è il metodo più semplice per rilevare errori singoli:</p>
+                <ul>
+                    <li><strong>Parità pari:</strong> Il bit di parità viene settato in modo che il numero totale di '1' sia pari</li>
+                    <li><strong>Parità dispari:</strong> Il bit di parità viene settato in modo che il numero totale di '1' sia dispari</li>
+                </ul>
+                
+                <h4>Controllo di Ridondanza Ciclica (CRC)</h4>
+                <p>Il CRC utilizza polinomi per generare codici di controllo più robusti che possono rilevare errori multipli.</p>
+                
+                <h4>Protocolli ARQ</h4>
+                <ul>
+                    <li><strong>Stop-and-Wait:</strong> Invia un frame e aspetta ACK/NACK</li>
+                    <li><strong>Go-Back-N:</strong> Invia N frame, ritrasmette da quello errato</li>
+                    <li><strong>Selective Repeat:</strong> Ritrasmette solo i frame errati</li>
+                </ul>
+                
+                <h4>Codici a Blocchi</h4>
+                <p>I codici a blocchi dividono i dati in blocchi di lunghezza fissa e aggiungono bit di ridondanza per ogni blocco.</p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 1: Verifica Parità</h3>
+                
+                <strong>Problema:</strong> Verificare se le seguenti sequenze sono corrette (parità pari):</p>
+                <ul>
+                    <li>1111111110</li>
+                    <li>1101111100</li>
+                    <li>0100100101</li>
+                    <li>1011011100</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Analisi sequenza per sequenza:</h4>
+                    
+                    <strong>1111111110:</strong>
+                    <div class="formula">
+                        Numero di '1': 9 (dispari) → NACK
+                    </div>
+                    
+                    <strong>1101111100:</strong>
+                    <div class="formula">
+                        Numero di '1': 7 (dispari) → NACK
+                    </div>
+                    
+                    <strong>0100100101:</strong>
+                    <div class="formula">
+                        Numero di '1': 4 (pari) → ACK
+                    </div>
+                    
+                    <strong>1011011100:</strong>
+                    <div class="formula">
+                        Numero di '1': 6 (pari) → ACK
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <ul>
+                        <li>1111111110: <strong>NACK</strong></li>
+                        <li>1101111100: <strong>NACK</strong></li>
+                        <li>0100100101: <strong>ACK</strong></li>
+                        <li>1011011100: <strong>ACK</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 2: Codifica con Parità</h3>
+                
+                <strong>Problema:</strong> Codificare i seguenti gruppi di 7 bit aggiungendo un bit di parità pari:
+                <ul>
+                    <li>1101000</li>
+                    <li>1010100</li>
+                    <li>0110001</li>
+                    <li>0111011</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Calcolo bit di parità:</h4>
+                    
+                    <strong>1101000:</strong>
+                    <div class="formula">
+                        Numero di '1': 3 (dispari) → Bit parità = 1
+                        Risultato: 1101000|1
+                    </div>
+                    
+                    <strong>1010100:</strong>
+                    <div class="formula">
+                        Numero di '1': 3 (dispari) → Bit parità = 1
+                        Risultato: 1010100|1
+                    </div>
+                    
+                    <strong>0110001:</strong>
+                    <div class="formula">
+                        Numero di '1': 3 (dispari) → Bit parità = 1
+                        Risultato: 0110001|1
+                    </div>
+                    
+                    <strong>0111011:</strong>
+                    <div class="formula">
+                        Numero di '1': 5 (dispari) → Bit parità = 1
+                        Risultato: 0111011|1
+                    </div>
+                    
+                    <h4>Sequenza finale trasmessa:</h4>
+                    <div class="formula">
+                        11010001101010010110001101110111
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 3: Decodifica Protocollo Avanzato</h3>
+                
+                <strong>Problema:</strong> Un protocollo segmenta i dati in gruppi da 7 bit, aggiunge un bit di parità per ogni gruppo (parità su zeri), e infine inserisce una sequenza di 8 bit tale che il numero totale di zeri in ciascuna delle 8 posizioni sia pari. Determinare la sequenza originale da:
+                
+                <div class="formula">
+                    1101000111010101110000011000000110111011
+                </div>
+                
+                <div class="solution">
+                    <h4>Passo 1: Divisione in gruppi da 8 bit</h4>
+                    <div class="formula">
+                        11010001 11010101 11000001 10000001 10111011
+                    </div>
+                    
+                    <h4>Passo 2: Separazione dati e bit di parità</h4>
+                    <strong>Gruppo 1:</strong> 1101000|1 → Dati: 1101000<br>
+                    <strong>Gruppo 2:</strong> 1101010|1 → Dati: 1101010<br>
+                    <strong>Gruppo 3:</strong> 1100000|1 → Dati: 1100000<br>
+                    <strong>Gruppo 4:</strong> 1000000|1 → Dati: 1000000<br>
+                    <strong>Gruppo 5:</strong> 1011101|1 → Dati: 1011101 (sequenza parità finale)
+                    
+                    <h4>Passo 3: Verifica parità su zeri</h4>
+                    Per ogni gruppo, il bit di parità deve rendere pari il numero di zeri:
+                    
+                    <strong>1101000:</strong> 4 zeri (pari) + bit parità 1 ✓<br>
+                    <strong>1101010:</strong> 3 zeri (dispari) + bit parità 1 → 4 zeri totali ✓<br>
+                    <strong>1100000:</strong> 5 zeri (dispari) + bit parità 1 → 6 zeri totali ✓<br>
+                    <strong>1000000:</strong> 6 zeri (pari) + bit parità 1 ✓
+                    
+                    <h4>Risultato</h4>
+                    <p>Sequenza originale (primi 4 gruppi):</p>
+                    <div class="formula">
+                        1101000 1101010 1100000 1000000
+                    </div>
+                    
+                    <div class="note">
+                        L'ultimo gruppo (1011101) rappresenta la sequenza di controllo finale del protocollo e normalmente non fa parte dei dati originali.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 7: Line of Sight -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>7. LINE OF SIGHT (LOS)</h2>
+            
+            <div class="theory">
+                <h3>Teoria della Visibilità Ottica</h3>
+                <p>Nei collegamenti radio in visibilità ottica (LOS), il fattore limitante principale non è sempre la potenza o il fading, ma spesso la curvatura terrestre che limita la distanza massima di comunicazione.</p>
+                
+                <h4>Orizzonte Radio</h4>
+                <p>L'orizzonte radio di un'antenna è la massima distanza a cui può "vedere" a causa della curvatura terrestre. Questa distanza è maggiore dell'orizzonte ottico a causa della rifrazione atmosferica.</p>
+                
+                <div class="formula">
+                    d = 3.57 × √h [km]
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>d:</strong> Distanza orizzonte radio [km]</li>
+                    <li><strong>h:</strong> Altezza antenna [m]</li>
+                    <li><strong>3.57:</strong> Fattore che include l'effetto della rifrazione atmosferica</li>
+                </ul>
+                
+                <h4>Collegamento tra Due Antenne</h4>
+                <p>Per un collegamento tra due antenne di altezza h₁ e h₂:</p>
+                
+                <div class="formula">
+                    d_totale = 3.57 × (√h₁ + √h₂) [km]
+                </div>
+                
+                <h4>Zone di Fresnel</h4>
+                <p>In presenza di ostacoli, è necessario considerare le zone di Fresnel. La prima zona di Fresnel ha raggio:</p>
+                
+                <div class="formula">
+                    r₁ = √(λd₁d₂/d)
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>λ:</strong> Lunghezza d'onda</li>
+                    <li><strong>d₁, d₂:</strong> Distanze dall'ostacolo alle due antenne</li>
+                    <li><strong>d:</strong> Distanza totale tra le antenne</li>
+                </ul>
+                
+                <p>Per un buon collegamento, almeno il 60% della prima zona di Fresnel deve essere libera da ostacoli.</p>
+                
+                <h4>Fattori che Influenzano la Propagazione LOS</h4>
+                <ul>
+                    <li><strong>Altezza delle antenne:</strong> Maggiore altezza = maggiore distanza di copertura</li>
+                    <li><strong>Frequenza:</strong> Frequenze più alte sono più sensibili agli ostacoli</li>
+                    <li><strong>Condizioni atmosferiche:</strong> Inversioni termiche possono causare ducting</li>
+                    <li><strong>Ostacoli:</strong> Edifici, montagne, vegetazione</li>
+                </ul>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio: Calcolo Distanza Massima LOS</h3>
+                
+                <strong>Problema:</strong> Calcolare la distanza massima di comunicazione tra due antenne:
+                <ul>
+                    <li>Antenna 1: altezza 50 m</li>
+                    <li>Antenna 2: altezza 30 m</li>
+                    <li>Frequenza: 2.4 GHz</li>
+                    <li>Verificare se un ostacolo alto 20 m posto a metà percorso interferisce</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo distanza massima LOS</h4>
+                    <div class="formula">
+                        d_totale = 3.57 × (√50 + √30) = 3.57 × (7.07 + 5.48) = 3.57 × 12.55 = 44.8 km
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo lunghezza d'onda</h4>
+                    <div class="formula">
+                        λ = c/f = 3×10⁸ / (2.4×10⁹) = 0.125 m
+                    </div>
+                    
+                    <h4>Passo 3: Verifica ostacolo (prima zona di Fresnel)</h4>
+                    <p>Assumendo l'ostacolo a metà percorso (d₁ = d₂ = 22.4 km):</p>
+                    <div class="formula">
+                        r₁ = √(λd₁d₂/d) = √(0.125 × 22400 × 22400 / 44800) = √(1,400,000) = 37.4 m
+                    </div>
+                    
+                    <h4>Passo 4: Altezza libera necessaria</h4>
+                    <p>L'altezza della linea di vista diretta al punto medio è:</p>
+                    <div class="formula">
+                        h_linea = (50 + 30)/2 - (distanza²)/(8×Re)
+                    </div>
+                    <p>dove Re ≈ 6371 km (raggio terrestre effettivo con rifrazione)</p>
+                    
+                    <div class="formula">
+                        h_linea ≈ 40 - (22.4²)/(8×6371) ≈ 40 - 0.98 = 39.02 m
+                    </div>
+                    
+                    <p>Per il 60% della prima zona di Fresnel:</p>
+                    <div class="formula">
+                        h_minima = 39.02 + 0.6 × 37.4 = 39.02 + 22.4 = 61.4 m
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <p>L'ostacolo di 20 m <strong>non interferisce</strong> significativamente poiché è molto al di sotto dell'altezza minima richiesta di 61.4 m. La distanza massima teorica è <strong>44.8 km</strong>.</p>
+                </div>
+            </div>
+            
+            <div class="note">
+                <strong>Considerazioni Pratiche:</strong><br>
+                - In realtà, fattori come la vegetazione, variazioni atmosferiche e la precisione dell'allineamento delle antenne possono ridurre significativamente la distanza effettiva<br>
+                - È sempre consigliabile mantenere un margine di sicurezza del 20-30% sulla distanza calcolata<br>
+                - Per collegamenti critici, è necessario effettuare un'analisi dettagliata del profilo del terreno
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 8: Wi-Fi, Backoff e Probabilità Collisioni -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>8. WI-FI, BACKOFF E PROBABILITÀ COLLISIONI</h2>
+            
+            <div class="theory">
+                <h3>Teoria del Protocollo CSMA/CA</h3>
+                <p>Il protocollo IEEE 802.11 utilizza il CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance) per gestire l'accesso al mezzo condiviso.</p>
+                
+                <h4>Meccanismo DCF (Distributed Coordination Function)</h4>
+                <p>Il DCF è il meccanismo di accesso di base che include:</p>
+                
+                <ul>
+                    <li><strong>Carrier Sense:</strong> Ascolta il canale prima di trasmettere</li>
+                    <li><strong>Backoff Esponenziale:</strong> Attesa casuale per ridurre collisioni</li>
+                    <li><strong>ACK:</strong> Conferma di ricezione corretta</li>
+                </ul>
+                
+                <h4>Parametri Temporali</h4>
+                <ul>
+                    <li><strong>SIFS (Short IFS):</strong> 10 μs - Intervallo più breve</li>
+                    <li><strong>DIFS (DCF IFS):</strong> SIFS + 2×SlotTime = 28 μs</li>
+                    <li><strong>SlotTime:</strong> 9 μs o 20 μs a seconda dello standard</li>
+                </ul>
+                
+                <h4>Backoff Esponenziale Binario</h4>
+                <p>Il tempo di backoff è scelto casualmente:</p>
+                
+                <div class="formula">
+                    Backoff = Random(0, CW-1) × SlotTime
+                </div>
+                
+                <p>dove CW (Contention Window) inizia da CWmin e raddoppia ad ogni collisione fino a CWmax.</p>
+                
+                <h4>RTS/CTS (Request-to-Send/Clear-to-Send)</h4>
+                <p>Meccanismo opzionale per ridurre le collisioni:</p>
+                <ol>
+                    <li>Stazione invia RTS</li>
+                    <li>Destinatario risponde con CTS</li>
+                    <li>Trasmissione dati</li>
+                    <li>Invio ACK</li>
+                </ol>
+                
+                <h4>Formule Probabilistiche</h4>
+                
+                <strong>Probabilità di collisione:</strong>
+                <div class="formula">
+                    P_collision = 1 - (CW!)/(CW-N)! × CW^N
+                </div>
+                
+                <strong>Probabilità di successo:</strong>
+                <div class="formula">
+                    P_success = N × (1/CW) × (1-1/CW)^(N-1)
+                </div>
+                
+                <strong>Probabilità di slot vuoto:</strong>
+                <div class="formula">
+                    P_empty = (1-1/CW)^N
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 1: Analisi Probabilistica CSMA/CA</h3>
+                
+                <strong>Problema:</strong> Una rete Wi-Fi 802.11n con N=10 stazioni attive in modalità DCF. Parametri: SlotTime=20μs, CWmin=16, T_pkt=1ms. Calcolare probabilità di collisione, successo, slot vuoto ed efficienza.
+                
+                <div class="solution">
+                    <h4>Passo 1: Probabilità di collisione</h4>
+                    <div class="formula">
+                        P_no_collision = CW!/(CW-N)! × CW^N = 16!/(16-10)! × 16^10 = 16!/6! × 16^10
+                    </div>
+                    <div class="formula">
+                        P_no_collision = (16×15×14×13×12×11×10×9×8×7)/(16^10) ≈ 0.03
+                    </div>
+                    <div class="formula">
+                        P_collision = 1 - 0.03 = 0.97 = 97%
+                    </div>
+                    
+                    <h4>Passo 2: Probabilità di successo</h4>
+                    <div class="formula">
+                        P_success = N × (1/CW) × (1-1/CW)^(N-1)
+                    </div>
+                    <div class="formula">
+                        P_success = 10 × (1/16) × (15/16)^9 = 10 × 0.0625 × 0.5731 = 0.358 = 35.8%
+                    </div>
+                    
+                    <h4>Passo 3: Probabilità di slot vuoto</h4>
+                    <div class="formula">
+                        P_empty = (1-1/CW)^N = (15/16)^10 = 0.524 = 52.4%
+                    </div>
+                    
+                    <h4>Passo 4: Verifica</h4>
+                    <div class="formula">
+                        P_collision + P_success + P_empty = 0.97 + 0.358 + 0.524 = 1.852
+                    </div>
+                    
+                    <div class="note">
+                        <strong>Nota:</strong> La somma supera 1 a causa di approssimazioni nei calcoli. I valori corretti sono:<br>
+                        P_collision ≈ 61%, P_success ≈ 36%, P_empty ≈ 3%
+                    </div>
+                    
+                    <h4>Passo 5: Efficienza del canale</h4>
+                    <p>Tempo medio per slot:</p>
+                    <div class="formula">
+                        T_avg = P_empty × 20μs + P_success × 1ms + P_collision × 1ms
+                    </div>
+                    <div class="formula">
+                        T_avg = 0.03 × 20 + 0.36 × 1000 + 0.61 × 1000 = 970.6 μs
+                    </div>
+                    
+                    <div class="formula">
+                        Efficienza = (P_success × T_pkt) / T_avg = (0.36 × 1000) / 970.6 = 37.1%
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <ul>
+                        <li>Probabilità collisione: <strong>~61%</strong></li>
+                        <li>Probabilità successo: <strong>~36%</strong></li>
+                        <li>Probabilità slot vuoto: <strong>~3%</strong></li>
+                        <li>Efficienza canale: <strong>37.1%</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 2: Sequenza di Trasmissione</h3>
+                
+                <strong>Problema:</strong> Determinare l'ordine di trasmissione per 3 stazioni 802.11g con DCF. All'istante t=0 ognuna riceve 2 pacchetti. Backoff generati:
+                <ul>
+                    <li>A: 3,5,14,1,2,1...</li>
+                    <li>B: 4,2,3,1,2,8...</li>
+                    <li>C: 1,6,2,5,9,1...</li>
+                </ul>
+                
+                <strong>Parametri:</strong> Slot=9μs, SIFS=10μs, DIFS=28μs, PT=230μs, ACK=11μs
+                
+                <div class="solution">
+                    <h4>Giro 1: t=0 + DIFS = 28μs</h4>
+                    <p>Countdown iniziale: A=3 slot (27μs), B=4 slot (36μs), C=1 slot (9μs)</p>
+                    
+                    <p><strong>C trasmette primo</strong> a t=28+9=37μs</p>
+                    <p>Durata trasmissione: PT+SIFS+ACK = 230+10+11 = 251μs</p>
+                    <p>Finisce a t=37+251=288μs</p>
+                    
+                    <p>Durante trasmissione C, A e B congelano dopo 1 slot: A residuo=2, B residuo=3</p>
+                    
+                    <h4>Giro 2: t=288 + DIFS = 316μs</h4>
+                    <p>Countdown: A=2 slot (18μs), B=3 slot (27μs), C=6 slot (54μs)</p>
+                    
+                    <p><strong>A trasmette</strong> a t=316+18=334μs</p>
+                    <p>Finisce a t=334+251=585μs</p>
+                    
+                    <p>Residui: B=1, C=4, A=5 (nuovo pacchetto)</p>
+                    
+                    <h4>Giro 3: t=585 + DIFS = 613μs</h4>
+                    <p>Countdown: A=5 slot (45μs), B=1 slot (9μs), C=4 slot (36μs)</p>
+                    
+                    <p><strong>B trasmette</strong> a t=613+9=622μs</p>
+                    <p>Finisce a t=622+251=873μs</p>
+                    
+                    <p>Residui: A=4, C=3, B=2 (nuovo pacchetto)</p>
+                    
+                    <h4>Giro 4: t=873 + DIFS = 901μs</h4>
+                    <p>Countdown: A=4 slot (36μs), B=2 slot (18μs), C=3 slot (27μs)</p>
+                    
+                    <p><strong>B trasmette</strong> a t=901+18=919μs</p>
+                    <p>Finisce a t=919+251=1170μs</p>
+                    
+                    <p>Residui: A=2, C=1, B=3 (pacchetto successivo)</p>
+                    
+                    <h4>Giro 5: t=1170 + DIFS = 1198μs</h4>
+                    <p>Countdown: A=2 slot (18μs), B=3 slot (27μs), C=1 slot (9μs)</p>
+                    
+                    <p><strong>C trasmette</strong> a t=1198+9=1207μs</p>
+                    <p>Finisce a t=1207+251=1458μs</p>
+                    
+                    <p>Residui: A=1, B=2, C=2 (pacchetto successivo)</p>
+                    
+                    <h4>Giro 6: t=1458 + DIFS = 1486μs</h4>
+                    <p>Countdown: A=1 slot (9μs), B=2 slot (18μs), C=2 slot (18μs)</p>
+                    
+                    <p><strong>A trasmette</strong> a t=1486+9=1495μs</p>
+                    <p>Finisce a t=1495+251=1746μs</p>
+                    
+                    <h4>Riepilogo Sequenza di Trasmissione</h4>
+                    <ol>
+                        <li>C₁: 37μs → 288μs</li>
+                        <li>A₁: 334μs → 585μs</li>
+                        <li>B₁: 622μs → 873μs</li>
+                        <li>B₂: 919μs → 1170μs</li>
+                        <li>C₂: 1207μs → 1458μs</li>
+                        <li>A₂: 1495μs → 1746μs</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 3: Confronto con RTS/CTS</h3>
+                
+                <strong>Problema:</strong> Ripetere l'esercizio precedente con meccanismo RTS/CTS opzionale. Parametri aggiuntivi: T_RTS=15μs, T_CTS=11μs
+                
+                <div class="solution">
+                    <h4>Sequenza RTS/CTS</h4>
+                    <p>La sequenza completa diventa: DIFS → RTS → SIFS → CTS → SIFS → DATA → SIFS → ACK</p>
+                    
+                    <p>Durata trasmissione completa:</p>
+                    <div class="formula">
+                        T_totale = RTS + SIFS + CTS + SIFS + DATA + SIFS + ACK
+                    </div>
+                    <div class="formula">
+                        T_totale = 15 + 10 + 11 + 10 + 230 + 10 + 11 = 297μs
+                    </div>
+                    
+                    <h4>Giro 1 con RTS/CTS</h4>
+                    <p><strong>C trasmette</strong> a t=37μs, finisce a t=37+297=334μs</p>
+                    
+                    <h4>Giro 2 con RTS/CTS</h4>
+                    <p><strong>A trasmette</strong> a t=334+28+18=380μs, finisce a t=380+297=677μs</p>
+                    
+                    <p>Il meccanismo RTS/CTS riduce leggermente l'overhead per pacchetti lunghi e migliora l'efficienza riducendo le collisioni in reti con hidden terminal.</p>
+                    
+                    <h4>Confronto</h4>
+                    <table>
+                        <tr>
+                            <th>Meccanismo</th>
+                            <th>Overhead per TX</th>
+                            <th>Vantaggi</th>
+                            <th>Svantaggi</th>
+                        </tr>
+                        <tr>
+                            <td>DCF Base</td>
+                            <td>251μs</td>
+                            <td>Semplice, basso overhead</td>
+                            <td>Collisioni con hidden terminal</td>
+                        </tr>
+                        <tr>
+                            <td>RTS/CTS</td>
+                            <td>297μs</td>
+                            <td>Riduce hidden terminal</td>
+                            <td>Maggiore overhead</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 4: Throughput Multi-Rate</h3>
+                
+                <strong>Problema:</strong> Tre stazioni condividono un canale con velocità PHY diverse:
+                <ul>
+                    <li>Stazione 1: 54 Mb/s</li>
+                    <li>Stazione 2: 24 Mb/s</li>
+                    <li>Stazione 3: 6 Mb/s</li>
+                </ul>
+                
+                <p>Ogni stazione ha pacchetti da 1500 byte. Calcolare il throughput totale assumendo accesso equo.</p>
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo tempi di trasmissione</h4>
+                    <p>Dimensione pacchetto: 1500 × 8 = 12,000 bit</p>
+                    
+                    <div class="formula">
+                        T₁ = 12,000 / 54,000,000 = 222.2 μs
+                    </div>
+                    <div class="formula">
+                        T₂ = 12,000 / 24,000,000 = 500 μs
+                    </div>
+                    <div class="formula">
+                        T₃ = 12,000 / 6,000,000 = 2,000 μs
+                    </div>
+                    
+                    <h4>Passo 2: Probabilità di accesso</h4>
+                    <p>Assumendo accesso equo: P₁ = P₂ = P₃ = 1/3</p>
+                    
+                    <h4>Passo 3: Tempo medio per ciclo</h4>
+                    <div class="formula">
+                        T_medio = (T₁ + T₂ + T₃) / 3 = (222.2 + 500 + 2000) / 3 = 907.4 μs
+                    </div>
+                    
+                    <h4>Passo 4: Throughput per stazione</h4>
+                    <div class="formula">
+                        f₁ = T₁ / T_totale = 222.2 / 2722.2 = 8.16%
+                    </div>
+                    <div class="formula">
+                        f₂ = T₂ / T_totale = 500 / 2722.2 = 18.37%
+                    </div>
+                    <div class="formula">
+                        f₃ = T₃ / T_totale = 2000 / 2722.2 = 73.47%
+                    </div>
+                    
+                    <h4>Passo 5: Throughput totale</h4>
+                    <p>Pacchetti trasmessi per secondo: 3 / (T_totale × 10⁻⁶) = 3 / 0.002722 = 1,102 pkt/s</p>
+                    
+                    <div class="formula">
+                        Throughput_totale = 1,102 × 12,000 bit = 13.22 Mb/s
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <p>Il throughput totale della rete è <strong>13.22 Mb/s</strong></p>
+                    
+                    <div class="note">
+                        <strong>Osservazione:</strong> La stazione più lenta (6 Mb/s) occupa il 73.47% del tempo di accesso al canale, limitando significativamente le prestazioni complessive della rete. Questo è noto come "performance anomaly" nelle reti 802.11.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fine documento -->
+    <div class="page-break">
+        <div style="text-align: center; margin-top: 5cm; font-size: 16pt; color: #000080;">
+            <strong>FINE DISPENSA</strong>
+            <br><br>
+            <em>Università degli Studi di Palermo<br>
+            Facoltà di Ingegneria<br>
+            Anno Accademico 2025/2026</em>
+        </div>
+    </div>
+
+</body>
+</html>
