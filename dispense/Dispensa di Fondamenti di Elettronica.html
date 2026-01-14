@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)https://kevinpetrone.github.io/Dispensa_Fondamenti_Di_Elettronica/ -->
+<html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa di Fondamenti di Elettronica</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.5cm;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 9pt;
+            line-height: 1.2;
+            color: #000;
+            background: white;
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 0cm;
+        }
+        
+        .frontpage {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            page-break-after: always;
+        }
+        
+        .frontpage h1 {
+            font-size: 24pt;
+            font-weight: bold;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+        
+        .frontpage h2 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin: 15px 0;
+            text-transform: uppercase;
+        }
+        
+        .frontpage h3 {
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+        .frontpage .details {
+            font-size: 11pt;
+            margin-top: 50px;
+            line-height: 1.8;
+        }
+        
+        .index {
+            page-break-after: always;
+            margin-top: 50px;
+        }
+        
+        .index h2 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .index ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .index li {
+            margin: 15px 0;
+            font-size: 12pt;
+        }
+        
+        .chapter {
+            page-break-before: always;
+            margin-top: 50px;
+        }
+        
+        .chapter h2 {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        .chapter h3 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .chapter h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        p {
+            text-align: justify;
+            margin: 10px 0;
+            font-size: 11pt;
+        }
+        
+        .formula {
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12pt;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+        
+        .diagram {
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            font-size: 10pt;
+            overflow-x: auto;
+        }
+        
+        .note {
+            border-left: 4px solid #000;
+            padding-left: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            background: #f9f9f9;
+            padding: 10px 15px;
+        }
+        
+        .example {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+        
+        .example h4 {
+            margin-top: 0;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .chapter {
+                page-break-before: always;
+            }
+        }
+        
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        strong {
+            font-weight: bold;
+        }
+        
+        em {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- FRONTPAGE -->
+    <div class="frontpage">
+        <h1>UNIVERSITÀ DEGLI STUDI DI PALERMO</h1>
+        <h2>FACOLTÀ DI INGEGNERIA</h2>
+        <h3>Dispensa di Fondamenti di Elettronica</h3>
+        <div class="details">
+            <p><strong>Prova in Itinere</strong></p>
+            <p>Sviluppatore: Petrone Kevin</p>
+            <p>Matricola: 0774409</p>
+            <p>Docente: Livreri Patrizia</p>
+            <p>Corso: Ing. Robotica</p>
+            <p>Anno Accademico: 2025/2026</p>
+            <p>Data: Ottobre 2025</p>
+        </div>
+    </div>
+
+    <!-- INDICE -->
+    <div class="index">
+        <h2>INDICE</h2>
+        <ul>
+            <li>1. Richiami di Chimica e Fisica dei Semiconduttori</li>
+            <li>2. Il Diodo a Giunzione</li>
+            <li>3. Diodo Schottky</li>
+            <li>4. Diodo Zener</li>
+            <li>5. Applicazioni dei Diodi</li>
+        </ul>
+    </div>
+
+    <!-- CAPITOLO 1 -->
+    <div class="chapter">
+        <h2>1. RICHIAMI DI CHIMICA E FISICA DEI SEMICONDUTTORI</h2>
+        
+        <h3>1.1 Struttura dell'Atomo</h3>
+        <p>L'atomo è l'unità fondamentale della materia ed è composto da un nucleo centrale e da elettroni che orbitano attorno ad esso. Il nucleo contiene protoni, particelle con carica elettrica positiva, e neutroni, particelle prive di carica elettrica. Gli elettroni sono particelle con carica elettrica negativa che si muovono in regioni dello spazio attorno al nucleo chiamate orbitali.</p>
+        
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Rappresentazione schematica di un atomo:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine1.png" alt="Rappresentazione schematica di un atomo" style="max-width: 20%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+
+        </div>
+        
+        <p>In un atomo neutro, il numero di protoni è uguale al numero di elettroni, bilanciando così la carica complessiva. Il numero di protoni determina l'elemento chimico, mentre il numero di neutroni può variare dando origine agli isotopi.</p>
+
+        <h3>1.2 I Semiconduttori</h3>
+        <p>I semiconduttori sono materiali che hanno proprietà elettriche intermedie tra i conduttori (come i metalli) e gli isolanti (come il vetro o la plastica). I semiconduttori più comuni utilizzati in elettronica sono il silicio (Si) e il germanio (Ge). Il silicio è il più utilizzato grazie alla sua abbondanza, stabilità termica e facilità di lavorazione.</p>
+        
+        <p>La caratteristica fondamentale dei semiconduttori è che la loro conducibilità elettrica può essere controllata e modificata attraverso diversi meccanismi, in particolare il drogaggio e la temperatura.</p>
+
+        <h3>1.3 Livelli Energetici degli Elettroni nei Solidi</h3>
+        <p>Nei solidi cristallini, come i semiconduttori, gli elettroni non possono assumere qualsiasi valore di energia, ma solo determinati valori discreti organizzati in bande energetiche. Le due bande più importanti sono:</p>
+        
+        <ul>
+            <li><strong>Banda di Valenza:</strong> è la banda energetica più alta completamente occupata dagli elettroni a temperatura zero assoluto. Gli elettroni in questa banda sono coinvolti nei legami chimici tra gli atomi.</li>
+            <li><strong>Banda di Conduzione:</strong> è la banda energetica immediatamente superiore alla banda di valenza. Gli elettroni in questa banda sono liberi di muoversi nel cristallo e contribuiscono alla conduzione elettrica.</li>
+        </ul>
+        
+        <p>Tra queste due bande esiste una regione energetica proibita chiamata <strong>gap energetico</strong> o <strong>banda proibita</strong> (energy gap), in cui gli elettroni non possono esistere. L'ampiezza di questo gap determina se un materiale è un conduttore, un semiconduttore o un isolante:</p>
+        
+        <ul>
+            <li><strong>Conduttori:</strong> gap energetico nullo o sovrapposizione delle bande</li>
+            <li><strong>Semiconduttori:</strong> gap energetico piccolo (circa 1 eV per il silicio a temperatura ambiente)</li>
+            <li><strong>Isolanti:</strong> gap energetico grande (maggiore di 3-4 eV)</li>
+        </ul>
+
+        <div class="diagram">
+Rappresentazione delle bande energetiche:
+
+ISOLANTE          SEMICONDUTTORE        CONDUTTORE
+                                        
+ ┌─────┐           ┌─────┐              ┌─────┐
+ │ B.C │           │ B.C │              │ B.C │
+ └─────┘           └─────┘              ├─────┤
+                                        │ B.V │
+   ↑↑↑               ↑↑                 └─────┘
+  GAP~5eV          GAP~1eV             GAP=0eV
+   ↓↓↓               ↓↓                 
+                                        B.C = Banda di Conduzione
+ ┌─────┐           ┌─────┐             B.V = Banda di Valenza
+ │ B.V │           │ B.V │
+ └─────┘           └─────┘
+        </div>
+
+        <h3>1.4 Il Legame Covalente</h3>
+        <p>Nel cristallo di silicio puro (intrinseco), ogni atomo di silicio ha quattro elettroni di valenza e forma legami covalenti con quattro atomi vicini. In un legame covalente, due atomi condividono una coppia di elettroni, creando una struttura cristallina molto stabile.</p>
+        
+        <div class="diagram">
+Struttura cristallina del silicio (rappresentazione bidimensionale):
+
+        Si          Si          Si
+       / | \       / | \       / | \
+      /  |  \     /  |  \     /  |  \
+    Si---Si---Si---Si---Si---Si---Si
+      \  |  /     \  |  /     \  |  /
+       \ | /       \ | /       \ | /
+        Si          Si          Si
+
+Ogni linea rappresenta un legame covalente (coppia di elettroni condivisi)
+        </div>
+        
+        <p>A temperatura zero assoluto, tutti gli elettroni sono impegnati nei legami covalenti e il materiale si comporta come un isolante. Tuttavia, all'aumentare della temperatura, alcuni elettroni acquisiscono energia termica sufficiente per rompere i legami covalenti e passare dalla banda di valenza alla banda di conduzione, diventando liberi di muoversi e contribuire alla conduzione elettrica.</p>
+
+        <h3>1.5 Elettroni e Lacune</h3>
+        <p>Quando un elettrone acquisisce energia sufficiente per passare dalla banda di valenza alla banda di conduzione, lascia dietro di sé uno stato vuoto nel legame covalente. Questo stato vuoto è chiamato <strong>lacuna</strong> (hole in inglese) e si comporta come una carica positiva libera di muoversi nel cristallo.</p>
+        
+        <p>La lacuna può essere riempita da un elettrone di un legame adiacente, ma questo crea una nuova lacuna nella posizione precedente dell'elettrone. In questo modo, le lacune si muovono attraverso il cristallo in direzione opposta al movimento degli elettroni. Dal punto di vista macroscopico, il movimento delle lacune contribuisce alla corrente elettrica esattamente come il movimento degli elettroni.</p>
+        
+        <div class="note">
+            <strong>Nota importante:</strong> In un semiconduttore intrinseco (puro), il numero di elettroni liberi nella banda di conduzione è sempre uguale al numero di lacune nella banda di valenza, poiché ogni elettrone che passa alla banda di conduzione lascia una lacuna nella banda di valenza.
+        </div>
+
+        <h3>1.6 Drogaggio dei Semiconduttori</h3>
+        <p>Per controllare e aumentare la conducibilità di un semiconduttore, si introduce deliberatamente una piccola quantità di impurità nel cristallo attraverso un processo chiamato <strong>drogaggio</strong>. Le impurità utilizzate sono atomi con un numero di elettroni di valenza diverso da quello del semiconduttore base (il silicio ha 4 elettroni di valenza).</p>
+
+        <h4>1.6.1 Drogaggio di Tipo N (elettroni)</h4>
+        <p>Nel drogaggio di tipo N, si introducono nel cristallo di silicio atomi <strong>pentavalenti</strong> (con 5 elettroni di valenza), tipicamente fosforo (P), arsenico (As) o antimonio (Sb). Questi atomi sono chiamati <strong>donatori</strong> perché "donano" un elettrone libero al cristallo.</p>
+        
+        <p>Quando un atomo pentavalente sostituisce un atomo di silicio nel reticolo cristallino, quattro dei suoi cinque elettroni di valenza formano legami covalenti con i quattro atomi di silicio vicini. Il quinto elettrone è debolmente legato all'atomo donatore e richiede pochissima energia (circa 0,05 eV) per diventare libero e passare alla banda di conduzione.</p>
+        
+        <div class="diagram">
+Drogaggio di tipo N con atomo pentavalente (es. Fosforo):
+
+        Si          Si          Si
+       / | \       / | \       / | \
+      /  |  \     /  |  \     /  |  \
+    Si---Si---Si---P(+)--Si---Si---Si
+      \  |  /     \  |  /     \  |  /    e- = elettrone libero
+       \ | /       \ | /       \ | /          in banda di conduzione
+        Si          Si  e-      Si
+        
+P(+) = atomo donatore (carica positiva fissa nel reticolo)
+        </div>
+        
+        <p>In un semiconduttore di tipo N, i portatori di carica maggioritari sono gli <strong>elettroni</strong>, mentre le lacune sono i portatori minoritari. La concentrazione di elettroni è molto maggiore della concentrazione di lacune.</p>
+
+        <h4>1.6.2 Drogaggio di Tipo P (lacune)</h4>
+        <p>Nel drogaggio di tipo P, si introducono atomi <strong>trivalenti</strong> (con 3 elettroni di valenza), tipicamente boro (B), gallio (Ga) o indio (In). Questi atomi sono chiamati <strong>accettori</strong> perché "accettano" un elettrone da un legame vicino, creando una lacuna.</p>
+        
+        <p>Quando un atomo trivalente sostituisce un atomo di silicio, i suoi tre elettroni di valenza formano legami covalenti con tre dei quattro atomi di silicio vicini, lasciando un legame incompleto. Questo legame incompleto può essere completato "rubando" un elettrone da un legame covalente adiacente, creando così una lacuna mobile.</p>
+        
+        <div class="diagram">
+Drogaggio di tipo P con atomo trivalente (es. Boro):
+
+        Si          Si          Si
+       / | \       / | \       / | \
+      /  |  \     /  |  \     /  |  \
+    Si---Si---Si---B(-)--Si---Si---Si
+      \  |  /     \ h+ /      \  |  /
+       \ | /       \ | /       \ | /
+        Si          Si          Si
+        
+B(-) = atomo accettore (carica negativa fissa nel reticolo)
+h+ = lacuna (hole) mobile
+        </div>
+        
+        <p>In un semiconduttore di tipo P, i portatori di carica maggioritari sono le <strong>lacune</strong>, mentre gli elettroni sono i portatori minoritari. La concentrazione di lacune è molto maggiore della concentrazione di elettroni.</p>
+
+        <h3>1.7 La Giunzione P-N</h3>
+        <p>Quando si mettono a contatto una regione di tipo P e una regione di tipo N nello stesso cristallo di semiconduttore, si forma una <strong>giunzione P-N</strong>, che è la base di funzionamento del diodo.</p>
+        
+        <p>Al momento del contatto, si verifica un fenomeno di <strong>diffusione</strong>: gli elettroni liberi dalla regione N tendono a diffondere verso la regione P (dove sono pochi), mentre le lacune dalla regione P tendono a diffondere verso la regione N. Questo movimento di cariche crea una <strong>regione di svuotamento</strong> (o regione di carica spaziale) nella zona di confine tra le due regioni.</p>
+
+        <div class="diagram">
+Giunzione P-N e formazione della regione di svuotamento:
+
+REGIONE P        | REGIONE DI  |       REGIONE N
+                 | SVUOTAMENTO |
+h+ h+ h+ h+      |-  -  -  +  +|      e- e- e- e-
+h+ h+ h+ h+      |-  -  -  +  +|      e- e- e- e-
+h+ h+ h+ h+      |-  -  -  +  +|      e- e- e- e-
+                 |             |
+                 |&lt;-----------&gt;|
+                     Zona di
+                   svuotamento
+                   
+Campo elettrico: da N verso P (dalle cariche + alle cariche -)
+        </div>
+        
+        <p>Nella regione di svuotamento:</p>
+        <ul>
+            <li>Gli elettroni che diffondono dalla regione N si ricombinano con le lacune della regione P, lasciando scoperte le cariche positive fisse degli atomi donatori nella regione N</li>
+            <li>Le lacune che diffondono dalla regione P si ricombinano con gli elettroni della regione N, lasciando scoperte le cariche negative fisse degli atomi accettori nella regione P</li>
+            <li>Si crea quindi un campo elettrico diretto dalla regione N (positiva) alla regione P (negativa)</li>
+            <li>Questo campo elettrico si oppone all'ulteriore diffusione di portatori, fino a raggiungere una condizione di equilibrio</li>
+        </ul>
+        
+        <p>La differenza di potenziale che si stabilisce attraverso la regione di svuotamento è chiamata <strong>potenziale di built-in</strong> o <strong>barriera di potenziale</strong>. Per il silicio, questo valore è tipicamente circa 0,6-0,7 V a temperatura ambiente.</p>
+        
+        <div class="note">
+            <strong>Nota:</strong> La regione di svuotamento è così chiamata perché è "svuotata" di portatori mobili (elettroni e lacune), contenendo solo le cariche fisse degli atomi ionizzati. Questa regione si comporta come un dielettrico (isolante) e la sua larghezza dipende dalla concentrazione di drogaggio delle due regioni.
+        </div>
+
+        <h4>1.7.1 Polarizzazione della Giunzione</h4>
+        <p>Il comportamento della giunzione P-N dipende dalla tensione esterna applicata:</p>
+        
+        <p><strong>Polarizzazione Diretta:</strong> Quando si applica una tensione esterna positiva alla regione P rispetto alla regione N, il campo elettrico esterno si oppone al campo elettrico interno della giunzione. Questo riduce l'ampiezza della regione di svuotamento e abbassa la barriera di potenziale, permettendo ai portatori maggioritari di attraversare facilmente la giunzione. Si ha quindi passaggio di corrente.</p>
+        
+        <p><strong>Polarizzazione Inversa:</strong> Quando si applica una tensione esterna negativa alla regione P rispetto alla regione N, il campo elettrico esterno rinforza il campo elettrico interno. Questo aumenta l'ampiezza della regione di svuotamento e alza la barriera di potenziale, impedendo ai portatori maggioritari di attraversare la giunzione. La corrente è praticamente nulla (solo una piccola corrente di portatori minoritari).</p>
+    </div>
+
+    <!-- CAPITOLO 2 -->
+    <div class="chapter">
+        <h2>2. IL DIODO A GIUNZIONE</h2>
+        
+        <h3>2.1 Principio di Funzionamento</h3>
+        <p>Il diodo a giunzione è un dispositivo elettronico a due terminali basato sulla giunzione P-N. Si comporta essenzialmente come un <strong>interruttore unidirezionale di corrente</strong>: permette il passaggio di corrente in una direzione (quando è "ON") e lo blocca nella direzione opposta (quando è "OFF").</p>
+        
+        <p>I due terminali del diodo sono chiamati:</p>
+        <ul>
+            <li><strong>Anodo (A):</strong> collegato alla regione di tipo P</li>
+            <li><strong>Catodo (K):</strong> collegato alla regione di tipo N</li>
+        </ul>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Simbolo circuitale del diodo:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine2.png" alt="Simbolo circuitale del diodo" style="max-width: 10%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+            
+La freccia indica la direzione convenzionale della corrente
+(dalla regione P alla regione N in polarizzazione diretta)
+        </div>
+
+        <h3>2.2 Stati di Funzionamento del Diodo</h3>
+        
+        <h4>2.2.1 Stato ON (Saturazione, Polarizzazione Diretta, Circuito Chiuso)</h4>
+        <p>Il diodo si trova in stato ON quando l'anodo è a potenziale positivo rispetto al catodo con una tensione superiore alla tensione di soglia V<sub>γ</sub> (gamma). In questo stato:</p>
+        <ul>
+            <li>La barriera di potenziale della giunzione è ridotta</li>
+            <li>I portatori maggioritari possono attraversare facilmente la giunzione</li>
+            <li>Il diodo conduce corrente con una resistenza molto bassa (idealmente nulla)</li>
+            <li>La tensione ai capi del diodo rimane circa costante e pari a V<sub>γ</sub> ≈ 0,6-0,7 V per il silicio</li>
+            <li>Il diodo si comporta come un interruttore chiuso in serie con una piccola batteria di tensione V<sub>γ</sub></li>
+        </ul>
+
+        <h4>2.2.2 Stato OFF (Interdizione, Polarizzazione Inversa, Circuito Aperto)</h4>
+        <p>Il diodo si trova in stato OFF quando l'anodo è a potenziale negativo rispetto al catodo, o quando la tensione diretta è inferiore a V<sub>γ</sub>. In questo stato:</p>
+        <ul>
+            <li>La barriera di potenziale della giunzione è aumentata</li>
+            <li>I portatori maggioritari non possono attraversare la giunzione</li>
+            <li>Il diodo blocca la corrente con una resistenza molto alta (idealmente infinita)</li>
+            <li>Scorre solo una piccolissima corrente di perdita (corrente inversa di saturazione)</li>
+            <li>Il diodo si comporta come un interruttore aperto</li>
+        </ul>
+
+        <h3>2.3 Caratteristica Tensione-Corrente del Diodo</h3>
+        <p>La relazione tra la corrente che attraversa il diodo (I<sub>D</sub>) e la tensione ai suoi capi (V<sub>D</sub>) è descritta dall'<strong>equazione di Shockley</strong>:</p>
+        
+        <div class="formula">
+I<sub>D</sub> = I<sub>S</sub> · (e<sup>V<sub>D</sub>/(n·V<sub>T</sub>)</sup> - 1)
+        </div>
+        
+        <p>Dove:</p>
+        <ul>
+            <li><strong>I<sub>D</sub>:</strong> corrente attraverso il diodo</li>
+            <li><strong>V<sub>D</sub>:</strong> tensione ai capi del diodo (positiva in polarizzazione diretta)</li>
+            <li><strong>I<sub>S</sub>:</strong> corrente di saturazione inversa (tipicamente 10<sup>-14</sup> - 10<sup>-12</sup> A per diodi al silicio)</li>
+            <li><strong>n:</strong> coefficiente di idealità o fattore di emissione (varia tra 1 e 2, tipicamente 1 per diodi ideali, 1,2-2 per diodi reali)</li>
+            <li><strong>V<sub>T</sub>:</strong> tensione termica = k·T/q ≈ 26 mV a temperatura ambiente (T = 300 K)</li>
+            <li><strong>k:</strong> costante di Boltzmann = 1,38 × 10<sup>-23</sup> J/K</li>
+            <li><strong>q:</strong> carica dell'elettrone = 1,6 × 10<sup>-19</sup> C</li>
+            <li><strong>T:</strong> temperatura assoluta in Kelvin</li>
+        </ul>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Caratteristica I-V del diodo reale vs ideale:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine3.png" alt="Caratteristica I-V del diodo reale vs ideale" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+        </div>
+
+        <h4>2.3.1 Diodo Ideale</h4>
+        <p>Per semplificare l'analisi dei circuiti, spesso si utilizza il modello del <strong>diodo ideale</strong>:</p>
+        <ul>
+            <li><strong>Polarizzazione diretta (V<sub>D</sub> &gt; 0):</strong> il diodo conduce perfettamente con resistenza nulla (cortocircuito), V<sub>D</sub> = 0 V</li>
+            <li><strong>Polarizzazione inversa (V<sub>D</sub> &lt; 0):</strong> il diodo blocca completamente con resistenza infinita (circuito aperto), I<sub>D</sub> = 0 A</li>
+        </ul>
+        
+        <div class="note">
+            <strong>Nota:</strong> Il modello ideale è utile per analisi qualitative rapide, ma per calcoli più precisi si utilizza il modello con tensione di soglia costante V<sub>γ</sub> o l'equazione di Shockley completa.
+        </div>
+
+        <h3>2.4 Aspetto Fisico del Diodo</h3>
+        <p>Fisicamente, un diodo a giunzione si presenta come un piccolo parallelepipedo o cilindro di silicio (o altro semiconduttore) contenente una singola giunzione P-N. Il cristallo di silicio è stato drogato in modo da creare due regioni distinte:</p>
+        <ul>
+            <li>Una regione con <strong>eccesso di lacune</strong> (drogaggio di tipo P) - corrisponde all'anodo</li>
+            <li>Una regione con <strong>eccesso di elettroni</strong> (drogaggio di tipo N) - corrisponde al catodo</li>
+        </ul>
+        
+        <p>Il dispositivo è incapsulato in un contenitore protettivo (plastica, vetro o metallo) con due terminali esterni. Spesso, il catodo è identificato da un anello o una banda colorata sul corpo del diodo.</p>
+
+        <h3>2.5 Analisi di Circuiti con Diodi</h3>
+        
+        <h4>2.5.1 Circuito Fondamentale con Generatore di Tensione Costante</h4>
+        <p>Consideriamo il circuito più semplice con un diodo: un generatore di tensione costante V<sub>DD</sub>, una resistenza R e un diodo.</p>
+        
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Circuito base con diodo:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine4.png" alt="Circuito base con diodo" style="max-width: 20%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+    
+V<sub>DD</sub> = tensione del generatore
+V<sub>D</sub> = tensione ai capi del diodo
+R = resistenza di limitazione
+I<sub>D</sub> = corrente attraverso il diodo
+        </div>
+        
+        <p>Per analizzare questo circuito, dobbiamo determinare se il diodo conduce o no, e in caso affermativo, calcolare la corrente che lo attraversa.</p>
+        
+        <p><strong>Applicando la legge di Kirchhoff delle tensioni (KVL) alla maglia:</strong></p>
+        
+        <div class="formula">
+V<sub>DD</sub> = V<sub>R</sub> + V<sub>D</sub> = R · I<sub>D</sub> + V<sub>D</sub>
+        </div>
+        
+        <p>Se il diodo conduce (V<sub>D</sub> ≈ V<sub>γ</sub> = 0,7 V per il silicio), possiamo calcolare la corrente:</p>
+        
+        <div class="formula">
+I<sub>D</sub> = (V<sub>DD</sub> - V<sub>D</sub>) / R = (V<sub>DD</sub> - V<sub>γ</sub>) / R
+        </div>
+        
+        <p><strong>Condizione di conduzione:</strong> Il diodo conduce se e solo se V<sub>DD</sub> &gt; V<sub>γ</sub>. Se V<sub>DD</sub> ≤ V<sub>γ</sub>, il diodo è interdetto, I<sub>D</sub> = 0 e V<sub>D</sub> = V<sub>DD</sub>.</p>
+
+        <div class="example">
+            <h4>Esempio 2.1: Calcolo della corrente nel diodo</h4>
+            <p><strong>Dati:</strong></p>
+            <ul>
+                <li>V<sub>DD</sub> = 5 V</li>
+                <li>R = 1 kΩ = 1000 Ω</li>
+                <li>Diodo al silicio con V<sub>γ</sub> = 0,7 V</li>
+            </ul>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>1. Verifichiamo se il diodo conduce: V<sub>DD</sub> = 5 V &gt; V<sub>γ</sub> = 0,7 V ✓ Il diodo conduce</p>
+            <p>2. Calcoliamo la corrente:</p>
+            <div class="formula">
+I<sub>D</sub> = (V<sub>DD</sub> - V<sub>γ</sub>) / R = (5 - 0,7) / 1000 = 4,3 / 1000 = 4,3 mA
+            </div>
+            <p>3. Verifichiamo la tensione sulla resistenza:</p>
+            <div class="formula">
+V<sub>R</sub> = R · I<sub>D</sub> = 1000 · 0,0043 = 4,3 V
+            </div>
+            <p>4. Verifica: V<sub>DD</sub> = V<sub>R</sub> + V<sub>D</sub> = 4,3 + 0,7 = 5 V ✓</p>
+            
+            <p><strong>Potenza dissipata dal diodo:</strong></p>
+            <div class="formula">
+P<sub>D</sub> = V<sub>D</sub> · I<sub>D</sub> = 0,7 · 0,0043 = 3,01 mW
+            </div>
+        </div>
+
+        <h4>2.5.2 Metodo Grafico (Load Line)</h4>
+        <p>Quando la tensione di alimentazione è superiore alla soglia e vogliamo considerare la caratteristica non lineare del diodo, possiamo utilizzare il <strong>metodo grafico della retta di carico</strong> (load line).</p>
+        
+        <p>La retta di carico rappresenta l'equazione della maglia del circuito sul piano V<sub>D</sub>-I<sub>D</sub>:</p>
+        
+        <div class="formula">
+I<sub>D</sub> = (V<sub>DD</sub> - V<sub>D</sub>) / R
+        </div>
+        
+        <p>Questa è l'equazione di una retta con:</p>
+        <ul>
+            <li><strong>Intercetta sull'asse V<sub>D</sub>:</strong> quando I<sub>D</sub> = 0, si ha V<sub>D</sub> = V<sub>DD</sub></li>
+            <li><strong>Intercetta sull'asse I<sub>D</sub>:</strong> quando V<sub>D</sub> = 0, si ha I<sub>D</sub> = V<sub>DD</sub>/R</li>
+            <li><strong>Pendenza:</strong> -1/R</li>
+        </ul>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Metodo grafico - retta di carico e punto operativo:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine5.png" alt="Metodo grafico - retta di carico e punto operativo" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+
+Q = punto di lavoro (intersezione tra retta di carico e caratteristica del diodo)
+        </div>
+        
+        <p>Il <strong>punto operativo Q</strong> (quiescent point) è l'intersezione tra la retta di carico e la caratteristica I-V del diodo. Le coordinate di Q forniscono i valori di tensione e corrente del diodo nel circuito.</p>
+
+        <h4>2.5.3 Metodo Iterativo</h4>
+        <p>Per circuiti più complessi o quando si vuole maggiore precisione, si può utilizzare un <strong>metodo iterativo</strong> basato sull'equazione di Shockley:</p>
+        
+        <p><strong>Procedimento:</strong></p>
+        <ol>
+            <li>Si assume un valore iniziale per V<sub>D</sub> (ad esempio V<sub>D</sub> = 0 V oppure V<sub>D</sub> = V<sub>γ</sub>)</li>
+            <li>Si calcola I<sub>D</sub> usando l'equazione del circuito: I<sub>D</sub> = (V<sub>DD</sub> - V<sub>D</sub>) / R</li>
+            <li>Si calcola un nuovo valore di V<sub>D</sub> usando l'equazione di Shockley invertita o una sua approssimazione</li>
+            <li>Si ripete il processo finché la differenza tra due iterazioni successive è minore di una tolleranza prefissata</li>
+        </ol>
+        
+        <div class="note">
+            <strong>Nota pratica:</strong> Nella maggior parte delle applicazioni pratiche, l'approssimazione con tensione di soglia costante V<sub>γ</sub> = 0,7 V (per il silicio) è sufficientemente accurata e molto più semplice da utilizzare.
+        </div>
+
+        <h3>2.6 Casi Particolari e Applicazioni della Legge di Kirchhoff</h3>
+        
+        <h4>2.6.1 Diodo in Polarizzazione Inversa con Generatore</h4>
+        <p>Consideriamo un diodo polarizzato inversamente da un generatore. Se abbiamo un diodo con V<sub>γ</sub> = 0,7 V e una batteria di 5 V che tenta di polarizzarlo inversamente:</p>
+        
+        <div class="example">
+            <h4>Esempio 2.2: Calcolo della tensione di breakdown necessaria</h4>
+            <p>Un diodo con V<sub>γ</sub> = 0,7 V è collegato con l'anodo a massa e il catodo a +5 V attraverso una resistenza. Quale tensione deve sopportare il diodo in polarizzazione inversa?</p>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>In polarizzazione inversa, il diodo si comporta come un circuito aperto (I<sub>D</sub> ≈ 0). Tutta la tensione del generatore cade ai capi del diodo:</p>
+            <div class="formula">
+V<sub>D_inversa</sub> = 5 V
+            </div>
+            <p>Se volessimo che il diodo conducesse in direzione opposta (cosa impossibile per un diodo normale), la tensione necessaria sarebbe:</p>
+            <div class="formula">
+V<sub>necessaria</sub> = V<sub>γ</sub> + V<sub>generatore</sub> = 0,7 + 5 = 5,7 V
+            </div>
+            <p>Questo significa che serve una tensione di 5,7 V nella direzione di conduzione per superare sia la barriera del diodo sia la tensione del generatore che si oppone.</p>
+        </div>
+
+        <h4>2.6.2 Partitore di Tensione con Diodi</h4>
+        <p>Ricordiamo la formula del <strong>partitore di tensione</strong>, utile nell'analisi di circuiti con diodi:</p>
+        
+        <div class="formula">
+V<sub>out</sub> = V<sub>in</sub> · R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        </div>
+        
+        <p>Se R<sub>2</sub> è sostituito da un diodo in conduzione, possiamo considerare che V<sub>out</sub> ≈ V<sub>γ</sub>, indipendentemente da V<sub>in</sub> (purché V<sub>in</sub> &gt; V<sub>γ</sub>).</p>
+
+        <h4>2.6.3 Partitore di Corrente</h4>
+        <p>Quando abbiamo resistenze in parallelo, la corrente si divide secondo la formula del <strong>partitore di corrente</strong>:</p>
+        
+        <div class="formula">
+I<sub>R1</sub> = I<sub>totale</sub> · R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+<br><br>
+I<sub>R2</sub> = I<sub>totale</sub> · R<sub>1</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        </div>
+        
+        <p>Nota: la corrente maggiore scorre nella resistenza minore (relazione inversa).</p>
+
+        <h3>2.7 Massima Potenza Dissipata</h3>
+        <p>Ogni diodo ha una <strong>massima potenza dissipabile</strong> specificata dal costruttore. La potenza dissipata nel diodo è data da:</p>
+        
+        <div class="formula">
+P<sub>D</sub> = V<sub>D</sub> · I<sub>D</sub>
+        </div>
+        
+        <p>In polarizzazione diretta, con V<sub>D</sub> ≈ V<sub>γ</sub>, la potenza dissipata è:</p>
+        
+        <div class="formula">
+P<sub>D</sub> = V<sub>γ</sub> · I<sub>D</sub>
+        </div>
+        
+        <p>Per garantire l'affidabilità del dispositivo, la potenza dissipata deve essere mantenuta al di sotto del valore massimo specificato (tipicamente con un margine di sicurezza del 50-70%).</p>
+        
+        <div class="example">
+            <h4>Esempio 2.3: Verifica della massima potenza</h4>
+            <p><strong>Dati:</strong></p>
+            <ul>
+                <li>Diodo con V<sub>γ</sub> = 0,7 V</li>
+                <li>Corrente I<sub>D</sub> = 100 mA</li>
+                <li>Potenza massima del diodo: P<sub>max</sub> = 500 mW</li>
+            </ul>
+            
+            <p><strong>Calcolo della potenza dissipata:</strong></p>
+            <div class="formula">
+P<sub>D</sub> = V<sub>γ</sub> · I<sub>D</sub> = 0,7 · 0,1 = 0,07 W = 70 mW
+            </div>
+            
+            <p><strong>Verifica:</strong></p>
+            <p>P<sub>D</sub> = 70 mW &lt; P<sub>max</sub> = 500 mW ✓ Il diodo opera in sicurezza</p>
+            <p>Margine di sicurezza: (500 - 70) / 500 = 86% ✓ Ottimo margine</p>
+        </div>
+    </div>
+
+    <!-- CAPITOLO 3 -->
+    <div class="chapter">
+        <h2>3. DIODO SCHOTTKY</h2>
+        
+        <h3>3.1 Struttura e Principio di Funzionamento</h3>
+        <p>Il <strong>diodo Schottky</strong> (o diodo a barriera Schottky) è un tipo particolare di diodo ottenuto dalla giunzione tra un <strong>metallo</strong> e un <strong>semiconduttore</strong> moderatamente drogato di tipo N, anziché dalla classica giunzione P-N.</p>
+        
+        <p>La differenza fondamentale rispetto al diodo a giunzione convenzionale è che il diodo Schottky non presenta una regione P, ma utilizza direttamente il contatto metallo-semiconduttore per formare la barriera di potenziale.</p>
+
+        <div class="diagram">
+Confronto strutturale:
+
+DIODO A GIUNZIONE P-N:          DIODO SCHOTTKY:
+                                
+  ┌──────────┬──────────┐         ┌──────────┬──────────┐
+  │          │          │         │          │          │
+  │ Regione  │ Regione  │         │  Metallo │ Regione  │
+  │    P     │    N     │         │  (Au,Pt) │    N     │
+  │          │          │         │          │          │
+  └──────────┴──────────┘         └──────────┴──────────┘
+      Anodo    Catodo                 Anodo    Catodo
+        </div>
+        
+        <p><strong>Metalli utilizzati:</strong> Tipicamente si usano metalli nobili come oro (Au), platino (Pt), palladio (Pd) o alluminio (Al), scelti in base alle caratteristiche desiderate della barriera.</p>
+
+        <h3>3.2 Caratteristiche Principali</h3>
+        
+        <h4>3.2.1 Tensione di Soglia Ridotta</h4>
+        <p>La caratteristica più importante del diodo Schottky è la sua <strong>tensione di soglia molto più bassa</strong> rispetto al diodo a giunzione P-N:</p>
+        
+        <ul>
+            <li><strong>Diodo Schottky:</strong> V<sub>γ</sub> = 0,2 - 0,4 V</li>
+            <li><strong>Diodo al silicio P-N:</strong> V<sub>γ</sub> = 0,6 - 0,7 V</li>
+            <li><strong>Caduta di tensione diretta tipica:</strong> 0,3 - 0,5 V alla corrente nominale</li>
+        </ul>
+        
+        <p>Questa caratteristica rende il diodo Schottky ideale per applicazioni a bassa tensione dove è importante minimizzare le perdite di potenza.</p>
+
+        <h4>3.2.2 Velocità di Commutazione</h4>
+        <p>Il diodo Schottky presenta un <strong>minore accumulo di carica</strong> rispetto al diodo P-N convenzionale. Questo si traduce in:</p>
+        
+        <ul>
+            <li><strong>Tempi di commutazione molto rapidi:</strong> nell'ordine dei nanosecondi</li>
+            <li><strong>Assenza di carica immagazzinata:</strong> il diodo Schottky è un dispositivo a portatori maggioritari (solo elettroni), senza ricombinazione di lacune</li>
+            <li><strong>Nessun tempo di recovery inverso:</strong> può passare da ON a OFF quasi istantaneamente</li>
+        </ul>
+        
+        <p>Queste caratteristiche rendono il diodo Schottky ideale per applicazioni ad alta frequenza come alimentatori switching, circuiti di raddrizzamento veloci e circuiti logici.</p>
+
+        <h4>3.2.3 Corrente Inversa Maggiore</h4>
+        <p>Lo svantaggio principale del diodo Schottky è una <strong>corrente inversa di saturazione più elevata</strong> rispetto ai diodi P-N:</p>
+        
+        <ul>
+            <li>La corrente di perdita in polarizzazione inversa è tipicamente 10-100 volte maggiore</li>
+            <li>Aumenta significativamente con la temperatura</li>
+            <li>Limita le applicazioni ad alta tensione</li>
+        </ul>
+        
+        <div class="note">
+            <strong>Nota:</strong> I diodi Schottky sono tipicamente limitati a tensioni inverse massime di 100-200 V, mentre i diodi P-N possono sopportare tensioni inverse di migliaia di volt.
+        </div>
+
+        <h3>3.3 Simbolo Circuitale</h3>
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Simbolo del diodo Schottky:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine6.png" alt="Simbolo del diodo Schottky" style="max-width: 10%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+           
+Le due linee alle estremità del catodo
+distinguono il diodo Schottky dal diodo normale
+        </div>
+
+        <h3>3.4 Applicazioni Tipiche</h3>
+        <ul>
+            <li><strong>Alimentatori switching:</strong> raddrizzatori ad alta frequenza con basse perdite</li>
+            <li><strong>Circuiti di protezione:</strong> protezione contro inversione di polarità</li>
+            <li><strong>Circuiti logici veloci:</strong> diodi di clamp e OR-ing</li>
+            <li><strong>Raddrizzatori a bassa tensione:</strong> dove la caduta di 0,7 V sarebbe eccessiva</li>
+            <li><strong>Mixer e rivelatori RF:</strong> applicazioni ad alta frequenza</li>
+        </ul>
+    </div>
+
+    <!-- CAPITOLO 4 -->
+    <div class="chapter">
+        <h2>4. DIODO ZENER</h2>
+        
+        <h3>4.1 Caratteristica Fondamentale</h3>
+        <p>Il <strong>diodo Zener</strong> è un tipo speciale di diodo progettato per lavorare nella <strong>regione di breakdown</strong> (o regione Zener) in polarizzazione inversa. A differenza dei diodi normali, che devono evitare la regione di breakdown per non danneggiarsi, il diodo Zener è costruito appositamente per operare stabilmente in questa regione.</p>
+        
+        <p>La caratteristica che rende il diodo Zener estremamente utile è che, una volta superato il <strong>ginocchio della caratteristica</strong> (knee point), la tensione ai suoi capi rimane pressoché costante indipendentemente dalla corrente che lo attraversa.</p>
+
+        <h3>4.2 Principio di Funzionamento</h3>
+        <p>Quando un diodo Zener è polarizzato inversamente con una tensione superiore alla sua <strong>tensione di Zener</strong> (V<sub>Z</sub>), si verifica il fenomeno del breakdown. Ci sono due meccanismi principali:</p>
+        
+        <ul>
+            <li><strong>Effetto Zener</strong> (V<sub>Z</sub> &lt; 5-6 V): Effetto tunnel quantomeccanico che permette agli elettroni di attraversare la barriera di potenziale</li>
+            <li><strong>Breakdown a valanga</strong> (V<sub>Z</sub> &gt; 5-6 V): Gli elettroni accelerati dal campo elettrico ionizzano altri atomi, creando una reazione a catena</li>
+        </ul>
+        
+        <p>I diodi Zener sono fabbricati con <strong>drogaggi molto intensi</strong> di entrambe le regioni P e N, il che crea una giunzione con campo elettrico molto elevato e regione di svuotamento molto stretta, favorendo il breakdown a tensioni controllate.</p>
+
+        <h3>4.3 Caratteristica I-V del Diodo Zener</h3>
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Caratteristica completa del diodo Zener:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine8.png" alt="Caratteristica completa del diodo Zener" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+        </div>
+        
+        <p><strong>Parametri fondamentali:</strong></p>
+        <ul>
+            <li><strong>V<sub>Z</sub>:</strong> Tensione di Zener nominale (specificata a una corrente di test I<sub>ZT</sub>)</li>
+            <li><strong>I<sub>ZK</sub>:</strong> Corrente di ginocchio (corrente minima per entrare nella regione di regolazione)</li>
+            <li><strong>I<sub>ZM</sub>:</strong> Corrente massima ammissibile (limitata dalla potenza massima dissipabile)</li>
+            <li><strong>P<sub>Z</sub>:</strong> Potenza massima dissipabile (tipicamente 400 mW, 500 mW, 1 W, 5 W)</li>
+        </ul>
+
+        <h3>4.4 Resistenza Dinamica</h3>
+        <p>Anche se idealmente la caratteristica I-V nella regione Zener sarebbe una retta perfettamente verticale (tensione costante), in realtà ha una piccola pendenza. Questa pendenza è quantificata dalla <strong>resistenza dinamica</strong> r<sub>Z</sub> (o r<sub>d</sub>):</p>
+        
+        <div class="formula">
+r<sub>Z</sub> = ΔV<sub>Z</sub> / ΔI<sub>Z</sub>
+        </div>
+        
+        <p>Dove ΔV<sub>Z</sub> è la variazione di tensione Zener corrispondente a una variazione ΔI<sub>Z</sub> della corrente.</p>
+        
+        <p><strong>Caratteristiche della resistenza dinamica:</strong></p>
+        <ul>
+            <li>Tipicamente varia da pochi ohm a qualche decina di ohm</li>
+            <li>Più bassa è r<sub>Z</sub>, più stabile è la tensione Zener</li>
+            <li>Di solito non supera i 10 Ω per diodi Zener di buona qualità</li>
+            <li>Varia con la corrente: è minima vicino alla corrente di test I<sub>ZT</sub></li>
+        </ul>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Modello equivalente del diodo Zener in breakdown:
+
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine9.png" alt="Modello equivalente del diodo Zener in breakdown" style="max-width: 10%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine7.png" alt="Simbolo del diodo Zener" style="max-width: 10%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+           
+La "Z" alle estremità identifica il diodo Zener.
+ATTENZIONE: Il Zener lavora in polarizzazione inversa,
+quindi il catodo è connesso al positivo!
+        </div>
+
+        <h3>4.6 Specifiche del Costruttore</h3>
+        <p>I produttori forniscono tipicamente i seguenti dati:</p>
+        <ul>
+            <li><strong>V<sub>Z</sub> @ I<sub>ZT</sub>:</strong> Tensione Zener nominale alla corrente di test specificata</li>
+            <li><strong>Tolleranza:</strong> Tipicamente ±5%, ±10% o ±20%</li>
+            <li><strong>I<sub>ZT</sub>:</strong> Corrente di test (tipicamente 5 mA o 10 mA)</li>
+            <li><strong>I<sub>ZK</sub>:</strong> Corrente di ginocchio minima (tipicamente 0,5-1 mA)</li>
+            <li><strong>r<sub>Z</sub>:</strong> Resistenza dinamica alla corrente di test</li>
+            <li><strong>P<sub>Z</sub>:</strong> Potenza massima dissipabile</li>
+            <li><strong>Coefficiente di temperatura:</strong> Variazione di V<sub>Z</sub> con la temperatura (mV/°C)</li>
+        </ul>
+
+        <h3>4.7 Calcolo della Corrente Massima</h3>
+        <p>La corrente massima che può attraversare il diodo Zener è limitata dalla potenza massima dissipabile:</p>
+        
+        <div class="formula">
+I<sub>ZM</sub> = P<sub>Z</sub> / V<sub>Z</sub>
+        </div>
+        
+        <div class="example">
+            <h4>Esempio 4.1: Calcolo corrente massima</h4>
+            <p><strong>Dati:</strong> Diodo Zener con V<sub>Z</sub> = 5,1 V e P<sub>Z</sub> = 500 mW</p>
+            
+            <p><strong>Corrente massima:</strong></p>
+            <div class="formula">
+I<sub>ZM</sub> = P<sub>Z</sub> / V<sub>Z</sub> = 0,5 / 5,1 = 98 mA
+            </div>
+            
+            <p>In pratica, per garantire affidabilità, si opera tipicamente al 50-70% di questo valore:</p>
+            <div class="formula">
+I<sub>Z_sicura</sub> = 0,7 · 98 ≈ 69 mA
+            </div>
+        </div>
+
+        <h3>4.8 Regione di Funzionamento</h3>
+        <p>Per garantire il corretto funzionamento come regolatore di tensione, il diodo Zener deve operare nella regione compresa tra la corrente di ginocchio e la corrente massima:</p>
+        
+        <div class="formula">
+I<sub>ZK</sub> ≤ I<sub>Z</sub> ≤ I<sub>ZM</sub>
+        </div>
+        
+        <p>Se I<sub>Z</sub> &lt; I<sub>ZK</sub>, il diodo non è completamente in breakdown e la tensione non è stabile. Se I<sub>Z</sub> &gt; I<sub>ZM</sub>, il diodo può danneggiarsi per eccessiva dissipazione di potenza.</p>
+
+        <div class="note">
+            <strong>Considerazione importante:</strong> Più bassa è la resistenza dinamica r<sub>Z</sub>, migliore è la stabilizzazione. Un buon diodo Zener ha r<sub>Z</sub> &lt; 10 Ω, il che significa che la tensione varia molto poco anche con grandi variazioni di corrente.
+        </div>
+    </div>
+
+    <!-- CAPITOLO 5 -->
+    <div class="chapter">
+        <h2>5. APPLICAZIONI DEI DIODI</h2>
+        
+        <h3>5.1 Raddrizzatori</h3>
+        <p>I <strong>raddrizzatori</strong> sono circuiti che convertono la tensione alternata (AC) in tensione continua pulsante (DC). Questa è una delle applicazioni più importanti dei diodi negli alimentatori elettronici.</p>
+
+        <h4>5.1.1 Raddrizzatore a Singola Semionda</h4>
+        <p>Il raddrizzatore a singola semionda è il circuito raddrizzatore più semplice, composto da un solo diodo. Permette il passaggio della corrente solo durante la semionda positiva dell'ingresso.</p>
+        
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Circuito raddrizzatore a singola semionda:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine10.png" alt="Circuito raddrizzatore a singola semionda" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+V<sub>in</sub> = tensione alternata sinusoidale
+R<sub>L</sub> = resistenza di carico
+C = condensatore di filtro (opzionale)
+        </div>
+
+        <p><strong>Funzionamento:</strong></p>
+        <ul>
+            <li><strong>Semionda positiva (V<sub>in</sub> &gt; V<sub>γ</sub>):</strong> Il diodo conduce, la tensione di uscita segue l'ingresso meno V<sub>γ</sub>: V<sub>out</sub> = V<sub>in</sub> - V<sub>γ</sub></li>
+            <li><strong>Semionda negativa (V<sub>in</sub> &lt; 0):</strong> Il diodo è interdetto, nessuna corrente scorre nel carico: V<sub>out</sub> = 0 V</li>
+        </ul>
+
+        <p><strong>Parametri caratteristici:</strong></p>
+        <ul>
+            <li><strong>Tensione di picco in uscita:</strong> V<sub>out_max</sub> = V<sub>p</sub> - V<sub>γ</sub></li>
+            <li><strong>Tensione media in uscita (senza filtro):</strong> V<sub>DC</sub> = V<sub>p</sub> / π ≈ 0,318 · V<sub>p</sub></li>
+            <li><strong>Efficienza:</strong> circa 40,6%</li>
+            <li><strong>Fattore di utilizzo del trasformatore:</strong> basso (il trasformatore è utilizzato solo per metà del ciclo)</li>
+            <li><strong>Ripple:</strong> molto elevato (100% senza filtro)</li>
+        </ul>
+
+        <div class="example">
+            <h4>Esempio 5.1: Raddrizzatore a singola semionda</h4>
+            <p><strong>Dati:</strong></p>
+            <ul>
+                <li>V<sub>in</sub> = 12 V<sub>RMS</sub> sinusoidale (rete a 50 Hz)</li>
+                <li>Diodo al silicio con V<sub>γ</sub> = 0,7 V</li>
+                <li>R<sub>L</sub> = 1 kΩ</li>
+            </ul>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>1. Tensione di picco in ingresso:</p>
+            <div class="formula">
+V<sub>p</sub> = V<sub>RMS</sub> · √2 = 12 · 1,414 = 16,97 V
+            </div>
+            
+            <p>2. Tensione di picco in uscita:</p>
+            <div class="formula">
+V<sub>out_max</sub> = V<sub>p</sub> - V<sub>γ</sub> = 16,97 - 0,7 = 16,27 V
+            </div>
+            
+            <p>3. Corrente di picco nel carico:</p>
+            <div class="formula">
+I<sub>p</sub> = V<sub>out_max</sub> / R<sub>L</sub> = 16,27 / 1000 = 16,27 mA
+            </div>
+            
+            <p>4. Tensione media in uscita (senza filtro):</p>
+            <div class="formula">
+V<sub>DC</sub> = V<sub>p</sub> / π = 16,97 / 3,14 = 5,4 V
+            </div>
+            
+            <p>5. Potenza media dissipata dal diodo:</p>
+            <div class="formula">
+P<sub>D_media</sub> = V<sub>γ</sub> · I<sub>media</sub> = 0,7 · (I<sub>p</sub> / π) = 0,7 · 5,18 mA = 3,63 mW
+            </div>
+        </div>
+
+        <h4>5.1.2 Raddrizzatore a Doppia Semionda con Presa Centrale</h4>
+        <p>Il raddrizzatore a doppia semionda utilizza entrambe le semionde del segnale di ingresso, raddoppiando l'efficienza. La configurazione con presa centrale richiede un trasformatore con presa centrale e due diodi.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Circuito raddrizzatore a doppia semionda (presa centrale):
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine12.png" alt="Circuito raddrizzatore a doppia semionda" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+              
+CT = Center Tap (presa centrale)
+        </div>
+
+        <p><strong>Funzionamento:</strong></p>
+        <ul>
+            <li><strong>Semionda positiva:</strong> D1 conduce (parte superiore del trasformatore positiva), D2 interdetto. La corrente scorre attraverso R<sub>L</sub></li>
+            <li><strong>Semionda negativa:</strong> D2 conduce (parte inferiore del trasformatore positiva), D1 interdetto. La corrente scorre attraverso R<sub>L</sub> nella stessa direzione</li>
+        </ul>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Forme d'onda raddrizzatore a doppia semionda:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine11.png" alt="Forme d&#39;onda raddrizzatore a doppia semionda" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+        </div>
+
+        <p><strong>Parametri caratteristici:</strong></p>
+        <ul>
+            <li><strong>Tensione media in uscita:</strong> V<sub>DC</sub> = (2 · V<sub>p</sub>) / π ≈ 0,636 · V<sub>p</sub></li>
+            <li><strong>Efficienza:</strong> circa 81,2% (doppia rispetto alla singola semionda)</li>
+            <li><strong>Frequenza del ripple:</strong> 2f (doppia della frequenza di rete)</li>
+            <li><strong>Ripple:</strong> molto ridotto rispetto alla singola semionda</li>
+            <li><strong>PIV (Peak Inverse Voltage):</strong> Ogni diodo deve sopportare 2V<sub>p</sub> in polarizzazione inversa</li>
+        </ul>
+
+        <div class="note">
+            <strong>Svantaggio:</strong> Richiede un trasformatore con presa centrale, che è più costoso e ingombrante. Inoltre, si utilizza solo metà dell'avvolgimento secondario per volta.
+        </div>
+
+        <h4>5.1.3 Raddrizzatore a Ponte (Bridge Rectifier)</h4>
+        <p>Il raddrizzatore a ponte è la configurazione più utilizzata per raddrizzamento a doppia semionda. Utilizza quattro diodi in configurazione a ponte e non richiede un trasformatore con presa centrale.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Circuito raddrizzatore a ponte:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine15.png" alt="Circuito raddrizzatore a ponte" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+              
+Configurazione a ponte di Graetz
+        </div>
+
+        <p><strong>Funzionamento:</strong></p>
+        <ul>
+            <li><strong>Semionda positiva (terminale superiore +):</strong> 
+                <ul>
+                    <li>Corrente entra da sopra → attraversa D1 → passa per R<sub>L</sub> (dall'alto verso il basso) → attraversa D2 → ritorna</li>
+                    <li>D3 e D4 sono interdetti</li>
+                </ul>
+            </li>
+            <li><strong>Semionda negativa (terminale inferiore +):</strong>
+                <ul>
+                    <li>Corrente entra da sotto → attraversa D3 → passa per R<sub>L</sub> (dall'alto verso il basso) → attraversa D4 → ritorna</li>
+                    <li>D1 e D2 sono interdetti</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p><strong>Parametri caratteristici:</strong></p>
+        <ul>
+            <li><strong>Tensione di picco in uscita:</strong> V<sub>out_max</sub> = V<sub>p</sub> - 2V<sub>γ</sub> (due diodi in serie)</li>
+            <li><strong>Tensione media in uscita:</strong> V<sub>DC</sub> = (2 · V<sub>p</sub>) / π ≈ 0,636 · V<sub>p</sub></li>
+            <li><strong>PIV:</strong> Ogni diodo deve sopportare V<sub>p</sub> (metà rispetto al centro presa)</li>
+            <li><strong>Efficienza:</strong> circa 81,2%</li>
+            <li><strong>Frequenza del ripple:</strong> 2f</li>
+        </ul>
+
+        <p><strong>Vantaggi:</strong></p>
+        <ul>
+            <li>Non richiede trasformatore con presa centrale</li>
+            <li>Utilizza completamente l'avvolgimento del trasformatore</li>
+            <li>PIV più basso sui diodi</li>
+            <li>Configurazione più economica e diffusa</li>
+        </ul>
+
+        <p><strong>Svantaggio:</strong></p>
+        <ul>
+            <li>Caduta di tensione maggiore (2V<sub>γ</sub> invece di V<sub>γ</sub>) dovuta a due diodi in serie</li>
+        </ul>
+
+        <div class="example">
+            <h4>Esempio 5.2: Raddrizzatore a ponte</h4>
+            <p><strong>Dati:</strong></p>
+            <ul>
+                <li>V<sub>in</sub> = 18 V<sub>RMS</sub> sinusoidale</li>
+                <li>Diodi al silicio con V<sub>γ</sub> = 0,7 V</li>
+                <li>R<sub>L</sub> = 500 Ω</li>
+                <li>C = 1000 μF</li>
+            </ul>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>1. Tensione di picco in ingresso:</p>
+            <div class="formula">
+V<sub>p</sub> = 18 · √2 = 25,46 V
+            </div>
+            
+            <p>2. Tensione di picco in uscita (considerando 2 diodi in serie):</p>
+            <div class="formula">
+V<sub>out_max</sub> = V<sub>p</sub> - 2V<sub>γ</sub> = 25,46 - 1,4 = 24,06 V
+            </div>
+            
+            <p>3. Tensione media in uscita (senza filtro):</p>
+            <div class="formula">
+V<sub>DC</sub> = (2 · V<sub>p</sub>) / π = 50,92 / 3,14 = 16,21 V
+            </div>
+            
+            <p>4. Corrente media nel carico:</p>
+            <div class="formula">
+I<sub>DC</sub> = V<sub>DC</sub> / R<sub>L</sub> = 16,21 / 500 = 32,42 mA
+            </div>
+            
+            <p>5. Con il condensatore di filtro, la tensione rimane vicina a V<sub>out_max</sub> con un piccolo ripple. Il ripple dipende da C, R<sub>L</sub> e dalla frequenza.</p>
+        </div>
+
+        <h4>5.1.4 Filtro Capacitivo</h4>
+        <p>Per ridurre il ripple della tensione raddrizzata, si utilizza un <strong>condensatore di filtro</strong> in parallelo al carico. Il condensatore si carica al valore di picco durante la conduzione del diodo e si scarica lentamente attraverso il carico durante l'interdizione.</p>
+
+        <p><strong>Calcolo del ripple:</strong></p>
+        <div class="formula">
+V<sub>ripple</sub> ≈ I<sub>DC</sub> / (f · C)
+        </div>
+        
+        <p>Dove:</p>
+        <ul>
+            <li>I<sub>DC</sub> = corrente media nel carico</li>
+            <li>f = frequenza del ripple (50 Hz per singola semionda, 100 Hz per doppia semionda in rete a 50 Hz)</li>
+            <li>C = capacità del condensatore di filtro</li>
+        </ul>
+
+        <p><strong>Tensione media con filtro capacitivo:</strong></p>
+        <div class="formula">
+V<sub>DC</sub> ≈ V<sub>p</sub> - V<sub>ripple</sub>/2
+        </div>
+
+        <div class="note">
+            <strong>Nota pratica:</strong> Per un buon filtraggio, si sceglie C in modo che V<sub>ripple</sub> sia minore del 5-10% di V<sub>DC</sub>. Valori tipici: 1000-4700 μF per correnti di 100-500 mA.
+        </div>
+
+        <h3>5.2 Stabilizzatore a Diodo Zener</h3>
+        <p>Uno stabilizzatore di tensione a diodo Zener è un circuito che fornisce una tensione di uscita costante indipendentemente dalle variazioni della tensione di ingresso o della corrente di carico, sfruttando la caratteristica di breakdown del diodo Zener.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Circuito stabilizzatore base con Zener:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine16.png" alt="Circuito stabilizzatore base con Zener" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+
+R<sub>S</sub> = resistenza di serie (limitatrice)
+R<sub>L</sub> = carico
+V<sub>out</sub> = V<sub>Z</sub> (tensione stabilizzata)
+        </div>
+
+        <p><strong>Principio di funzionamento:</strong></p>
+        <ul>
+            <li>Il diodo Zener è polarizzato inversamente e lavora nella regione di breakdown</li>
+            <li>La resistenza R<sub>S</sub> limita la corrente e assorbe le variazioni di tensione</li>
+            <li>La tensione di uscita V<sub>out</sub> rimane uguale a V<sub>Z</sub></li>
+            <li>Se V<sub>in</sub> aumenta, la corrente extra scorre attraverso lo Zener mantenendo V<sub>out</sub> costante</li>
+            <li>Se il carico varia, lo Zener compensa assorbendo più o meno corrente</li>
+        </ul>
+
+        <p><strong>Equazioni fondamentali:</strong></p>
+        
+        <p>Corrente attraverso R<sub>S</sub>:</p>
+        <div class="formula">
+I<sub>S</sub> = (V<sub>in</sub> - V<sub>Z</sub>) / R<sub>S</sub>
+        </div>
+
+        <p>Corrente nel carico:</p>
+        <div class="formula">
+I<sub>L</sub> = V<sub>Z</sub> / R<sub>L</sub>
+        </div>
+
+        <p>Corrente nello Zener (per la legge di Kirchhoff delle correnti):</p>
+        <div class="formula">
+I<sub>Z</sub> = I<sub>S</sub> - I<sub>L</sub>
+        </div>
+
+        <p><strong>Condizioni di funzionamento:</strong></p>
+        <p>Per garantire la regolazione, deve essere sempre:</p>
+        <div class="formula">
+I<sub>ZK</sub> ≤ I<sub>Z</sub> ≤ I<sub>ZM</sub>
+        </div>
+
+        <p><strong>Progettazione di R<sub>S</sub>:</strong></p>
+        <p>La resistenza R<sub>S</sub> deve essere scelta in modo che:</p>
+        <ul>
+            <li>Nella condizione peggiore (V<sub>in</sub> massima, I<sub>L</sub> minima), I<sub>Z</sub> ≤ I<sub>ZM</sub></li>
+            <li>Nella condizione migliore (V<sub>in</sub> minima, I<sub>L</sub> massima), I<sub>Z</sub> ≥ I<sub>ZK</sub></li>
+        </ul>
+
+        <div class="example">
+            <h4>Esempio 5.3: Progetto stabilizzatore Zener</h4>
+            <p><strong>Specifiche:</strong></p>
+            <ul>
+                <li>V<sub>out</sub> = 5,1 V stabilizzata</li>
+                <li>V<sub>in</sub> = 12 V ± 2 V (varia tra 10 V e 14 V)</li>
+                <li>I<sub>L</sub> = 0 - 50 mA (carico variabile)</li>
+                <li>Diodo Zener: V<sub>Z</sub> = 5,1 V, P<sub>Z</sub> = 500 mW, I<sub>ZK</sub> = 1 mA</li>
+            </ul>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>1. Calcolo I<sub>ZM</sub>:</p>
+            <div class="formula">
+I<sub>ZM</sub> = P<sub>Z</sub> / V<sub>Z</sub> = 0,5 / 5,1 = 98 mA
+            </div>
+            <p>Per sicurezza, limitiamo a I<sub>Z_max</sub> = 70 mA</p>
+            
+            <p>2. Condizione peggiore per lo Zener (massima corrente): V<sub>in</sub> = 14 V, I<sub>L</sub> = 0</p>
+            <div class="formula">
+I<sub>S</sub> = I<sub>Z_max</sub> + I<sub>L_min</sub> = 70 + 0 = 70 mA
+<br><br>
+R<sub>S_min</sub> = (V<sub>in_max</sub> - V<sub>Z</sub>) / I<sub>S</sub> = (14 - 5,1) / 0,07 = 127 Ω
+            </div>
+            
+            <p>3. Condizione critica per la regolazione (minima corrente Zener): V<sub>in</sub> = 10 V, I<sub>L</sub> = 50 mA</p>
+            <div class="formula">
+I<sub>S_min</sub> = I<sub>ZK</sub> + I<sub>L_max</sub> = 1 + 50 = 51 mA
+<br><br>
+R<sub>S_max</sub> = (V<sub>in_min</sub> - V<sub>Z</sub>) / I<sub>S_min</sub> = (10 - 5,1) / 0,051 = 96 Ω
+            </div>
+            
+            <p>4. Scelta di R<sub>S</sub>: deve essere 96 Ω ≤ R<sub>S</sub> ≤ 127 Ω</p>
+            <p>Scegliamo il valore standard R<sub>S</sub> = 100 Ω</p>
+            
+            <p>5. Verifica potenza su R<sub>S</sub> (caso peggiore):</p>
+            <div class="formula">
+P<sub>RS</sub> = I<sub>S_max</sub>² · R<sub>S</sub> = 0,07² · 100 = 0,49 W
+            </div>
+            <p>Utilizziamo una resistenza da almeno 1 W.</p>
+        </div>
+
+        <div class="note">
+            <strong>Limitazioni dello stabilizzatore Zener:</strong>
+            <ul>
+                <li>Regolazione non perfetta a causa della resistenza dinamica r<sub>Z</sub></li>
+                <li>Efficienza limitata (dissipazione di potenza su R<sub>S</sub> e Zener)</li>
+                <li>Corrente di carico limitata</li>
+                <li>Per applicazioni più esigenti si utilizzano regolatori lineari integrati o switching</li>
+            </ul>
+        </div>
+
+        <h3>5.3 Limitatori (Clippers)</h3>
+        <p>I <strong>limitatori</strong> o <strong>clippers</strong> sono circuiti che "tagliano" o limitano una parte della forma d'onda in ingresso a un livello di tensione prestabilito. Sono utilizzati per proteggere circuiti sensibili o per modellare le forme d'onda.</p>
+
+        <h4>5.3.1 Limitatore Positivo (Positive Clipper)</h4>
+        <p>Limita la parte positiva del segnale di ingresso.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Limitatore positivo semplice:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine18.png" alt="Limitatore positivo semplice" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+        </div>
+
+        <p><strong>Funzionamento:</strong></p>
+        <ul>
+            <li>Quando V<sub>in</sub> &lt; V<sub>γ</sub>: diodo interdetto, V<sub>out</sub> = V<sub>in</sub></li>
+            <li>Quando V<sub>in</sub> ≥ V<sub>γ</sub>: diodo conduce, V<sub>out</sub> ≈ V<sub>γ</sub> (limitato)</li>
+        </ul>
+
+        <div class="diagram">
+            
+La parte positiva è limitata a +0,7 V
+        </div>
+
+        <h4>5.3.2 Limitatore Negativo (Negative Clipper)</h4>
+        <p>Limita la parte negativa del segnale di ingresso.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Limitatore negativo:
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine19.png" alt="Limitatore negativo" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+        </div>
+
+        <p><strong>Funzionamento:</strong></p>
+        <ul>
+            <li>Quando V<sub>in</sub> &gt; -V<sub>γ</sub>: diodo interdetto, V<sub>out</sub> = V<sub>in</sub></li>
+            <li>Quando V<sub>in</sub> ≤ -V<sub>γ</sub>: diodo conduce, V<sub>out</sub> ≈ -V<sub>γ</sub> (limitato)</li>
+        </ul>
+
+        <div class="diagram">
+                       
+La parte negativa è limitata a -0,7 V
+        </div>
+
+        <h4>5.3.3 Limitatore con Tensione di Riferimento</h4>
+        <p>Aggiungendo una batteria o un diodo Zener in serie al diodo, si può limitare il segnale a un livello diverso da ±V<sub>γ</sub>.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Limitatore con batteria (limita a +V<sub>ref</sub>):
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine20.png" alt="Limitatore con batteria" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+
+Il segnale viene limitato a: V<sub>lim</sub> = V<sub>ref</sub> + V<sub>γ</sub>
+        </div>
+
+        <h4>5.3.4 Limitatore Bidirezionale (Double-Ended Clipper)</h4>
+        <p>Limita sia la parte positiva che quella negativa del segnale.</p>
+
+        <div class="diagram" style="white-space: normal; text-align: center; padding: 10px;">
+Limitatore bidirezionale:
+            
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="./Dispensa di Fondamenti di Elettronica_files/Immagine21.png" alt="Limitatore bidirezionale" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+        </div>
+
+        <p><strong>Funzionamento:</strong></p>
+        <ul>
+            <li>V<sub>in</sub> &gt; +V<sub>γ</sub>: D1 conduce, V<sub>out</sub> limitato a +V<sub>γ</sub></li>
+            <li>-V<sub>γ</sub> &lt; V<sub>in</sub> &lt; +V<sub>γ</sub>: entrambi i diodi interdetti, V<sub>out</sub> = V<sub>in</sub></li>
+            <li>V<sub>in</sub> &lt; -V<sub>γ</sub>: D2 conduce, V<sub>out</sub> limitato a -V<sub>γ</sub></li>
+        </ul>
+
+        <div class="diagram">
+
+Entrambe le parti sono limitate a ±0,7 V
+        </div>
+
+        <h3>5.4 Analisi di Circuiti con Generatori Sinusoidali</h3>
+        
+        <h4>5.4.1 Come Affrontare l'Analisi</h4>
+        <p>Quando si analizza un circuito con diodi e generatore sinusoidale, seguire questi passi:</p>
+        
+        <ol>
+            <li><strong>Identificare la forma d'onda d'ingresso:</strong> V<sub>in</sub>(t) = V<sub>p</sub> · sin(ωt), dove V<sub>p</sub> è l'ampiezza di picco</li>
+            <li><strong>Determinare quando il diodo conduce:</strong> Trovare i valori di tensione per cui V<sub>diodo</sub> &gt; V<sub>γ</sub></li>
+            <li><strong>Analizzare separatamente le fasi di conduzione e interdizione</strong></li>
+            <li><strong>Tracciare la forma d'onda di uscita</strong></li>
+        </ol>
+
+        <p><strong>Importante:</strong> Studiare un circuito a una singola frequenza significa che qualunque segnale complesso può essere decomposto in una somma di armoniche (serie di Fourier), e l'analisi può essere fatta separatamente per ciascuna armonica.</p>
+
+        <h4>5.4.2 Come Calcolare se la Tensione Supera la Soglia</h4>
+        <p>Per un circuito con più generatori e diodi, bisogna applicare il principio di sovrapposizione e la legge di Kirchhoff:</p>
+
+        <p><strong>Regola generale per limitatore in negativo:</strong></p>
+        <p>Il diodo conduce quando:</p>
+        <div class="formula">
+V<sub>in</sub> - V<sub>riferimento</sub> &lt; -V<sub>γ</sub>
+        </div>
+
+        <p>Oppure, in forma equivalente:</p>
+        <div class="formula">
+V<sub>in</sub> &lt; V<sub>riferimento</sub> - V<sub>γ</sub>
+        </div>
+
+        <div class="example">
+            <h4>Esempio 5.4: Limitatore con batteria</h4>
+            <p><strong>Circuito:</strong> Limitatore negativo con batteria di +5 V in serie al diodo verso GND</p>
+            <p><strong>Domanda:</strong> A quale tensione viene limitato il segnale in negativo?</p>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>Affinché il diodo conduca in questo circuito, la tensione d'ingresso deve scendere abbastanza da:</p>
+            <ul>
+                <li>Superare la tensione della batteria (5 V che si oppone)</li>
+                <li>Superare la soglia del diodo (0,7 V)</li>
+            </ul>
+            
+            <p>Quindi il diodo conduce quando:</p>
+            <div class="formula">
+V<sub>in</sub> &lt; -(5 + 0,7) = -5,7 V
+            </div>
+            
+            <p>Quando il diodo conduce, la tensione di uscita è limitata a:</p>
+            <div class="formula">
+V<sub>out</sub> = -5,7 V
+            </div>
+            
+            <p>Per tensioni V<sub>in</sub> &gt; -5,7 V, il diodo è interdetto e V<sub>out</sub> = V<sub>in</sub></p>
+        </div>
+
+        <h4>5.4.3 Tracciamento dei Grafici</h4>
+        <p>Per tracciare correttamente il grafico della tensione di uscita:</p>
+        
+        <ol>
+            <li><strong>Identificare i livelli di limitazione:</strong> Calcolare le tensioni a cui interviene la limitazione</li>
+            <li><strong>Dividere il periodo in zone:</strong> 
+                <ul>
+                    <li>Zone dove il diodo è ON (V<sub>out</sub> = costante = livello di limitazione)</li>
+                    <li>Zone dove il diodo è OFF (V<sub>out</sub> = V<sub>in</sub>)</li>
+                </ul>
+            </li>
+            <li><strong>Tracciare la forma d'onda continua:</strong> Unire i punti rispettando la continuità del segnale</li>
+            <li><strong>Verificare la coerenza:</strong> Controllare che nei punti di transizione le condizioni siano rispettate</li>
+        </ol>
+
+        <h3>5.5 Calcolo della Potenza Dissipata</h3>
+        
+        <h4>5.5.1 Potenza Istantanea</h4>
+        <p>La potenza istantanea dissipata dal diodo è:</p>
+        <div class="formula">
+p<sub>D</sub>(t) = v<sub>D</sub>(t) · i<sub>D</sub>(t)
+        </div>
+
+        <h4>5.5.2 Potenza Media</h4>
+        <p>Per un segnale periodico, la potenza media dissipata è:</p>
+        <div class="formula">
+P<sub>D</sub> = (1/T) · ∫<sub>0</sub><sup>T</sup> p<sub>D</sub>(t) dt
+        </div>
+
+        <p>In pratica, per circuiti semplici:</p>
+        <ul>
+            <li><strong>Segnale continuo:</strong> P<sub>D</sub> = V<sub>D</sub> · I<sub>D</sub></li>
+            <li><strong>Raddrizzatore a singola semionda:</strong> P<sub>D</sub> = V<sub>γ</sub> · I<sub>media</sub> = V<sub>γ</sub> · (I<sub>p</sub> / π)</li>
+            <li><strong>Raddrizzatore a doppia semionda:</strong> P<sub>D</sub> = V<sub>γ</sub> · I<sub>media</sub> = V<sub>γ</sub> · (2I<sub>p</sub> / π)</li>
+        </ul>
+
+        <h4>5.5.3 Massima Potenza Dissipabile</h4>
+        <p>Ogni diodo ha una specifica P<sub>max</sub> fornita dal costruttore. È essenziale verificare sempre:</p>
+        <div class="formula">
+P<sub>D</sub> ≤ P<sub>max</sub>
+        </div>
+
+        <p><strong>Margine di sicurezza consigliato:</strong> 50-70% della P<sub>max</sub></p>
+
+        <div class="example">
+            <h4>Esempio 5.5: Calcolo potenza in raddrizzatore</h4>
+            <p><strong>Dati:</strong></p>
+            <ul>
+                <li>Raddrizzatore a singola semionda</li>
+                <li>V<sub>p</sub> = 10 V</li>
+                <li>R<sub>L</sub> = 100 Ω</li>
+                <li>Diodo con V<sub>γ</sub> = 0,7 V, P<sub>max</sub> = 1 W</li>
+            </ul>
+            
+            <p><strong>Soluzione:</strong></p>
+            <p>1. Corrente di picco:</p>
+            <div class="formula">
+I<sub>p</sub> = (V<sub>p</sub> - V<sub>γ</sub>) / R<sub>L</sub> = (10 - 0,7) / 100 = 93 mA
+            </div>
+            
+            <p>2. Corrente media (singola semionda):</p>
+            <div class="formula">
+I<sub>media</sub> = I<sub>p</sub> / π = 93 / 3,14 = 29,6 mA
+            </div>
+            
+            <p>3. Potenza media dissipata dal diodo:</p>
+            <div class="formula">
+P<sub>D</sub> = V<sub>γ</sub> · I<sub>media</sub> = 0,7 · 0,0296 = 20,7 mW
+            </div>
+            
+            <p>4. Verifica:</p>
+            <div class="formula">
+P<sub>D</sub> = 20,7 mW &lt;&lt; P<sub>max</sub> = 1000 mW ✓
+            </div>
+            <p>Il diodo opera ampiamente entro i limiti di sicurezza (solo 2% della potenza massima).</p>
+        </div>
+
+        <h3>5.6 Considerazioni Pratiche Aggiuntive</h3>
+        
+        <h4>5.6.1 Effetto della Temperatura</h4>
+        <p>La temperatura influenza significativamente le caratteristiche dei diodi:</p>
+        <ul>
+            <li><strong>V<sub>γ</sub> diminuisce</strong> di circa -2 mV/°C per i diodi al silicio</li>
+            <li><strong>I<sub>S</sub> raddoppia</strong> circa ogni 10°C di aumento</li>
+            <li><strong>V<sub>Z</sub> dei diodi Zener</strong> può aumentare o diminuire con la temperatura (dipende dal meccanismo di breakdown)</li>
+        </ul>
+
+        <h4>5.6.2 Diodi in Serie e Parallelo</h4>
+        
+        <p><strong>Diodi in serie:</strong></p>
+        <ul>
+            <li>Utilizzati per aumentare la tensione inversa sopportabile</li>
+            <li>V<sub>breakdown_totale</sub> = Σ V<sub>breakdown_i</sub></li>
+            <li>Richiedono resistenze di bilanciamento in parallelo per equalizzare le tensioni</li>
+        </ul>
+
+        <p><strong>Diodi in parallelo:</strong></p>
+        <ul>
+            <li>Utilizzati per aumentare la corrente gestibile</li>
+            <li>Difficile ottenere ripartizione uniforme della corrente</li>
+            <li>Richiedono piccole resistenze in serie per bilanciamento</li>
+            <li>Meglio usare un singolo diodo di potenza adeguata</li>
+        </ul>
+
+        <h4>5.6.3 Protezione dei Diodi</h4>
+        
+        <p><strong>Protezione da sovratensioni:</strong></p>
+        <ul>
+            <li>Diodi TVS (Transient Voltage Suppressor) in parallelo</li>
+            <li>Varistori (MOV)</li>
+            <li>Circuiti RC snubber</li>
+        </ul>
+
+        <p><strong>Protezione da sovracorrenti:</strong></p>
+        <ul>
+            <li>Fusibili in serie</li>
+            <li>Resistenze di limitazione</li>
+            <li>Circuiti di current limiting</li>
+        </ul>
+
+        <h4>5.6.4 Partitori di Tensione e Corrente - Richiami</h4>
+        
+        <p><strong>Partitore di tensione:</strong></p>
+        <div class="diagram">
+         R1
+    o─────╱╲╱╲─────┬─── V<sub>out</sub>
+                   │
+    V<sub>in</sub>            R2
+                   │
+    o──────────────┴─── GND
+        </div>
+        
+        <div class="formula">
+V<sub>out</sub> = V<sub>in</sub> · R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        </div>
+
+        <p><strong>Partitore di corrente (resistenze in parallelo):</strong></p>
+        <div class="diagram">
+                ┌─── R1 ───┐
+    I<sub>tot</sub> o──────┤          ├──── o
+                └─── R2 ───┘
+        </div>
+        
+        <div class="formula">
+I<sub>R1</sub> = I<sub>tot</sub> · R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+<br><br>
+I<sub>R2</sub> = I<sub>tot</sub> · R<sub>1</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        </div>
+
+        <p><strong>Nota importante:</strong> Nel partitore di corrente, la corrente maggiore scorre nella resistenza minore (relazione inversa rispetto al partitore di tensione).</p>
+
+        <h4>5.6.5 Metodo Sistematico per Risolvere Esercizi</h4>
+        
+        <p><strong>Passo 1: Analisi del circuito</strong></p>
+        <ul>
+            <li>Identificare tutti i componenti e i loro valori</li>
+            <li>Identificare il tipo di generatore (DC, AC, sinusoidale, etc.)</li>
+            <li>Identificare la configurazione dei diodi</li>
+        </ul>
+
+        <p><strong>Passo 2: Determinare lo stato dei diodi</strong></p>
+        <ul>
+            <li>Assumere uno stato (ON o OFF) per ciascun diodo</li>
+            <li>Risolvere il circuito con questa assunzione</li>
+            <li>Verificare la coerenza: se un diodo assunto ON ha corrente negativa, o un diodo assunto OFF ha tensione diretta &gt; V<sub>γ</sub>, l'assunzione è errata</li>
+        </ul>
+
+        <p><strong>Passo 3: Applicare le leggi di Kirchhoff</strong></p>
+        <ul>
+            <li><strong>KVL (Kirchhoff Voltage Law):</strong> La somma delle tensioni in una maglia è zero</li>
+            <li><strong>KCL (Kirchhoff Current Law):</strong> La somma delle correnti in un nodo è zero</li>
+        </ul>
+
+        <p><strong>Passo 4: Calcolare le grandezze richieste</strong></p>
+        <ul>
+            <li>Tensioni</li>
+            <li>Correnti</li>
+            <li>Potenze</li>
+        </ul>
+
+        <p><strong>Passo 5: Verifiche</strong></p>
+        <ul>
+            <li>Verificare che tutti i diodi siano entro i limiti (corrente massima, potenza massima)</li>
+            <li>Verificare la coerenza con le leggi di Kirchhoff</li>
+            <li>Verificare che i risultati abbiano senso fisico</li>
+        </ul>
+
+        <div class="example">
+            <h4>Esempio 5.6: Esercizio completo con circuito misto</h4>
+            <p><strong>Circuito:</strong> Alimentatore con raddrizzatore a ponte, filtro capacitivo e stabilizzatore Zener</p>
+            
+            <div class="diagram">
+Circuito completo:
+
+   AC        [PONTE]        R<sub>S</sub>
+  ~~~~  --&gt;  [DIODI]  --&gt; ═══ --&gt; ╱╲╱╲ --&gt; ┬── V<sub>out</sub>
+  12V<sub>RMS</sub>    [1N4007]      C         100Ω   │
+                                            |◄┐
+                                            |◄│ 5,1V
+                                            └─┘
+                                             │
+         ────────────────────────────────────┴── GND
+            </div>
+            
+            <p><strong>Dati:</strong></p>
+            <ul>
+                <li>V<sub>in</sub> = 12 V<sub>RMS</sub> @ 50 Hz</li>
+                <li>Ponte diodi: 4× 1N4007 (V<sub>γ</sub> = 0,7 V)</li>
+                <li>C = 2200 μF</li>
+                <li>R<sub>S</sub> = 100 Ω</li>
+                <li>Zener: V<sub>Z</sub> = 5,1 V, P<sub>Z</sub> = 500 mW, I<sub>ZK</sub> = 1 mA</li>
+                <li>R<sub>L</sub> = 220 Ω (carico)</li>
+            </ul>
+            
+            <p><strong>Richieste:</strong></p>
+            <ol>
+                <li>Tensione raddrizzata di picco</li>
+                <li>Ripple stimato</li>
+                <li>Verifica funzionamento stabilizzatore</li>
+                <li>Potenza dissipata da R<sub>S</sub> e Zener</li>
+            </ol>
+            
+            <p><strong>Soluzione:</strong></p>
+            
+            <p><strong>1. Tensione di picco dopo il ponte:</strong></p>
+            <div class="formula">
+V<sub>p</sub> = V<sub>RMS</sub> · √2 - 2V<sub>γ</sub> = 12 · 1,414 - 1,4 = 15,57 V
+            </div>
+            
+            <p><strong>2. Corrente di carico:</strong></p>
+            <div class="formula">
+I<sub>L</sub> = V<sub>Z</sub> / R<sub>L</sub> = 5,1 / 220 = 23,2 mA
+            </div>
+            
+            <p><strong>3. Ripple dopo il filtro capacitivo (doppia semionda, f = 100 Hz):</strong></p>
+            <div class="formula">
+V<sub>ripple</sub> ≈ I<sub>L</sub> / (f · C) = 0,0232 / (100 · 0,0022) = 0,105 V
+            </div>
+            
+            <p><strong>4. Tensione media dopo il filtro:</strong></p>
+            <div class="formula">
+V<sub>filtrato</sub> ≈ V<sub>p</sub> - V<sub>ripple</sub>/2 = 15,57 - 0,05 = 15,52 V
+            </div>
+            
+            <p><strong>5. Corrente attraverso R<sub>S</sub>:</strong></p>
+            <div class="formula">
+I<sub>S</sub> = (V<sub>filtrato</sub> - V<sub>Z</sub>) / R<sub>S</sub> = (15,52 - 5,1) / 100 = 104,2 mA
+            </div>
+            
+            <p><strong>6. Corrente nello Zener:</strong></p>
+            <div class="formula">
+I<sub>Z</sub> = I<sub>S</sub> - I<sub>L</sub> = 104,2 - 23,2 = 81 mA
+            </div>
+            
+            <p><strong>7. Verifica I<sub>ZM</sub>:</strong></p>
+            <div class="formula">
+I<sub>ZM</sub> = P<sub>Z</sub> / V<sub>Z</sub> = 0,5 / 5,1 = 98 mA
+            </div>
+            <p>I<sub>Z</sub> = 81 mA &lt; I<sub>ZM</sub> = 98 mA ✓ OK</p>
+            <p>I<sub>Z</sub> = 81 mA &gt; I<sub>ZK</sub> = 1 mA ✓ OK (lo Zener regola correttamente)</p>
+            
+            <p><strong>8. Potenza dissipata da R<sub>S</sub>:</strong></p>
+            <div class="formula">
+P<sub>RS</sub> = I<sub>S</sub>² · R<sub>S</sub> = 0,1042² · 100 = 1,09 W
+            </div>
+            <p>Necessaria resistenza da almeno 2 W</p>
+            
+            <p><strong>9. Potenza dissipata dallo Zener:</strong></p>
+            <div class="formula">
+P<sub>Z</sub> = V<sub>Z</sub> · I<sub>Z</sub> = 5,1 · 0,081 = 0,413 W = 413 mW
+            </div>
+            <p>P<sub>Z</sub> = 413 mW &lt; P<sub>Z_max</sub> = 500 mW ✓ OK (margine del 17%)</p>
+            
+            <p><strong>Conclusioni:</strong></p>
+            <ul>
+                <li>Il circuito funziona correttamente</li>
+                <li>La tensione di uscita è stabilizzata a 5,1 V</li>
+                <li>Il ripple è molto basso (circa 100 mV, meno del 2%)</li>
+                <li>Tutti i componenti operano entro i limiti di sicurezza</li>
+                <li>R<sub>S</sub> deve essere da almeno 2 W per sicurezza</li>
+            </ul>
+        </div>
+
+        <h3>5.7 Sintesi e Formule Utili</h3>
+        
+        <p><strong>Diodo in conduzione:</strong></p>
+        <div class="formula">
+V<sub>D</sub> ≈ V<sub>γ</sub> = 0,6-0,7 V (silicio), 0,3 V (germanio), 0,2-0,4 V (Schottky)
+<br><br>
+P<sub>D</sub> = V<sub>D</sub> · I<sub>D</sub> ≤ P<sub>max</sub>
+        </div>
+
+        <p><strong>Raddrizzatore a singola semionda:</strong></p>
+        <div class="formula">
+V<sub>DC</sub> = V<sub>p</sub> / π ≈ 0,318 · V<sub>p</sub>
+<br><br>
+I<sub>media</sub> = I<sub>p</sub> / π
+<br><br>
+Frequenza ripple = f<sub>rete</sub>
+        </div>
+
+        <p><strong>Raddrizzatore a doppia semionda:</strong></p>
+        <div class="formula">
+V<sub>DC</sub> = (2 · V<sub>p</sub>) / π ≈ 0,636 · V<sub>p</sub>
+<br><br>
+I<sub>media</sub> = (2 · I<sub>p</sub>) / π
+<br><br>
+Frequenza ripple = 2f<sub>rete</sub>
+        </div>
+
+        <p><strong>Filtro capacitivo:</strong></p>
+        <div class="formula">
+V<sub>ripple</sub> ≈ I<sub>DC</sub> / (f<sub>ripple</sub> · C)
+<br><br>
+V<sub>DC</sub> ≈ V<sub>p</sub> - V<sub>ripple</sub> / 2
+        </div>
+
+        <p><strong>Stabilizzatore Zener:</strong></p>
+        <div class="formula">
+I<sub>Z</sub> = I<sub>S</sub> - I<sub>L</sub> = [(V<sub>in</sub> - V<sub>Z</sub>) / R<sub>S</sub>] - I<sub>L</sub>
+<br><br>
+I<sub>ZK</sub> ≤ I<sub>Z</sub> ≤ I<sub>ZM</sub>
+<br><br>
+I<sub>ZM</sub> = P<sub>Z</sub> / V<sub>Z</sub>
+        </div>
+
+        <p><strong>Partitore di tensione:</strong></p>
+        <div class="formula">
+V<sub>out</sub> = V<sub>in</sub> · R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        </div>
+
+        <p><strong>Partitore di corrente:</strong></p>
+        <div class="formula">
+I<sub>R1</sub> = I<sub>tot</sub> · R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        </div>
+
+        <div class="note">
+            <strong>Ricorda:</strong>
+            <ul>
+                <li>Verifica sempre la coerenza delle assunzioni sui diodi (ON/OFF)</li>
+                <li>Controlla sempre i limiti di potenza e corrente</li>
+                <li>In polarizzazione inversa: V<sub>inversa_max</sub> &lt; V<sub>breakdown</sub></li>
+                <li>Utilizza margini di sicurezza (50-70% dei valori massimi)</li>
+                <li>Per segnali AC: V<sub>p</sub> = V<sub>RMS</sub> · √2 ≈ V<sub>RMS</sub> · 1,414</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="page-break-before: always; text-align: center; margin-top: 100px;">
+        <h2>FINE DELLA DISPENSA</h2>
+        <p style="margin-top: 50px; font-style: italic;">
+            Università degli Studi di Palermo<br>
+            Facoltà di Ingegneria<br>
+            Anno Accademico 2025/2026
+        </p>
+
+    </div>
+
+</body></html>
