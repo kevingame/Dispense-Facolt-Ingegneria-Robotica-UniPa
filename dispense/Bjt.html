@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teoria Completa dei Transistor BJT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .highlight-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .formula-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .formula-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .key-points {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .key-points h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        .section-number {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .bold-text {
+            font-weight: bold;
+        }
+        
+        .violet-text {
+            color: #764ba2;
+            font-weight: 600;
+        }
+        
+        .highlight-yellow {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TEORIA COMPLETA DEI TRANSISTOR BJT</h1>
+        </header>
+        
+        <div class="content">
+            <h2><span class="section-number">1.</span> Introduzione al Transistor BJT</h2>
+            <p>Il <span class="bold-text">BJT (Bipolar Junction Transistor)</span> è un dispositivo semiconduttore a tre terminali utilizzato per amplificare o commutare segnali elettrici. È chiamato "bipolare" perché la sua operazione coinvolge sia portatori di carica maggioritari (elettroni) che minoritari (lacune).</p>
+            <p>Il BJT è costituito da tre regioni di materiale semiconduttore drogato: <span class="violet-text">Emettitore (E)</span>, <span class="violet-text">Base (B)</span> e <span class="violet-text">Collettore (C)</span>. Queste regioni formano due giunzioni PN che determinano il comportamento del transistor.</p>
+
+            <h2><span class="section-number">2.</span> Struttura e Tipologie di BJT</h2>
+            
+            <h3>2.1 Transistor NPN</h3>
+            <p>Nel transistor <span class="bold-text">NPN</span>, la struttura è composta da una sottile regione di tipo P (Base) posizionata tra due regioni di tipo N (Emettitore e Collettore). La configurazione è dunque: <span class="bold-text">N-P-N.</span></p>
+            
+            <div class="highlight-box">
+                <h4>✓ Identificazione NPN</h4>
+                <ul>
+                    <li><span class="bold-text">La freccia del transistor va dalla Base verso l'Emettitore (da B a E)</span></li>
+                    <li>Questo indica che la corrente convenzionale fluisce dall'emettitore verso la base quando il transistor è in conduzione</li>
+                    <li><span class="bold-text">Condizione di polarizzazione:</span> <code>V<sub>BE</sub> > 0</code> (la base deve essere positiva rispetto all'emettitore)</li>
+                </ul>
+            </div>
+
+            <h3>2.2 Transistor PNP</h3>
+            <p>Nel transistor <span class="bold-text">PNP</span>, la struttura è invertita: una sottile regione di tipo N (Base) è posizionata tra due regioni di tipo P (Emettitore e Collettore). La configurazione è: <span class="bold-text">P-N-P.</span></p>
+            
+            <div class="highlight-box">
+                <h4>✓ Identificazione PNP</h4>
+                <ul>
+                    <li><span class="bold-text">La freccia del transistor va dall'Emettitore verso la Base (da E a B)</span></li>
+                    <li>In questo caso la freccia punta verso l'interno del transistor (entra nel simbolo)</li>
+                    <li><span class="bold-text">Condizione di polarizzazione:</span> <code>V<sub>EB</sub> > 0</code> (l'emettitore deve essere positivo rispetto alla base)</li>
+                </ul>
+            </div>
+                </ul>
+            </div>
+
+            <h2><span class="section-number">3.</span> Principio di Funzionamento</h2>
+            
+            <h3>3.1 Le Giunzioni del BJT</h3>
+            <p>Un BJT contiene due giunzioni PN:</p>
+            <ul>
+                <li><strong><span class="bold-text">BEJ (Base-Emitter Junction):</span></strong> giunzione tra base ed emettitore</li>
+                <li><strong><span class="bold-text">BCJ (Base-Collector Junction):</span></strong> giunzione tra base e collettore</li>
+            </ul>
+            <p>Lo stato di polarizzazione di queste due giunzioni determina la regione di funzionamento del transistor (interdizione, zona attiva, saturazione).</p>
+
+            <h3>3.2 Flusso di Corrente nel BJT</h3>
+            <p>Quando il transistor è correttamente polarizzato, si stabilisce un flusso di corrente tra i tre terminali. Nel caso di un transistor NPN in zona attiva:</p>
+            <ul>
+                <li>Una piccola corrente di base (I<sub>B</sub>) entra nel terminale di base</li>
+                <li>Questa corrente controlla una corrente molto più grande di collettore (I<sub>C</sub>)</li>
+                <li>La corrente di emettitore (I<sub>E</sub>) è la somma delle altre due correnti</li>
+            </ul>
+            
+            <div class="formula-box">
+                <strong>Legge di Kirchhoff per le correnti:</strong>
+                I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub>
+            </div>
+
+            <h2><span class="section-number">4.</span> Regioni di Funzionamento</h2>
+            <p>Il transistor BJT può operare in diverse regioni a seconda dello stato di polarizzazione delle sue giunzioni:</p>
+
+            <h3>4.1 Zona di Interdizione (Cut-off)</h3>
+            <div class="highlight-box">
+                <h4>🚫 Interdizione</h4>
+                <p>In questa regione, entrambe le giunzioni (BEJ e BCJ) sono polarizzate inversamente. Il transistor è praticamente spento e non conduce corrente significativa.</p>
+                <p><span class="bold-text">Condizioni NPN:</span></p>
+                <ul>
+                    <li>V<sub>BE</sub> < 0,7V (giunzione base-emettitore non conduce)</li>
+                    <li>I<sub>C</sub> ≈ 0</li>
+                    <li>I<sub>B</sub> ≈ 0</li>
+                </ul>
+                <p><span class="bold-text">Condizioni PNP:</span></p>
+                <ul>
+                    <li>V<sub>EB</sub> < 0,7V (giunzione emettitore-base non conduce)</li>
+                    <li>I<sub>C</sub> ≈ 0</li>
+                    <li>I<sub>B</sub> ≈ 0</li>
+                </ul>
+            </div>
+
+            <h3>4.2 Zona Attiva (Active Region)</h3>
+            <div class="highlight-box">
+                <h4>⚡ Zona Attiva - La Regione di Amplificazione</h4>
+                <p>Questa è la regione in cui il transistor opera come <span class="bold-text">amplificatore</span>. La giunzione base-emettitore (BEJ) è polarizzata <span class="violet-text">direttamente</span>, mentre la giunzione base-collettore (BCJ) è polarizzata inversamente.</p>
+                
+                <p><span class="bold-text">Per transistor NPN:</span></p>
+                <ul>
+                    <li><span class="bold-text">VBE = 0,7V</span> (giunzione BE in conduzione diretta)</li>
+                    <li><span class="bold-text">VC > VB - 0,4V</span> (il collettore deve essere più positivo della base di almeno 0,4V)</li>
+                    <li><span class="bold-text">IC = IE</span> (approssimazione valida perché I<sub>B</sub> è molto piccola)</li>
+                </ul>
+                
+                <p><span class="bold-text">Per transistor PNP:</span></p>
+                <ul>
+                    <li><span class="bold-text">VEB = 0,7V</span> (giunzione EB in conduzione diretta)</li>
+                    <li><span class="bold-text">VC < VB + 0,4V</span> (il collettore deve essere più negativo della base di almeno 0,4V)</li>
+                    <li><span class="bold-text">IC = IE</span></li>
+                </ul>
+            </div>
+
+            <div class="formula-box">
+                <strong>Relazione fondamentale tra le correnti:</strong>
+                I<sub>B</sub> = I<sub>C</sub> / β<br><br>
+                dove <span class="violet-text">β (beta)</span> è il <span class="highlight-yellow">guadagno di corrente</span> del transistor<br><br>
+                <strong>Alternativamente:</strong><br>
+                I<sub>C</sub> = β × I<sub>B</sub><br><br>
+                Il parametro β tipicamente varia tra 50 e 300 per i transistor comuni.
+            </div>
+
+            <h3>4.3 Zona di Saturazione</h3>
+            <div class="highlight-box">
+                <h4>◉ Saturazione - Il Transistor come Interruttore Chiuso</h4>
+                <p>In saturazione, entrambe le giunzioni (BEJ e BCJ) sono polarizzate <span class="violet-text">direttamente</span>. Il transistor è "completamente acceso" e si comporta come un interruttore chiuso. La tensione collettore-emettitore scende a un valore molto basso.</p>
+                <p><span class="bold-text">Condizione caratteristica:</span></p>
+                <p><span class="violet-text">VCE = 0,2V</span> (valore tipico di saturazione)</p>
+                <p>dove V<sub>CE</sub> = V<sub>C</sub> - V<sub>E</sub></p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>⚠ Verifica della Zona di Saturazione</h4>
+                <p>Se durante l'analisi di un circuito si trova che <span class="bold-text">VCE < 0,2V</span> (ad esempio negativo), significa che l'ipotesi iniziale era errata. In questo caso bisogna:</p>
+                <ul>
+                    <li>Assumere che il transistor sia in saturazione (<span class="violet-text">VCE = 0,2V</span>)</li>
+                    <li>Procedere con la <span class="bold-text">verifica della zona attiva</span> per confermare</li>
+                    <li>Ricalcolare le correnti con le nuove assunzioni</li>
+                </ul>
+            </div>
+
+            <h2><span class="section-number">5.</span> Polarizzazione delle Giunzioni</h2>
+            
+            <h3>5.1 Giunzione Base-Emettitore (BEJ)</h3>
+            <p><span class="bold-text">Per transistor NPN:</span><br>
+            La BEJ è polarizzata <span class="violet-text">direttamente</span> quando: <span class="violet-text">VB > VE</span></p>
+            
+            <p><span class="bold-text">Per transistor PNP:</span><br>
+            La BEJ è polarizzata <span class="violet-text">direttamente</span> quando: <span class="violet-text">VE > VB</span></p>
+
+            <h3>5.2 Giunzione Base-Collettore (BCJ)</h3>
+            <p><span class="bold-text">Per transistor NPN:</span><br>
+            La BCJ è polarizzata <span class="violet-text">direttamente</span> quando: <span class="violet-text">VB > VC</span><br>
+            (questo porta il transistor in saturazione)</p>
+            
+            <p><span class="bold-text">Per transistor PNP:</span><br>
+            La BCJ è polarizzata <span class="violet-text">direttamente</span> quando: <span class="violet-text">VC > VB</span><br>
+            (questo porta il transistor in saturazione)</p>
+
+            <h2><span class="section-number">6.</span> Parametri Fondamentali del BJT</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Simbolo</th>
+                        <th>Descrizione</th>
+                        <th>Valori Tipici</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Guadagno di corrente in continua</td>
+                        <td>β (beta) o h<sub>FE</sub></td>
+                        <td>Rapporto tra corrente di collettore e corrente di base</td>
+                        <td>50 - 300</td>
+                    </tr>
+                    <tr>
+                        <td>Tensione base-emettitore</td>
+                        <td>V<sub>BE</sub></td>
+                        <td>Caduta di tensione sulla giunzione BE in conduzione</td>
+                        <td>0,6 - 0,7V</td>
+                    </tr>
+                    <tr>
+                        <td>Tensione di saturazione</td>
+                        <td>V<sub>CE(sat)</sub></td>
+                        <td>Tensione collettore-emettitore in saturazione</td>
+                        <td>0,2V</td>
+                    </tr>
+                    <tr>
+                        <td>Guadagno di emettitore</td>
+                        <td>α (alpha)</td>
+                        <td>Rapporto I<sub>C</sub>/I<sub>E</sub></td>
+                        <td>≈ 0,98 - 0,99</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="formula-box">
+                <strong>Relazione tra α e β:</strong>
+                α = β / (β + 1)<br><br>
+                β = α / (1 - α)
+            </div>
+
+            <h2><span class="section-number">7.</span> Procedura di Analisi di un Circuito con BJT</h2>
+            
+            <div class="highlight-box">
+                <h4>📋 Metodologia Standard</h4>
+                <ol>
+                    <li><span class="bold-text">Identificare il tipo di transistor</span> (NPN o PNP) osservando la direzione della freccia</li>
+                    <li><span class="bold-text">Assumere una regione di funzionamento</span> (tipicamente zona attiva)</li>
+                    <li><span class="bold-text">Applicare le condizioni della regione assunta:</span>
+                        <ul>
+                            <li>Per zona attiva: V<sub>BE</sub> = 0,7V (NPN) o V<sub>EB</sub> = 0,7V (PNP)</li>
+                            <li>I<sub>C</sub> ≈ I<sub>E</sub> (relazione fondamentale in zona attiva)</li>
+                            <li>I<sub>B</sub> = I<sub>C</sub> / β (per calcolare la corrente di base)</li>
+                        </ul>
+                    </li>
+                    <li><span class="bold-text">Calcolare tensioni e correnti</span> usando le leggi di Kirchhoff</li>
+                    <li><span class="bold-text">Verificare le ipotesi:</span>
+                        <ul>
+                            <li>Per NPN in zona attiva: controllare che V<sub>C</sub> > V<sub>B</sub> - 0,4V</li>
+                            <li>Per PNP in zona attiva: controllare che V<sub>C</sub> < V<sub>B</sub> + 0,4V</li>
+                            <li>Se V<sub>CE</sub> risulta negativo o troppo basso, assumere saturazione</li>
+                        </ul>
+                    </li>
+                    <li><span class="bold-text">Se necessario, ricalcolare</span> con la regione corretta</li>
+                </ol>
+            </div>
+
+            <h2><span class="section-number">8.</span> Applicazioni dei Transistor BJT</h2>
+            
+            <h3>8.1 Amplificatori</h3>
+            <p>In zona attiva, il BJT può amplificare segnali. Una piccola variazione della corrente di base produce una grande variazione della corrente di collettore, permettendo l'amplificazione di tensione e corrente.</p>
+
+            <h3>8.2 Interruttori Elettronici</h3>
+            <p>Sfruttando le regioni di interdizione (OFF) e saturazione (ON), il BJT può funzionare come interruttore controllato elettronicamente, fondamentale nei circuiti digitali e di potenza.</p>
+
+            <h3>8.3 Oscillatori</h3>
+            <p>Configurazioni particolari di BJT possono generare forme d'onda periodiche per applicazioni di temporizzazione e generazione di segnali.</p>
+
+            <h2><span class="section-number">9.</span> Riepilogo Formule Essenziali</h2>
+            
+            <div class="formula-box">
+                <strong>FORMULE FONDAMENTALI:</strong><br><br>
+                
+                <strong>Correnti:</strong><br>
+                • I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub><br>
+                • I<sub>C</sub> = β × I<sub>B</sub><br>
+                • I<sub>B</sub> = I<sub>C</sub> / β<br>
+                • I<sub>C</sub> ≈ I<sub>E</sub> (in zona attiva)<br><br>
+                
+                <strong>Tensioni (NPN):</strong><br>
+                • V<sub>BE</sub> = 0,7V (zona attiva)<br>
+                • V<sub>CE</sub> = V<sub>C</sub> - V<sub>E</sub><br>
+                • V<sub>CE(sat)</sub> = 0,2V (saturazione)<br>
+                • Condizione zona attiva: V<sub>C</sub> > V<sub>B</sub> - 0,4V<br><br>
+                
+                <strong>Tensioni (PNP):</strong><br>
+                • V<sub>EB</sub> = 0,7V (zona attiva)<br>
+                • V<sub>EC</sub> = V<sub>E</sub> - V<sub>C</sub><br>
+                • V<sub>EC(sat)</sub> = 0,2V (saturazione)<br>
+                • Condizione zona attiva: V<sub>C</sub> < V<sub>B</sub> + 0,4V
+            </div>
+
+            <div class="key-points">
+                <h4>💡 Punti Chiave da Ricordare</h4>
+                <ul>
+                    <li>La freccia indica sempre l'emettitore e la direzione della corrente convenzionale</li>
+                    <li>In zona attiva, V<sub>BE</sub> (o V<sub>EB</sub>) è sempre circa 0,7V</li>
+                    <li>La corrente di base è molto più piccola della corrente di collettore (I<sub>B</sub> << I<sub>C</sub>)</li>
+                    <li>In saturazione, V<sub>CE</sub> scende a circa 0,2V</li>
+                    <li>La verifica della regione di funzionamento è cruciale per l'analisi corretta</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
