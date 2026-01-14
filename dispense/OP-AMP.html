@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa Amplificatori Operazionali</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.5cm;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 8pt;
+            line-height: 1.1;
+            color: #000;
+            margin: 0;
+            padding: 0;
+            orphans: 3;
+            widows: 3;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        p, div {
+            orphans: 2;
+            widows: 2;
+        }
+        
+        .title-page {
+            text-align: center;
+            margin-top: 1cm;
+            font-size: 12pt;
+            font-weight: bold;
+        }
+        
+        .title-page h1 {
+            font-size: 16pt;
+            margin-bottom: 0.1cm;
+        }
+        
+        .title-page h2 {
+            font-size: 14pt;
+            margin-bottom: 0.8cm;
+        }
+        
+        .info-box {
+            text-align: left;
+            margin: 1cm auto;
+            width: 60%;
+            font-size: 9pt;
+            line-height: 1.2;
+        }
+        
+        .toc {
+            margin-top: 0.5cm;
+        }
+        
+        .toc h2 {
+            text-align: center;
+            font-size: 12pt;
+            margin-bottom: 0.4cm;
+        }
+        
+        .toc-item {
+            margin-bottom: 0.1cm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+        }
+        
+        .chapter {
+            margin-top: 0.5cm;
+            page-break-before: auto;
+        }
+        
+        .chapter h2 {
+            font-size: 10pt;
+            color: #000080;
+            border-bottom: 1px solid #000080;
+            padding-bottom: 0.1cm;
+            margin-bottom: 0.3cm;
+            page-break-after: avoid;
+        }
+        
+        .chapter h3 {
+            font-size: 9pt;
+            color: #000060;
+            margin-top: 0.4cm;
+            margin-bottom: 0.15cm;
+            page-break-after: avoid;
+        }
+        
+        .chapter h4 {
+            font-size: 8pt;
+            color: #000060;
+            margin-top: 0.3cm;
+            margin-bottom: 0.1cm;
+            page-break-after: avoid;
+        }
+        
+        .theory {
+            background-color: #f0f8ff;
+            padding: 0.2cm;
+            border-left: 2px solid #4169e1;
+            margin: 0.15cm 0;
+            page-break-inside: avoid;
+        }
+        
+        .exercise {
+            background-color: #fff8dc;
+            padding: 0.2cm;
+            border-left: 2px solid #ffa500;
+            margin: 0.15cm 0;
+            page-break-inside: avoid;
+        }
+        
+        .formula {
+            background-color: #f5f5f5;
+            padding: 0.1cm;
+            border: 1px solid #ddd;
+            margin: 0.08cm 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 7pt;
+            page-break-inside: avoid;
+        }
+        
+        .solution {
+            background-color: #f0fff0;
+            padding: 0.2cm;
+            border-left: 2px solid #32cd32;
+            margin: 0.08cm 0;
+        }
+        
+        .note {
+            background-color: #fffacd;
+            padding: 0.15cm;
+            border: 1px solid #daa520;
+            margin: 0.08cm 0;
+            font-style: italic;
+            font-size: 7pt;
+            page-break-inside: avoid;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.15cm 0;
+            font-size: 7pt;
+            page-break-inside: avoid;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.08cm;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        ul, ol {
+            margin: 0.1cm 0;
+            padding-left: 1cm;
+        }
+        
+        li {
+            margin-bottom: 0.05cm;
+        }
+        
+        @media print {
+            body { 
+                font-size: 7pt;
+                line-height: 1.0;
+                orphans: 3;
+                widows: 3;
+            }
+            .no-print {
+                display: none;
+            }
+            .chapter {
+                page-break-inside: avoid;
+            }
+            .chapter h2 {
+                font-size: 9pt;
+                page-break-after: avoid;
+            }
+            .chapter h3 {
+                font-size: 8pt;
+                page-break-after: avoid;
+            }
+            .chapter h4 {
+                font-size: 7pt;
+                page-break-after: avoid;
+            }
+            .title-page h1 {
+                font-size: 14pt;
+            }
+            .title-page h2 {
+                font-size: 12pt;
+            }
+            .info-box {
+                font-size: 8pt;
+            }
+            .formula {
+                font-size: 6pt;
+            }
+            .note {
+                font-size: 6pt;
+            }
+            table {
+                font-size: 6pt;
+            }
+            .theory, .exercise, .solution {
+                page-break-inside: avoid;
+                margin: 0.1cm 0;
+            }
+            p {
+                orphans: 2;
+                widows: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pagina del titolo -->
+    <div class="title-page">
+        <h1>UNIVERSITÀ DEGLI STUDI DI PALERMO</h1>
+        <h2>FACOLTÀ DI INGEGNERIA</h2>
+        
+        <div style="font-size: 18pt; margin: 1.5cm 0; color: #000080;">
+            Dispensa di Elettronica<br>
+            Amplificatori Operazionali
+        </div>
+        
+        <div class="info-box">
+            <strong>Sviluppatore:</strong> Petrone Kevin<br>
+            <strong>Matricola:</strong> 0774409<br>
+            <strong>Docente:</strong> Livreri Patrizia<br>
+            <strong>Corso:</strong> Ing. Robotica<br>
+            <strong>Anno Accademico:</strong> 2024/2025<br>
+            <strong>Data:</strong> Gennaio 2025
+        </div>
+    </div>
+
+    <!-- Indice -->
+    <div class="page-break">
+        <div class="toc">
+            <h2>INDICE</h2>
+            
+            <div class="toc-item">
+                <span>1. Introduzione agli Amplificatori Operazionali</span>
+                <span>3</span>
+            </div>
+            <div class="toc-item">
+                <span>2. Amplificatore Operazionale Ideale</span>
+                <span>5</span>
+            </div>
+            <div class="toc-item">
+                <span>3. Configurazione Invertente</span>
+                <span>7</span>
+            </div>
+            <div class="toc-item">
+                <span>4. Configurazione Non Invertente e Buffer</span>
+                <span>10</span>
+            </div>
+            <div class="toc-item">
+                <span>5. Sommatore Pesato</span>
+                <span>12</span>
+            </div>
+            <div class="toc-item">
+                <span>6. Amplificatore Differenziale</span>
+                <span>13</span>
+            </div>
+            <div class="toc-item">
+                <span>7. Amplificatore per Strumentazione</span>
+                <span>15</span>
+            </div>
+            <div class="toc-item">
+                <span>8. Integratore e Derivatore</span>
+                <span>17</span>
+            </div>
+            <div class="toc-item">
+                <span>9. Amplificatori Operazionali Reali</span>
+                <span>19</span>
+            </div>
+            <div class="toc-item">
+                <span>10. Esercizi Applicativi</span>
+                <span>22</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 1: Introduzione -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>1. INTRODUZIONE AGLI AMPLIFICATORI OPERAZIONALI</h2>
+            
+            <div class="theory">
+                <h3>Cos'è un Amplificatore Operazionale</h3>
+                <p>Un amplificatore operazionale (OpAmp) è un componente elettronico analogico in grado di innalzare il livello del segnale d'ingresso conferendo ad esso una potenza maggiore rispetto a quella in ingresso.</p>
+                
+                <p>La denominazione deriva dal fatto che questo dispositivo è stato storicamente usato per effettuare operazioni matematiche su segnali elettrici (somma, sottrazione, integrazione, derivazione, ecc.).</p>
+                
+                <h4>Evoluzione Tecnologica</h4>
+                <ul>
+                    <li><strong>Prima generazione:</strong> Circuiti a valvole termoioniche</li>
+                    <li><strong>Seconda generazione:</strong> Transistor discreti</li>
+                    <li><strong>Terza generazione:</strong> Circuiti integrati (attuale)</li>
+                </ul>
+                
+                <p>Gli amplificatori operazionali moderni sono circuiti integrati costituiti da decine di transistor, resistenze e condensatori. Sono estremamente versatili e vengono usati in ogni applicazione elettronica analogica.</p>
+                
+                <h4>Caratteristiche Principali</h4>
+                <ul>
+                    <li>Ingresso differenziale (due terminali di ingresso)</li>
+                    <li>Singola uscita</li>
+                    <li>Alimentazione duale (tipicamente ±12V o ±15V)</li>
+                    <li>Alto guadagno ad anello aperto (tipicamente 10⁶)</li>
+                    <li>Basso costo e ridotte dimensioni</li>
+                </ul>
+            </div>
+            
+            <div class="theory">
+                <h3>Simbolo Circuitale e Terminali</h3>
+                <p>Il simbolo circuitale dell'OpAmp è un triangolo con:</p>
+                
+                <ul>
+                    <li><strong>Terminale (+):</strong> Ingresso non invertente</li>
+                    <li><strong>Terminale (-):</strong> Ingresso invertente</li>
+                    <li><strong>Terminale vo:</strong> Uscita</li>
+                    <li><strong>V<sub>CC</sub>:</strong> Alimentazione positiva (non sempre disegnata)</li>
+                    <li><strong>-V<sub>CC</sub>:</strong> Alimentazione negativa (non sempre disegnata)</li>
+                </ul>
+                
+                <div class="note">
+                    Per semplicità, nei circuiti spesso si omettono i terminali di alimentazione, ma sono sempre presenti e necessari per il funzionamento.
+                </div>
+                
+                <h4>Relazione Ingresso-Uscita</h4>
+                <p>L'operazionale amplifica la differenza delle tensioni presenti ai terminali:</p>
+                <div class="formula">
+                    v<sub>o</sub> = A<sub>OL</sub>(v<sub>+</sub> - v<sub>-</sub>)
+                </div>
+                
+                <p>dove A<sub>OL</sub> è il guadagno ad anello aperto (Open Loop)</p>
+            </div>
+            
+            <div class="theory">
+                <h3>Segnale Differenziale e di Modo Comune</h3>
+                <p>Quando abbiamo una coppia di segnali in ingresso, è utile ragionare in termini di:</p>
+                
+                <h4>Segnale Differenziale</h4>
+                <div class="formula">
+                    v<sub>Id</sub> = v<sub>2</sub> - v<sub>1</sub>
+                </div>
+                
+                <h4>Segnale di Modo Comune</h4>
+                <div class="formula">
+                    v<sub>Icm</sub> = (v<sub>1</sub> + v<sub>2</sub>)/2
+                </div>
+                
+                <p>Possiamo esprimere i segnali di ingresso in funzione di questi parametri:</p>
+                <div class="formula">
+                    v<sub>1</sub> = v<sub>Icm</sub> - v<sub>Id</sub>/2
+                </div>
+                <div class="formula">
+                    v<sub>2</sub> = v<sub>Icm</sub> + v<sub>Id</sub>/2
+                </div>
+                
+                <div class="note">
+                    L'OpAmp amplifica principalmente il segnale differenziale e dovrebbe idealmente rigettare (ignorare) il segnale di modo comune. Questa capacità è misurata dal CMRR.
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Parametri Fondamentali</h3>
+                
+                <table>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Simbolo</th>
+                        <th>Valore Ideale</th>
+                        <th>Valore Reale (μA741)</th>
+                    </tr>
+                    <tr>
+                        <td>Guadagno ad anello aperto</td>
+                        <td>A<sub>OL</sub></td>
+                        <td>∞</td>
+                        <td>~10⁶ (200,000)</td>
+                    </tr>
+                    <tr>
+                        <td>Resistenza di ingresso</td>
+                        <td>R<sub>i</sub></td>
+                        <td>∞</td>
+                        <td>2 MΩ</td>
+                    </tr>
+                    <tr>
+                        <td>Resistenza di uscita</td>
+                        <td>R<sub>o</sub></td>
+                        <td>0</td>
+                        <td>75 Ω</td>
+                    </tr>
+                    <tr>
+                        <td>Larghezza di banda</td>
+                        <td>BW</td>
+                        <td>∞</td>
+                        <td>1 MHz</td>
+                    </tr>
+                    <tr>
+                        <td>CMRR</td>
+                        <td>-</td>
+                        <td>∞</td>
+                        <td>80-120 dB</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 2: OpAmp Ideale -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>2. AMPLIFICATORE OPERAZIONALE IDEALE</h2>
+            
+            <div class="theory">
+                <h3>Caratteristiche dell'OpAmp Ideale</h3>
+                
+                <h4>1. Guadagno Infinito</h4>
+                <div class="formula">
+                    A<sub>OL</sub> = ∞
+                </div>
+                <p>Il guadagno ad anello aperto è infinito e costante per tutte le frequenze.</p>
+                
+                <h4>2. Resistenza di Ingresso Infinita</h4>
+                <div class="formula">
+                    R<sub>i</sub> = ∞  →  i<sub>+</sub> = i<sub>-</sub> = 0
+                </div>
+                <p><strong>Conseguenza:</strong> L'OpAmp NON assorbe corrente dagli ingressi.</p>
+                
+                <h4>3. Resistenza di Uscita Nulla</h4>
+                <div class="formula">
+                    R<sub>o</sub> = 0
+                </div>
+                <p>L'uscita funziona come generatore ideale di tensione, indipendente dal carico.</p>
+                
+                <h4>4. Larghezza di Banda Infinita</h4>
+                <div class="formula">
+                    BW = ∞  (da 0 Hz a ∞ Hz)
+                </div>
+                <p>Il guadagno è costante per tutti i valori di frequenza, DC compresa.</p>
+                
+                <h4>5. Reiezione di Modo Comune Infinita</h4>
+                <div class="formula">
+                    CMRR = ∞
+                </div>
+                <p>Se v<sub>+</sub> = v<sub>-</sub>, allora v<sub>o</sub> = 0</p>
+                
+                <h4>6. Nessuna Deriva Termica</h4>
+                <p>Le caratteristiche non cambiano con la temperatura.</p>
+            </div>
+            
+            <div class="theory">
+                <h3>Il Principio del Cortocircuito Virtuale</h3>
+                <p>Dalla relazione fondamentale:</p>
+                <div class="formula">
+                    v<sub>o</sub> = A<sub>OL</sub>(v<sub>+</sub> - v<sub>-</sub>)
+                </div>
+                
+                <p>Se A<sub>OL</sub> → ∞ e v<sub>o</sub> è finita, allora:</p>
+                <div class="formula">
+                    v<sub>+</sub> - v<sub>-</sub> = v<sub>o</sub>/A<sub>OL</sub> → 0
+                </div>
+                
+                <p>Quindi:</p>
+                <div class="formula">
+                    v<sub>+</sub> = v<sub>-</sub>  (Cortocircuito Virtuale)
+                </div>
+                
+                <div class="note">
+                    <strong>IMPORTANTE:</strong> I due terminali sono allo stesso potenziale, ma NON passano correnti tra di loro (perché R<sub>i</sub> = ∞). È un "cortocircuito virtuale", non fisico!
+                </div>
+                
+                <h4>Massa Virtuale</h4>
+                <p>Se uno dei due ingressi è collegato a massa, anche l'altro è a potenziale zero (massa virtuale), pur non essendo fisicamente collegato a massa.</p>
+            </div>
+            
+            <div class="theory">
+                <h3>OpAmp ad Anello Aperto</h3>
+                <p>Senza rete di retroazione, l'OpAmp funziona come <strong>comparatore</strong>:</p>
+                
+                <div class="formula">
+                    Se v<sub>+</sub> > v<sub>-</sub>  →  v<sub>o</sub> ≈ +V<sub>CC</sub> (saturazione positiva)
+                </div>
+                <div class="formula">
+                    Se v<sub>+</sub> < v<sub>-</sub>  →  v<sub>o</sub> ≈ -V<sub>CC</sub> (saturazione negativa)
+                </div>
+                
+                <p>La zona lineare è estremamente stretta:</p>
+                <div class="formula">
+                    Δv<sub>i</sub> = V<sub>CC</sub>/A<sub>OL</sub> ≈ 15V/10⁶ = 15 μV
+                </div>
+                
+                <div class="note">
+                    Per usare l'OpAmp come amplificatore lineare è NECESSARIO introdurre una rete di retroazione negativa (feedback negativo).
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Controreazione e Guadagno ad Anello Chiuso</h3>
+                <p>Quando applichiamo una frazione β della tensione di uscita all'ingresso (retroazione negativa):</p>
+                
+                <div class="formula">
+                    v<sub>f</sub> = β·v<sub>o</sub>  (segnale di feedback)
+                </div>
+                <div class="formula">
+                    v<sub>i</sub> = v<sub>s</sub> - v<sub>f</sub>  (segnale di errore)
+                </div>
+                <div class="formula">
+                    v<sub>o</sub> = A<sub>OL</sub>·v<sub>i</sub> = A<sub>OL</sub>(v<sub>s</sub> - β·v<sub>o</sub>)
+                </div>
+                
+                <p>Risolvendo per v<sub>o</sub>/v<sub>s</sub>:</p>
+                <div class="formula">
+                    G = v<sub>o</sub>/v<sub>s</sub> = A<sub>OL</sub>/(1 + β·A<sub>OL</sub>)
+                </div>
+                
+                <p>Se β·A<sub>OL</sub> >> 1 (condizione tipica):</p>
+                <div class="formula">
+                    G ≈ 1/β
+                </div>
+                
+                <div class="note">
+                    Il guadagno ad anello chiuso dipende SOLO dalla rete di retroazione (componenti esterni), NON dalle caratteristiche dell'OpAmp!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 3: Configurazione Invertente -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>3. CONFIGURAZIONE INVERTENTE</h2>
+            
+            <div class="theory">
+                <h3>Schema e Funzionamento</h3>
+                <p>Nella configurazione invertente:</p>
+                <ul>
+                    <li>Il segnale v<sub>I</sub> è applicato al terminale invertente (-) attraverso R₁</li>
+                    <li>Il terminale non invertente (+) è collegato a massa</li>
+                    <li>La rete di feedback è costituita da R₂ tra uscita e ingresso invertente</li>
+                </ul>
+                
+                <h4>Analisi con OpAmp Ideale</h4>
+                <p><strong>Step 1:</strong> Applicare il cortocircuito virtuale</p>
+                <p>Poiché v<sub>+</sub> = 0 (collegato a massa), per il c.c. virtuale:</p>
+                <div class="formula">
+                    v<sub>-</sub> = v<sub>+</sub> = 0  (Massa Virtuale)
+                </div>
+                
+                <p><strong>Step 2:</strong> Calcolare la corrente i<sub>I</sub></p>
+                <p>Applicando la legge di Ohm su R₁:</p>
+                <div class="formula">
+                    i<sub>I</sub> = (v<sub>I</sub> - v<sub>-</sub>)/R₁ = v<sub>I</sub>/R₁
+                </div>
+                
+                <p><strong>Step 3:</strong> Applicare la conservazione della corrente</p>
+                <p>Poiché R<sub>i</sub> = ∞, l'OpAmp non assorbe corrente, quindi:</p>
+                <div class="formula">
+                    i<sub>I</sub> = i<sub>R2</sub>
+                </div>
+                
+                <p><strong>Step 4:</strong> Calcolare v<sub>o</sub></p>
+                <p>Applicando Ohm su R₂:</p>
+                <div class="formula">
+                    i<sub>R2</sub> = (v<sub>-</sub> - v<sub>o</sub>)/R₂ = -v<sub>o</sub>/R₂
+                </div>
+                
+                <p><strong>Step 5:</strong> Ricavare il guadagno</p>
+                <p>Eguagliando le correnti:</p>
+                <div class="formula">
+                    v<sub>I</sub>/R₁ = -v<sub>o</sub>/R₂
+                </div>
+                
+                <div class="formula">
+                    <strong>G = v<sub>o</sub>/v<sub>I</sub> = -R₂/R₁</strong>
+                </div>
+                
+                <div class="note">
+                    Il segno negativo indica che il segnale di uscita è invertito di 180° rispetto all'ingresso (sfasamento). L'ampiezza è moltiplicata per R₂/R₁.
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Resistenza di Ingresso e Uscita</h3>
+                
+                <h4>Resistenza di Ingresso</h4>
+                <div class="formula">
+                    R<sub>in</sub> = v<sub>I</sub>/i<sub>I</sub> = R₁
+                </div>
+                
+                <p>La resistenza di ingresso è semplicemente R₁. Non è infinita come nell'OpAmp ideale!</p>
+                
+                <div class="note">
+                    Per non caricare troppo la sorgente, R₁ deve essere sufficientemente grande. Però se R₁ è grande e vogliamo un guadagno elevato, R₂ diventa troppo grande (problemi pratici).
+                </div>
+                
+                <h4>Resistenza di Uscita</h4>
+                <div class="formula">
+                    R<sub>out</sub> = 0  (OpAmp ideale)
+                </div>
+                
+                <p>Per OpAmp reale con r<sub>o</sub> e A<sub>OL</sub> finiti:</p>
+                <div class="formula">
+                    R<sub>out</sub> = r<sub>o</sub>/A<sub>OL</sub> · (1 + R₂/R₁)
+                </div>
+                
+                <p>Tipicamente molto bassa (< 1Ω)</p>
+            </div>
+            
+            <div class="theory">
+                <h3>Effetti del Guadagno Finito</h3>
+                <p>Se consideriamo A<sub>OL</sub> finito (ma molto grande):</p>
+                
+                <p>La tensione al terminale invertente non è esattamente zero:</p>
+                <div class="formula">
+                    v<sub>-</sub> = -v<sub>o</sub>/A<sub>OL</sub>
+                </div>
+                
+                <p>Rifacendo i calcoli:</p>
+                <div class="formula">
+                    i<sub>I</sub> = (v<sub>I</sub> + v<sub>o</sub>/A<sub>OL</sub>)/R₁
+                </div>
+                <div class="formula">
+                    i<sub>I</sub> = (-v<sub>o</sub>/A<sub>OL</sub> - v<sub>o</sub>)/R₂
+                </div>
+                
+                <p>Il guadagno ad anello chiuso diventa:</p>
+                <div class="formula">
+                    G = (-R₂/R₁)/(1 + (1 + R₂/R₁)/A<sub>OL</sub>)
+                </div>
+                
+                <p>Per minimizzare la dipendenza da A<sub>OL</sub>, deve valere:</p>
+                <div class="formula">
+                    (1 + R₂/R₁) << A<sub>OL</sub>
+                </div>
+                
+                <div class="note">
+                    In pratica, se A<sub>OL</sub> = 10⁶, possiamo avere guadagni fino a 10³-10⁴ con errori trascurabili.
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 1: Progetto Amplificatore Invertente</h3>
+                
+                <strong>Problema:</strong> Progettare un amplificatore invertente con:
+                <ul>
+                    <li>Guadagno G = -10</li>
+                    <li>Resistenza di ingresso R<sub>in</sub> = 10 kΩ</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Scelta di R₁</h4>
+                    <p>Poiché R<sub>in</sub> = R₁:</p>
+                    <div class="formula">
+                        R₁ = 10 kΩ
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo di R₂</h4>
+                    <p>Dal guadagno:</p>
+                    <div class="formula">
+                        |G| = R₂/R₁ = 10
+                    </div>
+                    <div class="formula">
+                        R₂ = 10 × R₁ = 10 × 10 kΩ = 100 kΩ
+                    </div>
+                    
+                    <h4>Risultato del Progetto</h4>
+                    <ul>
+                        <li>R₁ = 10 kΩ</li>
+                        <li>R₂ = 100 kΩ</li>
+                        <li>G = -10</li>
+                        <li>R<sub>in</sub> = 10 kΩ</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 2: Verifica del Cortocircuito Virtuale</h3>
+                
+                <strong>Problema:</strong> Un amplificatore invertente ha R₁ = 1 kΩ, R₂ = 47 kΩ, A<sub>OL</sub> = 200,000. Se v<sub>I</sub> = 0.1 V, calcolare:
+                <ul>
+                    <li>v<sub>o</sub> (assumendo OpAmp ideale)</li>
+                    <li>v<sub>-</sub> effettiva</li>
+                    <li>Errore percentuale</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo v<sub>o</sub> (ideale)</h4>
+                    <div class="formula">
+                        v<sub>o</sub> = -R₂/R₁ × v<sub>I</sub> = -47 × 0.1 = -4.7 V
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo v<sub>-</sub> effettiva</h4>
+                    <div class="formula">
+                        v<sub>-</sub> = -v<sub>o</sub>/A<sub>OL</sub> = -(-4.7)/200,000 = 23.5 μV
+                    </div>
+                    
+                    <h4>Passo 3: Verifica approssimazione</h4>
+                    <p>Rispetto a v<sub>I</sub> = 0.1 V = 100,000 μV:</p>
+                    <div class="formula">
+                        Errore = (23.5/100,000) × 100% = 0.0235%
+                    </div>
+                    
+                    <div class="note">
+                        L'errore è trascurabile! L'approssimazione v<sub>-</sub> ≈ 0 è eccellente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 4: Configurazione Non Invertente -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>4. CONFIGURAZIONE NON INVERTENTE E BUFFER</h2>
+            
+            <div class="theory">
+                <h3>Amplificatore Non Invertente</h3>
+                <p>Nella configurazione non invertente:</p>
+                <ul>
+                    <li>Il segnale v<sub>I</sub> è applicato al terminale non invertente (+)</li>
+                    <li>Il terminale invertente (-) è collegato alla rete di feedback</li>
+                    <li>R₁ collega il terminale invertente a massa</li>
+                    <li>R₂ collega uscita e terminale invertente</li>
+                </ul>
+                
+                <h4>Derivazione del Guadagno</h4>
+                <p><strong>Step 1:</strong> Applicare il cortocircuito virtuale</p>
+                <div class="formula">
+                    v<sub>-</sub> = v<sub>+</sub> = v<sub>I</sub>
+                </div>
+                
+                <p><strong>Step 2:</strong> Calcolare v<sub>-</sub> con partitore</p>
+                <p>R₁ e R₂ formano un partitore di tensione:</p>
+                <div class="formula">
+                    v<sub>-</sub> = v<sub>o</sub> × R₁/(R₁ + R₂)
+                </div>
+                
+                <p><strong>Step 3:</strong> Eguagliare le due espressioni</p>
+                <div class="formula">
+                    v<sub>I</sub> = v<sub>o</sub> × R₁/(R₁ + R₂)
+                </div>
+                
+                <p><strong>Step 4:</strong> Ricavare il guadagno</p>
+                <div class="formula">
+                    <strong>G = v<sub>o</sub>/v<sub>I</sub> = (R₁ + R₂)/R₁ = 1 + R₂/R₁</strong>
+                </div>
+                
+                <div class="note">
+                    Il guadagno è sempre POSITIVO e maggiore di 1. Il segnale di uscita è in fase con l'ingresso (non invertito).
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Resistenze di Ingresso e Uscita</h3>
+                
+                <h4>Resistenza di Ingresso</h4>
+                <div class="formula">
+                    R<sub>in</sub> = ∞  (OpAmp ideale)
+                </div>
+                
+                <p>Il segnale è applicato direttamente al terminale (+) che ha impedenza infinita.</p>
+                
+                <div class="note">
+                    <strong>Vantaggio principale:</strong> Non carica la sorgente! Ideale per segnali provenienti da sorgenti ad alta impedenza.
+                </div>
+                
+                <h4>Resistenza di Uscita</h4>
+                <div class="formula">
+                    R<sub>out</sub> = 0  (OpAmp ideale)
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Effetti del Guadagno Finito</h3>
+                <p>Con A<sub>OL</sub> finito:</p>
+                
+                <div class="formula">
+                    G = (1 + R₂/R₁)/(1 + (1 + R₂/R₁)/A<sub>OL</sub>)
+                </div>
+                
+                <p>Il denominatore è identico al caso invertente. Per A<sub>OL</sub> → ∞:</p>
+                <div class="formula">
+                    G → 1 + R₂/R₁
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Buffer (Inseguitore di Tensione)</h3>
+                <p>Caso particolare con R₂ = 0 e R₁ → ∞ (o rimossa):</p>
+                
+                <div class="formula">
+                    G = 1 + 0/∞ = 1
+                </div>
+                
+                <p>Quindi:</p>
+                <div class="formula">
+                    v<sub>o</sub> = v<sub>I</sub>
+                </div>
+                
+                <h4>Caratteristiche del Buffer</h4>
+                <ul>
+                    <li>Guadagno unitario (G = 1)</li>
+                    <li>R<sub>in</sub> = ∞ (non carica la sorgente)</li>
+                    <li>R<sub>out</sub> = 0 (può pilotare carichi bassi)</li>
+                    <li>Funzione: separatore di impedenza</li>
+                </ul>
+                
+                <h4>Applicazioni del Buffer</h4>
+                <ul>
+                    <li>Interfaccia tra sorgente ad alta impedenza e carico a bassa impedenza</li>
+                    <li>Isolamento tra stadi di amplificazione</li>
+                    <li>Driver per carichi capacitivi</li>
+                    <li>Adattamento di impedenza</li>
+                </ul>
+                
+                <div class="note">
+                    Anche se il guadagno è 1, il buffer è utilissimo perché trasferisce potenza dalla sorgente al carico senza attenuazione, grazie all'alimentazione esterna dell'OpAmp.
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 3: Comparazione Configurazioni</h3>
+                
+                <strong>Problema:</strong> Confrontare le configurazioni invertente e non invertente per ottenere un guadagno in modulo di 10 con R₁ = 10 kΩ.
+                
+                <div class="solution">
+                    <h4>Configurazione Invertente</h4>
+                    <div class="formula">
+                        |G| = R₂/R₁ = 10 → R₂ = 100 kΩ
+                    </div>
+                    <div class="formula">
+                        R<sub>in</sub> = R₁ = 10 kΩ
+                    </div>
+                    <div class="formula">
+                        Uscita invertita (sfasamento 180°)
+                    </div>
+                    
+                    <h4>Configurazione Non Invertente</h4>
+                    <div class="formula">
+                        G = 1 + R₂/R₁ = 10 → R₂/R₁ = 9 → R₂ = 90 kΩ
+                    </div>
+                    <div class="formula">
+                        R<sub>in</sub> = ∞
+                    </div>
+                    <div class="formula">
+                        Uscita in fase con ingresso
+                    </div>
+                    
+                    <h4>Confronto</h4>
+                    <table>
+                        <tr>
+                            <th>Parametro</th>
+                            <th>Invertente</th>
+                            <th>Non Invertente</th>
+                        </tr>
+                        <tr>
+                            <td>R₂</td>
+                            <td>100 kΩ</td>
+                            <td>90 kΩ</td>
+                        </tr>
+                        <tr>
+                            <td>R<sub>in</sub></td>
+                            <td>10 kΩ</td>
+                            <td>∞</td>
+                        </tr>
+                        <tr>
+                            <td>Fase</td>
+                            <td>Invertita</td>
+                            <td>Non invertita</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 5: Sommatore Pesato -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>5. SOMMATORE PESATO</h2>
+            
+            <div class="theory">
+                <h3>Principio di Funzionamento</h3>
+                <p>Il sommatore pesato permette di sommare più segnali di ingresso, ciascuno moltiplicato per un "peso" diverso.</p>
+                
+                <h4>Schema del Circuito</h4>
+                <ul>
+                    <li>Più ingressi v₁, v₂, ..., v<sub>n</sub> collegati tramite resistenze R₁, R₂, ..., R<sub>n</sub></li>
+                    <li>Tutti convergono al terminale invertente</li>
+                    <li>Resistenza di feedback R<sub>f</sub></li>
+                    <li>Terminale (+) a massa</li>
+                </ul>
+                
+                <h4>Derivazione della Formula</h4>
+                <p><strong>Step 1:</strong> Massa virtuale</p>
+                <div class="formula">
+                    v<sub>-</sub> = 0
+                </div>
+                
+                <p><strong>Step 2:</strong> Correnti dai vari ingressi</p>
+                <div class="formula">
+                    i₁ = v₁/R₁,  i₂ = v₂/R₂,  ...,  i<sub>n</sub> = v<sub>n</sub>/R<sub>n</sub>
+                </div>
+                
+                <p><strong>Step 3:</strong> Corrente totale</p>
+                <p>Per il principio di conservazione (l'OpAmp non assorbe corrente):</p>
+                <div class="formula">
+                    i = i₁ + i₂ + ... + i<sub>n</sub> = v₁/R₁ + v₂/R₂ + ... + v<sub>n</sub>/R<sub>n</sub>
+                </div>
+                
+                <p><strong>Step 4:</strong> Tensione di uscita</p>
+                <div class="formula">
+                    v<sub>o</sub> = -R<sub>f</sub> × i
+                </div>
+                
+                <div class="formula">
+                    <strong>v<sub>o</sub> = -R<sub>f</sub>(v₁/R₁ + v₂/R₂ + ... + v<sub>n</sub>/R<sub>n</sub>)</strong>
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Caso Particolare: Resistenze Uguali</h3>
+                <p>Se R₁ = R₂ = ... = R<sub>n</sub> = R:</p>
+                
+                <div class="formula">
+                    v<sub>o</sub> = -(R<sub>f</sub>/R)(v₁ + v₂ + ... + v<sub>n</sub>)
+                </div>
+                
+                <p>Se inoltre R<sub>f</sub> = R:</p>
+                <div class="formula">
+                    v<sub>o</sub> = -(v₁ + v₂ + ... + v<sub>n</sub>)
+                </div>
+                
+                <p>Sommatore con inversione e guadagno unitario.</p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 4: Sommatore a 3 Ingressi</h3>
+                
+                <strong>Problema:</strong> Progettare un sommatore che realizzi:
+                <div class="formula">
+                    v<sub>o</sub> = -(2v₁ + 5v₂ + v₃)
+                </div>
+                Usare R<sub>f</sub> = 100 kΩ
+                
+                <div class="solution">
+                    <h4>Passo 1: Identificare i coefficienti</h4>
+                    <p>Dalla formula generale:</p>
+                    <div class="formula">
+                        v<sub>o</sub> = -R<sub>f</sub>(v₁/R₁ + v₂/R₂ + v₃/R₃)
+                    </div>
+                    
+                    <p>Dobbiamo avere:</p>
+                    <div class="formula">
+                        R<sub>f</sub>/R₁ = 2,  R<sub>f</sub>/R₂ = 5,  R<sub>f</sub>/R₃ = 1
+                    </div>
+                    
+                    <h4>Passo 2: Calcolare le resistenze</h4>
+                    <div class="formula">
+                        R₁ = R<sub>f</sub>/2 = 100/2 = 50 kΩ
+                    </div>
+                    <div class="formula">
+                        R₂ = R<sub>f</sub>/5 = 100/5 = 20 kΩ
+                    </div>
+                    <div class="formula">
+                        R₃ = R<sub>f</sub>/1 = 100 kΩ
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <ul>
+                        <li>R₁ = 50 kΩ (peso = 2)</li>
+                        <li>R₂ = 20 kΩ (peso = 5)</li>
+                        <li>R₃ = 100 kΩ (peso = 1)</li>
+                        <li>R<sub>f</sub> = 100 kΩ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 6: Amplificatore Differenziale -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>6. AMPLIFICATORE DIFFERENZIALE</h2>
+            
+            <div class="theory">
+                <h3>Funzione e Importanza</h3>
+                <p>L'amplificatore differenziale amplifica la differenza tra due segnali e, idealmente, elimina il segnale di modo comune.</p>
+                
+                <h4>Definizioni</h4>
+                <div class="formula">
+                    v<sub>o</sub> = A<sub>d</sub>·v<sub>Id</sub> + A<sub>cm</sub>·v<sub>Icm</sub>
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>A<sub>d</sub>:</strong> Guadagno differenziale</li>
+                    <li><strong>A<sub>cm</sub>:</strong> Guadagno di modo comune</li>
+                    <li><strong>v<sub>Id</sub> = v₂ - v₁:</strong> Segnale differenziale</li>
+                    <li><strong>v<sub>Icm</sub> = (v₁ + v₂)/2:</strong> Segnale di modo comune</li>
+                </ul>
+                
+                <h4>CMRR (Common Mode Rejection Ratio)</h4>
+                <div class="formula">
+                    CMRR = 20 log₁₀(|A<sub>d</sub>|/|A<sub>cm</sub>|)  [dB]
+                </div>
+                
+                <p>Valori tipici: 80-120 dB</p>
+                
+                <div class="note">
+                    Maggiore è il CMRR, migliore è la capacità di rigettare disturbi di modo comune (es. rumore sulla linea di alimentazione, interferenze elettromagnetiche).
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Schema e Analisi</h3>
+                <p>Lo schema classico prevede:</p>
+                <ul>
+                    <li>v<sub>I1</sub> applicato tramite R₁ al terminale (-)</li>
+                    <li>v<sub>I2</sub> applicato tramite R₃ al terminale (+)</li>
+                    <li>R₂ tra uscita e terminale (-)</li>
+                    <li>R₄ tra terminale (+) e massa</li>
+                </ul>
+                
+                <h4>Analisi con Sovrapposizione</h4>
+                
+                <p><strong>Contributo di v<sub>I1</sub> (v<sub>I2</sub> = 0):</strong></p>
+                <p>Configurazione invertente:</p>
+                <div class="formula">
+                    v<sub>o1</sub> = -R₂/R₁ × v<sub>I1</sub>
+                </div>
+                
+                <p><strong>Contributo di v<sub>I2</sub> (v<sub>I1</sub> = 0):</strong></p>
+                <p>Il terminale (+) vede il partitore R₃-R₄:</p>
+                <div class="formula">
+                    v<sub>+</sub> = v<sub>I2</sub> × R₄/(R₃ + R₄)
+                </div>
+                
+                <p>Configurazione non invertente:</p>
+                <div class="formula">
+                    v<sub>o2</sub> = v<sub>+</sub> × (1 + R₂/R₁) = v<sub>I2</sub> × R₄/(R₃ + R₄) × (1 + R₂/R₁)
+                </div>
+                
+                <p><strong>Uscita totale:</strong></p>
+                <div class="formula">
+                    v<sub>o</sub> = v<sub>o1</sub> + v<sub>o2</sub> = -R₂/R₁ × v<sub>I1</sub> + v<sub>I2</sub> × R₄/(R₃ + R₄) × (1 + R₂/R₁)
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Condizione per A<sub>cm</sub> = 0</h3>
+                <p>Per eliminare il modo comune, i due contributi devono avere lo stesso guadagno in modulo:</p>
+                
+                <div class="formula">
+                    R₂/R₁ = R₄/(R₃ + R₄) × (1 + R₂/R₁)
+                </div>
+                
+                <p>Semplificando:</p>
+                <div class="formula">
+                    R₂/R₁ = R₄/R₃
+                </div>
+                
+                <p><strong>Scelta tipica:</strong></p>
+                <div class="formula">
+                    R₃ = R₁  e  R₄ = R₂
+                </div>
+                
+                <p>Con questa scelta:</p>
+                <div class="formula">
+                    v<sub>o</sub> = R₂/R₁ × (v<sub>I2</sub> - v<sub>I1</sub>) = R₂/R₁ × v<sub>Id</sub>
+                </div>
+                
+                <div class="formula">
+                    A<sub>d</sub> = R₂/R₁,  A<sub>cm</sub> = 0 (ideale)
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Problemi Pratici</h3>
+                
+                <h4>1. Bassa Resistenza di Ingresso</h4>
+                <div class="formula">
+                    R<sub>in</sub> ≈ 2R₁
+                </div>
+                <p>Non ideale per sorgenti ad alta impedenza.</p>
+                
+                <h4>2. CMRR Finito</h4>
+                <p>Anche piccole tolleranze nelle resistenze (±1%) causano A<sub>cm</sub> ≠ 0.</p>
+                
+                <h4>3. Difficoltà di Regolazione</h4>
+                <p>Per cambiare il guadagno bisogna variare più resistenze mantenendo i rapporti.</p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 5: Progetto Amplificatore Differenziale</h3>
+                
+                <strong>Problema:</strong> Progettare un amplificatore differenziale con A<sub>d</sub> = 50 e R₁ = 2 kΩ.
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo R₂</h4>
+                    <div class="formula">
+                        A<sub>d</sub> = R₂/R₁ → R₂ = 50 × 2 kΩ = 100 kΩ
+                    </div>
+                    
+                    <h4>Passo 2: Scelta R₃ e R₄</h4>
+                    <p>Per CMRR ottimale:</p>
+                    <div class="formula">
+                        R₃ = R₁ = 2 kΩ
+                    </div>
+                    <div class="formula">
+                        R₄ = R₂ = 100 kΩ
+                    </div>
+                    
+                    <h4>Verifica CMRR</h4>
+                    <p>Con resistenze ideali:</p>
+                    <div class="formula">
+                        A<sub>cm</sub> = 0 → CMRR = ∞
+                    </div>
+                    
+                    <p>Con tolleranza ±1% su R₂ (worst case):</p>
+                    <div class="formula">
+                        A<sub>cm</sub> ≈ 0.01 × A<sub>d</sub> = 0.5
+                    </div>
+                    <div class="formula">
+                        CMRR ≈ 20 log(50/0.5) = 40 dB
+                    </div>
+                    
+                    <div class="note">
+                        Il CMRR reale dipende fortemente dalle tolleranze dei componenti!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 7: Amplificatore per Strumentazione -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>7. AMPLIFICATORE PER STRUMENTAZIONE</h2>
+            
+            <div class="theory">
+                <h3>Miglioramenti rispetto al Differenziale Classico</h3>
+                <p>L'amplificatore per strumentazione risolve i problemi del differenziale classico:</p>
+                
+                <h4>Versione Base (3 OpAmp)</h4>
+                <p><strong>Primo stadio:</strong> Due amplificatori non invertenti in parallelo</p>
+                <ul>
+                    <li>Resistenza di ingresso infinita</li>
+                    <li>Guadagno regolabile con una singola resistenza</li>
+                </ul>
+                
+                <p><strong>Secondo stadio:</strong> Amplificatore differenziale classico</p>
+                <ul>
+                    <li>Sottrae i due segnali</li>
+                    <li>Elimina il modo comune</li>
+                </ul>
+                
+                <h4>Guadagno Totale (versione base)</h4>
+                <div class="formula">
+                    A<sub>d</sub> = (1 + R₂/R₁) × R₄/R₃
+                </div>
+                
+                <p>Con R₄ = R₃:</p>
+                <div class="formula">
+                    A<sub>d</sub> = 1 + R₂/R₁
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Versione Ottimizzata</h3>
+                <p>Unendo le due resistenze R₁ in un'unica resistenza 2R₁:</p>
+                
+                <h4>Vantaggi</h4>
+                <ul>
+                    <li><strong>Guadagno regolabile:</strong> Cambiando solo 2R₁</li>
+                    <li><strong>CMRR eccellente:</strong> Primo stadio non amplifica il modo comune</li>
+                    <li><strong>Alta impedenza di ingresso:</strong> ∞ (OpAmp ideali)</li>
+                    <li><strong>Simmetria migliorata:</strong> Meno sensibile alle tolleranze</li>
+                </ul>
+                
+                <h4>Formula del Guadagno</h4>
+                <div class="formula">
+                    A<sub>d</sub> = (1 + R₂ + R₂'/2R₁) × R₄/R₃
+                </div>
+                
+                <p>Se R₂ = R₂' e R₄ = R₃:</p>
+                <div class="formula">
+                    A<sub>d</sub> = 1 + R₂/R₁
+                </div>
+                
+                <h4>Comportamento con Modo Comune</h4>
+                <p>Quando v<sub>I1</sub> = v<sub>I2</sub> = v<sub>Icm</sub>:</p>
+                <ul>
+                    <li>Per il c.c. virtuale, v<sub>-</sub> = v<sub>+</sub> per entrambi gli OpAmp</li>
+                    <li>Non c'è differenza di potenziale su 2R₁</li>
+                    <li>Non scorre corrente in 2R₁</li>
+                    <li>Gli OpAmp lavorano da buffer (G = 1)</li>
+                    <li>Il segnale comune viene trasmesso invariato al secondo stadio</li>
+                    <li>Il secondo stadio lo elimina completamente</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>CMRR eccezionale:</strong> Il primo stadio non amplifica il modo comune, quindi gli errori del secondo stadio sono divisi per il guadagno del primo!
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 6: Progetto Amplificatore per Strumentazione</h3>
+                
+                <strong>Problema:</strong> Progettare un amplificatore per strumentazione con:
+                <ul>
+                    <li>A<sub>d</sub> = 100</li>
+                    <li>Guadagno regolabile da 10 a 1000</li>
+                    <li>R₂ = 100 kΩ (fisso)</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Scelta del primo stadio</h4>
+                    <p>Usiamo R₄ = R₃ per semplificare, quindi il secondo stadio ha G = 1.</p>
+                    <p>Tutto il guadagno viene dal primo stadio:</p>
+                    <div class="formula">
+                        A<sub>d</sub> = 1 + R₂/R₁
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo 2R₁ per A<sub>d</sub> = 100</h4>
+>
+                    <div class="formula">
+                        100 = 1 + R₂/R₁ → R₂/R₁ = 99
+                    </div>
+                    <div class="formula">
+                        R₁ = R₂/99 = 100 kΩ/99 ≈ 1.01 kΩ
+                    </div>
+                    <div class="formula">
+                        2R₁ = 2.02 kΩ
+                    </div>
+                    
+                    <h4>Passo 3: Range di regolazione</h4>
+                    <p>Per A<sub>d</sub> = 10:</p>
+                    <div class="formula">
+                        10 = 1 + 100 kΩ/R₁ → R₁ = 100 kΩ/9 = 11.1 kΩ
+                    </div>
+                    <div class="formula">
+                        2R₁ = 22.2 kΩ
+                    </div>
+                    
+                    <p>Per A<sub>d</sub> = 1000:</p>
+                    <div class="formula">
+                        1000 = 1 + 100 kΩ/R₁ → R₁ = 100 kΩ/999 ≈ 100 Ω
+                    </div>
+                    <div class="formula">
+                        2R₁ = 200 Ω
+                    </div>
+                    
+                    <h4>Soluzione Pratica</h4>
+                    <p>Usare un potenziometro variabile da 22 kΩ per 2R₁</p>
+                    <ul>
+                        <li>R₂ = 100 kΩ (fisso)</li>
+                        <li>2R₁ = 200 Ω - 22 kΩ (potenziometro)</li>
+                        <li>R₃ = R₄ (per semplicità, anche fissi)</li>
+                    </ul>
+                    
+                    <h4>Vantaggi CMRR</h4>
+                    <p>Se il primo stadio ha tolleranza ±1% su R₂:</p>
+                    <div class="formula">
+                        Errore primo stadio ≈ 1%
+                    </div>
+                    <p>Ma questo errore viene diviso per il guadagno quando arriva al secondo stadio!</p>
+                    <div class="formula">
+                        CMRR ≈ 20 log(100) + 40 dB ≈ 80 dB
+                    </div>
+                    
+                    <div class="note">
+                        Molto meglio del differenziale classico che aveva solo 40 dB!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 8: Integratore e Derivatore -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>8. INTEGRATORE E DERIVATORE</h2>
+            
+            <div class="theory">
+                <h3>Integratore Invertente</h3>
+                <p>Sostituendo la resistenza di feedback con un condensatore realizziamo un integratore.</p>
+                
+                <h4>Schema e Funzionamento</h4>
+                <ul>
+                    <li>Resistenza R all'ingresso</li>
+                    <li>Condensatore C in feedback</li>
+                    <li>Terminale (+) a massa</li>
+                </ul>
+                
+                <h4>Analisi nel Dominio del Tempo</h4>
+                <p>Per massa virtuale:</p>
+                <div class="formula">
+                    i₁ = v<sub>I</sub>(t)/R
+                </div>
+                
+                <p>La corrente carica il condensatore:</p>
+                <div class="formula">
+                    i₁ = C · dv<sub>C</sub>/dt
+                </div>
+                
+                <p>Eguagliando:</p>
+                <div class="formula">
+                    v<sub>I</sub>(t)/R = C · dv<sub>C</sub>/dt
+                </div>
+                
+                <p>Integrando:</p>
+                <div class="formula">
+                    v<sub>C</sub>(t) = (1/RC) ∫ v<sub>I</sub>(t) dt
+                </div>
+                
+                <p>Poiché v<sub>o</sub> = -v<sub>C</sub>:</p>
+                <div class="formula">
+                    <strong>v<sub>o</sub>(t) = -(1/RC) ∫ v<sub>I</sub>(t) dt</strong>
+                </div>
+                
+                <h4>Funzione di Trasferimento</h4>
+                <p>Nel dominio di Laplace:</p>
+                <div class="formula">
+                    H(s) = V<sub>o</sub>(s)/V<sub>I</sub>(s) = -1/(sRC)
+                </div>
+                
+                <p>In frequenza (s = jω):</p>
+                <div class="formula">
+                    H(jω) = -1/(jωRC) = -j/(ωRC)
+                </div>
+                
+                <h4>Caratteristiche</h4>
+                <ul>
+                    <li>Polo nell'origine</li>
+                    <li>Comportamento passa-basso</li>
+                    <li>Pendenza: -20 dB/decade (-6 dB/ottava)</li>
+                    <li>Sfasamento: -90° (oltre ai -180° dell'inversione)</li>
+                    <li>Costante di tempo τ = RC</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>Problema:</strong> Guadagno infinito in DC! Qualsiasi offset o deriva causa saturazione.
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Integratore Pratico</h3>
+                <p>Per evitare la saturazione, si aggiunge R<sub>F</sub> in parallelo al condensatore:</p>
+                
+                <h4>Funzione di Trasferimento Modificata</h4>
+                <div class="formula">
+                    H(s) = -(R<sub>F</sub>/R)/(1 + sR<sub>F</sub>C)
+                </div>
+                
+                <h4>Caratteristiche</h4>
+                <ul>
+                    <li>Guadagno DC finito: |H(0)| = R<sub>F</sub>/R</li>
+                    <li>Frequenza di taglio inferiore: f₁ = 1/(2πR<sub>F</sub>C)</li>
+                    <li>Integrazione efficace per f >> f₁</li>
+                </ul>
+                
+                <p>Scelta di R<sub>F</sub>:</p>
+                <ul>
+                    <li>Abbastanza grande da non alterare l'integrazione alle frequenze di interesse</li>
+                    <li>Abbastanza piccola da limitare il guadagno DC</li>
+                    <li>Tipicamente: R<sub>F</sub> = 10R - 100R</li>
+                </ul>
+            </div>
+            
+            <div class="theory">
+                <h3>Derivatore</h3>
+                <p>Scambiando R e C otteniamo un derivatore.</p>
+                
+                <h4>Schema</h4>
+                <ul>
+                    <li>Condensatore C all'ingresso</li>
+                    <li>Resistenza R in feedback</li>
+                    <li>Terminale (+) a massa</li>
+                </ul>
+                
+                <h4>Analisi nel Dominio del Tempo</h4>
+                <p>Corrente attraverso il condensatore:</p>
+                <div class="formula">
+                    i = C · dv<sub>I</sub>(t)/dt
+                </div>
+                
+                <p>Questa corrente scorre in R:</p>
+                <div class="formula">
+                    v<sub>o</sub> = -R · i = -RC · dv<sub>I</sub>(t)/dt
+                </div>
+                
+                <div class="formula">
+                    <strong>v<sub>o</sub>(t) = -RC · dv<sub>I</sub>(t)/dt</strong>
+                </div>
+                
+                <h4>Funzione di Trasferimento</h4>
+                <div class="formula">
+                    H(s) = -sRC
+                </div>
+                
+                <div class="formula">
+                    H(jω) = -jωRC
+                </div>
+                
+                <h4>Caratteristiche</h4>
+                <ul>
+                    <li>Zero nell'origine</li>
+                    <li>Comportamento passa-alto</li>
+                    <li>Pendenza: +20 dB/decade (+6 dB/ottava)</li>
+                    <li>Amplifica il rumore ad alta frequenza</li>
+                    <li>Instabilità potenziale</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>Problema:</strong> Il derivatore amplifica fortemente il rumore ad alta frequenza. Spesso è necessario limitare il guadagno alle alte frequenze.
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 7: Progetto Integratore</h3>
+                
+                <strong>Problema:</strong> Progettare un integratore con:
+                <ul>
+                    <li>Costante di tempo τ = 1 ms</li>
+                    <li>Frequenza di taglio bassa f₁ = 1 Hz</li>
+                    <li>R = 10 kΩ</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Calcolo di C</h4>
+                    <p>Dalla costante di tempo:</p>
+                    <div class="formula">
+                        τ = RC → C = τ/R = 1 ms / 10 kΩ = 100 nF
+                    </div>
+                    
+                    <h4>Passo 2: Calcolo di R<sub>F</sub></h4>
+                    <p>Dalla frequenza di taglio:</p>
+                    <div class="formula">
+                        f₁ = 1/(2πR<sub>F</sub>C) → R<sub>F</sub> = 1/(2πf₁C)
+                    </div>
+                    <div class="formula">
+                        R<sub>F</sub> = 1/(2π × 1 Hz × 100 nF) ≈ 1.59 MΩ
+                    </div>
+                    
+                    <h4>Passo 3: Verifica del guadagno DC</h4>
+                    <div class="formula">
+                        |H(0)| = R<sub>F</sub>/R = 1.59 MΩ / 10 kΩ = 159
+                    </div>
+                    <div class="formula">
+                        20 log(159) ≈ 44 dB
+                    </div>
+                    
+                    <h4>Risultato</h4>
+                    <ul>
+                        <li>R = 10 kΩ</li>
+                        <li>C = 100 nF</li>
+                        <li>R<sub>F</sub> = 1.59 MΩ (usare 1.5 MΩ standard)</li>
+                        <li>Integrazione efficace per f > 10 Hz</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 9: OpAmp Reali -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>9. AMPLIFICATORI OPERAZIONALI REALI</h2>
+            
+            <div class="theory">
+                <h3>Differenze tra Ideale e Reale</h3>
+                <p>Gli OpAmp reali si discostano dall'ideale in vari aspetti:</p>
+                
+                <table>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Ideale</th>
+                        <th>Reale (μA741)</th>
+                        <th>Effetto</th>
+                    </tr>
+                    <tr>
+                        <td>A<sub>OL</sub></td>
+                        <td>∞</td>
+                        <td>200,000</td>
+                        <td>Cortocircuito virtuale non perfetto</td>
+                    </tr>
+                    <tr>
+                        <td>R<sub>i</sub></td>
+                        <td>∞</td>
+                        <td>2 MΩ</td>
+                        <td>Assorbimento corrente ingresso</td>
+                    </tr>
+                    <tr>
+                        <td>R<sub>o</sub></td>
+                        <td>0</td>
+                        <td>75 Ω</td>
+                        <td>Dipendenza dal carico</td>
+                    </tr>
+                    <tr>
+                        <td>BW</td>
+                        <td>∞</td>
+                        <td>1 MHz</td>
+                        <td>Limitazione frequenza</td>
+                    </tr>
+                    <tr>
+                        <td>CMRR</td>
+                        <td>∞</td>
+                        <td>90 dB</td>
+                        <td>Amplificazione modo comune</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="theory">
+                <h3>Offset di Tensione (V<sub>OS</sub>)</h3>
+                <p>Tensione che appare in uscita quando entrambi gli ingressi sono a zero.</p>
+                
+                <h4>Causa</h4>
+                <p>Dissimmetrie inevitabili nei transistor interni dello stadio differenziale di ingresso.</p>
+                
+                <h4>Modello</h4>
+                <p>Generatore di tensione V<sub>OS</sub> in serie all'ingresso (tipicamente 1-5 mV).</p>
+                
+                <h4>Effetto nei Circuiti</h4>
+                <p>In configurazione invertente con guadagno G:</p>
+                <div class="formula">
+                    V<sub>o,offset</sub> = V<sub>OS</sub> × (1 + R₂/R₁)
+                </div>
+                
+                <p>Esempio: V<sub>OS</sub> = 2 mV, G = 100:</p>
+                <div class="formula">
+                    V<sub>o,offset</sub> = 2 mV × 101 = 202 mV
+                </div>
+                
+                <h4>Compensazione</h4>
+                <p>Molti OpAmp hanno terminali dedicati (offset null) per la compensazione:</p>
+                <ul>
+                    <li>Collegare potenziometro (10 kΩ) tra i pin di offset</li>
+                    <li>Cursore collegato all'alimentazione negativa</li>
+                    <li>Regolare per v<sub>o</sub> = 0 con ingressi a massa</li>
+                </ul>
+                
+                <h4>Deriva Termica</h4>
+                <p>V<sub>OS</sub> varia con la temperatura:</p>
+                <div class="formula">
+                    ΔV<sub>OS</sub>/ΔT ≈ 5-30 μV/°C
+                </div>
+                
+                <div class="note">
+                    La compensazione è efficace solo alla temperatura di regolazione. Per applicazioni critiche, usare OpAmp con basso offset e deriva (chopper, auto-zero).
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Correnti di Polarizzazione</h3>
+                
+                <h4>Corrente di Bias (I<sub>B</sub>)</h4>
+                <p>Correnti DC necessarie per polarizzare i transistor di ingresso:</p>
+                <div class="formula">
+                    I<sub>B</sub> = (I<sub>B+</sub> + I<sub>B-</sub>)/2
+                </div>
+                
+                <p>Valori tipici:</p>
+                <ul>
+                    <li>BJT input: 10-500 nA</li>
+                    <li>JFET input: 10-100 pA</li>
+                    <li>MOSFET input: < 1 pA</li>
+                </ul>
+                
+                <h4>Corrente di Offset (I<sub>OS</sub>)</h4>
+                <div class="formula">
+                    I<sub>OS</sub> = |I<sub>B+</sub> - I<sub>B-</sub>|
+                </div>
+                
+                <p>Tipicamente I<sub>OS</sub> ≈ 0.1 × I<sub>B</sub></p>
+                
+                <h4>Effetto in Configurazione Invertente</h4>
+                <p>Senza compensazione:</p>
+                <div class="formula">
+                    V<sub>o,bias</sub> = I<sub>B-</sub> × R₂
+                </div>
+                
+                <h4>Compensazione con R₃</h4>
+                <p>Inserire R₃ = R₁||R₂ sul terminale (+):</p>
+                <div class="formula">
+                    R₃ = (R₁ × R₂)/(R₁ + R₂)
+                </div>
+                
+                <p>Tensione di offset residua:</p>
+                <div class="formula">
+                    V<sub>o,bias</sub> = I<sub>OS</sub> × R₂
+                </div>
+                
+                <p>Miglioramento di circa 10 volte!</p>
+            </div>
+            
+            <div class="theory">
+                <h3>Risposta in Frequenza</h3>
+                
+                <h4>Guadagno ad Anello Aperto</h4>
+                <p>Il guadagno dipende dalla frequenza:</p>
+                <div class="formula">
+                    A<sub>OL</sub>(f) = A₀/(1 + jf/f<sub>b</sub>)
+                </div>
+                
+                <p>Parametri tipici (μA741):</p>
+                <ul>
+                    <li>A₀ = 200,000 (106 dB)</li>
+                    <li>f<sub>b</sub> = 5 Hz (frequenza di taglio)</li>
+                    <li>f<sub>t</sub> = 1 MHz (unity-gain frequency)</li>
+                    <li>GBW = A₀ × f<sub>b</sub> = f<sub>t</sub></li>
+                </ul>
+                
+                <h4>Prodotto Guadagno-Banda (GBW)</h4>
+                <p>Per OpAmp con polo dominante:</p>
+                <div class="formula">
+                    GBW = |A(f)| × f = costante
+                </div>
+                
+                <p>Ad anello chiuso con guadagno G:</p>
+                <div class="formula">
+                    f<sub>-3dB</sub> = GBW/G
+                </div>
+                
+                <p>Esempio: GBW = 1 MHz, G = 100</p>
+                <div class="formula">
+                    f<sub>-3dB</sub> = 1 MHz / 100 = 10 kHz
+                </div>
+                
+                <div class="note">
+                    Maggiore il guadagno, minore la banda passante! Trade-off fondamentale.
+                </div>
+            </div>
+            
+            <div class="theory">
+                <h3>Slew Rate (SR)</h3>
+                <p>Massima velocità di variazione della tensione di uscita:</p>
+                
+                <div class="formula">
+                    SR = |dv<sub>o</sub>/dt|<sub>max</sub>  [V/μs]
+                </div>
+                
+                <p>Valori tipici:</p>
+                <ul>
+                    <li>μA741: 0.5 V/μs</li>
+                    <li>TL081: 13 V/μs</li>
+                    <li>LM318: 70 V/μs</li>
+                </ul>
+                
+                <h4>Limitazioni</h4>
+                <p>Per un'onda sinusoidale v<sub>o</sub> = V<sub>p</sub> sin(ωt):</p>
+                <div class="formula">
+                    dv<sub>o</sub>/dt = ωV<sub>p</sub> cos(ωt)
+                </div>
+                
+                <p>Massimo in t = 0:</p>
+                <div class="formula">
+                    (dv<sub>o</sub>/dt)<sub>max</sub> = 2πfV<sub>p</sub>
+                </div>
+                
+                <p>Per evitare distorsione:</p>
+                <div class="formula">
+                    2πfV<sub>p</sub> ≤ SR
+                </div>
+                
+                <p>Frequenza massima senza distorsione:</p>
+                <div class="formula">
+                    f<sub>max</sub> = SR/(2πV<sub>p</sub>)
+                </div>
+                
+                <h4>Larghezza di Banda a Piena Potenza</h4>
+                <div class="formula">
+                    f<sub>M</sub> = SR/(2πV<sub>o,max</sub>)
+                </div>
+                
+                <p>Esempio: SR = 0.5 V/μs, V<sub>o,max</sub> = 10 V</p>
+                <div class="formula">
+                    f<sub>M</sub> = 0.5 × 10⁶ / (2π × 10) ≈ 8 kHz
+                </div>
+                
+                <div class="note">
+                    Lo slewing introduce distorsione non lineare, diversa dalla limitazione di banda che attenua solo le alte frequenze.
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 8: Effetti dei Parametri Reali</h3>
+                
+                <strong>Problema:</strong> Amplificatore invertente con:
+                <ul>
+                    <li>R₁ = 1 kΩ, R₂ = 100 kΩ</li>
+                    <li>OpAmp: V<sub>OS</sub> = 2 mV, I<sub>B</sub> = 80 nA, I<sub>OS</sub> = 20 nA</li>
+                    <li>Calcolare l'errore di uscita totale</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Passo 1: Errore da V<sub>OS</sub></h4>
+                    <p>Guadagno del circuito:</p>
+                    <div class="formula">
+                        G = 1 + R₂/R₁ = 1 + 100 = 101
+                    </div>
+                    <div class="formula">
+                        V<sub>o,OS</sub> = V<sub>OS</sub> × G = 2 mV × 101 = 202 mV
+                    </div>
+                    
+                    <h4>Passo 2: Errore da I<sub>B</sub> (senza R₃)</h4>
+                    <div class="formula">
+                        V<sub>o,IB</sub> = I<sub>B</sub> × R₂ = 80 nA × 100 kΩ = 8 mV
+                    </div>
+                    
+                    <h4>Passo 3: Con compensazione R₃</h4>
+                    <div class="formula">
+                        R₃ = R₁||R₂ = (1 × 100)/(1 + 100) ≈ 0.99 kΩ
+                    </div>
+                    <div class="formula">
+                        V<sub>o,IOS</sub> = I<sub>OS</sub> × R₂ = 20 nA × 100 kΩ = 2 mV
+                    </div>
+                    
+                    <h4>Passo 4: Errore Totale</h4>
+                    <p>Senza R₃:</p>
+                    <div class="formula">
+                        V<sub>o,err</sub> = 202 mV + 8 mV = 210 mV
+                    </div>
+                    
+                    <p>Con R₃:</p>
+                    <div class="formula">
+                        V<sub>o,err</sub> = 202 mV + 2 mV = 204 mV
+                    </div>
+                    
+                    <div class="note">
+                        L'offset di tensione domina l'errore. R₃ migliora leggermente la situazione.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capitolo 10: Esercizi Applicativi -->
+    <div class="page-break">
+        <div class="chapter">
+            <h2>10. ESERCIZI APPLICATIVI</h2>
+            
+            <div class="exercise">
+                <h3>Esercizio 9: Sistema di Acquisizione Dati</h3>
+                
+                <strong>Problema:</strong> Progettare un sistema per acquisire il segnale da un sensore di temperatura:
+                <ul>
+                    <li>Sensore: 0-100°C → 0-100 mV (R<sub>source</sub> = 10 kΩ)</li>
+                    <li>ADC: 0-5 V input range</li>
+                    <li>Minimizzare carico sul sensore</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Analisi dei Requisiti</h4>
+                    <p>Guadagno necessario:</p>
+                    <div class="formula">
+                        G = 5 V / 0.1 V = 50
+                    </div>
+                    
+                    <p>Alta impedenza di ingresso necessaria!</p>
+                    
+                    <h4>Soluzione: Configurazione Non Invertente</h4>
+                    <div class="formula">
+                        G = 1 + R₂/R₁ = 50 → R₂/R₁ = 49
+                    </div>
+                    
+                    <p>Scelta componenti:</p>
+                    <div class="formula">
+                        R₁ = 1 kΩ → R₂ = 49 kΩ (usare 47 kΩ standard)
+                    </div>
+                    
+                    <h4>Verifica Carico</h4>
+                    <p>Con configurazione non invertente:</p>
+                    <div class="formula">
+                        R<sub>in</sub> = ∞ (ideale) → Nessun carico!
+                    </div>
+                    
+                    <h4>Aggiunta Buffer (Opzionale ma Consigliato)</h4>
+                    <p>Per massima protezione:</p>
+                    <ul>
+                        <li>Buffer (G=1) tra sensore e amplificatore</li>
+                        <li>Amplificatore non invertente (G=50)</li>
+                    </ul>
+                    
+                    <h4>Circuito Finale</h4>
+                    <p>Sensore → Buffer → Amplificatore (G≈50) → ADC</p>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3>Esercizio 10: Filtro Passa-Basso Attivo</h3>
+                
+                <strong>Problema:</strong> Progettare un filtro passa-basso del primo ordine:
+                <ul>
+                    <li>Frequenza di taglio: f<sub>c</sub> = 1 kHz</li>
+                    <li>Guadagno in banda: G = 10</li>
+                    <li>Configurazione invertente</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Schema</h4>
+                    <p>Resistenza R₁ all'ingresso, R₂ e C in parallelo in feedback.</p>
+                    
+                    <h4>Funzione di Trasferimento</h4>
+                    <div class="formula">
+                        H(s) = -(R₂/R₁) / (1 + sR₂C)
+                    </div>
+                    
+                    <h4>Passo 1: Guadagno DC</h4>
+                    <div class="formula">
+                        |H(0)| = R₂/R₁ = 10
+                    </div>
+                    
+                    <h4>Passo 2: Frequenza di Taglio</h4>
+                    <div class="formula">
+                        f<sub>c</sub> = 1/(2πR₂C) = 1000 Hz
+                    </div>
+                    <div class="formula">
+                        R₂C = 1/(2π × 1000) = 159.2 μs
+                    </div>
+                    
+                    <h4>Passo 3: Scelta Componenti</h4>
+                    <p>Scelgo R₁ = 10 kΩ:</p>
+                    <div class="formula">
+                        R₂ = 10 × R₁ = 100 kΩ
+                    </div>
+                    <div class="formula">
+                        C = 159.2 μs / 100 kΩ = 1.592 nF ≈ 1.5 nF (standard)
+                    </div>
+                    
+                    <h4>Verifica</h4>
+                    <p>Guadagno:</p>
+                    <div class="formula">
+                        G = 100 kΩ / 10 kΩ = 10 ✓</div>
+                <p>Frequenza (con C = 1.5 nF):</p>
+                <div class="formula">
+                    f<sub>c</sub> = 1/(2π × 100 kΩ × 1.5 nF) ≈ 1061 Hz
+                </div>
+                
+                <p>Errore: (1061-1000)/1000 = 6.1% (accettabile)</p>
+            </div>
+        </div>
+        
+        <div class="exercise">
+            <h3>Esercizio 11: Convertitore Corrente-Tensione</h3>
+            
+            <strong>Problema:</strong> Un fotodiodo genera corrente proporzionale alla luce:
+            <ul>
+                <li>Range: 0-100 μA</li>
+                <li>Convertire in tensione: 0-5 V</li>
+                <li>R<sub>fotodiodo</sub> molto alta (>100 MΩ)</li>
+            </ul>
+            
+            <div class="solution">
+                <h4>Configurazione I-V</h4>
+                <p>Fotodiodo collegato al terminale invertente, terminale (+) a massa.</p>
+                
+                <p>Formula:</p>
+                <div class="formula">
+                    v<sub>o</sub> = -i<sub>in</sub> × R<sub>F</sub>
+                </div>
+                
+                <h4>Calcolo R<sub>F</sub></h4>
+                <div class="formula">
+                    R<sub>F</sub> = v<sub>o,max</sub> / i<sub>in,max</sub> = 5 V / 100 μA = 50 kΩ
+                </div>
+                
+                <h4>Vantaggi della Configurazione</h4>
+                <ul>
+                    <li>Il fotodiodo vede massa virtuale → polarizzazione costante</li>
+                    <li>Linearità eccellente</li>
+                    <li>Basso rumore (nodo invertente a bassa impedenza)</li>
+                </ul>
+                
+                <h4>Considerazioni Pratiche</h4>
+                <p>Condensatore C<sub>F</sub> in parallelo a R<sub>F</sub> per:</p>
+                <ul>
+                    <li>Limitare banda (ridurre rumore)</li>
+                    <li>Compensare capacità del fotodiodo</li>
+                    <li>Tipico: C<sub>F</sub> = 10-100 pF</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="exercise">
+            <h3>Esercizio 12: Progetto Completo - Amplificatore Audio</h3>
+            
+            <strong>Problema:</strong> Progettare un pre-amplificatore microfonico:
+            <ul>
+                <li>Microfono: 1-10 mV, R<sub>mic</sub> = 600 Ω</li>
+                <li>Uscita: 1 V (line level)</li>
+                <li>Banda: 20 Hz - 20 kHz</li>
+                <li>Basso rumore, alta CMRR</li>
+            </ul>
+            
+            <div class="solution">
+                <h4>Architettura a Due Stadi</h4>
+                
+                <p><strong>Primo stadio:</strong> Amplificatore per strumentazione</p>
+                <ul>
+                    <li>Alta impedenza ingresso</li>
+                    <li>Alta CMRR (rigetta ronzio di rete)</li>
+                    <li>Guadagno G₁ = 10</li>
+                </ul>
+                
+                <p><strong>Secondo stadio:</strong> Amplificatore invertente</p>
+                <ul>
+                    <li>Guadagno regolabile G₂ = 10-100</li>
+                    <li>Filtro passa-alto (elimina DC)</li>
+                </ul>
+                
+                <h4>Primo Stadio - Dettagli</h4>
+                <p>Amplificatore per strumentazione:</p>
+                <div class="formula">
+                    G₁ = 1 + R₂/R₁ = 10 → R₂/R₁ = 9
+                </div>
+                <p>Con R₂ = 90 kΩ → R₁ = 10 kΩ</p>
+                
+                <h4>Secondo Stadio - Dettagli</h4>
+                <p>Passa-alto + amplificatore invertente:</p>
+                <ul>
+                    <li>C₁ in serie all'ingresso</li>
+                    <li>f<sub>HP</sub> = 1/(2πR₁C₁) = 20 Hz</li>
+                    <li>Con R₁ = 10 kΩ → C₁ = 0.8 μF</li>
+                    <li>R₂ variabile: 100 kΩ - 1 MΩ (potenziometro)</li>
+                    <li>Guadagno G₂ = 10 - 100</li>
+                </ul>
+                
+                <h4>Guadagno Totale</h4>
+                <div class="formula">
+                    G<sub>tot</sub> = G₁ × G₂ = 10 × (10-100) = 100-1000
+                </div>
+                
+                <p>Range uscita:</p>
+                <ul>
+                    <li>Min: 1 mV × 100 = 100 mV</li>
+                    <li>Max: 10 mV × 1000 = 10 V</li>
+                </ul>
+                
+                <h4>Verifica Banda</h4>
+                <p>Con OpAmp GBW = 10 MHz:</p>
+                <div class="formula">
+                    f<sub>-3dB</sub> = 10 MHz / 1000 = 10 kHz
+                </div>
+                
+                <p>Insufficiente! Serve OpAmp migliore (es. TL072, GBW = 3 MHz):</p>
+                <div class="formula">
+                    f<sub>-3dB</sub> = 3 MHz / 100 = 30 kHz ✓
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
