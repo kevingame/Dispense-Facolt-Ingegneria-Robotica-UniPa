@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa di Meccanica Razionale</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 2cm;
+            background: white;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        .cover-page {
+            text-align: center;
+            padding-top: 5cm;
+        }
+        
+        .cover-page h1 {
+            font-size: 24pt;
+            font-weight: bold;
+            margin-bottom: 0.5cm;
+        }
+        
+        .cover-page h2 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 2cm;
+        }
+        
+        .cover-page h3 {
+            font-size: 18pt;
+            margin-bottom: 3cm;
+        }
+        
+        .info-section {
+            text-align: left;
+            display: inline-block;
+            margin-top: 2cm;
+        }
+        
+        .info-section p {
+            margin: 0.3cm 0;
+            font-size: 12pt;
+        }
+        
+        .toc {
+            margin-top: 2cm;
+        }
+        
+        .toc h2 {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1cm;
+        }
+        
+        .toc-item {
+            margin: 0.5cm 0;
+            font-size: 12pt;
+        }
+        
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-top: 1cm;
+            margin-bottom: 0.5cm;
+            counter-increment: section;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 0.8cm;
+            margin-bottom: 0.4cm;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 0.6cm;
+            margin-bottom: 0.3cm;
+        }
+        
+        p {
+            text-align: justify;
+            margin: 0.3cm 0;
+        }
+        
+        .formula {
+            margin: 0.5cm 0;
+            padding: 0.3cm;
+            background: #f5f5f5;
+            border-left: 3px solid #333;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example {
+            margin: 0.5cm 0;
+            padding: 0.5cm;
+            border: 1px solid #ccc;
+            background: #fafafa;
+        }
+        
+        .note {
+            margin: 0.5cm 0;
+            padding: 0.3cm;
+            background: #ffffcc;
+            border-left: 3px solid #ffcc00;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGINA DI COPERTINA -->
+    <div class="cover-page">
+        <h1>UNIVERSITÀ DEGLI STUDI DI PALERMO</h1>
+        <h2>FACOLTÀ DI INGEGNERIA</h2>
+        <h3>Dispensa di Meccanica Razionale</h3>
+        
+        <div class="info-section">
+            <p><strong>Sviluppatore:</strong> Petrone Kevin</p>
+            <p><strong>Matricola:</strong> 0774409</p>
+            <p><strong>Docente:</strong> Sammartino Marco</p>
+            <p><strong>Corso:</strong> Ingegneria Robotica</p>
+            <p><strong>Anno Accademico:</strong> 2025/2026</p>
+            <p><strong>Data:</strong> Gennaio 2026</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- INDICE -->
+    <div class="toc">
+        <h2>INDICE</h2>
+        <div class="toc-item">1. Oscillatore Armonico Smorzato</div>
+        <div class="toc-item">2. Oscillatore Forzato</div>
+        <div class="toc-item">3. Baricentro e Momento d'Inerzia</div>
+        <div class="toc-item">4. Energia Cinetica</div>
+        <div class="toc-item">5. Tensori d'Inerzia</div>
+        <div class="toc-item">6. Triedro di Frenet</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 1: OSCILLATORE ARMONICO SMORZATO -->
+    <h1>1. Oscillatore Armonico Smorzato</h1>
+    
+    <h2>Teoria</h2>
+    <p>L'oscillatore armonico smorzato descrive il moto di un sistema massa-molla soggetto a una forza di smorzamento proporzionale alla velocità. Questo modello è fondamentale per comprendere numerosi fenomeni fisici, dalle sospensioni dei veicoli ai circuiti elettrici RLC.</p>
+    
+    <h3>Equazione del Moto</h3>
+    <p>L'equazione differenziale che governa il sistema è:</p>
+    <div class="formula">
+        mẍ = -kx - vẋ
+    </div>
+    <p>dove:</p>
+    <p>• <strong>m</strong>: massa del sistema (kg)</p>
+    <p>• <strong>k</strong>: costante elastica della molla (N/m)</p>
+    <p>• <strong>v</strong>: coefficiente di smorzamento (N·s/m)</p>
+    <p>• <strong>x</strong>: posizione rispetto all'equilibrio (m)</p>
+    <p>• <strong>ẋ = dx/dt</strong>: velocità (m/s)</p>
+    <p>• <strong>ẍ = d²x/dt²</strong>: accelerazione (m/s²)</p>
+    <p>• <strong>-kx</strong>: forza elastica di richiamo (legge di Hooke)</p>
+    <p>• <strong>-vẋ</strong>: forza di smorzamento viscoso</p>
+    
+    <p>Dividendo per la massa m, otteniamo la forma normalizzata:</p>
+    <div class="formula">
+        ẍ = -(k/m)x - (v/m)ẋ
+    </div>
+    
+    <h3>Equazione Caratteristica</h3>
+    <p>Per risolvere l'equazione differenziale, assumiamo una soluzione del tipo x(t) = e<sup>λt</sup> e sostituiamo nell'equazione omogenea:</p>
+    <div class="formula">
+        λ² + (v/m)λ + (k/m) = 0
+    </div>
+    
+    <h3>Parametri Fondamentali</h3>
+    <p>Definiamo due parametri che caratterizzano completamente il comportamento del sistema:</p>
+    <div class="formula">
+        ω = √(k/m)  →  Frequenza naturale (pulsazione propria)<br>
+        μ = v/(2m)  →  Coefficiente di smorzamento normalizzato
+    </div>
+    
+    <p>La frequenza naturale ω rappresenta la pulsazione con cui il sistema oscillerebbe in assenza di smorzamento. Il coefficiente μ quantifica l'intensità dello smorzamento.</p>
+    
+    <p>Sostituendo questi parametri nell'equazione caratteristica:</p>
+    <div class="formula">
+        λ² + 2μλ + ω² = 0
+    </div>
+    
+    <p>Le soluzioni sono:</p>
+    <div class="formula">
+        λ₁,₂ = -μ ± √(μ² - ω²)
+    </div>
+    
+    <h3>Analisi dei Tre Casi</h3>
+    <p>Il comportamento del sistema dipende dal segno del discriminante Δ = μ² - ω², che determina la natura delle radici λ₁ e λ₂.</p>
+    
+    <h2>Caso 1: Sovrasmorzamento (μ > ω)</h2>
+    <p>Quando il coefficiente di smorzamento è maggiore della frequenza naturale, abbiamo:</p>
+    <div class="formula">
+        Δ = μ² - ω² > 0  →  Radici reali e distinte
+    </div>
+    
+    <p>Le due radici sono:</p>
+    <div class="formula">
+        λ₁ = -μ + √(μ² - ω²)  (radice meno negativa)<br>
+        λ₂ = -μ - √(μ² - ω²)  (radice più negativa)
+    </div>
+    
+    <p>Entrambe le radici sono negative (λ₁ < 0 e λ₂ < 0), quindi la soluzione generale è:</p>
+    <div class="formula">
+        x(t) = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup>
+    </div>
+    
+    <p><strong>Comportamento fisico:</strong> Il sistema non oscilla. Ritorna all'equilibrio in modo esponenziale e lento. Maggiore è μ rispetto a ω, più lento è il ritorno all'equilibrio. È il caso delle sospensioni "troppo rigide".</p>
+    
+    <h2>Caso 2: Smorzamento Critico (μ = ω)</h2>
+    <p>Quando lo smorzamento è esattamente uguale alla frequenza naturale:</p>
+    <div class="formula">
+        Δ = μ² - ω² = 0  →  Radice doppia
+    </div>
+    
+    <p>La radice doppia è:</p>
+    <div class="formula">
+        λ = -μ
+    </div>
+    
+    <p>Per radici doppie, la soluzione generale assume la forma:</p>
+    <div class="formula">
+        x(t) = (C₁ + C₂t)e<sup>-μt</sup>
+    </div>
+    
+    <p><strong>Comportamento fisico:</strong> Il sistema non oscilla e ritorna all'equilibrio nel minor tempo possibile senza oscillare. Questo è il regime ottimale per molte applicazioni ingegneristiche (porte automatiche, sospensioni ottimizzate). Rappresenta il confine tra sovrasmorzamento e sottosmorzamento.</p>
+    
+    <h2>Caso 3: Sottosmorzamento (μ < ω)</h2>
+    <p>Quando lo smorzamento è minore della frequenza naturale:</p>
+    <div class="formula">
+        Δ = μ² - ω² < 0  →  Radici complesse coniugate
+    </div>
+    
+    <p>Le radici complesse sono:</p>
+    <div class="formula">
+        λ = -μ ± iω<sub>d</sub>
+    </div>
+    
+    <p>dove la frequenza smorzata è:</p>
+    <div class="formula">
+        ω<sub>d</sub> = √(ω² - μ²)
+    </div>
+    
+    <p>La soluzione generale è:</p>
+    <div class="formula">
+        x(t) = e<sup>-μt</sup>[C₁cos(ω<sub>d</sub>t) + C₂sin(ω<sub>d</sub>t)]
+    </div>
+    
+    <p><strong>Comportamento fisico:</strong> Il sistema oscilla attorno alla posizione di equilibrio con frequenza ω<sub>d</sub>, ma l'ampiezza delle oscillazioni decresce esponenzialmente secondo il fattore e<sup>-μt</sup>. Maggiore è μ, più rapidamente si smorzano le oscillazioni. È il caso tipico delle oscillazioni reali.</p>
+    
+    <div class="note">
+        <strong>NOTA:</strong> La frequenza smorzata ω<sub>d</sub> è sempre minore della frequenza naturale ω. Quando μ → 0, ω<sub>d</sub> → ω (oscillatore non smorzato).
+    </div>
+    
+    <h2>Esempio Svolto</h2>
+    <div class="example">
+        <h3>Problema</h3>
+        <p>Risolvere il sistema:</p>
+        <div class="formula">
+            ẍ + 6ẋ + 5x = 0<br>
+            Condizioni iniziali: x(0) = 1, ẋ(0) = 0
+        </div>
+        
+        <h3>Soluzione</h3>
+        <p><strong>Passo 1:</strong> Scriviamo l'equazione caratteristica</p>
+        <div class="formula">
+            λ² + 6λ + 5 = 0
+        </div>
+        
+        <p><strong>Passo 2:</strong> Identifichiamo i parametri</p>
+        <p>Confrontando con λ² + 2μλ + ω² = 0:</p>
+        <div class="formula">
+            2μ = 6  →  μ = 3<br>
+            ω² = 5  →  ω = √5 ≈ 2.236
+        </div>
+        
+        <p><strong>Passo 3:</strong> Determiniamo il tipo di smorzamento</p>
+        <p>Poiché μ = 3 > ω = √5 ≈ 2.236, siamo nel caso di <strong>sovrasmorzamento</strong>.</p>
+        
+        <p><strong>Passo 4:</strong> Calcoliamo le radici</p>
+        <div class="formula">
+            Δ = μ² - ω² = 9 - 5 = 4 > 0<br>
+            <br>
+            λ₁ = -μ + √(μ² - ω²) = -3 + √4 = -3 + 2 = -1<br>
+            λ₂ = -μ - √(μ² - ω²) = -3 - √4 = -3 - 2 = -5
+        </div>
+        
+        <p><strong>Passo 5:</strong> Scriviamo la soluzione generale</p>
+        <div class="formula">
+            x(t) = C₁e<sup>-t</sup> + C₂e<sup>-5t</sup>
+        </div>
+        
+        <p><strong>Passo 6:</strong> Calcoliamo la derivata</p>
+        <div class="formula">
+            ẋ(t) = -C₁e<sup>-t</sup> - 5C₂e<sup>-5t</sup>
+        </div>
+        
+        <p><strong>Passo 7:</strong> Applichiamo le condizioni iniziali</p>
+        <p>Per t = 0:</p>
+        <div class="formula">
+            x(0) = C₁e<sup>0</sup> + C₂e<sup>0</sup> = C₁ + C₂ = 1<br>
+            ẋ(0) = -C₁e<sup>0</sup> - 5C₂e<sup>0</sup> = -C₁ - 5C₂ = 0
+        </div>
+        
+        <p>Sistema:</p>
+        <div class="formula">
+            C₁ + C₂ = 1<br>
+            -C₁ - 5C₂ = 0
+        </div>
+        
+        <p>Dalla seconda equazione: C₁ = -5C₂</p>
+        <p>Sostituendo nella prima: -5C₂ + C₂ = 1  →  -4C₂ = 1  →  C₂ = -1/4</p>
+        <p>Quindi: C₁ = -5(-1/4) = 5/4</p>
+        
+        <p><strong>Soluzione finale:</strong></p>
+        <div class="formula">
+            x(t) = (5/4)e<sup>-t</sup> - (1/4)e<sup>-5t</sup>
+        </div>
+        
+        <p><strong>Interpretazione fisica:</strong> Il sistema parte dalla posizione x = 1 con velocità nulla e ritorna lentamente all'equilibrio senza oscillare. Il termine e<sup>-t</sup> decade più lentamente del termine e<sup>-5t</sup>, quindi per tempi lunghi il comportamento è dominato da (5/4)e<sup>-t</sup>.</p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 2: OSCILLATORE FORZATO -->
+    <h1>2. Oscillatore Forzato</h1>
+    
+    <h2>Teoria</h2>
+    <p>L'oscillatore forzato è un oscillatore armonico smorzato sottoposto a una forza esterna periodica. Questo modello descrive fenomeni importanti come la risonanza meccanica ed elettrica.</p>
+    
+    <h3>Equazione del Moto</h3>
+    <p>L'equazione differenziale è:</p>
+    <div class="formula">
+        mẍ + vẋ + kx = F cos(γt)
+    </div>
+    
+    <p>dove:</p>
+    <p>• <strong>F</strong>: ampiezza massima della forza forzante (N)</p>
+    <p>• <strong>γ</strong>: frequenza angolare della forza esterna (rad/s)</p>
+    <p>• Gli altri parametri sono gli stessi dell'oscillatore smorzato</p>
+    
+    <h3>Parametri Normalizzati</h3>
+    <p>Dividendo per m:</p>
+    <div class="formula">
+        ω² = k/m  (frequenza naturale al quadrato)<br>
+        μ = v/(2m)  (coefficiente di smorzamento)<br>
+        f = F/m  (forza forzante per unità di massa)
+    </div>
+    
+    <p>L'equazione diventa:</p>
+    <div class="formula">
+        ẍ + 2μẋ + ω²x = f cos(γt)
+    </div>
+    
+    <h3>Struttura della Soluzione</h3>
+    <p>La soluzione generale di un'equazione differenziale non omogenea è data dalla somma di due contributi:</p>
+    <div class="formula">
+        x(t) = x<sub>om</sub>(t) + x<sub>p</sub>(t)
+    </div>
+    
+    <p>dove:</p>
+    <p>• <strong>x<sub>om</sub>(t)</strong>: soluzione dell'equazione omogenea (transitorio)</p>
+    <p>• <strong>x<sub>p</sub>(t)</strong>: soluzione particolare (regime stazionario)</p>
+    
+    <h2>Soluzione Omogenea (Transitorio)</h2>
+    <p>La soluzione omogenea è identica a quella dell'oscillatore smorzato e dipende dal rapporto tra μ e ω:</p>
+    
+    <h3>Caso μ < ω (Sottosmorzamento)</h3>
+    <div class="formula">
+        x<sub>om</sub>(t) = e<sup>-μt</sup>[C₁cos(ω<sub>d</sub>t) + C₂sin(ω<sub>d</sub>t)]<br>
+        dove ω<sub>d</sub> = √(ω² - μ²)
+    </div>
+    
+    <h3>Caso μ = ω (Smorzamento Critico)</h3>
+    <div class="formula">
+        x<sub>om</sub>(t) = (C₁ + C₂t)e<sup>-μt</sup>
+    </div>
+    
+    <h3>Caso μ > ω (Sovrasmorzamento)</h3>
+    <div class="formula">
+        x<sub>om</sub>(t) = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup><br>
+        dove λ₁,₂ = -μ ± √(μ² - ω²)
+    </div>
+    
+    <div class="note">
+        <strong>IMPORTANTE:</strong> Il termine omogeneo x<sub>om</sub>(t) tende a zero per t → ∞ a causa del fattore e<sup>-μt</sup>. Per questo viene chiamato "transitorio". Dopo un tempo sufficientemente lungo, rimane solo la soluzione particolare.
+    </div>
+    
+    <h2>Soluzione Particolare (Regime Stazionario)</h2>
+    <p>Per trovare la soluzione particolare, cerchiamo una soluzione della stessa forma della forzante:</p>
+    <div class="formula">
+        x<sub>p</sub>(t) = a cos(γt) + b sin(γt)
+    </div>
+    
+    <h3>Procedimento di Calcolo</h3>
+    <p><strong>Passo 1:</strong> Calcoliamo le derivate</p>
+    <div class="formula">
+        ẋ<sub>p</sub>(t) = -aγ sin(γt) + bγ cos(γt)<br>
+        ẍ<sub>p</sub>(t) = -aγ² cos(γt) - bγ² sin(γt)
+    </div>
+    
+    <p><strong>Passo 2:</strong> Sostituiamo nell'equazione differenziale</p>
+    <div class="formula">
+        [-aγ² cos(γt) - bγ² sin(γt)] + 2μ[-aγ sin(γt) + bγ cos(γt)] + ω²[a cos(γt) + b sin(γt)] = f cos(γt)
+    </div>
+    
+    <p><strong>Passo 3:</strong> Raggruppiamo i termini in cos(γt) e sin(γt)</p>
+    <p>Per cos(γt):</p>
+    <div class="formula">
+        -aγ² + 2μbγ + ω²a = f<br>
+        a(ω² - γ²) + 2μbγ = f
+    </div>
+    
+    <p>Per sin(γt):</p>
+    <div class="formula">
+        -bγ² - 2μaγ + ω²b = 0<br>
+        b(ω² - γ²) - 2μaγ = 0
+    </div>
+    
+    <p><strong>Passo 4:</strong> Risolviamo il sistema lineare</p>
+    <div class="formula">
+        a(ω² - γ²) + 2μbγ = f<br>
+        -2μaγ + b(ω² - γ²) = 0
+    </div>
+    
+    <p>Dalla seconda equazione: b = (2μaγ)/(ω² - γ²)</p>
+    <p>Sostituendo nella prima e risolvendo per a:</p>
+    <div class="formula">
+        a = [f(ω² - γ²)] / [(ω² - γ²)² + (2μγ)²]<br>
+        b = [f(2μγ)] / [(ω² - γ²)² + (2μγ)²]
+    </div>
+    
+    <h3>Forma Compatta</h3>
+    <p>La soluzione particolare può essere scritta in forma compatta come:</p>
+    <div class="formula">
+        x<sub>p</sub>(t) = A cos(γt - φ)
+    </div>
+    
+    <p>dove:</p>
+    <div class="formula">
+        A = f / √[(ω² - γ²)² + (2μγ)²]  (ampiezza)<br>
+        tan(φ) = (2μγ)/(ω² - γ²)  (sfasamento)
+    </div>
+    
+    <h2>Fenomeno della Risonanza</h2>
+    <p>L'ampiezza A della risposta stazionaria dipende dalla frequenza forzante γ. Studiando A(γ), si trova che essa raggiunge un massimo per:</p>
+    <div class="formula">
+        γ<sub>ris</sub> = √(ω² - 2μ²)  (frequenza di risonanza)
+    </div>
+    
+    <p>L'ampiezza massima è:</p>
+    <div class="formula">
+        A<sub>max</sub> = f / (2μ√(ω² - μ²))
+    </div>
+    
+    <div class="note">
+        <strong>RISONANZA:</strong> Quando γ ≈ ω (frequenza forzante vicina alla frequenza naturale) e μ è piccolo, l'ampiezza diventa molto grande. Questo può causare danni strutturali (ponti, edifici) se non controllato. Per questo motivo le truppe militari rompono il passo quando attraversano i ponti.
+    </div>
+    
+    <h2>Soluzione Completa</h2>
+    <p>La soluzione completa del problema è:</p>
+    <div class="formula">
+        x(t) = x<sub>om</sub>(t) + x<sub>p</sub>(t)
+    </div>
+    
+    <p>Le costanti C₁ e C₂ nella soluzione omogenea si determinano imponendo le condizioni iniziali x(0) e ẋ(0) sulla soluzione completa.</p>
+    
+    <h3>Comportamento Asintotico</h3>
+    <p>Per tempi lunghi (t → ∞):</p>
+    <p>• Il transitorio x<sub>om</sub>(t) → 0 a causa dello smorzamento</p>
+    <p>• Rimane solo il regime stazionario x<sub>p</sub>(t)</p>
+    <p>• Il sistema oscilla con la frequenza della forzante γ</p>
+    <p>• L'ampiezza e lo sfasamento dipendono da γ, ω e μ</p>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 3: BARICENTRO E MOMENTO D'INERZIA -->
+    <h1>3. Baricentro e Momento d'Inerzia</h1>
+    
+    <h2>Teoria</h2>
+    <p>Il baricentro (o centro di massa) è il punto in cui si può considerare concentrata tutta la massa di un corpo. Il momento d'inerzia misura la resistenza di un corpo alla rotazione attorno a un asse.</p>
+    
+    <h3>Definizioni Fondamentali</h3>
+    <p><strong>Baricentro:</strong></p>
+    <div class="formula">
+        X<sub>G</sub> = (1/m) ∫∫ x ρ(x,y) dA<br>
+        Y<sub>G</sub> = (1/m) ∫∫ y ρ(x,y) dA
+    </div>
+    
+    <p><strong>Momento d'Inerzia:</strong></p>
+    <div class="formula">
+        I = ∫∫ r² ρ(x,y) dA
+    </div>
+    <p>dove r è la distanza dall'asse di rotazione.</p>
+    
+    <h3>Teorema di Huygens-Steiner</h3>
+    <p>Questo teorema fondamentale permette di calcolare il momento d'inerzia rispetto a un asse qualsiasi conoscendo quello rispetto al baricentro:</p>
+    <div class="formula">
+        I<sub>A</sub> = I<sub>G</sub> + md²
+    </div>
+    <p>dove:</p>
+    <p>• I<sub>A</sub>: momento d'inerzia rispetto all'asse A</p>
+    <p>• I<sub>G</sub>: momento d'inerzia rispetto al baricentro</p>
+    <p>• d: distanza tra i due assi paralleli</p>
+    
+    <h2>Asta Omogenea</h2>
+    <h3>Massa Totale</h3>
+    <p>Per un'asta di lunghezza L con densità lineare costante ρ:</p>
+    <div class="formula">
+        m = ρL
+    </div>
+    
+    <h3>Baricentro</h3>
+    <p>Ponendo un'estremità nell'origine:</p>
+    <div class="formula">
+        X<sub>G</sub> = (1/m) ∫<sub>0</sub><sup>L</sup> x ρ dx = (ρ/m) ∫<sub>0</sub><sup>L</sup> x dx
+    </div>
+    
+    <p>Sostituendo ρ = m/L:</p>
+    <div class="formula">
+        X<sub>G</sub> = (m/L)(1/m)[x²/2]<sub>0</sub><sup>L</sup> = (1/L)(L²/2) = L/2
+    </div>
+    
+    <p>Il baricentro si trova a metà dell'asta, come intuitivamente ci si aspetta per un corpo omogeneo.</p>
+    
+    <h3>Momento d'Inerzia rispetto a un'Estremità</h3>
+    <div class="formula">
+        I<sub>A</sub> = ∫<sub>0</sub><sup>L</sup> x² ρ dx = ρ[x³/3]<sub>0</sub><sup>L</sup> = ρL³/3
+    </div>
+    
+    <p>Sostituendo ρ = m/L:</p>
+    <div class="formula">
+        I<sub>A</sub> = (m/L)(L³/3) = mL²/3
+    </div>
+    
+    <h3>Momento d'Inerzia rispetto al Baricentro</h3>
+    <p>Applicando il teorema di Steiner con d = L/2:</p>
+    <div class="formula">
+        I<sub>G</sub> = I<sub>A</sub> - md² = (mL²/3) - m(L/2)² = (mL²/3) - (mL²/4) = mL²/12
+    </div>
+    
+    <h2>Quadrato Omogeneo</h2>
+    <p>Consideriamo un quadrato di lato L con densità superficiale ρ costante.</p>
+    
+    <h3>Massa Totale</h3>
+    <div class="formula">
+        m = ρA = ρL²
+    </div>
+    
+    <h3>Baricentro</h3>
+    <div class="formula">
+        X<sub>G</sub> = (1/m) ∫<sub>0</sub><sup>L</sup>∫<sub>0</sub><sup>L</sup> x ρ dx dy = (ρ/m) ∫<sub>0</sub><sup>L</sup> x dx ∫<sub>0</sub><sup>L</sup> dy = (ρ/m)(L²/2)L = L/2<br>
+        Y<sub>G</sub> = L/2
+    </div>
+    
+    <p>Il baricentro coincide con il centro geometrico.</p>
+    
+    <h3>Momento d'Inerzia rispetto a un Angolo</h3>
+    <div class="formula">
+        I<sub>A</sub> = ∫<sub>0</sub><sup>L</sup>∫<sub>0</sub><sup>L</sup> (x² + y²) ρ dx dy = ρ[∫<sub>0</sub><sup>L</sup> x² dx ∫<sub>0</sub><sup>L</sup> dy + ∫<sub>0</sub><sup>L</sup> dx ∫<sub>0</sub><sup>L</sup> y² dy]
+    </div>
+    <div class="formula">
+        = ρ[(L³/3)L + L(L³/3)] = (2ρL⁴/3) = (2/3)mL²
+    </div>
+    
+    <h3>Momento d'Inerzia rispetto al Centro</h3>
+    <p>La distanza dal centro a un angolo è d = L√2/2:</p>
+    <div class="formula">
+        I<sub>G</sub> = I<sub>A</sub> - md² = (2/3)mL² - m(L√2/2)² = (2/3)mL² - (mL²/2) = (mL²/6)
+    </div>
+    
+    <h2>Rettangolo Omogeneo</h2>
+    <p>Rettangolo con base L e altezza H, densità ρ costante.</p>
+    
+    <h3>Massa Totale</h3>
+    <div class="formula">
+        m = ρLH
+    </div>
+    
+    <h3>Baricentro</h3>
+    <div class="formula">
+        X<sub>G</sub> = (1/m) ∫<sub>0</sub><sup>L</sup>∫<sub>0</sub><sup>H</sup> x ρ dx dy = L/2<br>
+        Y<sub>G</sub> = H/2
+    </div>
+    
+    <h3>Momenti d'Inerzia</h3>
+    <p><strong>Rispetto all'asse x (orizzontale passante per la base):</strong></p>
+    <div class="formula">
+        I<sub>xA</sub> = ∫<sub>0</sub><sup>L</sup>∫<sub>0</sub><sup>H</sup> y² ρ dx dy = ρL(H³/3) = (m/3)H²
+    </div>
+    
+    <p><strong>Rispetto all'asse y (verticale passante per un lato):</strong></p>
+    <div class="formula">
+        I<sub>yA</sub> = ∫<sub>0</sub><sup>L</sup>∫<sub>0</sub><sup>H</sup> x² ρ dx dy = ρH(L³/3) = (m/3)L²
+    </div>
+    
+    <p><strong>Rispetto al baricentro:</strong></p>
+    <div class="formula">
+        I<sub>xG</sub> = I<sub>xA</sub> - m(H/2)² = (m/3)H² - (m/4)H² = (m/12)H²<br>
+        I<sub>yG</sub> = I<sub>yA</sub> - m(L/2)² = (m/3)L² - (m/4)L² = (m/12)L²
+    </div>
+    
+    <div class="note">
+        <strong>NOTA IMPORTANTE:</strong> Per I<sub>x</sub> integriamo y² (non x²) perché il momento d'inerzia rispetto all'asse x misura la distribuzione della massa in direzione perpendicolare all'asse x, cioè lungo y. La distanza di un punto (x,y) dall'asse x è semplicemente |y|.
+    </div>
+    
+    <h2>Disco Omogeneo</h2>
+    <p>Disco di raggio R con densità superficiale ρ costante.</p>
+    
+    <h3>Massa Totale</h3>
+    <div class="formula">
+        m = ρπR²
+    </div>
+    
+    <h3>Baricentro</h3>
+    <p>Per simmetria, il baricentro coincide con il centro:</p>
+    <div class="formula">
+        X<sub>G</sub> = 0,  Y<sub>G</sub> = 0
+    </div>
+    
+    <h3>Momento d'Inerzia rispetto al Centro</h3>
+    <p>Usando coordinate polari (x = r cos θ, y = r sin θ, dA = r dr dθ):</p>
+    <div class="formula">
+        I<sub>O</sub> = ∫<sub>0</sub><sup>2π</sup>∫<sub>0</sub><sup>R</sup> r² ρ r dr dθ = ρ ∫<sub>0</sub><sup>2π</sup> dθ ∫<sub>0</sub><sup>R</sup> r³ dr
+    </div>
+    <div class="formula">
+        = ρ(2π)(R⁴/4) = (πρR⁴/2) = (m/2)R²
+    </div>
+    
+    <h3>Momento d'Inerzia rispetto a un Asse Diametrale</h3>
+    <p>Per simmetria, il momento d'inerzia rispetto a qualsiasi diametro è lo stesso. Calcolando rispetto all'asse x:</p>
+    <div class="formula">
+        I<sub>x</sub> = ∫<sub>0</sub><sup>2π</sup>∫<sub>0</sub><sup>R</sup> (r sin θ)² ρ r dr dθ = ρ ∫<sub>0</sub><sup>2π</sup> sin² θ dθ ∫<sub>0</sub><sup>R</sup> r³ dr
+    </div>
+    
+    <p>Usando l'integrale noto ∫<sub>0</sub><sup>2π</sup> sin² θ dθ = π:</p>
+    <div class="formula">
+        I<sub>x</sub> = ρπ(R⁴/4) = (m/4)R²
+    </div>
+    
+    <h2>Semidisco Omogeneo</h2>
+    <p>Metà superiore di un disco di raggio R.</p>
+    
+    <h3>Massa Totale</h3>
+    <div class="formula">
+        m = (ρπR²)/2
+    </div>
+    
+    <h3>Baricentro</h3>
+    <p>Per simmetria: X<sub>G</sub> = 0</p>
+    <p>Calcoliamo Y<sub>G</sub>:</p>
+    <div class="formula">
+        Y<sub>G</sub> = (1/m) ∫<sub>0</sub><sup>π</sup>∫<sub>0</sub><sup>R</sup> (r sin θ) ρ r dr dθ
+    </div>
+    <div class="formula">
+        = (2/πρR²) ρ ∫<sub>0</sub><sup>π</sup> sin θ dθ ∫<sub>0</sub><sup>R</sup> r² dr = (2/πR²)[-cos θ]<sub>0</sub><sup>π</sup>(R³/3)
+    </div>
+    <div class="formula">
+        = (2/πR²)(2)(R³/3) = (4R)/(3π)
+    </div>
+    
+    <h3>Momenti d'Inerzia</h3>
+    <p><strong>Rispetto al centro (asse perpendicolare al piano):</strong></p>
+    <div class="formula">
+        I<sub>O</sub> = ∫<sub>0</sub><sup>π</sup>∫<sub>0</sub><sup>R</sup> r² ρ r dr dθ = ρπ(R⁴/4) = (m/2)R²
+    </div>
+    
+    <p><strong>Rispetto alla base (asse orizzontale):</strong></p>
+    <div class="formula">
+        I<sub>B</sub> = ρ ∫<sub>0</sub><sup>π</sup> sin² θ dθ ∫<sub>0</sub><sup>R</sup> r³ dr
+    </div>
+    
+    <p>Usando ∫<sub>0</sub><sup>π</sup> sin² θ dθ = π/2:</p>
+    <div class="formula">
+        I<sub>B</sub> = ρ(π/2)(R⁴/4) = (m/4)R²
+    </div>
+    
+    <h2>Corona Circolare Omogenea</h2>
+    <p>Anello circolare con raggio interno R₁ e raggio esterno R₂.</p>
+    
+    <h3>Massa Totale</h3>
+    <div class="formula">
+        m = ρπ(R₂² - R₁²)
+    </div>
+    
+    <h3>Baricentro</h3>
+    <p>Per simmetria: X<sub>G</sub> = 0, Y<sub>G</sub> = 0</p>
+    
+    <h3>Momento d'Inerzia rispetto al Centro</h3>
+    <div class="formula">
+        I<sub>O</sub> = ∫<sub>0</sub><sup>2π</sup>∫<sub>R₁</sub><sup>R₂</sup> r² ρ r dr dθ = ρ(2π)[r⁴/4]<sub>R₁</sub><sup>R₂</sup>
+    </div>
+    <div class="formula">
+        = (ρπ/2)(R₂⁴ - R₁⁴) = (m/2)(R₂² + R₁²)
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 4: ENERGIA CINETICA -->
+    <h1>4. Energia Cinetica</h1>
+    
+    <h2>Teoria - Teorema di König</h2>
+    <p>Per calcolare l'energia cinetica di un corpo rigido che si muove nel piano, utilizziamo il Teorema di König, che permette di scomporre l'energia cinetica in due contributi:</p>
+    
+    <div class="formula">
+        T = T<sub>trasl</sub> + T<sub>rot</sub>
+    </div>
+    
+    <p>dove:</p>
+    <p>• <strong>T<sub>trasl</sub></strong>: energia cinetica traslazionale del baricentro</p>
+    <p>• <strong>T<sub>rot</sub></strong>: energia cinetica rotazionale attorno al baricentro</p>
+    
+    <h3>Forma Generale</h3>
+    <p>L'energia cinetica rispetto a un polo O generico è:</p>
+    <div class="formula">
+        T = (1/2)m<u>V</u><sub>O</sub>² + m(<u>OG</u>) × [<u>V</u><sub>O</sub> × <u>ω</u>] + (1/2)<u>ω</u> · I(<u>ω</u>)
+    </div>
+    
+    <p>dove:</p>
+    <p>• Primo termine: energia cinetica del polo O</p>
+    <p>• Secondo termine: termine misto (si annulla se O ≡ G)</p>
+    <p>• Terzo termine: energia cinetica rotazionale</p>
+    
+    <h3>Casi Particolari</h3>
+    
+    <h4>Caso 1: Polo nel Baricentro (O ≡ G)</h4>
+    <p>Il termine misto scompare:</p>
+    <div class="formula">
+        T = (1/2)mV<sub>G</sub>² + (1/2)I<sub>G</sub>ω²
+    </div>
+    
+    <h4>Caso 2: Punto Fisso O</h4>
+    <p>Se il corpo ha un punto fisso O (V<sub>O</sub> = 0):</p>
+    <div class="formula">
+        T = (1/2)I<sub>O</sub>ω²
+    </div>
+    <p>Solo energia rotazionale attorno al punto fisso.</p>
+    
+    <h4>Caso 3: Rototraslazione Piana</h4>
+    <p>Corpo che scorre su una superficie piana:</p>
+    <div class="formula">
+        T = (1/2)mV<sub>G</sub>² + (1/2)I<sub>G</sub>ω²
+    </div>
+    
+    <h4>Caso 4: Rotazione Pura attorno a un Punto A</h4>
+    <p>Un estremo del corpo è incernierato al punto A:</p>
+    <div class="formula">
+        T = (1/2)I<sub>A</sub>ω²
+    </div>
+    
+    <h2>Esempio Svolto: Lamina Rettangolare</h2>
+    <div class="example">
+        <h3>Problema</h3>
+        <p>Una lamina rettangolare omogenea di lati a e b ha l'estremo A vincolato a scorrere su una retta orizzontale. Calcolare l'energia cinetica per:</p>
+        <p>a) Densità ρ costante</p>
+        
+        <h3>Soluzione</h3>
+        
+        <p><strong>Passo 1: Calcolo del Baricentro</strong></p>
+        <p>Ponendo A nell'origine con il rettangolo allineato agli assi:</p>
+        <div class="formula">
+            X<sub>G</sub> = a/2,  Y<sub>G</sub> = b/2
+        </div>
+        
+        <p><strong>Passo 2: Posizione del Baricentro dopo Rotazione</strong></p>
+        <p>Se il rettangolo ruota di un angolo θ attorno ad A, il baricentro si muove. Usiamo la matrice di rotazione R(θ):</p>
+        <div class="formula">
+	<pre>
+            R(θ) = |cos θ  -sin θ|
+                   |sin θ   cos θ|
+</pre>
+        </div>
+        <p>Il vettore posizione del baricentro ruotato:</p>
+        <div class="formula">
+<pre>
+            <u>X</u>'<sub>G</sub> = R(θ) · <u>X</u><sub>G</sub> = |cos θ  -sin θ| |a/2|
+                              |sin θ   cos θ| |b/2|
+</pre>
+        </div>
+        <div class="formula"><pre>
+            = |(a/2)cos θ - (b/2)sin θ|
+              |(a/2)sin θ + (b/2)cos θ|</pre>
+        </div>
+        
+        <p>Ma A può anche traslare lungo x di una quantità ẋ, quindi:</p>
+        <div class="formula">
+            X'<sub>G</sub> = x + (a/2)cos θ - (b/2)sin θ<br>
+            Y'<sub>G</sub> = (a/2)sin θ + (b/2)cos θ
+        </div>
+        
+        <p><strong>Passo 3: Velocità del Baricentro</strong></p>
+        <p>Deriviamo rispetto al tempo:</p>
+	
+        <div class="formula">
+            V<sub>Gx</sub> = ẋ - (a/2)θ̇ sin θ - (b/2)θ̇ cos θ<br>
+            V<sub>Gy</sub> = (a/2)θ̇ cos θ - (b/2)θ̇ sin θ
+        </div>
+        
+        <p><strong>Passo 4: Modulo Quadro della Velocità</strong></p>
+        <div class="formula">
+            V<sub>G</sub>² = V<sub>Gx</sub>² + V<sub>Gy</sub>²
+        </div>
+        
+        <p>Sviluppando i quadrati:</p>
+        <div class="formula">
+            V<sub>Gx</sub>² = ẋ² - ẋθ̇(a sin θ + b cos θ) + (θ̇²/4)(a² sin² θ + b² cos² θ + 2ab sin θ cos θ)
+        </div>
+        <div class="formula">
+            V<sub>Gy</sub>² = (θ̇²/4)(a² cos² θ + b² sin² θ - 2ab sin θ cos θ)
+        </div>
+        
+        <p>Sommando:</p>
+        <div class="formula">
+            V<sub>G</sub>² = ẋ² - ẋθ̇(a sin θ + b cos θ) + (θ̇²/4)(a² + b²)
+        </div>
+        
+        <p><strong>Passo 5: Momento d'Inerzia</strong></p>
+        <p>Massa: m = ρab, quindi ρ = m/(ab)</p>
+        
+        <p>Momento d'inerzia rispetto ad A:</p>
+        <div class="formula">
+            I<sub>A</sub> = ρ ∫<sub>0</sub><sup>a</sup>∫<sub>0</sub><sup>b</sup> (x² + y²) dx dy = ρ[(a³b/3) + (ab³/3)]
+        </div>
+        <div class="formula">
+            = (ρab/3)(a² + b²) = (m/3)(a² + b²)
+        </div>
+        
+        <p>Alternativamente, usando Steiner con d = √(a² + b²)/2:</p>
+        <div class="formula">
+            I<sub>G</sub> = I<sub>A</sub> - md² = (m/3)(a² + b²) - m(a² + b²)/4 = (m/12)(a² + b²)
+        </div>
+        
+        <p><strong>Passo 6: Energia Cinetica Totale</strong></p>
+        <div class="formula">
+            T = (1/2)mV<sub>G</sub>² + (1/2)I<sub>G</sub>ω²
+        </div>
+        <div class="formula">
+            T = (1/2)m[ẋ² - ẋθ̇(a sin θ + b cos θ) + (θ̇²/4)(a² + b²)] + (1/2) · (m/12)(a² + b²) · θ̇²
+        </div>
+        <div class="formula">
+            T = (m/2)ẋ² - (m/2)ẋθ̇(a sin θ + b cos θ) + (m/8)θ̇²(a² + b²) + (m/24)θ̇²(a² + b²)
+        </div>
+        <div class="formula">
+            T = (m/2)ẋ² - (m/2)ẋθ̇(a sin θ + b cos θ) + (m/6)θ̇²(a² + b²)
+        </div>
+    </div>
+    
+    <div class="note">
+        <strong>NOTA:</strong> Per il caso b) con densità variabile ρ(x,y), si devono ricalcolare massa, baricentro e momenti d'inerzia seguendo gli stessi passaggi ma tenendo conto della funzione ρ(x,y) specifica.
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 5: TENSORI D'INERZIA -->
+    <h1>5. Tensori d'Inerzia</h1>
+    
+    <h2>Teoria</h2>
+    <p>Il tensore d'inerzia è una matrice 3×3 simmetrica che descrive completamente come la massa di un corpo rigido è distribuita rispetto a un sistema di riferimento tridimensionale. È fondamentale per lo studio della dinamica rotazionale nello spazio.</p>
+    
+    <h3>Forma Generale del Tensore</h3>
+    <div class="formula">
+	<pre>
+	    |  Ixx  -Ixy  -Ixz |
+	I = | -Iyx   Iyy  -Iyz |
+	    | -Izx  -Izy   Izz |
+</pre>
+    </div>
+    <h3>Momenti d'Inerzia Principali</h3>
+    <p>Gli elementi diagonali sono i momenti d'inerzia rispetto agli assi coordinati:</p>
+    <div class="formula">
+        I<sub>xx</sub> = ∫<sub>V</sub> ρ(y² + z²) dV<br>
+        I<sub>yy</sub> = ∫<sub>V</sub> ρ(x² + z²) dV<br>
+        I<sub>zz</sub> = ∫<sub>V</sub> ρ(x² + y²) dV
+    </div>
+    
+    <p>Ogni momento d'inerzia misura la resistenza alla rotazione attorno al rispettivo asse. Ad esempio, I<sub>xx</sub> misura quanto la massa è distribuita lontano dall'asse x.</p>
+    
+    <h3>Prodotti d'Inerzia</h3>
+    <p>Gli elementi fuori diagonale sono i prodotti d'inerzia:</p>
+    <div class="formula">
+        I<sub>xy</sub> = I<sub>yx</sub> = ∫<sub>V</sub> ρxy dV<br>
+        I<sub>xz</sub> = I<sub>zx</sub> = ∫<sub>V</sub> ρxz dV<br>
+        I<sub>yz</sub> = I<sub>zy</sub> = ∫<sub>V</sub> ρyz dV
+    </div>
+    
+    <p>I prodotti d'inerzia sono nulli quando:</p>
+    <p>• Il sistema di riferimento è centrato nel baricentro</p>
+    <p>• Gli assi sono allineati con gli assi di simmetria del corpo</p>
+    
+    <h3>Casi Bidimensionali (z = 0)</h3>
+    <p>Per figure piane nel piano xy, l'integrazione si riduce a integrali doppi sull'area:</p>
+    <div class="formula">
+        I<sub>xx</sub> = ∫∫ ρy² dA<br>
+        I<sub>yy</sub> = ∫∫ ρx² dA<br>
+        I<sub>zz</sub> = ∫∫ ρ(x² + y²) dA = I<sub>xx</sub> + I<sub>yy</sub>
+    </div>
+    
+    <h3>Coordinate Polari</h3>
+    <p>Per corpi con simmetria circolare (disco, semidisco, corona), usiamo coordinate polari:</p>
+    <p>x = r cos θ, y = r sin θ, dA = r dr dθ</p>
+    <div class="formula">
+        I<sub>xx</sub> = ∫∫ ρr² sin² θ · r dr dθ<br>
+        I<sub>yy</sub> = ∫∫ ρr² cos² θ · r dr dθ<br>
+        I<sub>zz</sub> = ∫∫ ρr²(sin² θ + cos² θ) · r dr dθ = ∫∫ ρr³ dr dθ
+    </div>
+    
+    <h3>Proprietà del Tensore</h3>
+    <p>1. <strong>Simmetria:</strong> I<sub>ij</sub> = I<sub>ji</sub></p>
+    <p>2. <strong>Assi principali:</strong> Esistono tre assi ortogonali (assi principali d'inerzia) per cui il tensore diventa diagonale</p>
+    <p>3. <strong>Invarianti:</strong> La traccia del tensore (I<sub>xx</sub> + I<sub>yy</sub> + I<sub>zz</sub>) è invariante rispetto a rotazioni</p>
+    
+    <h2>Esempi di Calcolo</h2>
+    
+    <h3>Disco Omogeneo</h3>
+    <p>Per un disco di raggio R nel piano xy:</p>
+    <div class="formula">
+        I<sub>xx</sub> = ∫<sub>0</sub><sup>2π</sup>∫<sub>0</sub><sup>R</sup> ρr² sin² θ · r dr dθ = (m/4)R²<br>
+        I<sub>yy</sub> = ∫<sub>0</sub><sup>2π</sup>∫<sub>0</sub><sup>R</sup> ρr² cos² θ · r dr dθ = (m/4)R²<br>
+        I<sub>zz</sub> = ∫<sub>0</sub><sup>2π</sup>∫<sub>0</sub><sup>R</sup> ρr³ dr dθ = (m/2)R²
+    </div>
+    
+    <p>Si verifica che I<sub>zz</sub> = I<sub>xx</sub> + I<sub>yy</sub>, come previsto per corpi piani.</p>
+    
+    <h3>Rettangolo Omogeneo</h3>
+    <p>Per un rettangolo di lati a e b centrato nell'origine:</p>
+    <div class="formula">
+        I<sub>xx</sub> = ∫<sub>-a/2</sub><sup>a/2</sup>∫<sub>-b/2</sub><sup>b/2</sup> ρy² dx dy = (m/12)b²<br>
+        I<sub>yy</sub> = ∫<sub>-a/2</sub><sup>a/2</sup>∫<sub>-b/2</sub><sup>b/2</sup> ρx² dx dy = (m/12)a²<br>
+        I<sub>zz</sub> = (m/12)(a² + b²)
+    </div>
+    
+    <p>Tutti i prodotti d'inerzia sono nulli per simmetria.</p>
+    
+    <div class="note">
+        <strong>APPLICAZIONE:</strong> Il tensore d'inerzia è essenziale nella robotica e nell'ingegneria aerospaziale per calcolare le equazioni di Eulero per la dinamica rotazionale: <strong>I·ω̇ + ω × (I·ω) = M</strong>, dove M è il momento esterno applicato.
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 6: TRIEDRO DI FRENET -->
+    <h1>6. Triedro di Frenet</h1>
+    
+    <h2>Teoria</h2>
+    <p>Il triedro di Frenet (o triedro principale) è un sistema di riferimento mobile che si adatta in ogni punto a una curva regolare nello spazio tridimensionale. È fondamentale per studiare la geometria differenziale delle curve e per descrivere il moto di un punto lungo una traiettoria.</p>
+    
+    <h3>Definizione della Curva</h3>
+    <p>Data una curva regolare nello spazio tridimensionale parametrizzata rispetto all'ascissa curvilinea s:</p>
+    <div class="formula">
+        <u>X</u>(s) = (x(s), y(s), z(s))
+    </div>
+    
+    <p>dove s è la lunghezza d'arco misurata lungo la curva a partire da un punto di riferimento. L'uso dell'ascissa curvilinea garantisce che |d<u>X</u>/ds| = 1.</p>
+    
+    <h3>I Tre Versori del Triedro</h3>
+    
+    <h4>1. Versore Tangente (<u>t</u>)</h4>
+    <p>Il versore tangente indica la direzione istantanea della curva:</p>
+    <div class="formula">
+        <u>t</u> = d<u>X</u>/ds
+    </div>
+    
+    <p>Per costruzione, |<u>t</u>| = 1 (è un versore). La tangente punta nella direzione del moto lungo la curva.</p>
+    
+    <h4>2. Versore Normale (<u>n</u>)</h4>
+    <p>Il versore normale è ortogonale al versore tangente e punta verso il "centro di curvatura" della traiettoria:</p>
+    <div class="formula">
+        <u>n</u> = (1/κ) · d<u>t</u>/ds
+    </div>
+    
+    <p>dove κ (kappa) è la curvatura della curva:</p>
+    <div class="formula">
+        κ = |d<u>t</u>/ds|
+    </div>
+    
+    <p>La curvatura misura quanto "rapidamente" la curva cambia direzione. Il suo reciproco ρ = 1/κ è il raggio di curvatura.</p>
+    
+    <h4>3. Versore Binormale (<u>b</u>)</h4>
+    <p>Il versore binormale è ortogonale sia a <u>t</u> che a <u>n</u>, ed è definito dal prodotto vettoriale:</p>
+    <div class="formula">
+        <u>b</u> = <u>t</u> × <u>n</u>
+    </div>
+    
+    <p>Il versore binormale indica la direzione attorno alla quale la curva si "torce" nello spazio.</p>
+    
+    <h3>Proprietà del Triedro</h3>
+    <p>1. I tre versori <u>t</u>, <u>n</u>, <u>b</u> formano una terna ortonormale destrorsa</p>
+    <p>2. <u>t</u> · <u>n</u> = 0,  <u>t</u> · <u>b</u> = 0,  <u>n</u> · <u>b</u> = 0</p>
+    <p>3. |<u>t</u>| = |<u>n</u>| = |<u>b</u>| = 1</p>
+    
+    <h3>Piano Osculatore</h3>
+    <p>Il piano contenente <u>t</u> e <u>n</u> è chiamato piano osculatore. È il piano che "meglio approssima" la curva in quel punto. La proiezione della curva sul piano osculatore mostra la curvatura locale.</p>
+    
+    <h2>Formule di Frenet-Serret</h2>
+    <p>Le formule di Frenet-Serret descrivono come variano i tre versori lungo la curva:</p>
+    <div class="formula">
+        d<u>t</u>/ds = κ<u>n</u><br>
+        d<u>n</u>/ds = -κ<u>t</u> + τ<u>b</u><br>
+        d<u>b</u>/ds = -τ<u>n</u>
+    </div>
+    
+    <p>dove:</p>
+    <p>• <strong>κ</strong> (curvatura): misura quanto la curva si piega</p>
+    <p>• <strong>τ</strong> (torsione): misura quanto la curva si torce uscendo dal piano osculatore</p>
+    
+    <h3>Significato della Torsione</h3>
+    <p>La torsione τ è definita da:</p>
+    <div class="formula">
+        τ = -<u>n</u> · (d<u>b</u>/ds)
+    </div>
+    
+    <p>• Se τ = 0: la curva è piana (rimane sempre nello stesso piano)</p>
+    <p>• Se τ ≠ 0: la curva è sghemba (tridimensionale)</p>
+    
+    <h2>Caso Particolare: Curve Piane</h2>
+    <p>Per una curva contenuta in un piano (ad esempio il piano xy):</p>
+    
+    <div class="formula">
+        <strong>Torsione: τ = 0</strong>
+    </div>
+    
+    <p>Proprietà delle curve piane:</p>
+    <p>• Il piano osculatore T-N è fisso e coincide con il piano della curva</p>
+    <p>• Il versore binormale <u>b</u> è costante e perpendicolare al piano</p>
+    <p>• Solo la curvatura κ varia lungo la curva</p>
+    <p>• Le formule di Frenet si semplificano:</p>
+    
+    <div class="formula">
+        d<u>t</u>/ds = κ<u>n</u><br>
+        d<u>n</u>/ds = -κ<u>t</u><br>
+        d<u>b</u>/ds = <u>0</u>
+    </div>
+    
+    <h2>Calcolo Pratico dei Versori</h2>
+    <p>Data una curva parametrizzata <u>r</u>(t) (non necessariamente con ascissa curvilinea):</p>
+    
+    <h3>Passo 1: Versore Tangente</h3>
+    <div class="formula">
+        <u>t</u> = <u>v</u>/|<u>v</u>|  dove  <u>v</u> = d<u>r</u>/dt
+    </div>
+    
+    <h3>Passo 2: Curvatura</h3>
+    <div class="formula">
+        κ = |<u>v</u> × <u>a</u>|/|<u>v</u>|³  dove  <u>a</u> = d²<u>r</u>/dt²
+    </div>
+    
+    <h3>Passo 3: Versore Normale</h3>
+    <div class="formula">
+        <u>n</u> = (d<u>t</u>/dt) / |d<u>t</u>/dt|
+    </div>
+    
+    <h3>Passo 4: Versore Binormale</h3>
+    <div class="formula">
+        <u>b</u> = <u>t</u> × <u>n</u>
+    </div>
+    
+    <h3>Passo 5: Torsione</h3>
+    <div class="formula">
+        τ = [(<u>v</u> × <u>a</u>) · (d<u>a</u>/dt)] / |<u>v</u> × <u>a</u>|²
+    </div>
+    
+    <h2>Esempio: Elica Circolare</h2>
+    <div class="example">
+        <h3>Curva Parametrica</h3>
+        <div class="formula">
+            <u>r</u>(t) = (R cos t, R sin t, ht)
+        </div>
+        <p>dove R è il raggio e h è il passo dell'elica.</p>
+        
+        <h3>Calcolo dei Versori</h3>
+        <p><strong>Velocità:</strong></p>
+        <div class="formula">
+            <u>v</u> = (-R sin t, R cos t, h)<br>
+            |<u>v</u>| = √(R² + h²)
+        </div>
+        
+        <p><strong>Versore Tangente:</strong></p>
+        <div class="formula">
+            <u>t</u> = (-R sin t, R cos t, h) / √(R² + h²)
+        </div>
+        
+        <p><strong>Accelerazione:</strong></p>
+        <div class="formula">
+            <u>a</u> = (-R cos t, -R sin t, 0)
+        </div>
+        
+        <p><strong>Curvatura:</strong></p>
+        <div class="formula">
+            κ = R/(R² + h²)
+        </div>
+        <p>Costante lungo tutta l'elica!</p>
+        
+        <p><strong>Torsione:</strong></p>
+        <div class="formula">
+            τ = h/(R² + h²)
+        </div>
+        <p>Anch'essa costante. L'elica ha curvatura e torsione costanti.</p>
+    </div>
+    
+    <h2>Applicazioni del Triedro di Frenet</h2>
+    
+    <h3>1. Cinematica del Punto Materiale</h3>
+    <p>Per un punto che si muove lungo una traiettoria, possiamo scomporre accelerazione e velocità nelle componenti del triedro:</p>
+    <div class="formula">
+        <u>v</u> = v<u>t</u>  (velocità solo tangenziale)<br>
+        <u>a</u> = (dv/dt)<u>t</u> + (v²κ)<u>n</u>
+    </div>
+    <p>dove v²κ è l'accelerazione centripeta.</p>
+    
+    <h3>2. Robotica e Traiettorie</h3>
+    <p>Nel controllo di robot e veicoli autonomi, il triedro di Frenet viene usato per:</p>
+    <p>• Pianificare traiettorie smooth con curvatura controllata</p>
+    <p>• Calcolare le forze necessarie per seguire un percorso</p>
+    <p>• Definire sistemi di coordinate mobili lungo il percorso</p>
+    
+    <h3>3. Grafica Computerizzata</h3>
+    <p>Per animare oggetti lungo curve (camera path, etc.), il triedro fornisce un riferimento naturale per orientare l'oggetto lungo il percorso.</p>
+    
+    <div class="note">
+        <strong>RICORDA:</strong> 
+        <p>• Per curve piane: τ = 0, il binormale è costante</p>
+        <p>• Curvatura κ ≥ 0 sempre (per definizione)</p>
+        <p>• Torsione τ può essere positiva o negativa</p>
+        <p>• κ = 0 significa tratto rettilineo</p>
+        <p>• τ = 0 significa curva piana</p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CONCLUSIONE -->
+    <div style="text-align: center; margin-top: 3cm;">
+        <h2>Fine della Dispensa</h2>
+        <p style="margin-top: 2cm;">Università degli Studi di Palermo</p>
+        <p>Facoltà di Ingegneria</p>
+        <p>Anno Accademico 2025/2026</p>
+    </div>
