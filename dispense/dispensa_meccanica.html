@@ -352,41 +352,40 @@
     
     <div class="page-break"></div>
     
-<h2>Esempio Svolto</h2>
+<h2>Esempio Svolto: Oscillatore Sottosmorzato</h2>
 <div class="example">
     <h3>Problema</h3>
-    <p>Risolvere il sistema:</p>
+    <p>Oscillatore smorzato:</p>
     <div class="formula">
-        ẍ + 2ẋ + 5x = 0<br>
-        Condizioni iniziali: x(0) = 1, ẋ(0) = 0
+        ẍ + 2ẋ + 5x = 0
     </div>
+    <p>dove m = 1, v = 2, k = 5</p>
     
     <h3>Soluzione</h3>
-    <p><strong>Passo 1:</strong> Scriviamo l'equazione caratteristica</p>
+    <p><strong>Passo 1:</strong> Identifichiamo i parametri</p>
+    <div class="formula">
+        ω = √(k/m) = √5<br>
+        μ = v/(2m) = 2/(2·1) = 1
+    </div>
+    
+    <p><strong>Passo 2:</strong> Determiniamo il tipo di smorzamento</p>
+    <p>Confrontiamo μ e ω:</p>
+    <div class="formula">
+        μ = 1 < ω = √5 ≈ 2.236  →  sottosmorzato
+    </div>
+    
+    <p><strong>Passo 3:</strong> Scriviamo l'equazione caratteristica</p>
     <div class="formula">
         λ² + 2λ + 5 = 0
     </div>
     
-    <p><strong>Passo 2:</strong> Identifichiamo i parametri</p>
-    <p>Confrontando con λ² + 2μλ + ω² = 0:</p>
+    <p><strong>Passo 4:</strong> Calcoliamo le radici</p>
+    <p>Usando la formula λ₁,₂ = -μ ± i·ω<sub>d</sub>, dove ω<sub>d</sub> = √(ω² - μ²):</p>
     <div class="formula">
-        2μ = 2  →  μ = 1<br>
-        ω² = 5  →  ω = √5 ≈ 2.236
+        ω<sub>d</sub> = √(5 - 1) = √4 = 2
     </div>
-    
-    <p>Inoltre, dall'equazione originale: m = 1, v = 2, k = 5</p>
-    
-    <p><strong>Passo 3:</strong> Determiniamo il tipo di smorzamento</p>
-    <p>Poiché μ = 1 < ω = √5 ≈ 2.236, siamo nel caso di <strong>sottosmorzamento</strong>.</p>
-    
-    <p><strong>Passo 4:</strong> Calcoliamo le radici complesse</p>
     <div class="formula">
-        Δ = μ² - ω² = 1 - 5 = -4 < 0
-    </div>
-    
-    <p>Le radici sono complesse coniugate:</p>
-    <div class="formula">
-        λ₁,₂ = -μ ± i√(ω² - μ²) = -1 ± i√4 = -1 ± 2i
+        λ₁,₂ = -1 ± i·2 = -1 ± 2i
     </div>
     
     <p>Quindi:</p>
@@ -396,101 +395,72 @@
     </div>
     
     <p><strong>Passo 5:</strong> Scriviamo la soluzione generale</p>
-    <p>Per radici complesse λ = -μ ± iω<sub>d</sub>, la soluzione è:</p>
     <div class="formula">
-        x(t) = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup>
-    </div>
-    
-    <p>Con λ₁ = -1 + 2i e λ₂ = -1 - 2i:</p>
-    <div class="formula">
-        x(t) = C₁e<sup>(-1+2i)t</sup> + C₂e<sup>(-1-2i)t</sup>
+        x(t) = C₁ · e^(λ₁t) + C₂ · e^(λ₂t)
     </div>
     
     <p><strong>Passo 6:</strong> Calcoliamo la derivata</p>
     <div class="formula">
-        ẋ(t) = λ₁C₁e<sup>λ₁t</sup> + λ₂C₂e<sup>λ₂t</sup>
-    </div>
-    <div class="formula">
-        = (-1 + 2i)C₁e<sup>(-1+2i)t</sup> + (-1 - 2i)C₂e<sup>(-1-2i)t</sup>
+        ẋ(t) = λ₁C₁ · e^(λ₁t) + λ₂C₂ · e^(λ₂t)
     </div>
     
-    <p><strong>Passo 7:</strong> Applichiamo le condizioni iniziali</p>
-    <p>Per t = 0:</p>
+    <p><strong>Passo 7:</strong> Sostituiamo le condizioni iniziali x(0) = 1, ẋ(0) = 0</p>
     <div class="formula">
-        x(0) = C₁e<sup>0</sup> + C₂e<sup>0</sup> = C₁ + C₂ = 1<br>
-        ẋ(0) = (-1 + 2i)C₁ + (-1 - 2i)C₂ = 0
+        C₁ + C₂ = 1<br>
+        λ₁C₁ + λ₂C₂ = 0
     </div>
     
-    <p>Sistema da risolvere:</p>
+    <p>Sostituendo λ₁ e λ₂:</p>
     <div class="formula">
         C₁ + C₂ = 1<br>
         (-1 + 2i)C₁ + (-1 - 2i)C₂ = 0
     </div>
     
-    <p>Dalla seconda equazione:</p>
+    <p><strong>Passo 8:</strong> Risolviamo il sistema</p>
+    <p>Dalla prima equazione:</p>
     <div class="formula">
-        (-1 + 2i)C₁ + (-1 - 2i)C₂ = 0<br>
-        (-1 + 2i)C₁ = (1 + 2i)C₂<br>
-        C₁ = [(1 + 2i)/(−1 + 2i)]C₂
+        C₁ = 1 - C₂
     </div>
     
-    <p>Razionalizziamo moltiplicando per il coniugato:</p>
+    <p>Sostituiamo nella seconda:</p>
     <div class="formula">
-        C₁ = [(1 + 2i)(−1 − 2i)]/[(−1 + 2i)(−1 − 2i)]C₂<br>
-        = [(−1 − 2i − 2i − 4i²)]/[1 + 4]C₂<br>
-        = [(−1 − 4i + 4)]/5 C₂ = (3 − 4i)/5 C₂
+        (-1 + 2i)(1 - C₂) + (-1 - 2i)C₂ = 0
+    </div>
+    <div class="formula">
+        -1 + 2i - C₂(-1 + 2i) + (-1 - 2i)C₂ = 0
+    </div>
+    <div class="formula">
+        -1 + 2i + C₂ - 2iC₂ - C₂ - 2iC₂ = 0
+    </div>
+    <div class="formula">
+        -1 + 2i - 4iC₂ = 0
+    </div>
+    <div class="formula">
+        2i - 4iC₂ = 1
+    </div>
+    <div class="formula">
+        C₂ = (2i - 1)/(-4i) = (1 - 2i)/(-4i)
     </div>
     
-    <p>Dalla prima equazione C₁ + C₂ = 1:</p>
+    <p>Razionalizziamo moltiplicando numeratore e denominatore per i:</p>
     <div class="formula">
-        (3 − 4i)/5 C₂ + C₂ = 1<br>
-        [(3 − 4i) + 5]/5 C₂ = 1<br>
-        (8 − 4i)/5 C₂ = 1<br>
-        C₂ = 5/(8 − 4i)
-    </div>
-    
-    <p>Razionalizziamo:</p>
-    <div class="formula">
-        C₂ = [5(8 + 4i)]/[(8 − 4i)(8 + 4i)] = [5(8 + 4i)]/(64 + 16) = (40 + 20i)/80 = (1 + 2i)/4
+        C₂ = (1 - 2i) · i/(-4i · i) = (i - 2i²)/(-4i²) = (i + 2)/4 = (2 + i)/4
     </div>
     
     <p>E quindi:</p>
     <div class="formula">
-        C₁ = 1 − C₂ = 1 − (1 + 2i)/4 = (4 − 1 − 2i)/4 = (3 − 2i)/4
+        C₁ = 1 - C₂ = 1 - (2 + i)/4 = (4 - 2 - i)/4 = (2 - i)/4
     </div>
-    
-    <p>Ma per semplificare, notiamo un approccio alternativo. Dalla seconda equazione:</p>
-    <div class="formula">
-        −C₁ + 2iC₁ − C₂ − 2iC₂ = 0<br>
-        −(C₁ + C₂) + 2i(C₁ − C₂) = 0
-    </div>
-    
-    <p>Usando C₁ + C₂ = 1:</p>
-    <div class="formula">
-        −1 + 2i(C₁ − C₂) = 0<br>
-        C₁ − C₂ = 1/(2i) = −i/2
-    </div>
-    
-    <p>Sistema più semplice:</p>
-    <div class="formula">
-        C₁ + C₂ = 1<br>
-        C₁ − C₂ = −i/2
-    </div>
-    
-    <p>Sommando: 2C₁ = 1 − i/2 → C₁ = (2 − i)/4</p>
-    <p>Sottraendo: 2C₂ = 1 + i/2 → C₂ = (2 + i)/4</p>
     
     <p><strong>Soluzione finale:</strong></p>
     <div class="formula">
-        x(t) = [(2 − i)/4]e<sup>(-1+2i)t</sup> + [(2 + i)/4]e<sup>(-1-2i)t</sup>
+        x(t) = [(2 - i)/4] · e^((-1+2i)t) + [(2 + i)/4] · e^((-1-2i)t)
     </div>
     
-    <p>Questa può essere scritta in forma reale usando le formule di Eulero, ottenendo:</p>
+    <p>Oppure, in forma alternativa usando la formula di Eulero:</p>
     <div class="formula">
-        x(t) = e<sup>-t</sup>[A cos(2t) + B sin(2t)]
+        x(t) = e^(-t)[A cos(2t) + B sin(2t)]
     </div>
-    
-    <p><strong>Interpretazione fisica:</strong> Il sistema oscilla con frequenza smorzata ω<sub>d</sub> = 2 rad/s, mentre l'ampiezza decresce esponenzialmente con costante di tempo 1/μ = 1 secondo.</p>
 </div>
 
     <!-- CAPITOLO 2: OSCILLATORE FORZATO -->
@@ -1243,9 +1213,9 @@
 
 <p>Calcolo pratico del prodotto vettoriale:</p>
 <div class="formula">
-    <u>b</u> = | <u>i</u>   <u>j</u>   <u>k</u>  |<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| t<sub>x</sub>  t<sub>y</sub>  t<sub>z</sub> |<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| n<sub>x</sub>  n<sub>y</sub>  n<sub>z</sub> |
+    &nbsp;&nbsp;&nbsp;&nbsp;| <u>i</u>&nbsp;   <u>j</u>&nbsp;   <u>k</u>&nbsp; |<br>
+    <u>b</u> = | t<sub>x</sub>  t<sub>y</sub>  t<sub>z</sub> |<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;| n<sub>x</sub>  n<sub>y</sub>  n<sub>z</sub> |
 </div>
 
 <p>Componenti:</p>
@@ -1260,65 +1230,74 @@
     <h3>Curva Parametrica</h3>
     <p>Circonferenza di raggio R nel piano xy:</p>
     <div class="formula">
-        <u>X</u>(θ) = (R cos θ, R sin θ)
+        <u>x</u> = (R cos θ, R sin θ)
     </div>
     
     <h3>Passo 1: Versore Tangente</h3>
-    <p>Calcoliamo d<u>X</u>/dθ:</p>
+    <p>Calcoliamo il versore tangente usando la regola della catena:</p>
     <div class="formula">
-        d<u>X</u>/dθ = (-R sin θ, R cos θ)
+        <u>t</u> = d<u>x</u>/ds = (d<u>x</u>/dθ) · (dθ/ds)
     </div>
     
-    <p>Calcoliamo l'ascissa curvilinea:</p>
+    <p>Prima calcoliamo d<u>x</u>/dθ:</p>
     <div class="formula">
-        s = ∫<sub>θ₀</sub><sup>θ</sup> |d<u>X</u>/dθ'| dθ'  →  ds/dθ = |d<u>X</u>/dθ| = R
+        d<u>x</u>/dθ = (-R sin θ, R cos θ)
+    </div>
+    
+    <p>Poi calcoliamo l'ascissa curvilinea s:</p>
+    <div class="formula">
+        s = ∫<sub>θ₀</sub><sup>θ</sup> |d<u>x</u>/dθ'| dθ'
     </div>
     
     <p>Quindi:</p>
     <div class="formula">
-        dθ/ds = 1/R
+        dθ/ds = 1/|d<u>x</u>/dθ| = 1/R
     </div>
     
-    <p>Il versore tangente:</p>
+    <p>Il versore tangente diventa:</p>
     <div class="formula">
-        <u>t</u> = d<u>X</u>/ds = (d<u>X</u>/dθ) · (dθ/ds) = (-R sin θ, R cos θ) · (1/R) = (-sin θ, cos θ)
+        <u>t</u> = (-R sin θ, R cos θ) · (1/R) = (-sin θ, cos θ)
     </div>
     
     <h3>Passo 2: Versore Normale</h3>
+    <p>Il versore normale si calcola come:</p>
+    <div class="formula">
+        <u>n</u> = (d<u>t</u>/ds) · ρ = (d<u>t</u>/dθ) · (dθ/ds) · ρ
+    </div>
+    
     <p>Calcoliamo d<u>t</u>/dθ:</p>
     <div class="formula">
         d<u>t</u>/dθ = (-cos θ, -sin θ)
     </div>
     
-    <p>Calcoliamo il raggio di curvatura:</p>
+    <p>Moltiplichiamo per dθ/ds = 1/R:</p>
     <div class="formula">
-        ρ = |d<u>t</u>/dθ · dθ/ds|⁻¹ = |(-cos θ, -sin θ) · (1/R)|⁻¹
-    </div>
-    <div class="formula">
-        = |√(cos²θ + sin²θ)/R|⁻¹ = |1/R|⁻¹ = R
+        (d<u>t</u>/dθ) · (dθ/ds) = (-cos θ, -sin θ) · (1/R)
     </div>
     
-    <p>Il versore normale:</p>
+    <p>Calcoliamo il raggio di curvatura ρ:</p>
     <div class="formula">
-        <u>n</u> = ρ · (d<u>t</u>/ds) = R · (d<u>t</u>/dθ) · (dθ/ds)
+        ρ = |d<u>x</u>/dθ|⁻¹ = (√(1/R² cos²θ + 1/R² sin²θ))⁻¹ = R
     </div>
+    
+    <p>Quindi il versore normale è:</p>
     <div class="formula">
-        = R · (-cos θ, -sin θ) · (1/R) = (-cos θ, -sin θ)
+        <u>n</u> = (-cos θ, -sin θ) · (1/R) · R = (-cos θ, -sin θ)
     </div>
     
     <h3>Passo 3: Versore Binormale</h3>
-    <p>Prodotto vettoriale:</p>
+    <p>Calcoliamo il prodotto vettoriale <u>b</u> = <u>t</u> × <u>n</u>:</p>
     <div class="formula">
-        <u>b</u> = <u>t</u> × <u>n</u> = | <u>i</u>    <u>j</u>    <u>k</u>  |<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -sin θ  cos θ   0  |<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -cos θ  -sin θ  0  |
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;<u>i</u>&nbsp;&nbsp;&nbsp;&nbsp;    <u>j</u>&nbsp;&nbsp;&nbsp;    <u>k</u>&nbsp;  |<br>
+        <u>b</u> = <u>t</u> × <u>n</u> = | -sinθ  cosθ  &nbsp; 0  &nbsp;|<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -cosθ  -sinθ &nbsp;0&nbsp;  |
     </div>
     
-    <p>Componenti:</p>
+    <p>Calcoliamo le componenti (cancellando ogni volta la colonna corrispondente):</p>
     <div class="formula">
-        b<sub>x</sub> = cos θ · 0 - 0 · (-sin θ) = 0<br>
-        b<sub>y</sub> = 0 · (-cos θ) - (-sin θ) · 0 = 0<br>
-        b<sub>z</sub> = (-sin θ) · (-sin θ) - cos θ · (-cos θ) = sin²θ + cos²θ = 1
+        b<sub>i</sub> = ad - bc = 0 (cancellando la colonna i)<br>
+        b<sub>j</sub> = ad - bc = 0 (cancellando la colonna j)<br>
+        b<sub>z</sub> = ad - bc = 1 (cancellando la colonna k)
     </div>
     
     <p>Quindi:</p>
@@ -1326,7 +1305,31 @@
         <u>b</u> = (0, 0, 1)
     </div>
     
-    <p><strong>Interpretazione:</strong> Il versore binormale è costante e perpendicolare al piano della circonferenza, confermando che si tratta di una curva piana con torsione τ = 0.</p>
+    <h3>Passo 4: Calcolo del Moto del Punto lungo la Curva</h3>
+    <p><strong>Velocità:</strong></p>
+    <div class="formula">
+        <u>v</u> = ṡ<u>t</u> = (ds/dt)<u>t</u> = (ds/dθ) · (dθ/dt) · <u>t</u> = R · θ̇ · (-sin θ, cos θ)
+    </div>
+    
+    <p>dove R · θ̇ = ṡ e ds/dθ = |d<u>x</u>/dθ| = R</p>
+    
+    <p><strong>Accelerazione:</strong></p>
+    <div class="formula">
+        <u>a</u> = s̈<u>t</u> + (1/ρ)ṡ²<u>n</u> = (dṡ/dt)<u>t</u> + (1/ρ)ṡ²<u>n</u>
+    </div>
+    
+    <p>Calcoliamo dṡ/dt usando la regola della catena:</p>
+    <div class="formula">
+        dṡ/dt = (dṡ/dθ) · (dθ/dt) = Rθ̈
+    </div>
+    
+    <p>Quindi l'accelerazione completa è:</p>
+    <div class="formula">
+        <u>a</u> = Rθ̈ · (-sin θ, cos θ) + (1/R) · R²θ̇² · (-cos θ, -sin θ)
+    </div>
+    <div class="formula">
+        = Rθ̈(-sin θ, cos θ) + Rθ̇²(-cos θ, -sin θ)
+    </div>
 </div>
 
 <h2>Esempio 2: Parabola</h2>
@@ -1334,63 +1337,127 @@
     <h3>Curva Parametrica</h3>
     <p>Parabola nel piano xy:</p>
     <div class="formula">
-        <u>X</u>(α) = (α, aα²)
+        <u>x</u> = (α, aα²)
     </div>
     
     <h3>Passo 1: Versore Tangente</h3>
-    <p>Calcoliamo d<u>X</u>/dα:</p>
+    <p>Calcoliamo il versore tangente usando la regola della catena:</p>
     <div class="formula">
-        d<u>X</u>/dα = (1, 2aα)
+        <u>t</u> = d<u>x</u>/ds = (d<u>x</u>/dα) · (dα/ds)
     </div>
     
-    <p>Ascissa curvilinea:</p>
+    <p>Prima calcoliamo d<u>x</u>/dα:</p>
     <div class="formula">
-        |d<u>X</u>/dα| = √(1 + 4a²α²)  →  dα/ds = 1/√(1 + 4a²α²)
+        d<u>x</u>/dα = (1, 2aα)
     </div>
     
-    <p>Versore tangente:</p>
+    <p>Poi calcoliamo dα/ds dall'ascissa curvilinea:</p>
     <div class="formula">
-        <u>t</u> = (1, 2aα) · 1/√(1 + 4a²α²) = (1/√(1 + 4a²α²), 2aα/√(1 + 4a²α²))
+        s⁻¹ = dα/ds = 1/|d<u>x</u>/dα| = 1/√(1 + 4a²α²)
+    </div>
+    
+    <p>Il versore tangente è:</p>
+    <div class="formula">
+        <u>t</u> = (1, 2aα) · (1/√(1 + 4a²α²)) = (1/√(1 + 4a²α²), 2aα/√(1 + 4a²α²))
     </div>
     
     <h3>Passo 2: Versore Normale</h3>
-    <p>Calcoliamo d<u>t</u>/dα. Ponendo f = (1 + 4a²α²) per semplicità:</p>
+    <p>Il versore normale si calcola come:</p>
     <div class="formula">
-        d<u>t</u>/dα = (-4a²α · f⁻³/², 2a · f⁻¹/² - 8a³α² · f⁻³/²)
+        <u>n</u> = (d<u>t</u>/ds) · ρ = (d<u>t</u>/dα) · (dα/ds) · ρ
     </div>
+    
+    <p>Calcoliamo d<u>t</u>/dα:</p>
+    <div class="formula">
+        d<u>t</u>/dα = (-4a²α/(1 + 4a²α²)^(3/2), 2a/(1 + 4a²α²)^(1/2) - 8a³α²/(1 + 4a²α²)^(3/2))
+    </div>
+    
+    <p>Semplificando la componente y:</p>
+    <div class="formula">
+        = (-4a²α(1 + 4a²α²)⁻³/², 2a(1 + 4a²α²)⁻¹/² - 8a³α²(1 + 4a²α²)⁻³/²)
+    </div>
+    
+    <p>Moltiplichiamo per dα/ds = 1/√(1 + 4a²α²):</p>
+    <div class="formula">
+        (d<u>t</u>/dα) · (dα/ds) = (-4a²α/(1 + 4a²α²)², 2a/(1 + 4a²α²) - 8a³α²/(1 + 4a²α²)²)
+    </div>
+    
+    <p>Semplificando ulteriormente la componente y:</p>
+    <div class="formula">
+        = (-4a²α/(1 + 4a²α²)², (2a + 8a³α² - 8a³α²)/(1 + 4a²α²)²)
+    </div>
+    <div class="formula">
+        = (-4a²α/(1 + 4a²α²)², 2a/(1 + 4a²α²)²)
+    </div>
+    
+    <p>Calcoliamo il raggio di curvatura ρ:</p>
+    <div class="formula">
+        ρ = |d<u>t</u>/dα · dα/ds|⁻¹ = (√(16a⁴α²/(1 + 4a²α²)⁴ + 4a²/(1 + 4a²α²)⁴))⁻¹
+    </div>
+    <div class="formula">
+        = (√(4a²(4a²α² + 1)/(1 + 4a²α²)⁴))⁻¹ = (2a/(1 + 4a²α²)^(3/2))⁻¹
+    </div>
+    <div class="formula">
+        = (1 + 4a²α²)^(3/2)/(2a)
+    </div>
+    
+    <p>Moltiplichiamo per ρ per ottenere il versore normale:</p>
+    <div class="formula">
+        <u>n</u> = (-4a²α/(1 + 4a²α²)², 2a/(1 + 4a²α²)²) · (1 + 4a²α²)^(3/2)/(2a)
+    </div>
+    
+    <p>Nota: 3/2 - 2 = -1/2, quindi:</p>
+    <div class="formula">
+        <u>n</u> = (-2aα/√(1 + 4a²α²), 1/√(1 + 4a²α²))
+    </div>
+    
+    <h3>Passo 3: Calcolo del Moto</h3>
+    <p><strong>Velocità:</strong></p>
+    <div class="formula">
+        <u>v</u> = ṡ<u>t</u> = (ds/dt)<u>t</u> = (ds/dα) · (dα/dt) · <u>t</u>
+    </div>
+    <div class="formula">
+        = √(1 + 4a²α²) · α̇ · (1/√(1 + 4a²α²), 2aα/√(1 + 4a²α²))
+    </div>
+    
+    <p>dove √(1 + 4a²α²) · α̇ = ṡ</p>
     
     <p>Semplificando:</p>
     <div class="formula">
-        d<u>t</u>/dα = (-4a²α · f⁻³/², 2a(1 + 4a²α² - 4a²α²) · f⁻³/²)
-    </div>
-    <div class="formula">
-        = (-4a²α · f⁻³/², 2a · f⁻³/²)
+        <u>v</u> = (1, 2aα) · α̇
     </div>
     
-    <p>Raggio di curvatura:</p>
+    <p><strong>Accelerazione:</strong></p>
     <div class="formula">
-        ρ = |d<u>t</u>/dα · dα/ds|⁻¹ = |(-4a²α · f⁻³/², 2a · f⁻³/²) · f⁻¹/²|⁻¹
-    </div>
-    <div class="formula">
-        = |√(16a⁴α² · f⁻⁴ + 4a² · f⁻⁴)|⁻¹ = |√(4a²(4a²α² + 1)) · f⁻²|⁻¹
-    </div>
-    <div class="formula">
-        = |2a · f¹/² · f⁻²|⁻¹ = |2a · f⁻³/²|⁻¹ = f³/²/(2a) = (1 + 4a²α²)³/²/(2a)
+        <u>a</u> = s̈<u>t</u> + (1/ρ)ṡ²<u>n</u> = (dṡ/dt)<u>t</u> + (1/ρ)ṡ²<u>n</u> = (dṡ/dα) · (dα/dt) · <u>t</u> + (1/ρ)ṡ²<u>n</u>
     </div>
     
-    <p>Versore normale:</p>
+    <p>Calcoliamo dṡ/dα:</p>
     <div class="formula">
-        <u>n</u> = ρ · (d<u>t</u>/dα) · (dα/ds)
-    </div>
-    <div class="formula">
-        = [(1 + 4a²α²)³/²/(2a)] · (-4a²α · f⁻³/², 2a · f⁻³/²) · f⁻¹/²
-    </div>
-    <div class="formula">
-        = (-2aα/√(1 + 4a²α²), 1/√(1 + 4a²α²))
+        dṡ/dα = (1/2)√(1 + 4a²α²)⁻¹ · 8a²α = 4a²α/√(1 + 4a²α²)
     </div>
     
-    <p><strong>Verifica:</strong> |<u>n</u>|² = 4a²α²/(1 + 4a²α²) + 1/(1 + 4a²α²) = (4a²α² + 1)/(1 + 4a²α²) = 1 ✓</p>
+    <p>Quindi dṡ/dt:</p>
+    <div class="formula">
+        dṡ/dt = (4a²α/√(1 + 4a²α²)) · α̇ + α̈ · √(1 + 4a²α²)
+    </div>
+    
+    <p>L'accelerazione completa è:</p>
+    <div class="formula">
+        <u>a</u> = [(4a²α · α̇/√(1 + 4a²α²)) + α̈√(1 + 4a²α²)] · (1/√(1 + 4a²α²), 2aα/√(1 + 4a²α²))
+    </div>
+    <div class="formula">
+        + [2a/(1 + 4a²α²)^(3/2)] · (1 + 4a²α²) · α̇² · (-2aα/√(1 + 4a²α²), 1/√(1 + 4a²α²))
+    </div>
+    
+    <p>dove:</p>
+    <p>• (4a²α · α̇/√(1 + 4a²α²)) + α̈√(1 + 4a²α²) = dṡ/dt</p>
+    <p>• (1/√(1 + 4a²α²), 2aα/√(1 + 4a²α²)) = <u>t</u></p>
+    <p>• 2a/(1 + 4a²α²)^(3/2) = 1/ρ</p>
+    <p>• (1 + 4a²α²) · α̇² = ṡ²</p>
+    <p>• (-2aα/√(1 + 4a²α²), 1/√(1 + 4a²α²)) = <u>n</u></p>
 </div>
+
 <h2>Cinematica: Moto del Punto lungo una Curva</h2>
 <p>Una volta calcolato il triedro di Frenet, possiamo descrivere il moto di un punto che si muove lungo la curva.</p>
 
@@ -1497,85 +1564,105 @@
 <h2>Esempio 3: Moto Circolare con Velocità Angolare Variabile</h2>
 <div class="example">
     <h3>Problema</h3>
-    <p>Un punto si muove su una circonferenza di raggio R secondo la legge:</p>
+    <p>Esercizio di Frenet quando la curva è parametrizzata in t:</p>
     <div class="formula">
-        <u>X</u>(t) = (R cos[(a/2)t² + ωt], R sin[(a/2)t² + ωt])
+        <u>x</u> = (R cos(a/2 · t² + ωt), R sin(a/2 · t² + ωt))
     </div>
-    <p>dove a e ω sono costanti. Calcolare il triedro di Frenet e il moto del punto.</p>
     
     <h3>Soluzione</h3>
-    <p>Poniamo per semplicità y = (a/2)t² + ωt. Allora <u>X</u>(t) = (R cos y, R sin y)</p>
+    <p>Poniamo y = a/2 · t² + ωt per semplicità. Quindi <u>x</u> = (R cos y, R sin y)</p>
     
-    <p><strong>Passo 1: Versore Tangente</strong></p>
-    <p>Calcoliamo d<u>X</u>/dt:</p>
+    <h3>Passo 1: Versore Tangente</h3>
+    <p>Calcoliamo il versore tangente:</p>
     <div class="formula">
-        d<u>X</u>/dt = (-R sin y · ẏ, R cos y · ẏ) = (-R sin y · (at + ω), R cos y · (at + ω))
+        <u>t</u> = d<u>x</u>/ds = (d<u>x</u>/dt) · (dt/ds)
     </div>
     
-    <p>Ascissa curvilinea:</p>
+    <p>Prima calcoliamo d<u>x</u>/dt (derivata di <u>x</u> rispetto a t):</p>
     <div class="formula">
-        |d<u>X</u>/dt| = R|at + ω|√(sin²y + cos²y) = R(at + ω)
+        d<u>x</u>/dt = (-R sin(a/2 · t² + ωt) · (at + ω), R cos(a/2 · t² + ωt) · (at + ω))
     </div>
-    <p>(assumendo at + ω > 0)</p>
-    
-    <p>Quindi:</p>
     <div class="formula">
-        dt/ds = 1/[R(at + ω)]
+        = (-R sin y · (at + ω), R cos y · (at + ω))
     </div>
     
-    <p>Versore tangente:</p>
+    <p>Calcoliamo l'ascissa curvilinea:</p>
     <div class="formula">
-        <u>t</u> = (d<u>X</u>/dt) · (dt/ds) = (-R sin y · (at + ω), R cos y · (at + ω)) · 1/[R(at + ω)]
+        dt/ds = 1/|d<u>x</u>/dt| = 1/√(R² sin²y · (at + ω)² + R² cos²y · (at + ω)²)
+    </div>
+    <div class="formula">
+        = 1/(R(at + ω))
+    </div>
+    
+    <p>Il versore tangente è:</p>
+    <div class="formula">
+        <u>t</u> = (-R sin y · (at + ω), R cos y · (at + ω)) · 1/(R(at + ω))
     </div>
     <div class="formula">
         = (-sin y, cos y)
     </div>
     
-    <p><strong>Passo 2: Versore Normale</strong></p>
+    <h3>Passo 2: Versore Normale</h3>
+    <p>Il versore normale si calcola come:</p>
+    <div class="formula">
+        <u>n</u> = (d<u>t</u>/ds) · ρ = (d<u>t</u>/dt) · (dt/ds) · ρ
+    </div>
+    
     <p>Calcoliamo d<u>t</u>/dt:</p>
     <div class="formula">
-        d<u>t</u>/dt = (-cos y · ẏ, -sin y · ẏ) = (-cos y · (at + ω), -sin y · (at + ω))
+        d<u>t</u>/dt = (-cos y · (at + ω), -sin y · (at + ω))
     </div>
     
-    <p>Raggio di curvatura:</p>
+    <p>Moltiplichiamo per dt/ds = 1/(R(at + ω)):</p>
     <div class="formula">
-        ρ = |d<u>t</u>/dt · dt/ds|⁻¹ = |(-cos y · (at + ω), -sin y · (at + ω)) · 1/[R(at + ω)]|⁻¹
+        (d<u>t</u>/dt) · (dt/ds) = (-cos y · (at + ω), -sin y · (at + ω)) · 1/(R(at + ω))
     </div>
     <div class="formula">
-        = |√(cos²y + sin²y)/R|⁻¹ = R
-    </div>
-    
-    <p>Versore normale:</p>
-    <div class="formula">
-        <u>n</u> = ρ · (d<u>t</u>/dt) · (dt/ds) = R · (-cos y · (at + ω), -sin y · (at + ω)) · 1/[R(at + ω)]
-    </div>
-    <div class="formula">
-        = (-cos y, -sin y)
+        = (-cos y/R, -sin y/R)
     </div>
     
-    <p><strong>Passo 3: Moto del Punto</strong></p>
-    <p><strong>Velocità:</strong> Abbiamo già ṡ = ds/dt = R(at + ω)</p>
+    <p>Calcoliamo il raggio di curvatura ρ:</p>
     <div class="formula">
-        <u>v</u> = ṡ<u>t</u> = R(at + ω)(-sin y, cos y)
+        ρ = 1/√(cos²y/R² + sin²y/R²) = 1/(1/R) = R
     </div>
     
-    <p><strong>Accelerazione:</strong> In questo caso abbiamo già ds/dt, quindi:</p>
+    <p>Il versore normale è:</p>
     <div class="formula">
-        s̈ = d/dt[R(at + ω)] = Ra
+        <u>n</u> = (-cos y/R, -sin y/R) · R = (-cos y, -sin y)
     </div>
     
-    <p>L'accelerazione è:</p>
+    <h3>Passo 3: Calcolo del Moto</h3>
+    <p><strong>Velocità:</strong></p>
     <div class="formula">
-        <u>a</u> = s̈<u>t</u> + (1/ρ)ṡ²<u>n</u>
+        <u>v</u> = ṡ<u>t</u> = (ds/dt)<u>t</u> = R(at + ω) · (-sin y, cos y)
     </div>
+    
+    <p>dove R(at + ω) = ṡ</p>
+    
+    <p><strong>Accelerazione:</strong></p>
     <div class="formula">
-        = Ra(-sin y, cos y) + (1/R)[R(at + ω)]²(-cos y, -sin y)
+        <u>a</u> = s̈<u>t</u> + (1/ρ)ṡ²<u>n</u> = (dṡ/dt)<u>t</u> + (1/ρ)ṡ²<u>n</u>
+    </div>
+    
+    <p>In questo caso abbiamo già ds/dt, quindi non va scomposto in prodotto ds/dθ · dθ/dt:</p>
+    <div class="formula">
+        dṡ/dt = d/dt[R(at + ω)] = Ra
+    </div>
+    
+    <p>L'accelerazione completa è:</p>
+    <div class="formula">
+        <u>a</u> = Ra · (-sin y, cos y) + (1/R) · [R(at + ω)]² · (-cos y, -sin y)
     </div>
     <div class="formula">
         = Ra(-sin y, cos y) + R(at + ω)²(-cos y, -sin y)
     </div>
     
-    <p><strong>Interpretazione:</strong> La componente tangenziale dell'accelerazione è costante (Ra), mentre quella centripeta aumenta quadraticamente con t.</p>
+    <p>dove:</p>
+    <p>• Ra = dṡ/dt (in questo caso abbiamo già ds/dt, quindi non serve scomporlo)</p>
+    <p>• (-sin y, cos y) = <u>t</u></p>
+    <p>• 1/R = 1/ρ</p>
+    <p>• R²(at + ω)² = ṡ²</p>
+    <p>• (-cos y, -sin y) = <u>n</u></p>
 </div>
 
 <h2>Applicazioni del Triedro di Frenet</h2>
@@ -1589,24 +1676,27 @@
 <h3>2. Grafica Computerizzata</h3>
 <p>Per animare oggetti lungo curve (camera path, etc.), il triedro fornisce un riferimento naturale per orientare l'oggetto lungo il percorso.</p>
 
-x<div class="note">
-    <strong>RICORDA:</strong> 
+<div class="note">
+    <strong>NOTE IMPORTANTI:</strong>
+    <p>• Scomposizione: quando si deve semplificare (x + ay + az)², scomporre come (x + a(y + z))² = x² + a²(y + z)² + 2xa(y + z), cioè un quadrato di binomio dentro un altro quadrato di binomio</p>
+    <p>• Per l'oscillatore smorzato ẍ + 2ẋ + 5x = 0: m = 1, v = 2, k = 5</p>
+    <p>• ω = √(k/m) = √5 e μ = v/(2m) = 1</p>
+    <p>• μ < ω → sottosmorzato</p>
+    <p>• λ² + 2λ + 5 = 0</p>
+    <p>• λ₁,₂ = -μ ± i·ω<sub>d</sub> dove ω<sub>d</sub> = √(ω² - μ²) = √4 = 2</p>
+    <p>• λ₁,₂ = -1 ± 2i</p>
+</div>
+
+<div class="note">
+    <strong>RICORDA - Triedro di Frenet:</strong> 
     <p>• Per curve piane: τ = 0, il binormale è costante</p>
-    <p>• Curvatura κ ≥ 0 sempre (per definizione), e κ = 1/ρ</p>
+    <p>• Curvatura κ = 1/ρ (κ ≥ 0 sempre)</p>
     <p>• Torsione τ può essere positiva o negativa</p>
     <p>• κ = 0 significa tratto rettilineo</p>
     <p>• τ = 0 significa curva piana</p>
     <p>• La velocità è sempre tangenziale: <u>v</u> = ṡ<u>t</u></p>
     <p>• L'accelerazione ha due componenti: tangenziale (s̈<u>t</u>) e centripeta [(1/ρ)ṡ²<u>n</u>]</p>
-</div>
-
-<div class="note">
-    <strong>NOTA SULLE SCOMPOSIZIONI:</strong>
-    <p>Quando si deve semplificare un'espressione del tipo (x + ay + az)², è utile scomporla come:</p>
-    <div class="formula">
-        (x + ay + az)² = (x + a(y + z))² = x² + a²(y + z)² + 2xa(y + z)
-    </div>
-    <p>Questo è un quadrato di binomio dentro un altro quadrato di binomio, che facilita i calcoli.</p>
+    <p>• Quando abbiamo già ds/dt esplicitamente, non serve scomporlo in ds/dα · dα/dt</p>
 </div>
     
     <div class="page-break"></div>
