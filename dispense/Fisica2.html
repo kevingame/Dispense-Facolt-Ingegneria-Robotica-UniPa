@@ -1,0 +1,2865 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa di Fisica 2</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 2cm;
+            background: white;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        .cover-page {
+            text-align: center;
+            padding-top: 5cm;
+        }
+        
+        .cover-page h1 {
+            font-size: 24pt;
+            font-weight: bold;
+            margin-bottom: 0.5cm;
+        }
+        
+        .cover-page h2 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 2cm;
+        }
+        
+        .cover-page h3 {
+            font-size: 18pt;
+            margin-bottom: 3cm;
+        }
+        
+        .info-section {
+            text-align: left;
+            display: inline-block;
+            margin-top: 2cm;
+        }
+        
+        .info-section p {
+            margin: 0.3cm 0;
+            font-size: 12pt;
+        }
+        
+        .toc {
+            margin-top: 2cm;
+        }
+        
+        .toc h2 {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1cm;
+        }
+        
+        .toc-item {
+            margin: 0.5cm 0;
+            font-size: 12pt;
+        }
+        
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-top: 1cm;
+            margin-bottom: 0.5cm;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 0.8cm;
+            margin-bottom: 0.4cm;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 0.6cm;
+            margin-bottom: 0.3cm;
+        }
+        
+        p {
+            text-align: justify;
+            margin: 0.3cm 0;
+        }
+        
+        .formula {
+            margin: 0.5cm 0;
+            padding: 0.3cm;
+            background: #f5f5f5;
+            border-left: 3px solid #333;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example {
+            margin: 0.5cm 0;
+            padding: 0.5cm;
+            border: 1px solid #ccc;
+            background: #fafafa;
+        }
+        
+        .note {
+            margin: 0.5cm 0;
+            padding: 0.3cm;
+            background: #ffffcc;
+            border-left: 3px solid #ffcc00;
+        }
+        
+        ul {
+            margin: 0.3cm 0 0.3cm 1cm;
+        }
+        
+        li {
+            margin: 0.2cm 0;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGINA DI COPERTINA -->
+    <div class="cover-page">
+        <h1>UNIVERSITÀ DEGLI STUDI DI PALERMO</h1>
+        <h2>DIPARTIMENTO DI INGEGNERIA</h2>
+        <h3>Dispensa di Fisica 2</h3>
+        
+        <div class="info-section">
+            <p><strong>Sviluppatore:</strong> Petrone Kevin</p>
+            <p><strong>Matricola:</strong> 0774409</p>
+            <p><strong>Docente:</strong> Oliveri Roberto Luigi</p>
+            <p><strong>Corso:</strong> Ingegneria Robotica</p>
+            <p><strong>Anno Accademico:</strong> 2025/2026</p>
+            <p><strong>Data:</strong> Febbraio 2026</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- INDICE -->
+    <div class="toc">
+        <h2>INDICE</h2>
+        <div class="toc-item">1. Campi Elettrici</div>
+        <div class="toc-item">2. Legge di Gauss</div>
+        <div class="toc-item">3. Potenziale Elettrico</div>
+        <div class="toc-item">4. Capacità e Dielettrici</div>
+        <div class="toc-item">5. Corrente e Resistenza</div>
+        <div class="toc-item">6. Circuiti in Corrente Continua</div>
+        <div class="toc-item">7. Campi Magnetici</div>
+        <div class="toc-item">8. Sorgenti di Campo Magnetico</div>
+        <div class="toc-item">9. Legge di Faraday</div>
+        <div class="toc-item">10. Induttanza</div>
+        <div class="toc-item">11. Onde Elettromagnetiche</div>
+        <div class="toc-item">12. Luce e Ottica Geometrica</div>
+        <div class="toc-item">13. Formazione dell'Immagine</div>
+        <div class="toc-item">14. Interferenza delle Onde Luminose</div>
+        <div class="toc-item">15. Diffrazione e Polarizzazione</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 1: CAMPI ELETTRICI -->
+    <h1>1. Campi Elettrici</h1>
+    
+    <h2>1.1 Legge di Coulomb</h2>
+    <p>La legge di Coulomb descrive la forza elettrostatica tra due cariche puntiformi. È una delle leggi fondamentali dell'elettromagnetismo e stabilisce che la forza tra due cariche è direttamente proporzionale al prodotto delle cariche e inversamente proporzionale al quadrato della distanza che le separa.</p>
+    
+    <h3>Formula della Legge di Coulomb</h3>
+    <div class="formula">
+        F = k · (q₁q₂)/r²
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li><strong>F</strong>: forza elettrostatica (N)</li>
+        <li><strong>k</strong> = 8.99 × 10⁹ N·m²/C² (costante di Coulomb)</li>
+        <li><strong>q₁, q₂</strong>: cariche elettriche (C)</li>
+        <li><strong>r</strong>: distanza tra le cariche (m)</li>
+    </ul>
+    
+    <p>Forma vettoriale:</p>
+    <div class="formula">
+        <strong>F</strong>₁₂ = k · (q₁q₂)/r² · <strong>r̂</strong>₁₂
+    </div>
+    
+    <p>dove <strong>r̂</strong>₁₂ è il versore diretto da q₂ a q₁.</p>
+    
+    <h3>Costante Dielettrica del Vuoto</h3>
+    <p>La costante k può essere espressa in termini della costante dielettrica del vuoto ε₀:</p>
+    <div class="formula">
+        k = 1/(4πε₀)<br>
+        ε₀ = 8.85 × 10⁻¹² C²/(N·m²)
+    </div>
+    
+    <div class="note">
+        <strong>PROPRIETÀ DELLA FORZA ELETTROSTATICA:</strong>
+        <ul>
+            <li>Cariche dello stesso segno si respingono (F > 0)</li>
+            <li>Cariche di segno opposto si attraggono (F < 0)</li>
+            <li>La forza agisce lungo la linea che congiunge le due cariche</li>
+            <li>Rispetta il principio di azione e reazione: <strong>F</strong>₁₂ = -<strong>F</strong>₂₁</li>
+        </ul>
+    </div>
+    
+    <h2>1.2 Campo Elettrico</h2>
+    <p>Il campo elettrico è una grandezza vettoriale che descrive la forza elettrica per unità di carica in ogni punto dello spazio. Rappresenta l'influenza che una distribuzione di cariche esercita sulla regione circostante.</p>
+    
+    <h3>Definizione di Campo Elettrico</h3>
+    <p>Il campo elettrico <strong>E</strong> in un punto è definito come la forza elettrica <strong>F</strong> che agirebbe su una carica di prova positiva q₀ posta in quel punto, divisa per q₀:</p>
+    <div class="formula">
+        <strong>E</strong> = <strong>F</strong>/q₀
+    </div>
+    
+    <p>Unità di misura: N/C oppure V/m</p>
+    
+    <h3>Campo Elettrico di una Carica Puntiforme</h3>
+    <p>Per una carica puntiforme q, il campo elettrico a distanza r è:</p>
+    <div class="formula">
+        <strong>E</strong> = k · (q/r²) · <strong>r̂</strong>
+    </div>
+    
+    <p>dove <strong>r̂</strong> è il versore radiale diretto dalla carica verso l'esterno.</p>
+    
+    <h3>Principio di Sovrapposizione</h3>
+    <p>Il campo elettrico generato da un sistema di cariche puntiformi è la somma vettoriale dei campi generati da ciascuna carica:</p>
+    <div class="formula">
+        <strong>E</strong>tot = Σ<strong>E</strong>ᵢ = Σ k · (qᵢ/rᵢ²) · <strong>r̂</strong>ᵢ
+    </div>
+    
+    <h2>1.3 Campo Elettrico Generato da una Distribuzione Continua di Carica</h2>
+    <p>Per distribuzioni continue di carica, il campo elettrico si calcola integrando il contributo di ciascun elemento infinitesimo di carica.</p>
+    
+    <h3>Densità di Carica</h3>
+    <p>Definiamo tre tipi di densità:</p>
+    
+    <p><strong>Densità lineare (λ):</strong> carica per unità di lunghezza</p>
+    <div class="formula">
+        λ = dq/dl  [C/m]
+    </div>
+    
+    <p><strong>Densità superficiale (σ):</strong> carica per unità di superficie</p>
+    <div class="formula">
+        σ = dq/dA  [C/m²]
+    </div>
+    
+    <p><strong>Densità volumetrica (ρ):</strong> carica per unità di volume</p>
+    <div class="formula">
+        ρ = dq/dV  [C/m³]
+    </div>
+    
+    <h3>Formula Generale per il Campo Elettrico</h3>
+    <p>Il campo elettrico in un punto P dovuto a una distribuzione continua è:</p>
+    <div class="formula">
+        <strong>E</strong>(P) = k ∫ (dq/r²) · <strong>r̂</strong>
+    </div>
+    
+    <p>dove l'integrale si estende su tutta la distribuzione di carica.</p>
+    
+    <h3>Esempi di Distribuzioni Continue</h3>
+    
+    <p><strong>1. Filo infinito uniformemente carico:</strong></p>
+    <div class="formula">
+        E = λ/(2πε₀r)
+    </div>
+    <p>Il campo è radiale e decresce inversamente con la distanza r dal filo.</p>
+    
+    <p><strong>2. Piano infinito uniformemente carico:</strong></p>
+    <div class="formula">
+        E = σ/(2ε₀)
+    </div>
+    <p>Il campo è uniforme e perpendicolare al piano, indipendente dalla distanza.</p>
+    
+    <p><strong>3. Anello carico sul suo asse:</strong></p>
+    <div class="formula">
+        E = (kqx)/(x² + R²)^(3/2)
+    </div>
+    <p>dove x è la distanza dal centro dell'anello lungo l'asse e R è il raggio.</p>
+    
+    <h2>1.4 Linee di Campo Elettrico</h2>
+    <p>Le linee di campo elettrico sono curve tangenti in ogni punto al vettore campo elettrico. Forniscono una rappresentazione visiva del campo.</p>
+    
+    <h3>Proprietà delle Linee di Campo</h3>
+    <ul>
+        <li>Partono dalle cariche positive e terminano su quelle negative</li>
+        <li>Non si intersecano mai</li>
+        <li>La densità delle linee è proporzionale all'intensità del campo</li>
+        <li>Sono perpendicolari alle superfici equipotenziali</li>
+        <li>Sono perpendicolari alle superfici conduttrici in equilibrio</li>
+    </ul>
+    
+    <h2>1.5 Moto di una Particella in un Campo Elettrico Uniforme</h2>
+    <p>Consideriamo una particella carica in un campo elettrico uniforme <strong>E</strong>.</p>
+    
+    <h3>Forza ed Accelerazione</h3>
+    <p>La forza sulla particella è:</p>
+    <div class="formula">
+        <strong>F</strong> = q<strong>E</strong>
+    </div>
+    
+    <p>L'accelerazione è costante:</p>
+    <div class="formula">
+        <strong>a</strong> = q<strong>E</strong>/m
+    </div>
+    
+    <h3>Moto Rettilineo</h3>
+    <p>Se la velocità iniziale è parallela al campo:</p>
+    <div class="formula">
+        v = v₀ + at<br>
+        x = x₀ + v₀t + (1/2)at²<br>
+        v² = v₀² + 2a(x - x₀)
+    </div>
+    
+    <h3>Moto Parabolico</h3>
+    <p>Se la velocità iniziale è perpendicolare al campo (come un proiettile):</p>
+    <div class="formula">
+        x = v₀t<br>
+        y = (1/2)at²<br>
+        y = (a/2v₀²)x²
+    </div>
+    
+    <div class="example">
+        <h3>Esempio: Elettrone in Campo Uniforme</h3>
+        <p><strong>Problema:</strong> Un elettrone viene liberato in un campo elettrico uniforme E = 1000 N/C. Calcolare l'accelerazione e la velocità dopo aver percorso d = 1 cm.</p>
+        
+        <p><strong>Dati:</strong></p>
+        <ul>
+            <li>e = 1.6 × 10⁻¹⁹ C</li>
+            <li>mₑ = 9.11 × 10⁻³¹ kg</li>
+            <li>E = 1000 N/C</li>
+            <li>d = 0.01 m</li>
+        </ul>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p>Accelerazione:</p>
+        <div class="formula">
+            a = eE/mₑ = (1.6 × 10⁻¹⁹ × 1000)/(9.11 × 10⁻³¹) = 1.76 × 10¹⁴ m/s²
+        </div>
+        
+        <p>Velocità dopo distanza d:</p>
+        <div class="formula">
+            v = √(2ad) = √(2 × 1.76 × 10¹⁴ × 0.01) = 1.88 × 10⁶ m/s
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 2: LEGGE DI GAUSS -->
+    <h1>2. Legge di Gauss</h1>
+    
+    <h2>2.1 Flusso Elettrico</h2>
+    <p>Il flusso elettrico è una misura del numero di linee di campo che attraversano una superficie. È un concetto fondamentale per comprendere la legge di Gauss.</p>
+    
+    <h3>Definizione di Flusso</h3>
+    <p>Per una superficie infinitesima dA, il flusso elettrico elementare è:</p>
+    <div class="formula">
+        dΦₑ = <strong>E</strong> · d<strong>A</strong> = E cos θ dA
+    </div>
+    
+    <p>dove θ è l'angolo tra <strong>E</strong> e la normale alla superficie.</p>
+    
+    <p>Il flusso totale attraverso una superficie S è:</p>
+    <div class="formula">
+        Φₑ = ∫∫ₛ <strong>E</strong> · d<strong>A</strong>
+    </div>
+    
+    <p>Unità di misura: N·m²/C oppure V·m</p>
+    
+    <h3>Interpretazione del Flusso</h3>
+    <ul>
+        <li>Φₑ > 0: le linee di campo escono dalla superficie</li>
+        <li>Φₑ < 0: le linee di campo entrano nella superficie</li>
+        <li>Φₑ = 0: stesso numero di linee entranti e uscenti</li>
+    </ul>
+    
+    <h2>2.2 Legge di Gauss</h2>
+    <p>La legge di Gauss è una delle quattro equazioni di Maxwell e fornisce una relazione tra il flusso elettrico attraverso una superficie chiusa e la carica totale contenuta al suo interno.</p>
+    
+    <h3>Enunciato della Legge di Gauss</h3>
+    <div class="formula">
+        Φₑ = ∮ <strong>E</strong> · d<strong>A</strong> = Q_int/ε₀
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li><strong>Φₑ</strong>: flusso totale attraverso la superficie chiusa</li>
+        <li><strong>Q_int</strong>: carica totale interna alla superficie</li>
+        <li><strong>ε₀</strong> = 8.85 × 10⁻¹² C²/(N·m²): permittività del vuoto</li>
+    </ul>
+    
+    <div class="note">
+        <strong>SIGNIFICATO FISICO:</strong> La legge di Gauss afferma che il flusso elettrico netto attraverso una superficie chiusa è proporzionale alla carica totale contenuta. Le cariche esterne alla superficie non contribuiscono al flusso netto.
+    </div>
+    
+    <h2>2.3 Applicazione della Legge di Gauss</h2>
+    <p>La legge di Gauss è particolarmente utile per calcolare il campo elettrico quando esiste un'elevata simmetria. La chiave è scegliere una superficie gaussiana appropriata.</p>
+    
+    <h3>Strategia di Risoluzione</h3>
+    <ol>
+        <li>Identificare la simmetria del problema (sferica, cilindrica, piana)</li>
+        <li>Scegliere una superficie gaussiana che sfrutta la simmetria</li>
+        <li>Calcolare il flusso attraverso la superficie</li>
+        <li>Determinare la carica interna</li>
+        <li>Applicare la legge di Gauss per trovare E</li>
+    </ol>
+    
+    <h3>Caso 1: Simmetria Sferica - Carica Puntiforme</h3>
+    <p>Per una carica puntiforme q, scegliamo una superficie sferica di raggio r centrata sulla carica:</p>
+    <div class="formula">
+        ∮ <strong>E</strong> · d<strong>A</strong> = E · 4πr² = q/ε₀<br>
+        E = q/(4πε₀r²) = kq/r²
+    </div>
+    
+    <h3>Caso 2: Simmetria Sferica - Guscio Sferico</h3>
+    <p>Guscio sferico di raggio R con carica Q uniformemente distribuita sulla superficie:</p>
+    
+    <p><strong>All'esterno (r > R):</strong></p>
+    <div class="formula">
+        E = kQ/r²
+    </div>
+    <p>Il campo è come se tutta la carica fosse concentrata nel centro.</p>
+    
+    <p><strong>All'interno (r < R):</strong></p>
+    <div class="formula">
+        E = 0
+    </div>
+    <p>Non c'è carica interna alla superficie gaussiana.</p>
+    
+    <h3>Caso 3: Simmetria Sferica - Sfera Uniformemente Carica</h3>
+    <p>Sfera di raggio R con carica Q distribuita uniformemente nel volume (densità ρ = 3Q/(4πR³)):</p>
+    
+    <p><strong>All'esterno (r > R):</strong></p>
+    <div class="formula">
+        E = kQ/r²
+    </div>
+    
+    <p><strong>All'interno (r < R):</strong></p>
+    <div class="formula">
+        E = kQr/R³ = (ρr)/(3ε₀)
+    </div>
+    <p>Il campo cresce linearmente con r.</p>
+    
+    <h3>Caso 4: Simmetria Cilindrica - Filo Infinito</h3>
+    <p>Filo infinito con densità lineare di carica λ. Superficie gaussiana: cilindro di raggio r e lunghezza L:</p>
+    <div class="formula">
+        ∮ <strong>E</strong> · d<strong>A</strong> = E · 2πrL = λL/ε₀<br>
+        E = λ/(2πε₀r)
+    </div>
+    
+    <h3>Caso 5: Simmetria Piana - Piano Infinito</h3>
+    <p>Piano infinito con densità superficiale σ. Superficie gaussiana: cilindro perpendicolare al piano:</p>
+    <div class="formula">
+        ∮ <strong>E</strong> · d<strong>A</strong> = 2EA = σA/ε₀<br>
+        E = σ/(2ε₀)
+    </div>
+    <p>Il campo è uniforme e indipendente dalla distanza.</p>
+    
+    <h3>Caso 6: Due Piani Paralleli con Cariche Opposte</h3>
+    <p>Condensatore piano: due piani paralleli con densità +σ e -σ:</p>
+    <div class="formula">
+        E = σ/ε₀  (tra i piani)<br>
+        E = 0  (all'esterno)
+    </div>
+    
+    <h2>2.4 Conduttori in Equilibrio Elettrostatico</h2>
+    <p>Un conduttore in equilibrio elettrostatico presenta proprietà notevoli che derivano dalla mobilità delle cariche al suo interno.</p>
+    
+    <h3>Proprietà dei Conduttori in Equilibrio</h3>
+    <ol>
+        <li><strong>Campo elettrico interno nullo:</strong>
+            <div class="formula">
+                <strong>E</strong>int = 0
+            </div>
+        </li>
+        <li><strong>Carica solo sulla superficie:</strong> All'interno di un conduttore la densità di carica è zero (ρ = 0)</li>
+        <li><strong>Campo perpendicolare alla superficie:</strong> Il campo elettrico alla superficie è perpendicolare</li>
+        <li><strong>Potenziale costante:</strong> Tutto il conduttore è a potenziale uniforme</li>
+        <li><strong>Campo alla superficie:</strong>
+            <div class="formula">
+                E = σ/ε₀
+            </div>
+        </li>
+    </ol>
+    
+    <h3>Schermatura Elettrostatica</h3>
+    <p>Una cavità vuota all'interno di un conduttore è completamente schermata da campi elettrici esterni. Questo principio è utilizzato nelle gabbie di Faraday.</p>
+    
+    <h3>Carica Indotta</h3>
+    <p>Quando un conduttore neutro è posto in un campo elettrico esterno:</p>
+    <ul>
+        <li>Le cariche si ridistribuiscono sulla superficie</li>
+        <li>Si creano cariche indotte</li>
+        <li>Il campo interno rimane zero</li>
+        <li>Il campo esterno viene modificato</li>
+    </ul>
+    
+    <div class="example">
+        <h3>Esempio: Guscio Sferico Conduttore</h3>
+        <p><strong>Problema:</strong> Un guscio sferico conduttore di raggio interno R₁ e raggio esterno R₂ contiene una carica +Q al centro. Determinare il campo elettrico in tutte le regioni.</p>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p><strong>Regione 1 (r < R₁):</strong> Campo della carica puntiforme</p>
+        <div class="formula">
+            E = kQ/r²
+        </div>
+        
+        <p><strong>Regione 2 (R₁ < r < R₂):</strong> Interno del conduttore</p>
+        <div class="formula">
+            E = 0
+        </div>
+        
+        <p><strong>Regione 3 (r > R₂):</strong> Esterno</p>
+        <div class="formula">
+            E = kQ/r²
+        </div>
+        
+        <p><strong>Distribuzione delle cariche:</strong></p>
+        <ul>
+            <li>Superficie interna: -Q (indotta)</li>
+            <li>Superficie esterna: +Q</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 3: POTENZIALE ELETTRICO -->
+    <h1>3. Potenziale Elettrico</h1>
+    
+    <h2>3.1 Potenziale Elettrico e Differenza di Potenziale</h2>
+    <p>Il potenziale elettrico è un concetto scalare che semplifica notevolmente l'analisi dei campi elettrici. Mentre il campo elettrico è un vettore, il potenziale è uno scalare e spesso è più facile da calcolare.</p>
+    
+    <h3>Definizione di Potenziale Elettrico</h3>
+    <p>Il potenziale elettrico V in un punto è l'energia potenziale elettrica per unità di carica positiva:</p>
+    <div class="formula">
+        V = Uₑ/q₀
+    </div>
+    
+    <p>Unità di misura: Volt (V) = J/C</p>
+    
+    <h3>Differenza di Potenziale</h3>
+    <p>La differenza di potenziale tra due punti A e B è il lavoro per unità di carica per spostare una carica da A a B:</p>
+    <div class="formula">
+        ΔV = Vᵦ - Vₐ = -∫ₐᵇ <strong>E</strong> · d<strong>l</strong>
+    </div>
+    
+    <p>Il segno negativo indica che il lavoro positivo è fatto contro il campo elettrico.</p>
+    
+    <h3>Energia Potenziale Elettrica</h3>
+    <p>L'energia potenziale di una carica q in un punto con potenziale V è:</p>
+    <div class="formula">
+        Uₑ = qV
+    </div>
+    
+    <p>La variazione di energia potenziale è:</p>
+    <div class="formula">
+        ΔUₑ = q(Vᵦ - Vₐ) = qΔV
+    </div>
+    
+    <div class="note">
+        <strong>IMPORTANTE:</strong> Una carica positiva si muove spontaneamente da potenziale alto a potenziale basso. Una carica negativa si muove spontaneamente da potenziale basso a potenziale alto.
+    </div>
+    
+    <h2>3.2 Differenza di Potenziale in un Campo Elettrico Uniforme</h2>
+    <p>Per un campo elettrico uniforme <strong>E</strong> diretto lungo l'asse x, la differenza di potenziale tra due punti separati da distanza d è:</p>
+    <div class="formula">
+        ΔV = -Ed
+    </div>
+    
+    <p>Se ci muoviamo nella direzione del campo (da + a -), il potenziale diminuisce linearmente.</p>
+    
+    <h3>Relazione tra Campo e Potenziale</h3>
+    <p>In un campo uniforme:</p>
+    <div class="formula">
+        E = -ΔV/d
+    </div>
+    
+    <p>Il campo elettrico punta nella direzione di massima diminuzione del potenziale.</p>
+    
+    <h2>3.3 Potenziale Elettrico ed Energia Potenziale di Cariche Puntiformi</h2>
+    <p>Il potenziale elettrico generato da una carica puntiforme q a distanza r è:</p>
+    <div class="formula">
+        V = kq/r
+    </div>
+    
+    <p>Per convenzione, il potenziale è zero a infinito (V(∞) = 0).</p>
+    
+    <h3>Sistema di Cariche Puntiformi</h3>
+    <p>Il potenziale generato da un sistema di cariche è la somma algebrica (scalare!) dei potenziali:</p>
+    <div class="formula">
+        V = Σᵢ kqᵢ/rᵢ
+    </div>
+    
+    <h3>Energia Potenziale di un Sistema di Cariche</h3>
+    <p>L'energia potenziale di due cariche q₁ e q₂ separate da distanza r è:</p>
+    <div class="formula">
+        U = kq₁q₂/r
+    </div>
+    
+    <p>Per un sistema di N cariche:</p>
+    <div class="formula">
+        U = (1/2) Σᵢ qᵢVᵢ
+    </div>
+    
+    <p>dove Vᵢ è il potenziale nel punto dove si trova qᵢ dovuto a tutte le altre cariche.</p>
+    
+    <h2>3.4 Relazione tra Campo Elettrico e Potenziale Elettrico</h2>
+    <p>Il campo elettrico è il gradiente negativo del potenziale:</p>
+    <div class="formula">
+        <strong>E</strong> = -∇V = -(∂V/∂x, ∂V/∂y, ∂V/∂z)
+    </div>
+    
+    <p>In una dimensione:</p>
+    <div class="formula">
+        E = -dV/dx
+    </div>
+    
+    <p>Questa relazione mostra che:</p>
+    <ul>
+        <li>Il campo elettrico punta nella direzione di massima diminuzione del potenziale</li>
+        <li>Il campo è perpendicolare alle superfici equipotenziali</li>
+        <li>Dove il potenziale varia rapidamente, il campo è intenso</li>
+    </ul>
+    
+    <h3>Superfici Equipotenziali</h3>
+    <p>Sono superfici su cui il potenziale è costante. Proprietà:</p>
+    <ul>
+        <li>Le linee di campo sono perpendicolari alle superfici equipotenziali</li>
+        <li>Nessun lavoro è necessario per spostare una carica lungo una superficie equipotenziale</li>
+        <li>Nei conduttori in equilibrio, la superficie è equipotenziale</li>
+    </ul>
+    
+    <h2>3.5 Potenziale Elettrico di Distribuzioni Continue di Carica</h2>
+    <p>Per distribuzioni continue, il potenziale si calcola integrando:</p>
+    <div class="formula">
+        V = k ∫ dq/r
+    </div>
+    
+    <h3>Esempi Importanti</h3>
+    
+    <p><strong>1. Anello carico uniformemente (sul suo asse):</strong></p>
+    <div class="formula">
+        V = kQ/√(x² + R²)
+    </div>
+    <p>dove x è la distanza dal centro lungo l'asse e R è il raggio.</p>
+    
+    <p><strong>2. Disco carico uniformemente (sul suo asse):</strong></p>
+    <div class="formula">
+        V = (σ/2ε₀)[√(x² + R²) - x]
+    </div>
+    
+    <p><strong>3. Sfera uniformemente carica:</strong></p>
+    <p>All'esterno (r ≥ R):</p>
+    <div class="formula">
+        V = kQ/r
+    </div>
+    <p>All'interno (r < R):</p>
+    <div class="formula">
+        V = (kQ/2R³)(3R² - r²)
+    </div>
+    
+    <h2>3.6 Potenziale Elettrico di un Conduttore Carico</h2>
+    <p>Per un conduttore isolato in equilibrio elettrostatico:</p>
+    <ul>
+        <li>Tutto il conduttore è allo stesso potenziale (equipotenziale)</li>
+        <li>Il campo interno è zero</li>
+        <li>Tutta la carica risiede sulla superficie</li>
+    </ul>
+    
+    <h3>Sfera Conduttrice Carica</h3>
+    <p>Sfera conduttrice di raggio R con carica Q:</p>
+    
+    <p>All'esterno (r ≥ R):</p>
+    <div class="formula">
+        V = kQ/r
+    </div>
+    
+    <p>Sulla superficie e all'interno (r ≤ R):</p>
+    <div class="formula">
+        V = kQ/R = costante
+    </div>
+    
+    <h2>3.7 Applicazioni dell'Elettrostatica</h2>
+    
+    <h3>Generatore di Van de Graaff</h3>
+    <p>Dispositivo che accumula cariche elettriche su una sfera conduttrice cava, raggiungendo potenziali di milioni di volt. Utilizzato per:</p>
+    <ul>
+        <li>Accelerazione di particelle</li>
+        <li>Esperimenti di fisica nucleare</li>
+        <li>Dimostrazioni didattiche</li>
+    </ul>
+    
+    <h3>Precipitatore Elettrostatico</h3>
+    <p>Dispositivo per rimuovere particelle da gas di scarico. Funzionamento:</p>
+    <ul>
+        <li>Un elettrodo ad alto voltaggio ionizza l'aria</li>
+        <li>Le particelle si caricano</li>
+        <li>Vengono attratte da piastre cariche opposte</li>
+        <li>Si depositano e vengono rimosse</li>
+    </ul>
+    
+    <h3>Fotocopiatrice e Stampante Laser</h3>
+    <p>Utilizzano il principio della carica elettrostatica per trasferire toner sulla carta:</p>
+    <ul>
+        <li>Un tamburo viene caricato uniformemente</li>
+        <li>La luce scarica selettivamente il tamburo</li>
+        <li>Il toner aderisce alle zone cariche</li>
+        <li>Viene trasferito e fissato sulla carta</li>
+    </ul>
+    
+    <div class="example">
+        <h3>Esempio Completo: Carica tra Due Piani</h3>
+        <p><strong>Problema:</strong> Una carica q = 1.5 × 10⁻⁸ C si trova a metà strada tra due piani paralleli distanti d = 2 cm con densità di carica ±σ = ±8 × 10⁻⁸ C/m². Calcolare:</p>
+        <ul>
+            <li>a) Il campo elettrico E(x)</li>
+            <li>b) Il lavoro per spostare la carica in un punto esterno distante h = 3 cm dal piano più vicino</li>
+        </ul>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p><strong>a) Campo elettrico:</strong></p>
+        <p>Tra i piani, il campo è uniforme:</p>
+        <div class="formula">
+            E = σ/ε₀ = (8 × 10⁻⁸)/(8.85 × 10⁻¹²) = 9.04 × 10³ N/C
+        </div>
+        
+        <p><strong>b) Lavoro per spostare la carica:</strong></p>
+        <p>La carica parte da x = d/2 = 1 cm e deve arrivare a h = 3 cm dal piano più vicino.</p>
+        <p>Distanza totale nel campo: Δx = d/2 = 1 cm</p>
+        <p>Differenza di potenziale:</p>
+        <div class="formula">
+            ΔV = -E·Δx = -9.04 × 10³ × 0.01 = -90.4 V
+        </div>
+        
+        <p>Lavoro delle forze elettrostatiche:</p>
+        <div class="formula">
+            W = q·ΔV = 1.5 × 10⁻⁸ × (-90.4) = -1.36 × 10⁻⁶ J
+        </div>
+        
+        <p>Il lavoro esterno necessario è:</p>
+        <div class="formula">
+            Wₑₛₜ = -W = 1.36 × 10⁻⁶ J = 1.36 μJ
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 4: CAPACITÀ E DIELETTRICI -->
+    <h1>4. Capacità e Dielettrici</h1>
+    
+    <h2>4.1 Definizione di Capacità</h2>
+    <p>Un condensatore è un dispositivo che immagazzina carica elettrica e energia. La capacità è una misura della capacità di un condensatore di immagazzinare carica.</p>
+    
+    <h3>Definizione di Capacità</h3>
+    <p>La capacità C è definita come il rapporto tra la carica Q su un conduttore e la differenza di potenziale V:</p>
+    <div class="formula">
+        C = Q/V
+    </div>
+    
+    <p>Unità di misura: Farad (F) = C/V</p>
+    <p>In pratica si usano sottomultipli:</p>
+    <ul>
+        <li>1 μF = 10⁻⁶ F (microfarad)</li>
+        <li>1 nF = 10⁻⁹ F (nanofarad)</li>
+        <li>1 pF = 10⁻¹² F (picofarad)</li>
+    </ul>
+    
+    <div class="note">
+        <strong>NOTA:</strong> La capacità dipende solo dalla geometria del condensatore e dal materiale tra le armature, non dalla carica o dalla differenza di potenziale.
+    </div>
+    
+    <h2>4.2 Calcolo della Capacità</h2>
+    <p>Per calcolare la capacità di un condensatore:</p>
+    <ol>
+        <li>Assumere una carica ±Q sulle armature</li>
+        <li>Calcolare il campo elettrico E tra le armature</li>
+        <li>Calcolare la differenza di potenziale V = ∫E·dl</li>
+        <li>Applicare C = Q/V</li>
+    </ol>
+    
+    <h3>Condensatore Piano</h3>
+    <p>Due piastre parallele di area A separate da distanza d:</p>
+    <div class="formula">
+        C = ε₀A/d
+    </div>
+    
+    <p>Derivazione:</p>
+    <ul>
+        <li>Campo tra le piastre: E = σ/ε₀ = Q/(ε₀A)</li>
+        <li>Differenza di potenziale: V = Ed = Qd/(ε₀A)</li>
+        <li>Capacità: C = Q/V = ε₀A/d</li>
+    </ul>
+    
+    <h3>Condensatore Sferico</h3>
+    <p>Due sfere concentriche di raggi R₁ (interno) e R₂ (esterno):</p>
+    <div class="formula">
+        C = 4πε₀R₁R₂/(R₂ - R₁)
+    </div>
+    
+    <p>Per una sfera singola isolata (R₂ → ∞):</p>
+    <div class="formula">
+        C = 4πε₀R₁
+    </div>
+    
+    <h3>Condensatore Cilindrico</h3>
+    <p>Due cilindri coassiali di raggi R₁ (interno) e R₂ (esterno), lunghezza L:</p>
+    <div class="formula">
+        C = 2πε₀L/ln(R₂/R₁)
+    </div>
+    
+    <h2>4.3 Combinazioni di Condensatori</h2>
+    
+    <h3>Condensatori in Serie</h3>
+    <p>Condensatori collegati uno dopo l'altro. Proprietà:</p>
+    <ul>
+        <li>Stessa carica Q su tutti i condensatori</li>
+        <li>Tensioni diverse: V_tot = V₁ + V₂ + ...</li>
+    </ul>
+    
+    <p>Capacità equivalente:</p>
+    <div class="formula">
+        1/C_eq = 1/C₁ + 1/C₂ + ... + 1/Cₙ
+    </div>
+    
+    <p>Per due condensatori:</p>
+    <div class="formula">
+        C_eq = C₁C₂/(C₁ + C₂)
+    </div>
+    
+    <h3>Condensatori in Parallelo</h3>
+    <p>Condensatori collegati tra gli stessi due punti. Proprietà:</p>
+    <ul>
+        <li>Stessa differenza di potenziale V</li>
+        <li>Cariche diverse: Q_tot = Q₁ + Q₂ + ...</li>
+    </ul>
+    
+    <p>Capacità equivalente:</p>
+    <div class="formula">
+        C_eq = C₁ + C₂ + ... + Cₙ
+    </div>
+    
+    <h2>4.4 Energia Immagazzinata in un Condensatore Carico</h2>
+    <p>L'energia immagazzinata in un condensatore carico è l'energia necessaria per caricare il condensatore.</p>
+    
+    <h3>Formule Equivalenti per l'Energia</h3>
+    <div class="formula">
+        U = (1/2)QV = (1/2)CV² = Q²/(2C)
+    </div>
+    
+    <p>Dove:</p>
+    <ul>
+        <li>U: energia immagazzinata (J)</li>
+        <li>Q: carica (C)</li>
+        <li>V: differenza di potenziale (V)</li>
+        <li>C: capacità (F)</li>
+    </ul>
+    
+    <h3>Densità di Energia</h3>
+    <p>L'energia per unità di volume in un condensatore piano è:</p>
+    <div class="formula">
+        u = U/(Ad) = (1/2)ε₀E²
+    </div>
+    
+    <p>Questa formula è generale per qualsiasi campo elettrico.</p>
+    
+    <h2>4.5 Condensatori con Dielettrico</h2>
+    <p>Un dielettrico è un materiale isolante inserito tra le armature di un condensatore. Effetti del dielettrico:</p>
+    <ul>
+        <li>Aumenta la capacità di un fattore κ (costante dielettrica)</li>
+        <li>Riduce il campo elettrico di un fattore κ</li>
+        <li>Aumenta la tensione di rottura</li>
+    </ul>
+    
+    <h3>Capacità con Dielettrico</h3>
+    <div class="formula">
+        C = κC₀
+    </div>
+    
+    <p>dove C₀ è la capacità senza dielettrico e κ è la costante dielettrica relativa.</p>
+    
+    <p>Per un condensatore piano:</p>
+    <div class="formula">
+        C = κε₀A/d
+    </div>
+    
+    <h3>Costanti Dielettriche di Materiali Comuni</h3>
+    <ul>
+        <li>Vuoto: κ = 1 (per definizione)</li>
+        <li>Aria: κ ≈ 1.00059</li>
+        <li>Teflon: κ ≈ 2.1</li>
+        <li>Carta: κ ≈ 3.7</li>
+        <li>Vetro: κ ≈ 4-10</li>
+        <li>Acqua: κ ≈ 80</li>
+    </ul>
+    
+    <h3>Effetto del Dielettrico sul Campo</h3>
+    <p>Il campo elettrico con dielettrico è:</p>
+    <div class="formula">
+        E = E₀/κ
+    </div>
+    
+    <p>dove E₀ è il campo senza dielettrico.</p>
+    
+    <h2>4.6 Dipolo Elettrico in un Campo Elettrico Esterno</h2>
+    <p>Un dipolo elettrico è costituito da due cariche uguali e opposte ±q separate da distanza d.</p>
+    
+    <h3>Momento di Dipolo</h3>
+    <div class="formula">
+        <strong>p</strong> = q<strong>d</strong>
+    </div>
+    
+    <p>Il momento di dipolo punta dalla carica negativa alla positiva.</p>
+    <p>Unità di misura: C·m</p>
+    
+    <h3>Momento Meccanico su un Dipolo</h3>
+    <p>In un campo elettrico uniforme <strong>E</strong>, il dipolo subisce un momento meccanico:</p>
+    <div class="formula">
+        <strong>τ</strong> = <strong>p</strong> × <strong>E</strong>
+    </div>
+    
+    <p>Modulo:</p>
+    <div class="formula">
+        τ = pE sin θ
+    </div>
+    
+    <p>dove θ è l'angolo tra <strong>p</strong> e <strong>E</strong>.</p>
+    
+    <h3>Energia Potenziale di un Dipolo</h3>
+    <div class="formula">
+        U = -<strong>p</strong> · <strong>E</strong> = -pE cos θ
+    </div>
+    
+    <p>L'energia è minima quando il dipolo è allineato con il campo (θ = 0).</p>
+    
+    <h2>4.7 Descrizione Atomica dei Dielettrici</h2>
+    <p>A livello microscopico, i dielettrici possono essere classificati in due categorie:</p>
+    
+    <h3>Molecole Polari</h3>
+    <p>Hanno un momento di dipolo permanente (es. H₂O). In assenza di campo esterno, i dipoli sono orientati casualmente. In presenza di un campo:</p>
+    <ul>
+        <li>I dipoli tendono ad allinearsi con il campo</li>
+        <li>L'allineamento parziale riduce il campo netto</li>
+        <li>Effetto dipende dalla temperatura (agitazione termica)</li>
+    </ul>
+    
+    <h3>Molecole Non Polari</h3>
+    <p>Non hanno momento di dipolo permanente (es. N₂). In presenza di un campo esterno:</p>
+    <ul>
+        <li>Il campo induce una separazione di carica</li>
+        <li>Si crea un dipolo indotto</li>
+        <li>Il dipolo indotto si oppone al campo applicato</li>
+    </ul>
+    
+    <h3>Polarizzazione</h3>
+    <p>La polarizzazione <strong>P</strong> è il momento di dipolo per unità di volume:</p>
+    <div class="formula">
+        <strong>P</strong> = χₑε₀<strong>E</strong>
+    </div>
+    
+    <p>dove χₑ è la suscettività elettrica del materiale.</p>
+    
+    <p>Relazione con la costante dielettrica:</p>
+    <div class="formula">
+        κ = 1 + χₑ
+    </div>
+    
+    <div class="example">
+        <h3>Esempio: Circuito con Condensatori</h3>
+        <p><strong>Problema:</strong> Nel circuito dato, con E = 12 V, la corrente nel generatore è i = 0.5 A. L'energia in C₁ e C₂ è U₁ = 4 × 10⁻⁶ J e U₂ = 2 × 10⁻⁶ J. Calcolare C₁ e C₂.</p>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p>Dall'energia immagazzinata:</p>
+        <div class="formula">
+            U = (1/2)CV²
+        </div>
+        
+        <p>Quindi:</p>
+        <div class="formula">
+            C = 2U/V²
+        </div>
+        
+        <p>Dobbiamo prima trovare le tensioni V₁ e V₂ sui condensatori analizzando il circuito con le leggi di Kirchhoff.</p>
+        
+        <p>Una volta note le tensioni:</p>
+        <div class="formula">
+            C₁ = 2U₁/V₁² = 2(4 × 10⁻⁶)/V₁²<br>
+            C₂ = 2U₂/V₂² = 2(2 × 10⁻⁶)/V₂²
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 5: CORRENTE E RESISTENZA -->
+    <h1>5. Corrente e Resistenza</h1>
+    
+    <h2>5.1 Corrente Elettrica</h2>
+    <p>La corrente elettrica è il flusso ordinato di cariche elettriche attraverso un conduttore.</p>
+    
+    <h3>Definizione di Corrente</h3>
+    <p>La corrente è la carica che attraversa una sezione nell'unità di tempo:</p>
+    <div class="formula">
+        I = dQ/dt
+    </div>
+    
+    <p>Unità di misura: Ampere (A) = C/s</p>
+    
+    <p>Per convenzione, la direzione della corrente è quella del flusso di cariche positive (opposta al moto degli elettroni).</p>
+    
+    <h3>Densità di Corrente</h3>
+    <p>La densità di corrente <strong>J</strong> è la corrente per unità di area:</p>
+    <div class="formula">
+        I = ∫ <strong>J</strong> · d<strong>A</strong>
+    </div>
+    
+    <p>Per una corrente uniforme:</p>
+    <div class="formula">
+        J = I/A
+    </div>
+    
+    <p>Unità di misura: A/m²</p>
+    
+    <h3>Velocità di Deriva</h3>
+    <p>Gli elettroni in un conduttore si muovono con una velocità media v_d (velocità di deriva) molto piccola:</p>
+    <div class="formula">
+        J = nqv_d
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>n: numero di portatori di carica per unità di volume</li>
+        <li>q: carica del portatore</li>
+        <li>v_d: velocità di deriva</li>
+    </ul>
+    
+    <div class="note">
+        <strong>NOTA:</strong> Anche se la velocità di deriva è molto piccola (∼ mm/s), il segnale elettrico si propaga quasi alla velocità della luce perché il campo elettrico si stabilisce istantaneamente.
+    </div>
+    
+    <h2>5.2 Resistenza</h2>
+    <p>La resistenza è una misura dell'opposizione al passaggio di corrente in un conduttore.</p>
+    
+    <h3>Legge di Ohm</h3>
+    <p>Per molti materiali (conduttori ohmici), la differenza di potenziale è proporzionale alla corrente:</p>
+    <div class="formula">
+        V = IR
+    </div>
+    
+    <p>dove R è la resistenza.</p>
+    <p>Unità di misura: Ohm (Ω) = V/A</p>
+    
+    <h3>Resistenza e Resistività</h3>
+    <p>La resistenza di un conduttore dipende dalla geometria e dal materiale:</p>
+    <div class="formula">
+        R = ρL/A
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>ρ: resistività del materiale (Ω·m)</li>
+        <li>L: lunghezza del conduttore (m)</li>
+        <li>A: area della sezione trasversale (m²)</li>
+    </ul>
+    
+    <h3>Conduttività</h3>
+    <p>La conduttività σ è l'inverso della resistività:</p>
+    <div class="formula">
+        σ = 1/ρ
+    </div>
+    
+    <p>Unità di misura: (Ω·m)⁻¹ = S/m (Siemens per metro)</p>
+    
+    <h3>Dipendenza dalla Temperatura</h3>
+    <p>La resistività varia con la temperatura:</p>
+    <div class="formula">
+        ρ = ρ₀[1 + α(T - T₀)]
+    </div>
+    
+    <p>dove α è il coefficiente di temperatura della resistività.</p>
+    
+    <p>Per i metalli, α > 0 (la resistività aumenta con la temperatura).</p>
+    
+    <h3>Resistività di Materiali Comuni</h3>
+    <ul>
+        <li>Argento: ρ = 1.59 × 10⁻⁸ Ω·m</li>
+        <li>Rame: ρ = 1.72 × 10⁻⁸ Ω·m</li>
+        <li>Alluminio: ρ = 2.82 × 10⁻⁸ Ω·m</li>
+        <li>Ferro: ρ = 10 × 10⁻⁸ Ω·m</li>
+        <li>Nichel-cromo: ρ = 100 × 10⁻⁸ Ω·m</li>
+    </ul>
+    
+    <h2>5.3 Superconduttori</h2>
+    <p>I superconduttori sono materiali che, al di sotto di una temperatura critica T_c, hanno resistenza esattamente zero.</p>
+    
+    <h3>Proprietà dei Superconduttori</h3>
+    <ul>
+        <li>Resistenza nulla: R = 0</li>
+        <li>Correnti persistenti senza dissipazione</li>
+        <li>Effetto Meissner: espulsione del campo magnetico</li>
+        <li>Temperature critiche molto basse</li>
+    </ul>
+    
+    <h3>Applicazioni</h3>
+    <ul>
+        <li>Magneti superconduttori (MRI, acceleratori)</li>
+        <li>Treni a levitazione magnetica (maglev)</li>
+        <li>Cavi elettrici ad alta efficienza</li>
+        <li>Dispositivi quantistici (SQUID)</li>
+    </ul>
+    
+    <h2>5.4 Potenza Elettrica</h2>
+    <p>La potenza è la velocità con cui l'energia viene trasferita o dissipata.</p>
+    
+    <h3>Potenza in un Circuito</h3>
+    <div class="formula">
+        P = VI
+    </div>
+    
+    <p>Unità di misura: Watt (W) = J/s</p>
+    
+    <h3>Potenza Dissipata in una Resistenza</h3>
+    <p>Usando la legge di Ohm (V = IR), la potenza dissipata in una resistenza può essere espressa in tre forme equivalenti:</p>
+    <div class="formula">
+        P = VI = I²R = V²/R
+    </div>
+    
+    <p>L'energia dissipata in un tempo t è:</p>
+    <div class="formula">
+        E = Pt = VIt = I²Rt = V²t/R
+    </div>
+    
+    <h3>Effetto Joule</h3>
+    <p>L'energia elettrica si trasforma in calore quando la corrente attraversa una resistenza. Questo è chiamato effetto Joule ed è alla base di:</p>
+    <ul>
+        <li>Resistenze elettriche per riscaldamento</li>
+        <li>Lampade a incandescenza</li>
+        <li>Fusibili e interruttori termici</li>
+    </ul>
+    
+    <h2>5.5 Modello di Conduzione Elettrica</h2>
+    <p>Il modello classico di Drude-Lorentz descrive la conduzione nei metalli.</p>
+    
+    <h3>Assunzioni del Modello</h3>
+    <ul>
+        <li>Gli elettroni di conduzione sono liberi di muoversi nel metallo</li>
+        <li>Subiscono collisioni con gli ioni del reticolo</li>
+        <li>Il tempo medio tra le collisioni è τ</li>
+    </ul>
+    
+    <h3>Relazione tra Resistività e Parametri Microscopici</h3>
+    <div class="formula">
+        ρ = m/(ne²τ)
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>m: massa dell'elettrone</li>
+        <li>n: densità di elettroni di conduzione</li>
+        <li>e: carica dell'elettrone</li>
+        <li>τ: tempo medio tra le collisioni</li>
+    </ul>
+    
+    <h3>Velocità di Deriva</h3>
+    <p>Nel modello di Drude:</p>
+    <div class="formula">
+        v_d = (eE/m)τ = (e/m)τ(V/L)
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 6: CIRCUITI IN CORRENTE CONTINUA -->
+    <h1>6. Circuiti in Corrente Continua</h1>
+    
+    <h2>6.1 Forza Elettromotrice (f.e.m.)</h2>
+    <p>Una batteria o un generatore fornisce energia per mantenere una differenza di potenziale in un circuito.</p>
+    
+    <h3>Definizione di f.e.m.</h3>
+    <p>La forza elettromotrice ε è il lavoro per unità di carica che il generatore compie per spostare le cariche:</p>
+    <div class="formula">
+        ε = W/Q
+    </div>
+    
+    <p>Unità di misura: Volt (V)</p>
+    
+    <h3>Resistenza Interna</h3>
+    <p>Un generatore reale ha una resistenza interna r. La differenza di potenziale ai terminali è:</p>
+    <div class="formula">
+        V = ε - Ir
+    </div>
+    
+    <p>dove I è la corrente erogata.</p>
+    
+    <p>Potenza fornita dal generatore:</p>
+    <div class="formula">
+        P_gen = εI
+    </div>
+    
+    <p>Potenza dissipata internamente:</p>
+    <div class="formula">
+        P_int = I²r
+    </div>
+    
+    <p>Potenza utile:</p>
+    <div class="formula">
+        P_utile = VI = εI - I²r
+    </div>
+    
+    <h2>6.2 Resistori in Serie e in Parallelo</h2>
+    
+    <h3>Resistori in Serie</h3>
+    <p>Resistori collegati uno dopo l'altro. Proprietà:</p>
+    <ul>
+        <li>Stessa corrente I in tutti i resistori</li>
+        <li>Tensioni diverse: V_tot = V₁ + V₂ + ...</li>
+    </ul>
+    
+    <p>Resistenza equivalente:</p>
+    <div class="formula">
+        R_eq = R₁ + R₂ + ... + Rₙ
+    </div>
+    
+    <h3>Resistori in Parallelo</h3>
+    <p>Resistori collegati tra gli stessi due punti. Proprietà:</p>
+    <ul>
+        <li>Stessa tensione V su tutti i resistori</li>
+        <li>Correnti diverse: I_tot = I₁ + I₂ + ...</li>
+    </ul>
+    
+    <p>Resistenza equivalente:</p>
+    <div class="formula">
+        1/R_eq = 1/R₁ + 1/R₂ + ... + 1/Rₙ
+    </div>
+    
+    <p>Per due resistori:</p>
+    <div class="formula">
+        R_eq = R₁R₂/(R₁ + R₂)
+    </div>
+    
+    <h2>6.3 Leggi di Kirchhoff</h2>
+    <p>Le leggi di Kirchhoff sono fondamentali per l'analisi di circuiti complessi.</p>
+    
+    <h3>Prima Legge (Legge dei Nodi)</h3>
+    <p>La somma algebrica delle correnti in un nodo è zero:</p>
+    <div class="formula">
+        ΣI_in = ΣI_out
+    </div>
+    
+    <p>Equivalentemente:</p>
+    <div class="formula">
+        ΣI = 0
+    </div>
+    
+    <p>Esprime la conservazione della carica.</p>
+    
+    <h3>Seconda Legge (Legge delle Maglie)</h3>
+    <p>La somma algebrica delle differenze di potenziale lungo una maglia chiusa è zero:</p>
+    <div class="formula">
+        ΣV = 0
+    </div>
+    
+    <p>Esprime la conservazione dell'energia.</p>
+    
+    <h3>Convenzioni di Segno</h3>
+    <ul>
+        <li>Attraversando una resistenza nella direzione della corrente: ΔV = -IR</li>
+        <li>Attraversando una resistenza contro la direzione della corrente: ΔV = +IR</li>
+        <li>Attraversando una f.e.m. da - a +: ΔV = +ε</li>
+        <li>Attraversando una f.e.m. da + a -: ΔV = -ε</li>
+    </ul>
+    
+    <h3>Procedura di Risoluzione</h3>
+    <ol>
+        <li>Assegnare direzioni arbitrarie alle correnti</li>
+        <li>Applicare la legge dei nodi a tutti i nodi tranne uno</li>
+        <li>Applicare la legge delle maglie a maglie indipendenti</li>
+        <li>Risolvere il sistema di equazioni</li>
+        <li>Correnti negative indicano direzione opposta a quella assunta</li>
+    </ol>
+    
+    <h2>6.4 Circuiti RC</h2>
+    <p>Un circuito RC contiene resistori e condensatori. Il comportamento dipende dal tempo.</p>
+    
+    <h3>Carica di un Condensatore</h3>
+    <p>Circuito con resistenza R, condensatore C e f.e.m. ε in serie. Inizialmente il condensatore è scarico.</p>
+    
+    <p>Equazione differenziale:</p>
+    <div class="formula">
+        ε = IR + Q/C = R(dQ/dt) + Q/C
+    </div>
+    
+    <p>Soluzione:</p>
+    <div class="formula">
+        Q(t) = Cε(1 - e^(-t/RC))<br>
+        I(t) = (ε/R)e^(-t/RC)<br>
+        V_C(t) = ε(1 - e^(-t/RC))
+    </div>
+    
+    <h3>Scarica di un Condensatore</h3>
+    <p>Condensatore carico Q₀ collegato a resistenza R (senza generatore).</p>
+    
+    <p>Soluzione:</p>
+    <div class="formula">
+        Q(t) = Q₀e^(-t/RC)<br>
+        I(t) = -(Q₀/RC)e^(-t/RC)<br>
+        V_C(t) = V₀e^(-t/RC)
+    </div>
+    
+    <h3>Costante di Tempo</h3>
+    <p>La costante di tempo τ caratterizza la velocità del processo:</p>
+    <div class="formula">
+        τ = RC
+    </div>
+    
+    <p>Significato:</p>
+    <ul>
+        <li>Dopo tempo τ, la carica raggiunge il 63% del valore finale (carica)</li>
+        <li>Dopo tempo τ, la carica scende al 37% del valore iniziale (scarica)</li>
+        <li>Dopo 5τ, il processo è praticamente completato</li>
+    </ul>
+    
+    <div class="example">
+        <h3>Esempio: Circuito RC</h3>
+        <p><strong>Problema:</strong> Un condensatore C = 10 μF è collegato in serie con R = 100 kΩ e una batteria da 12 V. Calcolare:</p>
+        <ul>
+            <li>a) La costante di tempo</li>
+            <li>b) La carica finale</li>
+            <li>c) La carica dopo 1 s</li>
+            <li>d) Il tempo per raggiungere il 90% della carica finale</li>
+        </ul>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p><strong>a) Costante di tempo:</strong></p>
+        <div class="formula">
+            τ = RC = 100 × 10³ × 10 × 10⁻⁶ = 1 s
+        </div>
+        
+        <p><strong>b) Carica finale:</strong></p>
+        <div class="formula">
+            Q_f = Cε = 10 × 10⁻⁶ × 12 = 1.2 × 10⁻⁴ C = 120 μC
+        </div>
+        
+        <p><strong>c) Carica dopo 1 s:</strong></p>
+        <div class="formula">
+            Q(1) = Q_f(1 - e^(-1/1)) = 120(1 - e^(-1)) = 120(0.632) = 75.8 μC
+        </div>
+        
+        <p><strong>d) Tempo per 90% della carica:</strong></p>
+        <div class="formula">
+            0.9 = 1 - e^(-t/τ)<br>
+            e^(-t/τ) = 0.1<br>
+            -t/τ = ln(0.1) = -2.303<br>
+            t = 2.303τ = 2.303 s
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 7: CAMPI MAGNETICI -->
+    <h1>7. Campi Magnetici</h1>
+    
+    <h2>7.1 Campi Magnetici e Forze Magnetiche</h2>
+    <p>Il campo magnetico è una regione dello spazio dove una carica in movimento sperimenta una forza.</p>
+    
+    <h3>Forza di Lorentz</h3>
+    <p>La forza su una carica q che si muove con velocità <strong>v</strong> in un campo magnetico <strong>B</strong> è:</p>
+    <div class="formula">
+        <strong>F</strong> = q<strong>v</strong> × <strong>B</strong>
+    </div>
+    
+    <p>Modulo:</p>
+    <div class="formula">
+        F = qvB sin θ
+    </div>
+    
+    <p>dove θ è l'angolo tra <strong>v</strong> e <strong>B</strong>.</p>
+    
+    <p>Unità di misura del campo magnetico: Tesla (T) = N/(A·m) = kg/(A·s²)</p>
+    <p>Si usa anche il Gauss: 1 T = 10⁴ G</p>
+    
+    <h3>Proprietà della Forza Magnetica</h3>
+    <ul>
+        <li>La forza è perpendicolare sia a <strong>v</strong> che a <strong>B</strong></li>
+        <li>La forza è massima quando <strong>v</strong> ⊥ <strong>B</strong></li>
+        <li>La forza è nulla quando <strong>v</strong> ∥ <strong>B</strong></li>
+        <li>La forza non compie lavoro (è sempre perpendicolare allo spostamento)</li>
+        <li>Cambia la direzione ma non il modulo della velocità</li>
+    </ul>
+    
+    <h3>Forza di Lorentz Completa</h3>
+    <p>In presenza di campi elettrico e magnetico:</p>
+    <div class="formula">
+        <strong>F</strong> = q(<strong>E</strong> + <strong>v</strong> × <strong>B</strong>)
+    </div>
+    
+    <h2>7.2 Moto di una Particella Carica in un Campo Magnetico</h2>
+    
+    <h3>Moto Circolare Uniforme</h3>
+    <p>Se <strong>v</strong> ⊥ <strong>B</strong>, la particella descrive un cerchio. La forza magnetica fornisce la forza centripeta:</p>
+    <div class="formula">
+        qvB = mv²/r
+    </div>
+    
+    <p>Raggio della traiettoria:</p>
+    <div class="formula">
+        r = mv/(qB)
+    </div>
+    
+    <p>Periodo di rivoluzione:</p>
+    <div class="formula">
+        T = 2πr/v = 2πm/(qB)
+    </div>
+    
+    <p>Frequenza (frequenza di ciclotrone):</p>
+    <div class="formula">
+        f = 1/T = qB/(2πm)
+    </div>
+    
+    <div class="note">
+        <strong>NOTA:</strong> Il periodo e la frequenza sono indipendenti dalla velocità!
+    </div>
+    
+    <h3>Moto Elicoidale</h3>
+    <p>Se <strong>v</strong> ha componenti sia parallele che perpendicolari a <strong>B</strong>:</p>
+    <ul>
+        <li>La componente v∥ rimane costante</li>
+        <li>La componente v⊥ produce moto circolare</li>
+        <li>Il risultato è una traiettoria elicoidale</li>
+    </ul>
+    
+    <p>Passo dell'elica:</p>
+    <div class="formula">
+        p = v∥T = 2πmv∥/(qB)
+    </div>
+    
+    <h2>7.3 Applicazioni</h2>
+    
+    <h3>Selettore di Velocità</h3>
+    <p>Dispositivo con campi <strong>E</strong> e <strong>B</strong> perpendicolari. Le particelle passano indisturbate se:</p>
+    <div class="formula">
+        qE = qvB  →  v = E/B
+    </div>
+    
+    <h3>Spettrometro di Massa</h3>
+    <p>Dispositivo per misurare il rapporto massa/carica. Le particelle con stessa carica ma massa diversa hanno raggi di curvatura diversi:</p>
+    <div class="formula">
+        r = mv/(qB)  →  m/q = rB/v
+    </div>
+    
+    <h3>Ciclotrone</h3>
+    <p>Acceleratore di particelle che sfrutta il fatto che il periodo è indipendente dalla velocità. Le particelle vengono accelerate ogni mezzo giro.</p>
+    
+    <h2>7.4 Forza Magnetica su un Conduttore Percorso da Corrente</h2>
+    <p>Un filo percorso da corrente in un campo magnetico subisce una forza.</p>
+    
+    <h3>Formula Generale</h3>
+    <p>Per un elemento infinitesimo di filo d<strong>l</strong> percorso da corrente I:</p>
+    <div class="formula">
+        d<strong>F</strong> = I d<strong>l</strong> × <strong>B</strong>
+    </div>
+    
+    <p>Per un filo rettilineo di lunghezza L in campo uniforme:</p>
+    <div class="formula">
+        <strong>F</strong> = I<strong>L</strong> × <strong>B</strong>
+    </div>
+    
+    <p>Modulo:</p>
+    <div class="formula">
+        F = ILB sin θ
+    </div>
+    
+    <h3>Forza tra Due Fili Paralleli</h3>
+    <p>Due fili paralleli di lunghezza L, distanti d, percorsi da correnti I₁ e I₂:</p>
+    <div class="formula">
+        F = μ₀I₁I₂L/(2πd)
+    </div>
+    
+    <p>dove μ₀ = 4π × 10⁻⁷ T·m/A è la permeabilità magnetica del vuoto.</p>
+    
+    <ul>
+        <li>Correnti nello stesso verso: attrazione</li>
+        <li>Correnti in verso opposto: repulsione</li>
+    </ul>
+    
+    <h2>7.5 Momento Meccanico su una Spira Percorsa da Corrente</h2>
+    <p>Una spira rettangolare di area A, percorsa da corrente I, in un campo uniforme <strong>B</strong> subisce un momento meccanico.</p>
+    
+    <h3>Momento Magnetico</h3>
+    <p>Definiamo il momento magnetico della spira:</p>
+    <div class="formula">
+        <strong>μ</strong> = IA<strong>n̂</strong>
+    </div>
+    
+    <p>dove <strong>n̂</strong> è la normale al piano della spira (regola della mano destra con la corrente).</p>
+    
+    <p>Unità di misura: A·m²</p>
+    
+    <h3>Momento Meccanico</h3>
+    <div class="formula">
+        <strong>τ</strong> = <strong>μ</strong> × <strong>B</strong>
+    </div>
+    
+    <p>Modulo:</p>
+    <div class="formula">
+        τ = μB sin θ = IAB sin θ
+    </div>
+    
+    <p>dove θ è l'angolo tra <strong>μ</strong> e <strong>B</strong>.</p>
+    
+    <h3>Energia Potenziale</h3>
+    <div class="formula">
+        U = -<strong>μ</strong> · <strong>B</strong> = -μB cos θ
+    </div>
+    
+    <p>L'energia è minima quando la spira è allineata con il campo (θ = 0).</p>
+    
+    <h2>7.6 Effetto Hall</h2>
+    <p>Quando una corrente attraversa un conduttore immerso in un campo magnetico perpendicolare, si genera una differenza di potenziale trasversale.</p>
+    
+    <h3>Tensione di Hall</h3>
+    <p>Per un conduttore di spessore t con corrente I e campo B perpendicolare:</p>
+    <div class="formula">
+        V_H = (IB)/(nqt)
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>n: densità di portatori di carica</li>
+        <li>q: carica del portatore</li>
+        <li>t: spessore del conduttore</li>
+    </ul>
+    
+    <h3>Applicazioni</h3>
+    <ul>
+        <li>Misura di campi magnetici</li>
+        <li>Determinazione del tipo di portatori (elettroni o lacune)</li>
+        <li>Sensori di posizione</li>
+    </ul>
+    
+    <div class="example">
+        <h3>Esempio: Elettrone in Campo Magnetico</h3>
+        <p><strong>Problema:</strong> Un elettrone entra perpendicolarmente in un campo magnetico B = 1 T con velocità v = 10⁶ m/s. Calcolare il raggio della traiettoria circolare.</p>
+        
+        <p><strong>Dati:</strong></p>
+        <ul>
+            <li>e = 1.6 × 10⁻¹⁹ C</li>
+            <li>m_e = 9.11 × 10⁻³¹ kg</li>
+            <li>B = 1 T</li>
+            <li>v = 10⁶ m/s</li>
+        </ul>
+        
+        <p><strong>Soluzione:</strong></p>
+        <div class="formula">
+            r = mv/(eB) = (9.11 × 10⁻³¹ × 10⁶)/(1.6 × 10⁻¹⁹ × 1)
+        </div>
+        <div class="formula">
+            r = 5.69 × 10⁻⁶ m = 5.69 μm
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Continua con gli altri capitoli... -->
+    
+    <h1>8. Sorgenti di Campo Magnetico</h1>
+    
+    <h2>8.1 Legge di Biot-Savart</h2>
+    <p>La legge di Biot-Savart permette di calcolare il campo magnetico generato da una corrente.</p>
+    
+    <h3>Formula della Legge di Biot-Savart</h3>
+    <p>Il campo magnetico d<strong>B</strong> generato da un elemento di corrente I d<strong>l</strong> a distanza r è:</p>
+    <div class="formula">
+        d<strong>B</strong> = (μ₀/4π) · (I d<strong>l</strong> × <strong>r̂</strong>)/r²
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>μ₀ = 4π × 10⁻⁷ T·m/A: permeabilità magnetica del vuoto</li>
+        <li><strong>r̂</strong>: versore da d<strong>l</strong> al punto dove si calcola il campo</li>
+    </ul>
+    
+    <h3>Campo di un Filo Rettilineo Infinito</h3>
+    <p>Per un filo rettilineo infinito percorso da corrente I, il campo a distanza r è:</p>
+    <div class="formula">
+        B = μ₀I/(2πr)
+    </div>
+    
+    <p>Il campo è tangente a circonferenze concentriche al filo (regola della mano destra).</p>
+    
+    <h3>Campo al Centro di una Spira Circolare</h3>
+    <p>Spira di raggio R percorsa da corrente I:</p>
+    <div class="formula">
+        B = μ₀I/(2R)
+    </div>
+    
+    <p>Il campo è perpendicolare al piano della spira.</p>
+    
+    <h3>Campo sull'Asse di una Spira Circolare</h3>
+    <p>A distanza x dal centro lungo l'asse:</p>
+    <div class="formula">
+        B = (μ₀IR²)/(2(x² + R²)^(3/2))
+    </div>
+    
+    <h2>8.2 Forza Magnetica tra Due Conduttori Paralleli</h2>
+    <p>Già trattata nel capitolo precedente. Questa forza è alla base della definizione dell'ampere:</p>
+    
+    <div class="note">
+        <strong>DEFINIZIONE DI AMPERE:</strong> Un ampere è la corrente che, fluendo in due fili paralleli infiniti distanti 1 m, produce una forza di 2 × 10⁻⁷ N per metro di lunghezza.
+    </div>
+    
+    <h2>8.3 Legge di Ampère</h2>
+    <p>La legge di Ampère è l'analogo magnetico della legge di Gauss ed è utile per calcolare campi magnetici con elevata simmetria.</p>
+    
+    <h3>Enunciato della Legge di Ampère</h3>
+    <div class="formula">
+        ∮ <strong>B</strong> · d<strong>l</strong> = μ₀I_concatenata
+    </div>
+    
+    <p>L'integrale di linea del campo magnetico lungo un percorso chiuso è proporzionale alla corrente totale che attraversa la superficie delimitata dal percorso.</p>
+    
+    <h3>Applicazioni della Legge di Ampère</h3>
+    
+    <p><strong>1. Filo infinito (riderivazione):</strong></p>
+    <p>Percorso circolare di raggio r attorno al filo:</p>
+    <div class="formula">
+        B · 2πr = μ₀I  →  B = μ₀I/(2πr)
+    </div>
+    
+    <p><strong>2. Filo cilindrico di raggio R:</strong></p>
+    <p>All'esterno (r > R):</p>
+    <div class="formula">
+        B = μ₀I/(2πr)
+    </div>
+    
+    <p>All'interno (r < R), con corrente uniformemente distribuita:</p>
+    <div class="formula">
+        B = μ₀Ir/(2πR²)
+    </div>
+    
+    <h2>8.4 Campo Magnetico di un Solenoide</h2>
+    <p>Un solenoide è una bobina cilindrica con N spire strettamente avvolte su lunghezza L.</p>
+    
+    <h3>Solenoide Ideale</h3>
+    <p>Per un solenoide infinitamente lungo:</p>
+    <ul>
+        <li>Campo uniforme e parallelo all'asse all'interno</li>
+        <li>Campo nullo all'esterno</li>
+    </ul>
+    
+    <p>Densità di spire: n = N/L</p>
+    
+    <p>Campo interno:</p>
+    <div class="formula">
+        B = μ₀nI = μ₀NI/L
+    </div>
+    
+    <h3>Solenoide Finito</h3>
+    <p>Il campo agli estremi è circa metà del campo centrale.</p>
+    
+    <h2>8.5 Legge di Gauss per il Magnetismo</h2>
+    <p>Non esistono monopoli magnetici. Le linee di campo magnetico sono sempre chiuse.</p>
+    
+    <div class="formula">
+        ∮ <strong>B</strong> · d<strong>A</strong> = 0
+    </div>
+    
+    <p>Il flusso magnetico netto attraverso una superficie chiusa è sempre zero.</p>
+    
+    <h2>8.6 Magnetismo nella Materia</h2>
+    <p>I materiali rispondono diversamente ai campi magnetici esterni.</p>
+    
+    <h3>Tipi di Materiali Magnetici</h3>
+    
+    <p><strong>1. Diamagnetici:</strong></p>
+    <ul>
+        <li>Si oppongono debolmente al campo magnetico</li>
+        <li>Suscettività magnetica χ_m < 0</li>
+        <li>Esempi: rame, argento, oro, bismuto</li>
+    </ul>
+    
+    <p><strong>2. Paramagnetici:</strong></p>
+    <ul>
+        <li>Sono debolmente attratti dal campo</li>
+        <li>Suscettività magnetica χ_m > 0 (piccola)</li>
+        <li>Effetto dipende dalla temperatura</li>
+        <li>Esempi: alluminio, platino, ossigeno</li>
+    </ul>
+    
+    <p><strong>3. Ferromagnetici:</strong></p>
+    <ul>
+        <li>Fortemente attratti dal campo</li>
+        <li>Possono essere magnetizzati permanentemente</li>
+        <li>Suscettività magnetica molto grande</li>
+        <li>Esempi: ferro, cobalto, nickel</li>
+    </ul>
+    
+    <h3>Permeabilità Magnetica Relativa</h3>
+    <div class="formula">
+        κ_m = 1 + χ_m
+    </div>
+    
+    <p>Campo in un materiale:</p>
+    <div class="formula">
+        B = κ_m B₀
+    </div>
+    
+    <h2>8.7 Campo Magnetico Terrestre</h2>
+    <p>La Terra si comporta come un grande magnete con:</p>
+    <ul>
+        <li>Campo medio: ≈ 0.5 G = 5 × 10⁻⁵ T</li>
+        <li>Il polo sud magnetico è vicino al polo nord geografico</li>
+        <li>Inclinazione magnetica varia con la latitudine</li>
+        <li>Declinazione magnetica: scostamento dal nord geografico</li>
+    </ul>
+    
+    <h3>Funzioni del Campo Magnetico Terrestre</h3>
+    <ul>
+        <li>Protegge dalle particelle cariche solari (vento solare)</li>
+        <li>Permette la navigazione con le bussole</li>
+        <li>Causa le aurore polari</li>
+    </ul>
+    
+    <div class="page-break"></div>
+    
+    <div style="text-align: center; margin-top: 3cm;">
+        <h2>Continuazione della Dispensa</h2>
+        <p style="margin-top: 1cm;">I capitoli successivi (9-15) trattano:</p>
+        <ul style="text-align: left; display: inline-block;">
+            <li>Legge di Faraday e Induzione Elettromagnetica</li>
+            <li>Induttanza e Circuiti RL e RLC</li>
+            <li>Onde Elettromagnetiche</li>
+            <li>Ottica Geometrica e Formazione delle Immagini</li>
+            <li>Interferenza, Diffrazione e Polarizzazione</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 9: LEGGE DI FARADAY -->
+    <h1>9. Legge di Faraday</h1>
+    
+    <h2>9.1 Legge di Faraday dell'Induzione</h2>
+    <p>La legge di Faraday descrive come un campo magnetico variabile genera un campo elettrico indotto.</p>
+    
+    <h3>Flusso Magnetico</h3>
+    <p>Il flusso magnetico attraverso una superficie S è:</p>
+    <div class="formula">
+        Φ_B = ∫∫_S <strong>B</strong> · d<strong>A</strong>
+    </div>
+    
+    <p>Per campo uniforme e superficie piana:</p>
+    <div class="formula">
+        Φ_B = BA cos θ
+    </div>
+    
+    <p>Unità di misura: Weber (Wb) = T·m²</p>
+    
+    <h3>Legge di Faraday</h3>
+    <p>La forza elettromotrice indotta in un circuito è uguale all'opposto della variazione del flusso magnetico nel tempo:</p>
+    <div class="formula">
+        ε = -dΦ_B/dt
+    </div>
+    
+    <p>Per una bobina di N spire:</p>
+    <div class="formula">
+        ε = -N dΦ_B/dt
+    </div>
+    
+    <h3>Modi per Variare il Flusso</h3>
+    <ol>
+        <li>Variare l'intensità del campo B</li>
+        <li>Variare l'area A del circuito</li>
+        <li>Variare l'orientazione del circuito rispetto a B</li>
+        <li>Qualsiasi combinazione dei precedenti</li>
+    </ol>
+    
+    <h2>9.2 F.e.m. nei Circuiti in Moto</h2>
+    <p>Quando un conduttore si muove in un campo magnetico, le cariche libere al suo interno sperimentano una forza magnetica che genera una f.e.m.</p>
+    
+    <h3>Sbarra in Moto</h3>
+    <p>Sbarra di lunghezza L che si muove con velocità v perpendicolare a un campo uniforme B:</p>
+    <div class="formula">
+        ε = BLv
+    </div>
+    
+    <p>Derivazione:</p>
+    <ul>
+        <li>Forza su ogni carica: F = qvB</li>
+        <li>Campo elettrico indotto: E = F/q = vB</li>
+        <li>F.e.m.: ε = EL = vBL</li>
+    </ul>
+    
+    <p>Alternativamente, usando Faraday:</p>
+    <ul>
+        <li>Area spazzata in dt: dA = L·dx = L·v·dt</li>
+        <li>Variazione di flusso: dΦ_B = B·dA = BLv·dt</li>
+        <li>F.e.m.: ε = -dΦ_B/dt = -BLv (il segno dipende dalla direzione)</li>
+    </ul>
+    
+    <h2>9.3 Legge di Lenz</h2>
+    <p>La legge di Lenz determina il verso della corrente indotta.</p>
+    
+    <h3>Enunciato</h3>
+    <p>La corrente indotta genera un campo magnetico che si oppone alla variazione del flusso magnetico che l'ha generata.</p>
+    
+    <p>Il segno negativo nella legge di Faraday esprime questa opposizione:</p>
+    <div class="formula">
+        ε = -dΦ_B/dt
+    </div>
+    
+    <h3>Procedura per Applicare la Legge di Lenz</h3>
+    <ol>
+        <li>Determinare se il flusso magnetico sta aumentando o diminuendo</li>
+        <li>Il campo indotto si oppone a questa variazione</li>
+        <li>Usare la regola della mano destra per trovare il verso della corrente</li>
+    </ol>
+    
+    <div class="note">
+        <strong>CONSERVAZIONE DELL'ENERGIA:</strong> La legge di Lenz è una conseguenza della conservazione dell'energia. Se la corrente indotta favorisse la variazione di flusso, si avrebbe una violazione del primo principio della termodinamica.
+    </div>
+    
+    <h2>9.4 F.e.m. Indotte e Campi Elettrici Indotti</h2>
+    <p>Un campo magnetico variabile genera un campo elettrico anche in assenza di conduttori.</p>
+    
+    <h3>Forma Generale della Legge di Faraday</h3>
+    <div class="formula">
+        ∮ <strong>E</strong> · d<strong>l</strong> = -dΦ_B/dt
+    </div>
+    
+    <p>Questa è una delle quattro equazioni di Maxwell.</p>
+    
+    <h3>Differenze tra Campo Elettrico Indotto e Campo Elettrostatico</h3>
+    <table border="1" style="width:100%; border-collapse: collapse; margin: 0.5cm 0;">
+        <tr>
+            <th>Campo Elettrostatico</th>
+            <th>Campo Indotto</th>
+        </tr>
+        <tr>
+            <td>Generato da cariche ferme</td>
+            <td>Generato da campo magnetico variabile</td>
+        </tr>
+        <tr>
+            <td>Conservativo: ∮E·dl = 0</td>
+            <td>Non conservativo: ∮E·dl ≠ 0</td>
+        </tr>
+        <tr>
+            <td>Linee di campo aperte (da + a -)</td>
+            <td>Linee di campo chiuse</td>
+        </tr>
+    </table>
+    
+    <h2>9.5 Generatori e Motori</h2>
+    
+    <h3>Generatore di Corrente Alternata</h3>
+    <p>Una spira che ruota in un campo magnetico uniforme con velocità angolare ω genera una f.e.m. sinusoidale:</p>
+    <div class="formula">
+        ε(t) = NABω sin(ωt) = ε_max sin(ωt)
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>N: numero di spire</li>
+        <li>A: area della spira</li>
+        <li>B: campo magnetico</li>
+        <li>ω: velocità angolare</li>
+        <li>ε_max = NABω: f.e.m. massima</li>
+    </ul>
+    
+    <h3>Motore Elettrico</h3>
+    <p>Un motore è essenzialmente un generatore che funziona al contrario:</p>
+    <ul>
+        <li>Una corrente attraversa una spira in un campo magnetico</li>
+        <li>La spira subisce un momento meccanico e ruota</li>
+        <li>Un commutatore inverte la corrente ogni mezzo giro</li>
+    </ul>
+    
+    <h3>F.e.m. Controelettromotrice</h3>
+    <p>Quando un motore ruota, agisce anche come generatore, producendo una f.e.m. indotta che si oppone alla corrente applicata:</p>
+    <div class="formula">
+        ε_back = NABω
+    </div>
+    
+    <p>La corrente effettiva nel motore è:</p>
+    <div class="formula">
+        I = (V - ε_back)/R
+    </div>
+    
+    <h2>9.6 Correnti Parassite (Eddy Currents)</h2>
+    <p>Correnti indotte che circolano in conduttori massivi immersi in campi magnetici variabili.</p>
+    
+    <h3>Effetti delle Correnti Parassite</h3>
+    <ul>
+        <li><strong>Riscaldamento:</strong> dissipazione per effetto Joule (forni a induzione)</li>
+        <li><strong>Frenatura:</strong> si oppongono al moto (freni magnetici)</li>
+        <li><strong>Smorzamento:</strong> utile in strumenti di misura</li>
+    </ul>
+    
+    <h3>Riduzione delle Correnti Parassite</h3>
+    <p>Nei trasformatori e nei motori, si usano nuclei laminati (sottili lamine isolate tra loro) per ridurre le correnti parassite e le perdite energetiche.</p>
+    
+    <div class="example">
+        <h3>Esempio: Bobina in Campo Magnetico Variabile</h3>
+        <p><strong>Problema:</strong> Una bobina rettangolare di lati a = 10 cm e b = 5 cm, con N = 100 spire e resistenza R = 2 Ω, è immersa in un campo magnetico B = c₁x²(t² - c₂), con c₁ = 5 T/m²s² e c₂ = 0.25 s². Calcolare:</p>
+        <ul>
+            <li>a) La f.e.m. indotta ε(t)</li>
+            <li>b) La corrente i(t) e la carica q tra t = 0 e t = 0.5 s</li>
+        </ul>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p><strong>a) F.e.m. indotta:</strong></p>
+        <p>Il flusso attraverso la bobina dipende dalla posizione. Assumendo che il campo vari nel tempo:</p>
+        <div class="formula">
+            Φ_B(t) = NBA(t² - c₂) (assumendo x costante o media)
+        </div>
+        
+        <p>Derivando:</p>
+        <div class="formula">
+            ε(t) = -dΦ_B/dt = -NBA·2t = -100·B·0.005·2t
+        </div>
+        
+        <p><strong>b) Corrente:</strong></p>
+        <div class="formula">
+            i(t) = ε(t)/R
+        </div>
+        
+        <p>Carica totale:</p>
+        <div class="formula">
+            q = ∫₀^0.5 i(t) dt = ∫₀^0.5 ε(t)/R dt = -ΔΦ_B/R
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 10: INDUTTANZA -->
+    <h1>10. Induttanza</h1>
+    
+    <h2>10.1 Autoinduttanza e Induttanza</h2>
+    <p>Quando la corrente in un circuito varia, il flusso magnetico che essa stessa genera varia, inducendo una f.e.m. che si oppone alla variazione di corrente.</p>
+    
+    <h3>Definizione di Autoinduttanza</h3>
+    <p>Il flusso magnetico concatenato con un circuito è proporzionale alla corrente che lo percorre:</p>
+    <div class="formula">
+        Φ_B = LI
+    </div>
+    
+    <p>dove L è l'autoinduttanza (o semplicemente induttanza).</p>
+    <p>Unità di misura: Henry (H) = Wb/A = V·s/A</p>
+    
+    <h3>F.e.m. Autoindotta</h3>
+    <p>Dalla legge di Faraday:</p>
+    <div class="formula">
+        ε_L = -L dI/dt
+    </div>
+    
+    <p>Il segno negativo indica che la f.e.m. si oppone alla variazione di corrente (legge di Lenz).</p>
+    
+    <h3>Calcolo dell'Induttanza</h3>
+    
+    <p><strong>Solenoide:</strong></p>
+    <p>Solenoide di lunghezza l, area A, N spire:</p>
+    <div class="formula">
+        L = μ₀N²A/l = μ₀n²Al
+    </div>
+    
+    <p>dove n = N/l è la densità di spire.</p>
+    
+    <p><strong>Toroide:</strong></p>
+    <p>Toroide di raggio medio r, sezione A, N spire:</p>
+    <div class="formula">
+        L = μ₀N²A/(2πr)
+    </div>
+    
+    <h3>Induttanza Mutua</h3>
+    <p>Quando due circuiti sono vicini, la corrente nel primo induce un flusso nel secondo:</p>
+    <div class="formula">
+        Φ₂₁ = M₁₂I₁<br>
+        ε₂ = -M₁₂ dI₁/dt
+    </div>
+    
+    <p>L'induttanza mutua M₁₂ = M₂₁ dipende dalla geometria e dalla posizione relativa dei circuiti.</p>
+    
+    <h2>10.2 Circuiti RL</h2>
+    <p>Un circuito RL contiene resistenza e induttanza. Il comportamento è analogo ai circuiti RC.</p>
+    
+    <h3>Crescita della Corrente</h3>
+    <p>Circuito con R, L e f.e.m. ε in serie, interruttore chiuso a t = 0:</p>
+    
+    <p>Equazione del circuito:</p>
+    <div class="formula">
+        ε = IR + L dI/dt
+    </div>
+    
+    <p>Soluzione:</p>
+    <div class="formula">
+        I(t) = (ε/R)(1 - e^(-t/τ))
+    </div>
+    
+    <p>dove τ = L/R è la costante di tempo del circuito RL.</p>
+    
+    <h3>Decadimento della Corrente</h3>
+    <p>Se il generatore viene scollegato (cortocircuito RL):</p>
+    <div class="formula">
+        I(t) = I₀ e^(-t/τ)
+    </div>
+    
+    <h3>Costante di Tempo RL</h3>
+    <div class="formula">
+        τ = L/R
+    </div>
+    
+    <p>Significato:</p>
+    <ul>
+        <li>Dopo tempo τ, la corrente raggiunge il 63% del valore finale</li>
+        <li>Maggiore è L, più lento è il cambiamento di corrente</li>
+        <li>Maggiore è R, più veloce è il cambiamento</li>
+    </ul>
+    
+    <h2>10.3 Energia in un Campo Magnetico</h2>
+    <p>Un induttore percorso da corrente immagazzina energia nel campo magnetico.</p>
+    
+    <h3>Energia Immagazzinata</h3>
+    <div class="formula">
+        U_L = (1/2)LI²
+    </div>
+    
+    <p>Questa energia è immagazzinata nel campo magnetico dell'induttore.</p>
+    
+    <h3>Densità di Energia Magnetica</h3>
+    <p>L'energia per unità di volume nel campo magnetico è:</p>
+    <div class="formula">
+        u_B = B²/(2μ₀)
+    </div>
+    
+    <p>Per un solenoide:</p>
+    <ul>
+        <li>Volume: V = Al</li>
+        <li>Campo: B = μ₀nI</li>
+        <li>Energia: U = u_B·V = [B²/(2μ₀)]·Al = [(μ₀nI)²/(2μ₀)]·Al = (1/2)LI²</li>
+    </ul>
+    
+    <h2>10.4 Circuiti RLC</h2>
+    <p>Un circuito RLC contiene resistenza, induttanza e capacità. Mostra oscillazioni smorzate.</p>
+    
+    <h3>Circuito RLC in Serie</h3>
+    <p>Condensatore inizialmente carico Q₀, scaricato attraverso R e L:</p>
+    
+    <p>Equazione del circuito:</p>
+    <div class="formula">
+        L d²Q/dt² + R dQ/dt + Q/C = 0
+    </div>
+    
+    <p>Questa è l'equazione dell'oscillatore armonico smorzato!</p>
+    
+    <h3>Frequenza di Oscillazione</h3>
+    <p>Frequenza angolare naturale:</p>
+    <div class="formula">
+        ω₀ = 1/√(LC)
+    </div>
+    
+    <p>Con smorzamento (R ≠ 0):</p>
+    <div class="formula">
+        ω = √(ω₀² - (R/2L)²)
+    </div>
+    
+    <h3>Tre Regimi</h3>
+    
+    <p><strong>1. Sottosmorzato (R < 2√(L/C)):</strong></p>
+    <div class="formula">
+        Q(t) = Q₀ e^(-Rt/2L) cos(ωt + φ)
+    </div>
+    <p>Oscillazioni smorzate esponenzialmente.</p>
+    
+    <p><strong>2. Smorzamento critico (R = 2√(L/C)):</strong></p>
+    <p>Ritorno più rapido all'equilibrio senza oscillazioni.</p>
+    
+    <p><strong>3. Sovrasmorzato (R > 2√(L/C)):</strong></p>
+    <p>Ritorno lento senza oscillazioni.</p>
+    
+    <div class="example">
+        <h3>Esempio: Circuito RL</h3>
+        <p><strong>Problema:</strong> Un solenoide L = 0.5 H è collegato in serie con R = 10 Ω e una batteria da 12 V. Calcolare:</p>
+        <ul>
+            <li>a) La costante di tempo</li>
+            <li>b) La corrente finale</li>
+            <li>c) Il tempo per raggiungere il 90% della corrente finale</li>
+            <li>d) L'energia immagazzinata a regime</li>
+        </ul>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p><strong>a) Costante di tempo:</strong></p>
+        <div class="formula">
+            τ = L/R = 0.5/10 = 0.05 s = 50 ms
+        </div>
+        
+        <p><strong>b) Corrente finale:</strong></p>
+        <div class="formula">
+            I_f = ε/R = 12/10 = 1.2 A
+        </div>
+        
+        <p><strong>c) Tempo per 90%:</strong></p>
+        <div class="formula">
+            0.9 = 1 - e^(-t/τ)<br>
+            e^(-t/τ) = 0.1<br>
+            t = -τ ln(0.1) = 2.303τ = 115 ms
+        </div>
+        
+        <p><strong>d) Energia immagazzinata:</strong></p>
+        <div class="formula">
+            U_L = (1/2)LI_f² = (1/2)·0.5·1.2² = 0.36 J
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 11: ONDE ELETTROMAGNETICHE -->
+    <h1>11. Onde Elettromagnetiche</h1>
+    
+    <h2>11.1 Corrente di Spostamento e Legge di Ampère Generalizzata</h2>
+    <p>Maxwell modificò la legge di Ampère per renderla coerente con la conservazione della carica.</p>
+    
+    <h3>Problema con la Legge di Ampère Originale</h3>
+    <p>Applicando la legge di Ampère a un condensatore in carica, si ottengono risultati contraddittori a seconda della superficie scelta.</p>
+    
+    <h3>Corrente di Spostamento</h3>
+    <p>Maxwell introdusse la corrente di spostamento:</p>
+    <div class="formula">
+        I_d = ε₀ dΦ_E/dt
+    </div>
+    
+    <p>dove Φ_E è il flusso del campo elettrico.</p>
+    
+    <h3>Legge di Ampère-Maxwell</h3>
+    <div class="formula">
+        ∮ <strong>B</strong> · d<strong>l</strong> = μ₀(I + I_d) = μ₀I + μ₀ε₀ dΦ_E/dt
+    </div>
+    
+    <p>Questa è la forma completa della legge di Ampère.</p>
+    
+    <h2>11.2 Equazioni di Maxwell e Scoperta di Hertz</h2>
+    <p>Le quattro equazioni di Maxwell descrivono completamente l'elettromagnetismo classico.</p>
+    
+    <h3>Le Quattro Equazioni di Maxwell</h3>
+    
+    <p><strong>1. Legge di Gauss per l'elettricità:</strong></p>
+    <div class="formula">
+        ∮ <strong>E</strong> · d<strong>A</strong> = Q_int/ε₀
+    </div>
+    <p>Le cariche elettriche generano campo elettrico.</p>
+    
+    <p><strong>2. Legge di Gauss per il magnetismo:</strong></p>
+    <div class="formula">
+        ∮ <strong>B</strong> · d<strong>A</strong> = 0
+    </div>
+    <p>Non esistono monopoli magnetici.</p>
+    
+    <p><strong>3. Legge di Faraday:</strong></p>
+    <div class="formula">
+        ∮ <strong>E</strong> · d<strong>l</strong> = -dΦ_B/dt
+    </div>
+    <p>Un campo magnetico variabile genera campo elettrico.</p>
+    
+    <p><strong>4. Legge di Ampère-Maxwell:</strong></p>
+    <div class="formula">
+        ∮ <strong>B</strong> · d<strong>l</strong> = μ₀I + μ₀ε₀ dΦ_E/dt
+    </div>
+    <p>Correnti e campi elettrici variabili generano campo magnetico.</p>
+    
+    <h3>Previsione delle Onde Elettromagnetiche</h3>
+    <p>Dalle equazioni di Maxwell, si ricava che i campi elettrico e magnetico possono propagarsi nello spazio come onde con velocità:</p>
+    <div class="formula">
+        c = 1/√(μ₀ε₀) = 3 × 10⁸ m/s
+    </div>
+    
+    <p>Questa è esattamente la velocità della luce! Maxwell concluse che la luce è un'onda elettromagnetica.</p>
+    
+    <h3>Esperimenti di Hertz (1887)</h3>
+    <p>Heinrich Hertz confermò sperimentalmente l'esistenza delle onde elettromagnetiche:</p>
+    <ul>
+        <li>Generò onde radio con un oscillatore</li>
+        <li>Le rivelò con un ricevitore a distanza</li>
+        <li>Dimostrò che avevano proprietà delle onde (riflessione, rifrazione)</li>
+        <li>Misurò la loro velocità</li>
+    </ul>
+    
+    <h2>11.3 Onde Elettromagnetiche Piane</h2>
+    <p>Un'onda elettromagnetica piana è una soluzione delle equazioni di Maxwell nel vuoto.</p>
+    
+    <h3>Proprietà delle Onde EM</h3>
+    <ul>
+        <li><strong>E</strong> e <strong>B</strong> sono perpendicolari tra loro</li>
+        <li><strong>E</strong> e <strong>B</strong> sono perpendicolari alla direzione di propagazione</li>
+        <li><strong>E</strong> e <strong>B</strong> oscillano in fase</li>
+        <li>Rapporto tra ampiezze: E = cB</li>
+    </ul>
+    
+    <h3>Equazione dell'Onda</h3>
+    <p>Per un'onda che si propaga lungo l'asse x:</p>
+    <div class="formula">
+        E_y = E_max sin(kx - ωt)<br>
+        B_z = B_max sin(kx - ωt)
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>k = 2π/λ: numero d'onda</li>
+        <li>ω = 2πf: frequenza angolare</li>
+        <li>v = ω/k = fλ = c: velocità</li>
+    </ul>
+    
+    <h2>11.4 Energia Trasportata dalle Onde Elettromagnetiche</h2>
+    
+    <h3>Densità di Energia</h3>
+    <p>L'energia per unità di volume nell'onda è:</p>
+    <div class="formula">
+        u = u_E + u_B = (1/2)ε₀E² + B²/(2μ₀)
+    </div>
+    
+    <p>Poiché E = cB e c = 1/√(μ₀ε₀), si ha u_E = u_B, quindi:</p>
+    <div class="formula">
+        u = ε₀E² = B²/μ₀
+    </div>
+    
+    <h3>Vettore di Poynting</h3>
+    <p>Il flusso di energia per unità di area è dato dal vettore di Poynting:</p>
+    <div class="formula">
+        <strong>S</strong> = (<strong>E</strong> × <strong>B</strong>)/μ₀
+    </div>
+    
+    <p>Modulo:</p>
+    <div class="formula">
+        S = EB/μ₀ = cε₀E² = cB²/μ₀
+    </div>
+    
+    <p>Unità di misura: W/m²</p>
+    
+    <h3>Intensità</h3>
+    <p>L'intensità I è il valore medio temporale di S:</p>
+    <div class="formula">
+        I = S_avg = (1/2)cε₀E_max² = E_max²/(2μ₀c) = cB_max²/(2μ₀)
+    </div>
+    
+    <h2>11.5 Quantità di Moto e Pressione di Radiazione</h2>
+    <p>Le onde elettromagnetiche trasportano quantità di moto e possono esercitare pressione.</p>
+    
+    <h3>Quantità di Moto</h3>
+    <p>Un'onda che trasporta energia U ha quantità di moto:</p>
+    <div class="formula">
+        p = U/c
+    </div>
+    
+    <h3>Pressione di Radiazione</h3>
+    <p>Su una superficie perfettamente assorbente:</p>
+    <div class="formula">
+        P = I/c  (assorbimento totale)
+    </div>
+    
+    <p>Su una superficie perfettamente riflettente:</p>
+    <div class="formula">
+        P = 2I/c  (riflessione totale)
+    </div>
+    
+    <h3>Applicazioni</h3>
+    <ul>
+        <li>Vele solari per propulsione spaziale</li>
+        <li>Pinzette ottiche per manipolare cellule e molecole</li>
+        <li>Raffreddamento laser di atomi</li>
+    </ul>
+    
+    <h2>11.6 Produzione di Onde Elettromagnetiche da un'Antenna</h2>
+    <p>Un'antenna è un conduttore che irradia onde elettromagnetiche quando è percorso da corrente alternata.</p>
+    
+    <h3>Antenna a Dipolo</h3>
+    <p>Due conduttori rettilinei in cui la corrente oscilla sinusoidalmente:</p>
+    <ul>
+        <li>La carica accelera avanti e indietro</li>
+        <li>Il campo elettrico e magnetico variabili si propagano</li>
+        <li>L'irraggiamento è massimo perpendicolare all'antenna</li>
+        <li>L'irraggiamento è nullo lungo l'asse dell'antenna</li>
+    </ul>
+    
+    <h3>Potenza Irraggiata</h3>
+    <p>Per un dipolo oscillante con lunghezza molto minore della lunghezza d'onda:</p>
+    <div class="formula">
+        P ∝ I₀²ω⁴
+    </div>
+    
+    <p>La potenza aumenta rapidamente con la frequenza (∝ f⁴).</p>
+    
+    <h2>11.7 Spettro delle Onde Elettromagnetiche</h2>
+    <p>Le onde elettromagnetiche coprono un enorme intervallo di frequenze e lunghezze d'onda.</p>
+    
+    <h3>Classificazione dello Spettro</h3>
+    
+    <p><strong>1. Onde Radio (f < 10⁹ Hz, λ > 0.3 m):</strong></p>
+    <ul>
+        <li>Radiodiffusione AM/FM</li>
+        <li>Televisione</li>
+        <li>Comunicazioni radio</li>
+    </ul>
+    
+    <p><strong>2. Microonde (10⁹ - 10¹² Hz, 0.3 m - 1 mm):</strong></p>
+    <ul>
+        <li>Radar</li>
+        <li>Forni a microonde</li>
+        <li>Comunicazioni satellitari</li>
+        <li>Telefonia mobile</li>
+    </ul>
+    
+    <p><strong>3. Infrarosso (10¹² - 4×10¹⁴ Hz, 1 mm - 700 nm):</strong></p>
+    <ul>
+        <li>Radiazione termica</li>
+        <li>Telecomandi</li>
+        <li>Visione notturna</li>
+    </ul>
+    
+    <p><strong>4. Luce Visibile (4×10¹⁴ - 7.5×10¹⁴ Hz, 700 - 400 nm):</strong></p>
+    <ul>
+        <li>Rosso: λ ≈ 700 nm</li>
+        <li>Arancione: λ ≈ 600 nm</li>
+        <li>Giallo: λ ≈ 580 nm</li>
+        <li>Verde: λ ≈ 550 nm</li>
+        <li>Blu: λ ≈ 470 nm</li>
+        <li>Violetto: λ ≈ 400 nm</li>
+    </ul>
+    
+    <p><strong>5. Ultravioletto (7.5×10¹⁴ - 10¹⁷ Hz, 400 - 10 nm):</strong></p>
+    <ul>
+        <li>Luce solare (causa abbronzatura)</li>
+        <li>Sterilizzazione</li>
+        <li>Fluorescenza</li>
+    </ul>
+    
+    <p><strong>6. Raggi X (10¹⁷ - 10¹⁹ Hz, 10 - 0.01 nm):</strong></p>
+    <ul>
+        <li>Radiografia medica</li>
+        <li>Cristallografia</li>
+        <li>Controlli di sicurezza</li>
+    </ul>
+    
+    <p><strong>7. Raggi Gamma (f > 10¹⁹ Hz, λ < 0.01 nm):</strong></p>
+    <ul>
+        <li>Decadimenti nucleari</li>
+        <li>Radioterapia</li>
+        <li>Astronomia gamma</li>
+    </ul>
+    
+    <div class="note">
+        <strong>RELAZIONE FONDAMENTALE:</strong> Per tutte le onde elettromagnetiche nel vuoto vale: c = fλ = 3 × 10⁸ m/s
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 12: LUCE E OTTICA GEOMETRICA -->
+    <h1>12. Luce e Ottica Geometrica</h1>
+    
+    <h2>12.1 Natura della Luce</h2>
+    <p>La luce mostra sia comportamento ondulatorio che corpuscolare (dualismo onda-particella).</p>
+    
+    <h3>Teoria Ondulatoria</h3>
+    <ul>
+        <li>La luce è un'onda elettromagnetica (Maxwell)</li>
+        <li>Spiega interferenza e diffrazione</li>
+        <li>Spiega la polarizzazione</li>
+    </ul>
+    
+    <h3>Teoria Corpuscolare</h3>
+    <ul>
+        <li>La luce è composta da fotoni (particelle)</li>
+        <li>Spiega l'effetto fotoeletrico</li>
+        <li>Energia del fotone: E = hf = hc/λ</li>
+        <li>h = 6.626 × 10⁻³⁴ J·s (costante di Planck)</li>
+    </ul>
+    
+    <h2>12.2 Misure della Velocità della Luce</h2>
+    
+    <h3>Esperimento di Rømer (1676)</h3>
+    <p>Studiando le eclissi delle lune di Giove, stimò c ≈ 2.2 × 10⁸ m/s.</p>
+    
+    <h3>Esperimento di Fizeau (1849)</h3>
+    <p>Usò una ruota dentata rotante e uno specchio. Ottenne c ≈ 3.15 × 10⁸ m/s.</p>
+    
+    <h3>Esperimento di Michelson (1926)</h3>
+    <p>Usò specchi rotanti e ottenne c = 2.997924 × 10⁸ m/s, molto preciso.</p>
+    
+    <h3>Valore Attuale</h3>
+    <div class="formula">
+        c = 299792458 m/s (esatto per definizione)
+    </div>
+    
+    <h2>12.3 Approssimazione dei Raggi nell'Ottica Geometrica</h2>
+    <p>L'ottica geometrica è valida quando le dimensioni degli oggetti sono molto maggiori della lunghezza d'onda della luce.</p>
+    
+    <h3>Principi dell'Ottica Geometrica</h3>
+    <ul>
+        <li>La luce si propaga in linea retta in mezzi omogenei</li>
+        <li>I raggi di luce sono linee perpendicolari ai fronti d'onda</li>
+        <li>I raggi si propagano indipendentemente l'uno dall'altro</li>
+    </ul>
+    
+    <h3>Leggi Fondamentali</h3>
+    
+    <p><strong>1. Riflessione:</strong></p>
+    <div class="formula">
+        θᵢ = θᵣ
+    </div>
+    <p>L'angolo di incidenza uguale all'angolo di riflessione.</p>
+    
+    <p><strong>2. Rifrazione (Legge di Snell):</strong></p>
+    <div class="formula">
+        n₁ sin θ₁ = n₂ sin θ₂
+    </div>
+    <p>dove n è l'indice di rifrazione del mezzo.</p>
+    
+    <h2>12.4 Principio di Huygens</h2>
+    <p>Ogni punto di un fronte d'onda può essere considerato come sorgente di onde sferiche secondarie.</p>
+    
+    <h3>Enunciato</h3>
+    <p>Il nuovo fronte d'onda è l'inviluppo delle onde secondarie dopo un tempo dt.</p>
+    
+    <h3>Applicazioni</h3>
+    <ul>
+        <li>Derivazione della legge di riflessione</li>
+        <li>Derivazione della legge di rifrazione</li>
+        <li>Spiegazione della diffrazione</li>
+    </ul>
+    
+    <h2>12.5 Dispersione</h2>
+    <p>La dispersione è la separazione della luce bianca nelle sue componenti cromatiche.</p>
+    
+    <h3>Indice di Rifrazione e Lunghezza d'Onda</h3>
+    <p>L'indice di rifrazione dipende dalla lunghezza d'onda:</p>
+    <div class="formula">
+        n = n(λ)
+    </div>
+    
+    <p>Generalmente, n aumenta al diminuire di λ (dispersione normale):</p>
+    <ul>
+        <li>Luce blu: n maggiore, deviazione maggiore</li>
+        <li>Luce rossa: n minore, deviazione minore</li>
+    </ul>
+    
+    <h3>Prisma</h3>
+    <p>Un prisma separa la luce bianca nei colori dell'arcobaleno perché:</p>
+    <ul>
+        <li>Ogni colore ha indice di rifrazione diverso</li>
+        <li>Ogni colore viene rifratto con angolo diverso</li>
+    </ul>
+    
+    <h3>Arcobaleno</h3>
+    <p>Fenomeno causato da rifrazione e riflessione della luce solare nelle gocce d'acqua:</p>
+    <ul>
+        <li>La luce entra nella goccia (prima rifrazione)</li>
+        <li>Si riflette sulla superficie interna</li>
+        <li>Esce dalla goccia (seconda rifrazione)</li>
+        <li>La dispersione separa i colori</li>
+    </ul>
+    
+    <h2>12.6 Riflessione Totale Interna</h2>
+    <p>Quando la luce passa da un mezzo più denso a uno meno denso, può essere totalmente riflessa.</p>
+    
+    <h3>Angolo Limite</h3>
+    <p>L'angolo limite θ_c è quello per cui l'angolo rifratto è 90°:</p>
+    <div class="formula">
+        sin θ_c = n₂/n₁  (con n₁ > n₂)
+    </div>
+    
+    <p>Per θᵢ > θ_c: riflessione totale interna (nessuna luce rifratta).</p>
+    
+    <h3>Applicazioni</h3>
+    
+    <p><strong>Fibre Ottiche:</strong></p>
+    <ul>
+        <li>Trasmettono luce per riflessione totale interna</li>
+        <li>Nucleo con indice di rifrazione n₁</li>
+        <li>Rivestimento con indice n₂ < n₁</li>
+        <li>Perdite minime su lunghe distanze</li>
+        <li>Usate in telecomunicazioni e medicina</li>
+    </ul>
+    
+    <p><strong>Diamante:</strong></p>
+    <p>L'alto indice di rifrazione (n ≈ 2.42) causa:</p>
+    <ul>
+        <li>Angolo limite piccolo (θ_c ≈ 24°)</li>
+        <li>Molta luce riflessa internamente</li>
+        <li>Brillantezza caratteristica</li>
+    </ul>
+    
+    <div class="example">
+        <h3>Esempio: Riflessione Totale</h3>
+        <p><strong>Problema:</strong> Calcolare l'angolo limite per la luce che passa dall'acqua (n = 1.33) all'aria (n = 1.00).</p>
+        
+        <p><strong>Soluzione:</strong></p>
+        <div class="formula">
+            sin θ_c = n_aria/n_acqua = 1.00/1.33 = 0.752
+        </div>
+        <div class="formula">
+            θ_c = arcsin(0.752) = 48.8°
+        </div>
+        
+        <p>Per angoli maggiori di 48.8°, la luce viene totalmente riflessa nell'acqua.</p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 13: FORMAZIONE DELL'IMMAGINE -->
+    <h1>13. Formazione dell'Immagine</h1>
+    
+    <h2>13.1 Immagini Formate da Specchi Piani</h2>
+    <p>Uno specchio piano forma immagini virtuali, dritte e delle stesse dimensioni dell'oggetto.</p>
+    
+    <h3>Proprietà dell'Immagine</h3>
+    <ul>
+        <li>Virtuale (dietro lo specchio)</li>
+        <li>Stessa dimensione dell'oggetto</li>
+        <li>Dritta (non capovolta)</li>
+        <li>Distanza dall'immagine = distanza dell'oggetto</li>
+        <li>Invertita lateralmente</li>
+    </ul>
+    
+    <h2>13.2 Specchi Sferici</h2>
+    <p>Gli specchi sferici possono essere concavi o convessi.</p>
+    
+    <h3>Definizioni</h3>
+    <ul>
+        <li><strong>Centro di curvatura C:</strong> centro della sfera</li>
+        <li><strong>Raggio di curvatura R:</strong> raggio della sfera</li>
+        <li><strong>Fuoco F:</strong> punto dove convergono raggi paralleli all'asse</li>
+        <li><strong>Distanza focale f:</strong> f = R/2</li>
+        <li><strong>Asse ottico:</strong> linea che passa per C e il vertice</li>
+    </ul>
+    
+    <h3>Convenzioni dei Segni</h3>
+    <ul>
+        <li>Distanze positive: davanti allo specchio (oggetti reali)</li>
+        <li>Distanze negative: dietro lo specchio (immagini virtuali)</li>
+        <li>Altezze positive: sopra l'asse</li>
+        <li>Altezze negative: sotto l'asse</li>
+    </ul>
+    
+    <h3>Equazione degli Specchi</h3>
+    <div class="formula">
+        1/p + 1/q = 1/f = 2/R
+    </div>
+    
+    <p>dove:</p>
+    <ul>
+        <li>p: distanza dell'oggetto</li>
+        <li>q: distanza dell'immagine</li>
+        <li>f: distanza focale</li>
+    </ul>
+    
+    <h3>Ingrandimento</h3>
+    <div class="formula">
+        M = h'/h = -q/p
+    </div>
+    
+    <p>dove h è l'altezza dell'oggetto e h' quella dell'immagine.</p>
+    <ul>
+        <li>M > 0: immagine dritta</li>
+        <li>M < 0: immagine capovolta</li>
+        <li>|M| > 1: ingrandita</li>
+        <li>|M| < 1: rimpicciolita</li>
+    </ul>
+    
+    <h3>Specchio Concavo (f > 0)</h3>
+    <p>Riflette verso l'interno. Può formare immagini reali o virtuali:</p>
+    <ul>
+        <li>p > R: immagine reale, capovolta, rimpicciolita</li>
+        <li>p = R: immagine reale, capovolta, stessa dimensione</li>
+        <li>f < p < R: immagine reale, capovolta, ingrandita</li>
+        <li>p = f: nessuna immagine (raggi paralleli)</li>
+        <li>p < f: immagine virtuale, dritta, ingrandita</li>
+    </ul>
+    
+    <h3>Specchio Convesso (f < 0)</h3>
+    <p>Riflette verso l'esterno. Forma sempre immagini virtuali, dritte e rimpicciolite.</p>
+    
+    <h2>13.3 Immagini per Rifrazione</h2>
+    <p>La rifrazione attraverso superfici curve può formare immagini.</p>
+    
+    <h3>Superficie Sferica Rifrangente</h3>
+    <p>Per una superficie sferica tra due mezzi con indici n₁ e n₂:</p>
+    <div class="formula">
+        n₁/p + n₂/q = (n₂ - n₁)/R
+    </div>
+    
+    <h3>Superficie Piana</h3>
+    <p>Per rifrazione attraverso una superficie piana (R → ∞):</p>
+    <div class="formula">
+        n₁/p + n₂/q = 0  →  q = -(n₂/n₁)p
+    </div>
+    
+    <p>L'immagine è sempre virtuale e più vicina alla superficie dell'oggetto.</p>
+    
+    <h2>13.4 Lenti Sottili</h2>
+    <p>Una lente sottile è un elemento ottico con due superfici rifrangenti molto vicine.</p>
+    
+    <h3>Tipi di Lenti</h3>
+    
+    <p><strong>Lenti Convergenti (f > 0):</strong></p>
+    <ul>
+        <li>Biconvessa</li>
+        <li>Piano-convessa</li>
+        <li>Menisco convergente</li>
+        <li>Più spesse al centro</li>
+    </ul>
+    
+    <p><strong>Lenti Divergenti (f < 0):</strong></p>
+    <ul>
+        <li>Biconcava</li>
+        <li>Piano-concava</li>
+        <li>Menisco divergente</li>
+        <li>Più sottili al centro</li>
+    </ul>
+    
+    <h3>Equazione delle Lenti Sottili</h3>
+    <div class="formula">
+        1/p + 1/q = 1/f
+    </div>
+    
+    <h3>Equazione del Costruttore di Lenti</h3>
+    <p>La distanza focale dipende dai raggi di curvatura e dall'indice di rifrazione:</p>
+    <div class="formula">
+        1/f = (n - 1)(1/R₁ - 1/R₂)
+    </div>
+    
+    <p>dove R₁ e R₂ sono i raggi delle due superfici.</p>
+    
+    <h3>Ingrandimento</h3>
+    <div class="formula">
+        M = h'/h = -q/p
+    </div>
+    
+    <h3>Lente Convergente</h3>
+    <ul>
+        <li>p > 2f: immagine reale, capovolta, rimpicciolita</li>
+        <li>p = 2f: immagine reale, capovolta, stessa dimensione</li>
+        <li>f < p < 2f: immagine reale, capovolta, ingrandita</li>
+        <li>p = f: nessuna immagine</li>
+        <li>p < f: immagine virtuale, dritta, ingrandita</li>
+    </ul>
+    
+    <h3>Lente Divergente</h3>
+    <p>Forma sempre immagini virtuali, dritte e rimpicciolite.</p>
+    
+    <h3>Costruzione dei Raggi Principali</h3>
+    <p>Per costruire graficamente l'immagine, si usano tre raggi:</p>
+    <ol>
+        <li>Raggio parallelo all'asse → passa per il fuoco</li>
+        <li>Raggio attraverso il centro → non devia</li>
+        <li>Raggio attraverso il fuoco → emerge parallelo</li>
+    </ol>
+    
+    <h2>13.5 Aberrazioni delle Lenti</h2>
+    <p>Le lenti reali non formano immagini perfette a causa di vari difetti.</p>
+    
+    <h3>Aberrazione Sferica</h3>
+    <p>I raggi lontani dall'asse focalizzan in punti diversi dai raggi parrassiali.</p>
+    <p>Rimedi:</p>
+    <ul>
+        <li>Usare lenti asferiche</li>
+        <li>Usare diaframmi per bloccare i raggi periferici</li>
+        <li>Combinare lenti</li>
+    </ul>
+    
+    <h3>Aberrazione Cromatica</h3>
+    <p>Diversi colori hanno fuochi diversi (dispersione).</p>
+    <p>Rimedi:</p>
+    <ul>
+        <li>Lenti acromatiche (combinazione di vetri diversi)</li>
+        <li>Lenti apocromatiche (correzione migliore)</li>
+    </ul>
+    
+    <h3>Altre Aberrazioni</h3>
+    <ul>
+        <li>Coma: oggetti fuori asse hanno code cometarie</li>
+        <li>Astigmatismo: punti fuori asse formano linee</li>
+        <li>Distorsione: ingrandimento varia con la distanza dall'asse</li>
+        <li>Curvatura di campo: piano focale curvo invece che piano</li>
+    </ul>
+    
+    <div class="example">
+        <h3>Esempio: Lente Convergente</h3>
+        <p><strong>Problema:</strong> Un oggetto alto 2 cm è posto a 30 cm da una lente convergente con f = 20 cm. Trovare posizione, dimensione e natura dell'immagine.</p>
+        
+        <p><strong>Soluzione:</strong></p>
+        <p>Dati: p = 30 cm, f = 20 cm, h = 2 cm</p>
+        
+        <p><strong>Posizione dell'immagine:</strong></p>
+        <div class="formula">
+            1/p + 1/q = 1/f<br>
+            1/30 + 1/q = 1/20<br>
+            1/q = 1/20 - 1/30 = 3/60 - 2/60 = 1/60<br>
+            q = 60 cm
+        </div>
+        
+        <p><strong>Ingrandimento:</strong></p>
+        <div class="formula">
+            M = -q/p = -60/30 = -2
+        </div>
+        
+        <p><strong>Altezza immagine:</strong></p>
+        <div class="formula">
+            h' = M·h = -2 × 2 = -4 cm
+        </div>
+        
+        <p><strong>Conclusione:</strong> Immagine reale (q > 0), capovolta (M < 0), ingrandita (|M| > 1), alta 4 cm, a 60 cm dalla lente.</p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 14: INTERFERENZA DELLE ONDE LUMINOSE -->
+    <h1>14. Interferenza delle Onde Luminose</h1>
+    
+    <h2>14.1 Condizioni per l'Interferenza</h2>
+    <p>L'interferenza è la sovrapposizione di due o più onde luminose.</p>
+    
+    <h3>Principio di Sovrapposizione</h3>
+    <p>L'ampiezza risultante è la somma delle ampiezze delle onde componenti:</p>
+    <div class="formula">
+        E_tot = E₁ + E₂ + ...
+    </div>
+    
+    <h3>Sorgenti Coerenti</h3>
+    <p>Per osservare interferenza stabile, le sorgenti devono essere:</p>
+    <ul>
+        <li>Coerenti: stessa frequenza e differenza di fase costante</li>
+        <li>Monocromatiche (o quasi)</li>
+    </ul>
+    
+    <p>Le sorgenti luminose ordinarie non sono coerenti. Soluzioni:</p>
+    <ul>
+        <li>Dividere la luce da un'unica sorgente</li>
+        <li>Usare laser</li>
+    </ul>
+    
+    <h2>14.2 Esperimento di Young della Doppia Fenditura</h2>
+    <p>L'esperimento di Young (1801) dimostrò la natura ondulatoria della luce.</p>
+    
+    <h3>Configurazione</h3>
+    <ul>
+        <li>Luce monocromatica attraversa due fenditure strette</li>
+        <li>Distanza tra le fenditure: d</li>
+        <li>Distanza sullo schermo: L >> d</li>
+        <li>Si osserva un pattern di frange chiare e scure</li>
+    </ul>
+    
+    <h3>Interferenza Costruttiva (Massimi)</h3>
+    <p>Le onde arrivano in fase quando la differenza di cammino è un multiplo intero di λ:</p>
+    <div class="formula">
+        d sin θ = mλ  (m = 0, ±1, ±2, ...)
+    </div>
+    
+    <p>Posizione dei massimi sullo schermo:</p>
+    <div class="formula">
+        y_max = mλL/d
+    </div>
+    
+    <h3>Interferenza Distruttiva (Minimi)</h3>
+    <p>Le onde arrivano in opposizione di fase quando la differenza di cammino è un multiplo dispari di λ/2:</p>
+    <div class="formula">
+        d sin θ = (m + 1/2)λ  (m = 0, ±1, ±2, ...)
+    </div>
+    
+    <p>Posizione dei minimi:</p>
+    <div class="formula">
+        y_min = (m + 1/2)λL/d
+    </div>
+    
+    <h3>Spaziatura tra Frange</h3>
+    <div class="formula">
+        Δy = λL/d
+    </div>
+    
+    <h2>14.3 Distribuzione di Intensità nella Figura di Interferenza</h2>
+    <p>L'intensità varia sinusoidalmente:</p>
+    <div class="formula">
+        I = I_max cos²(πd sin θ/λ)
+    </div>
+    
+    <p>dove I_max = 4I₀ (intensità di una singola fenditura).</p>
+    
+    <h2>14.4 Variazione di Fase dovuta alla Riflessione</h2>
+    <p>Quando un'onda si riflette su un mezzo più denso, subisce uno sfasamento di π (o λ/2).</p>
+    
+    <h3>Regola</h3>
+    <ul>
+        <li>Riflessione da mezzo meno denso a più denso: sfasamento π</li>
+        <li>Riflessione da mezzo più denso a meno denso: nessuno sfasamento</li>
+    </ul>
+    
+    <h2>14.5 Interferenza nelle Lamine Sottili</h2>
+    <p>La luce riflessa da entrambe le superfici di una lamina sottile può interferire.</p>
+    
+    <h3>Differenza di Cammino Ottico</h3>
+    <p>Per incidenza quasi normale su una lamina di spessore t e indice n:</p>
+    <div class="formula">
+        Δ = 2nt
+    </div>
+    
+    <h3>Condizioni per Interferenza (con riflessione alla prima superficie)</h3>
+    
+    <p><strong>Interferenza costruttiva (massimi):</strong></p>
+    <div class="formula">
+        2nt = (m + 1/2)λ  (m = 0, 1, 2, ...)
+    </div>
+    
+    <p><strong>Interferenza distruttiva (minimi):</strong></p>
+    <div class="formula">
+        2nt = mλ  (m = 0, 1, 2, ...)
+    </div>
+    
+    <div class="note">
+        <strong>ATTENZIONE:</strong> Le condizioni si invertono se si considera la luce riflessa dalla superficie inferiore o se entrambe le riflessioni hanno lo stesso tipo di sfasamento.
+    </div>
+    
+    <h3>Applicazioni</h3>
+    
+    <p><strong>Bolle di Sapone e Pellicole d'Olio:</strong></p>
+    <p>Mostrano colori iridescenti perché:</p>
+    <ul>
+        <li>Lo spessore varia</li>
+        <li>Diversi colori interferiscono costruttivamente in punti diversi</li>
+    </ul>
+    
+    <p><strong>Rivestimenti Antiriflesso:</strong></p>
+    <p>Uno strato sottile (t = λ/(4n)) causa interferenza distruttiva per la luce riflessa, riducendo i riflessi.</p>
+    
+    <p><strong>Anelli di Newton:</strong></p>
+    <p>Pattern circolare di interferenza tra una lente e una lastra piana a contatto.</p>
+    
+    <div class="page-break"></div>
+    
+    <!-- CAPITOLO 15: DIFFRAZIONE E POLARIZZAZIONE -->
+    <h1>15. Diffrazione e Polarizzazione</h1>
+    
+    <h2>15.1 Figure di Diffrazione da Fenditure Singole</h2>
+    <p>La diffrazione è la deviazione della luce dal percorso rettilineo quando incontra un ostacolo.</p>
+    
+    <h3>Diffrazione di Fraunhofer</h3>
+    <p>Per una fenditura singola di larghezza a, i minimi si hanno quando:</p>
+    <div class="formula">
+        a sin θ = mλ  (m = ±1, ±2, ±3, ...)
+    </div>
+    
+    <p>Nota: m = 0 NON è un minimo, ma il massimo centrale!</p>
+    
+    <h3>Posizione dei Minimi</h3>
+    <div class="formula
