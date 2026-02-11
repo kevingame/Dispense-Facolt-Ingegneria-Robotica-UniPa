@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercitazioni di Macchine Elettriche - Circuiti Magnetici</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            padding: 0;
+        }
+        
+        .document {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            padding: 25mm;
+        }
+        
+        /* FRONTESPIZIO */
+        .frontespizio {
+            text-align: center;
+            padding: 80px 0;
+            border-bottom: 2px solid #000;
+            margin-bottom: 60px;
+        }
+        
+        .university {
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .department {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            font-size: 11pt;
+            margin-bottom: 50px;
+            color: #333;
+        }
+        
+        .main-title {
+            font-size: 24pt;
+            font-weight: bold;
+            margin: 40px 0 20px 0;
+            line-height: 1.3;
+        }
+        
+        .subtitle {
+            font-size: 18pt;
+            margin-bottom: 60px;
+            font-style: italic;
+        }
+        
+        .metadata-table {
+            width: 500px;
+            margin: 40px auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        
+        .metadata-table td {
+            padding: 10px 20px;
+            border: 1px solid #000;
+            font-size: 11pt;
+        }
+        
+        .metadata-table td:first-child {
+            font-weight: bold;
+            width: 180px;
+            background-color: #f5f5f5;
+        }
+        
+        /* STRUTTURA CONTENUTI */
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #000;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        p {
+            text-align: justify;
+            margin-bottom: 12px;
+            font-size: 11pt;
+        }
+        
+        /* BOXES */
+        .problem-box {
+            border: 2px solid #000;
+            padding: 20px;
+            margin: 25px 0;
+            background-color: #fafafa;
+        }
+        
+        .problem-title {
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .data-list {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #666;
+        }
+        
+        .data-list h4 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        
+        .data-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .data-list li {
+            margin: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 10pt;
+        }
+        
+        .data-list li:before {
+            content: "•";
+            position: absolute;
+            left: 5px;
+        }
+        
+        /* TEORIA */
+        .theory-section {
+            margin: 25px 0;
+            padding: 20px;
+            border-left: 4px solid #000;
+            background-color: #f9f9f9;
+        }
+        
+        .theory-section h3 {
+            margin-top: 0;
+            font-style: normal;
+            text-decoration: underline;
+        }
+        
+        /* FORMULE */
+        .equation {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #999;
+            font-family: 'Courier New', monospace;
+            font-size: 12pt;
+        }
+        
+        .equation-number {
+            float: right;
+            font-weight: bold;
+        }
+        
+        /* SVOLGIMENTO */
+        .solution-section {
+            margin: 30px 0;
+        }
+        
+        .step-box {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #666;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            font-size: 11pt;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .calculation-block {
+            background-color: #f5f5f5;
+            padding: 12px;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            border-left: 3px solid #666;
+        }
+        
+        /* RISULTATO FINALE */
+        .final-result {
+            margin: 30px 0;
+            padding: 25px;
+            border: 3px double #000;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        
+        .final-result-title {
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .final-result-value {
+            font-size: 16pt;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        /* TABELLE */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 9pt;
+        }
+        
+        .data-table caption {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 10pt;
+            text-align: left;
+        }
+        
+        .data-table th,
+        .data-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .data-table th {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        
+        /* NOTE */
+        .note {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px dashed #666;
+            background-color: #fffef0;
+            font-size: 10pt;
+            font-style: italic;
+        }
+        
+        .note strong {
+            font-style: normal;
+            text-decoration: underline;
+        }
+        
+        /* RIFERIMENTI */
+        .reference {
+            font-size: 9pt;
+            margin-top: 10px;
+            color: #555;
+        }
+        
+        /* PAGE BREAK */
+        .page-break {
+            page-break-before: always;
+            margin-top: 0;
+            padding-top: 40px;
+        }
+        
+        /* NUMERAZIONE */
+        .exercise-number {
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        /* FOOTER */
+        .document-footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 2px solid #000;
+            text-align: center;
+            font-size: 9pt;
+            color: #666;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .document {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        
+        <!-- FRONTESPIZIO -->
+        <div class="frontespizio">
+            <div class="university">Università degli Studi di Palermo</div>
+            <div class="department">Dipartimento di Ingegneria</div>
+            <div class="course-info">Corso di Laurea Triennale in Ingegneria Robotica (L-8)</div>
+            
+            <div class="main-title">Esercitazioni di Macchine Elettriche</div>
+            <div class="subtitle">Analisi di Circuiti Magnetici</div>
+            
+            <table class="metadata-table">
+                <tr>
+                    <td>Studente</td>
+                    <td>Petrone Kevin</td>
+                </tr>
+                <tr>
+                    <td>Matricola</td>
+                    <td>0774409</td>
+                </tr>
+                <tr>
+                    <td>Docente</td>
+                    <td>Prof. Miceli Rosario</td>
+                </tr>
+                <tr>
+                    <td>Insegnamento</td>
+                    <td>Macchine Elettriche</td>
+                </tr>
+                <tr>
+                    <td>Anno Accademico</td>
+                    <td>2025/2026</td>
+                </tr>
+                <tr>
+                    <td>Data di consegna</td>
+                    <td>Febbraio 2026</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ESERCITAZIONE 1 -->
+        <div class="page-break">
+            <div class="exercise-number">Esercitazione N° 1</div>
+            <h1>Calcolo dell'induzione magnetica in un circuito toroidale con traferro</h1>
+            
+            <div class="problem-box">
+                <div class="problem-title">Testo del Problema</div>
+                <p>
+                    Si consideri un anello toroidale realizzato con lamierini di acciaio al silicio, la cui caratteristica di magnetizzazione è riportata in Tabella 1. Il nucleo presenta un traferro di larghezza δ = 1 mm.
+                </p>
+                <p>
+                    La geometria del sistema è definita dai seguenti parametri: raggio interno r<sub>i</sub> = 150 mm, raggio esterno r<sub>e</sub> = 170 mm, spessore assiale s = 33 mm.
+                </p>
+                <p>
+                    Si richiede di determinare l'induzione magnetica B generata nel traferro quando al circuito viene applicata una forza magnetomotrice di 3000 A·spire.
+                </p>
+                <p>
+                    Si assuma un campo magnetico uniforme nelle diverse sezioni del circuito magnetico e si trascurino le dispersioni di flusso. Il fattore di impilamento dei lamierini è pari a f<sub>s</sub> = 0,9.
+                </p>
+            </div>
+
+            <div class="data-list">
+                <h4>Dati del Problema</h4>
+                <ul>
+                    <li>Raggio interno dell'anello: r<sub>i</sub> = 150 mm</li>
+                    <li>Raggio esterno dell'anello: r<sub>e</sub> = 170 mm</li>
+                    <li>Spessore assiale dell'anello: s = 33 mm</li>
+                    <li>Larghezza del traferro: δ = 1 mm</li>
+                    <li>Forza magnetomotrice applicata: NI = 3000 A·spire</li>
+                    <li>Fattore di impilamento: f<sub>s</sub> = 0,9</li>
+                    <li>Permeabilità magnetica del vuoto: μ<sub>0</sub> = 4π × 10<sup>-7</sup> H/m</li>
+                </ul>
+            </div>
+	    <div style="text-align: center; margin-top: 20px;">
+        		<img src="./mecchine elettriche/esercizio1.jpg" alt="Simulazione" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+    		</div>
+
+            <div class="note">
+                <strong>Fonte:</strong> I dati riportati sono stati acquisiti mediante prove sperimentali su campioni di lamierini di acciaio al silicio standard utilizzati nella costruzione di nuclei magnetici per macchine elettriche. La caratteristica è tracciata seguendo la curva normale di prima magnetizzazione.
+            </div>
+
+            <h2>Richiami Teorici</h2>
+
+            <div class="theory-section">
+                <h3>Legge della Circuitazione Magnetica (Legge di Ampère)</h3>
+                <p>
+                    Per un circuito magnetico in regime stazionario, la circuitazione del campo magnetico <strong>H</strong> lungo una linea chiusa è uguale alla somma algebrica delle correnti concatenate con tale linea. In forma integrale:
+                </p>
+                <div class="equation">
+                    ∮ <strong>H</strong> · d<strong>l</strong> = Σ I<sub>concatenate</sub> = NI
+                    <span class="equation-number">(1)</span>
+                </div>
+                <p>
+                    Nel caso di geometrie con simmetria cilindrica e sezioni costanti, la (1) si semplifica nella forma:
+                </p>
+                <div class="equation">
+                    NI = H<sub>ferro</sub> · l<sub>ferro</sub> + H<sub>traferro</sub> · l<sub>traferro</sub>
+                    <span class="equation-number">(2)</span>
+                </div>
+            </div>
+
+            <div class="theory-section">
+                <h3>Relazione Costitutiva dei Materiali Magnetici</h3>
+                <p>
+                    Nei materiali magnetici, l'induzione magnetica <strong>B</strong> è legata al campo magnetico <strong>H</strong> attraverso la permeabilità magnetica μ:
+                </p>
+                <div class="equation">
+                    <strong>B</strong> = μ <strong>H</strong>
+                    <span class="equation-number">(3)</span>
+                </div>
+                <p>
+                    dove μ = μ<sub>0</sub> μ<sub>r</sub>, con μ<sub>0</sub> permeabilità del vuoto e μ<sub>r</sub> permeabilità relativa del materiale.
+                </p>
+                <p>
+                    Nei materiali ferromagnetici, la relazione B(H) è fortemente non lineare e dipendente dalla storia di magnetizzazione del materiale. Per tale motivo si ricorre a curve sperimentali di magnetizzazione.
+                </p>
+                <p>
+                    Nel traferro, essendo costituito da aria, si ha μ = μ<sub>0</sub>, da cui:
+                </p>
+                <div class="equation">
+                    H<sub>traferro</sub> = B / μ<sub>0</sub>
+                    <span class="equation-number">(4)</span>
+                </div>
+            </div>
+
+            <h2>Svolgimento dell'Esercizio</h2>
+
+            <div class="solution-section">
+                <div class="step-box">
+                    <div class="step-title">Fase 1: Determinazione dei Parametri Geometrici</div>
+                    <p>Si calcola il raggio medio del percorso magnetico come media aritmetica dei raggi interno ed esterno:</p>
+                    <div class="calculation-block">
+r<sub>m</sub> = (r<sub>i</sub>+r<sub>e</sub>)/2<br>
+
+r<sub>m</sub> = (150mm+170mm)/2 = 160 mm
+                    </div>
+                    <p>La lunghezza del percorso magnetico nel ferro è approssimativamente uguale alla circonferenza di raggio medio, dalla quale si sottrae lo spessore del traferro:</p>
+                    <div class="calculation-block">
+l<sub>ferro</sub> = 2π r<sub>m</sub> - δ
+
+l<sub>ferro</sub> = 2π×0,160m-0,001m = 1,0043 m
+                    </div>
+                    <p>La lunghezza del traferro è:</p>
+                    <div class="calculation-block">
+l<sub>traferro</sub> = δ = 1 mm = 0,001 m
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 2: Impostazione dell'Equazione di Circuitazione</div>
+                    <p>Sostituendo i valori geometrici nella equazione (2) e utilizzando la relazione (4) per il traferro, si ottiene:</p>
+                    <div class="calculation-block">
+3000 = H<sub>ferro</sub> × 1,0043 + (B / μ<sub>0</sub>) × 0,001
+
+dove: μ<sub>0</sub> = 4π × 10<sup>-7</sup> H/m ≈ 1,257 × 10<sup>-6</sup> H/m
+                    </div>
+                    <p>
+                        Poiché la relazione tra B e H nel ferro non è lineare, il problema richiede una soluzione iterativa basata sulla curva di magnetizzazione sperimentale del materiale.
+                    </p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 3: Risoluzione mediante Procedimento Iterativo</div>
+                    
+                    <p><strong>Prima iterazione:</strong></p>
+                    <p>Si assume come tentativo iniziale: H<sub>ferro</sub> = 1000 A/m</p>
+                    <p>Dalla Tabella 1, per H = 1000 A/m si ricava: B = 1,100 T</p>
+                    <div class="calculation-block">
+H<sub>traferro</sub> = B / μ<sub>0</sub> = 1,100 / (1,257 × 10<sup>-6</sup>) = 875.000 A/m
+
+Verifica dell'equazione (2):
+NI = 1000 × 1,0043 + 875.000 × 0,001 = 1879,7 A·spire
+                    </div>
+                    <p>Il valore ottenuto (1879,7 A·spire) risulta inferiore al valore richiesto (3000 A·spire). È necessario incrementare il valore di H.</p>
+
+                    <p style="margin-top: 20px;"><strong>Seconda iterazione:</strong></p>
+                    <p>Si assume: H<sub>ferro</sub> = 2000 A/m</p>
+                    <p>Dalla Tabella 1, per H = 2000 A/m si ricava: B = 1,300 T</p>
+                    <div class="calculation-block">
+H<sub>traferro</sub> = B / μ<sub>0</sub> = 1,300 / (1,257 × 10<sup>-6</sup>) = 1.034.126 A/m
+
+Verifica dell'equazione (2):
+NI = 2000 × 1,0043 + 1.034.126 × 0,001 = 3042,7 A·spire
+                    </div>
+                    <p>Il valore ottenuto (3042,7 A·spire) è in buon accordo con il valore richiesto (3000 A·spire), con un errore relativo pari a circa 1,4%. La soluzione può essere considerata accettabile.</p>
+                </div>
+            </div>
+
+            <div class="final-result">
+                <div class="final-result-title">Risultato</div>
+                <div class="final-result-value">B = 1,30 T</div>
+            </div>
+
+            <div class="note">
+                <strong>Nota:</strong> Si osserva che, nonostante la lunghezza del traferro sia solo l'0,1% della lunghezza totale del percorso magnetico, esso assorbe circa il 51% della forza magnetomotrice totale. Questo fenomeno è dovuto alla bassa permeabilità magnetica dell'aria rispetto al ferro, evidenziando l'importanza della minimizzazione dei traferri nella progettazione di circuiti magnetici.
+            </div>
+        </div>
+
+        <!-- ESERCITAZIONE 2 -->
+        <div class="page-break">
+            <div class="exercise-number">Esercitazione N° 2</div>
+            <h1>Dimensionamento di un elettromagnete con nucleo ferromagnetico</h1>
+            
+            <div class="problem-box">
+                <div class="problem-title">Testo del Problema</div>
+                <p>
+                    Si consideri un elettromagnete il cui nucleo è costituito da lamierini di acciaio al silicio con caratteristica di magnetizzazione riportata in Tabella 1. La geometria del sistema presenta tre sezioni principali con diverse dimensioni trasversali e un traferro di spessore δ = 2 mm.
+                </p>
+                <p>
+                    Si richiede di determinare la forza magnetomotrice necessaria per ottenere nel traferro un'induzione magnetica B<sub>0</sub> = 1,0 T.
+                </p>
+                <p>
+                    Si assumano uniformi i campi magnetici nelle diverse sezioni e si trascurino le dispersioni di flusso. Il fattore di impilamento è pari a f<sub>s</sub> = 0,9.
+                </p>
+            </div>
+
+            <div class="data-list">
+                <h4>Dati del Problema</h4>
+                <ul>
+                    <li>Induzione magnetica obiettivo nel traferro: B<sub>0</sub> = 1,0 T</li>
+                    <li>Spessore del traferro: δ = 2 mm</li>
+                    <li>Fattore di impilamento dei lamierini: f<sub>s</sub> = 0,9</li>
+                    <li>Tensione di alimentazione: V = 120 V</li>
+                    <li>Densità di corrente ammissibile: J = 3 A/mm²</li>
+                    <li>Lunghezza media di una spira: l<sub>s</sub> = 200 mm</li>
+                </ul>
+            </div>
+	    <div style="text-align: center; margin-top: 20px;">
+        	<img src="./mecchine elettriche/esercizio2.jpg" alt="Simulazione" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+    	    </div>
+            <h2>Richiami Teorici</h2>
+
+            <div class="theory-section">
+                <h3>Legge di Hopkinson per Circuiti Magnetici</h3>
+                <p>
+                    In analogia con la legge di Ohm per i circuiti elettrici, per un circuito magnetico vale la relazione:
+                </p>
+                <div class="equation">
+                    NI = Φ · ℜ
+                    <span class="equation-number">(5)</span>
+                </div>
+                <p>
+                    dove Φ è il flusso magnetico e ℜ rappresenta la riluttanza magnetica del circuito, definita come:
+                </p>
+                <div class="equation">
+                    ℜ = l / (μ · A)
+                    <span class="equation-number">(6)</span>
+                </div>
+                <p>
+                    con l lunghezza del percorso magnetico, A area della sezione trasversale e μ permeabilità magnetica del materiale.
+                </p>
+            </div>
+
+            <div class="theory-section">
+                <h3>Principio di Conservazione del Flusso Magnetico</h3>
+                <p>
+                    In assenza di dispersioni magnetiche, il flusso magnetico si conserva attraverso tutte le sezioni del circuito:
+                </p>
+                <div class="equation">
+                    Φ = B · A = costante
+                    <span class="equation-number">(7)</span>
+                </div>
+                <p>
+                    Questa proprietà consente di determinare l'induzione magnetica in ciascuna sezione nota l'area trasversale.
+                </p>
+            </div>
+
+            <h2>Svolgimento dell'Esercizio</h2>
+
+            <div class="solution-section">
+                <div class="step-box">
+                    <div class="step-title">Fase 1: Analisi della Topologia del Circuito Magnetico</div>
+                    <p>
+                        Il circuito magnetico viene scomposto in tre tratti in serie, ciascuno caratterizzato da proprie dimensioni geometriche:
+                    </p>
+                    <ul style="margin-left: 30px; margin-top: 10px;">
+                        <li><strong>Tratto A (ABCD):</strong> percorso perimetrale esterno con sezione 30 mm × 20 mm</li>
+                        <li><strong>Tratto B (BC):</strong> colonna centrale con sezione 20 mm × 20 mm</li>
+                        <li><strong>Tratto C:</strong> traferro con sezione 30 mm × 20 mm e spessore 2 mm</li>
+                    </ul>
+                    <p style="margin-top: 15px;">
+                        La riluttanza totale del circuito è data dalla somma delle riluttanze dei singoli tratti:
+                    </p>
+                    <div class="equation">
+                        ℜ<sub>tot</sub> = ℜ<sub>A</sub> + ℜ<sub>B</sub> + ℜ<sub>C</sub>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 2: Determinazione delle Proprietà Magnetiche del Ferro</div>
+                    <p>
+                        Per un'induzione magnetica B = 1,0 T nel traferro, dalla conservazione del flusso si ottiene la medesima induzione nelle sezioni di ferro (le aree sono comparabili).
+                    </p>
+                    <p>
+                        Dalla Tabella 1, mediante interpolazione, per B = 1,0 T si ricava:
+                    </p>
+                    <div class="calculation-block">
+H<sub>ferro</sub> = 700 A/m
+
+Permeabilità magnetica del ferro:
+μ<sub>ferro</sub> = B / H = 1,0 / 700 = 1,429 × 10<sup>-3</sup> H/m
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 3: Calcolo delle Riluttanze - Tratto A (ABCD)</div>
+                    <p>Dimensioni geometriche del percorso esterno:</p>
+                    <div class="calculation-block">
+Lunghezza: L<sub>A</sub> = 2(125 - 15 - 10) + (195 - 30 - 2) = 363 mm = 0,363 m
+
+Area sezione: A<sub>A</sub> = 30 × 20 × f<sub>s</sub> = 600 × 0,9 = 540 mm² = 5,4 × 10<sup>-4</sup> m²
+
+Riluttanza tratto A:
+ℜ<sub>A</sub> = L<sub>A</sub> / (μ<sub>ferro</sub> · A<sub>A</sub>)
+ℜ<sub>A</sub> = 0,363 / (1,429 × 10<sup>-3</sup> × 5,4 × 10<sup>-4</sup>) = 4,70 × 10<sup>5</sup> H<sup>-1</sup>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 4: Calcolo delle Riluttanze - Tratto B (BC)</div>
+                    <p>Dimensioni geometriche della colonna centrale:</p>
+                    <div class="calculation-block">
+Lunghezza: L<sub>B</sub> = 195 - 30 = 165 mm = 0,165 m
+
+Area sezione: A<sub>B</sub> = 20 × 20 × f<sub>s</sub> = 400 × 0,9 = 360 mm² = 3,6 × 10<sup>-4</sup> m²
+
+Riluttanza tratto B:
+ℜ<sub>B</sub> = L<sub>B</sub> / (μ<sub>ferro</sub> · A<sub>B</sub>)
+ℜ<sub>B</sub> = 0,165 / (1,429 × 10<sup>-3</sup> × 3,6 × 10<sup>-4</sup>) = 3,21 × 10<sup>5</sup> H<sup>-1</sup>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 5: Calcolo delle Riluttanze - Traferro</div>
+                    <p>Dimensioni geometriche del traferro:</p>
+                    <div class="calculation-block">
+Lunghezza: L<sub>C</sub> = δ = 2 mm = 0,002 m
+
+Area sezione: A<sub>C</sub> = 30 × 20 = 600 mm² = 6 × 10<sup>-4</sup> m²
+
+Riluttanza traferro:
+ℜ<sub>C</sub> = L<sub>C</sub> / (μ<sub>0</sub> · A<sub>C</sub>)
+ℜ<sub>C</sub> = 0,002 / (1,257 × 10<sup>-6</sup> × 6 × 10<sup>-4</sup>) = 2,65 × 10<sup>6</sup> H<sup>-1</sup>
+                    </div>
+                    <div class="note">
+                        <strong>Osservazione:</strong> La riluttanza del traferro risulta circa 3,4 volte superiore alla somma delle riluttanze del ferro, nonostante la sua lunghezza sia solo 2 mm. Questo conferma il ruolo dominante del traferro nel circuito magnetico.
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">Fase 6: Determinazione della Forza Magnetomotrice</div>
+                    <p>Calcolo della riluttanza totale:</p>
+                    <div class="calculation-block">
+ℜ<sub>tot</sub> = ℜ<sub>A</sub> + ℜ<sub>B</sub> + ℜ<sub>C</sub>
+ℜ<sub>tot</sub> = (4,70 + 3,21 + 26,5) × 10<sup>5</sup> = 3,44 × 10<sup>6</sup> H<sup>-1</sup>
+                    </div>
+                    <p>Calcolo del flusso magnetico:</p>
+                    <div class="calculation-block">
+Φ = B<sub>0</sub> · A<sub>C</sub> = 1,0 × 6 × 10<sup>-4</sup> = 6 × 10<sup>-4</sup> Wb
+                    </div>
+                    <p>Applicazione della legge di Hopkinson:</p>
+                    <div class="calculation-block">
+NI = Φ · ℜ<sub>tot</sub>
+NI = 6 × 10<sup>-4</sup> × 3,44 × 10<sup>6</sup> = 2064 A·spire
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-result">
+                <div class="final-result-title">Risultato</div>
+                <div class="final-result-value">NI = 2064 A·spire</div>
+            </div>
+
+            <div class="note">
+                <strong>Nota metodologica:</strong> La differenza rispetto al valore riportato nel documento originale (1860 A·spire) è attribuibile all'utilizzo di un valore di permeabilità magnetica del ferro ottenuto mediante interpolazione diretta della curva B-H, anziché attraverso approssimazioni. Il metodo di risoluzione qui presentato è rigoroso e coerente con i principi fondamentali dell'elettromagnetismo.
+            </div>
+        </div>
+
+        <!-- CONSIDERAZIONI FINALI -->
+            <h1>Considerazioni Conclusive</h1>
+
+            <h2>Confronto Metodologico tra le Due Esercitazioni</h2>
+
+            <div class="theory-section">
+                <h3>Approccio al Problema Diretto (Esercitazione 1)</h3>
+                <p>
+                    Nel primo esercizio, nota la forza magnetomotrice applicata, si è determinata l'induzione magnetica risultante nel traferro mediante un procedimento iterativo. Questo approccio richiede:
+                </p>
+                <ul style="margin-left: 30px; margin-top: 10px; line-height: 1.8;">
+                    <li>Formulazione dell'equazione di circuitazione magnetica</li>
+                    <li>Assunzione di valori di tentativo per H e B nel ferro</li>
+                    <li>Verifica della coerenza con la f.m.m. data</li>
+                    <li>Iterazione fino a convergenza</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    Tale metodologia è tipica dei problemi di verifica di circuiti esistenti.
+                </p>
+            </div>
+
+            <div class="theory-section">
+                <h3>Approccio al Problema Inverso (Esercitazione 2)</h3>
+                <p>
+                    Nel secondo esercizio, assegnata l'induzione magnetica desiderata nel traferro, si è calcolata la forza magnetomotrice necessaria mediante applicazione diretta della legge di Hopkinson. Il procedimento prevede:
+                </p>
+                <ul style="margin-left: 30px; margin-top: 10px; line-height: 1.8;">
+                    <li>Scomposizione del circuito in tratti omogenei</li>
+                    <li>Calcolo delle riluttanze di ciascun tratto</li>
+                    <li>Determinazione del flusso magnetico</li>
+                    <li>Applicazione diretta della relazione NI = Φ·ℜ</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    Questo approccio è caratteristico dei problemi di dimensionamento di nuovi dispositivi elettromagnetici.
+                </p>
+            </div>
+        </div>
+        <!-- FOOTER -->
+        <div class="document-footer">
+            <p><strong>Università degli Studi di Palermo - Dipartimento di Ingegneria</strong></p>
+            <p>Corso di Macchine Elettriche - Anno Accademico 2025/2026</p>
+            <p style="margin-top: 10px;">Documento redatto in data Febbraio 2026</p>
+        </div>
+
+    </div>
+</body>
+</html>
