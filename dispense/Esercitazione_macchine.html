@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Times New Roman', Times, serif;
-            line-height: 1.6;
+            line-height: 1.4;
             color: #1a1a1a;
             background-color: #ffffff;
             padding: 0;
@@ -23,15 +23,16 @@
             max-width: 210mm;
             margin: 0 auto;
             background: white;
-            padding: 25mm;
+            padding: 20mm;
         }
         
         /* FRONTESPIZIO */
         .frontespizio {
             text-align: center;
-            padding: 80px 0;
+            padding: 50px 0 30px 0;
             border-bottom: 2px solid #000;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
+            page-break-after: always;
         }
         
         .university {
@@ -50,28 +51,29 @@
         
         .course-info {
             font-size: 11pt;
-            margin-bottom: 50px;
+            margin-bottom: 35px;
             color: #333;
         }
         
         .main-title {
             font-size: 24pt;
             font-weight: bold;
-            margin: 40px 0 20px 0;
+            margin: 30px 0 15px 0;
             line-height: 1.3;
         }
         
         .subtitle {
             font-size: 18pt;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             font-style: italic;
         }
         
         .metadata-table {
             width: 500px;
-            margin: 40px auto;
+            margin: 30px auto;
             border-collapse: collapse;
             text-align: left;
+            page-break-inside: avoid;
         }
         
         .metadata-table td {
@@ -90,54 +92,59 @@
         h1 {
             font-size: 18pt;
             font-weight: bold;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 6px;
             border-bottom: 2px solid #000;
             text-transform: uppercase;
+            page-break-after: avoid;
         }
         
         h2 {
             font-size: 14pt;
             font-weight: bold;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
         }
         
         h3 {
             font-size: 12pt;
             font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-top: 15px;
+            margin-bottom: 8px;
             font-style: italic;
+            page-break-after: avoid;
         }
         
         p {
             text-align: justify;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-size: 11pt;
         }
         
-        /* BOXES */
+        /* BOXES - EVITA INTERRUZIONI */
         .problem-box {
             border: 2px solid #000;
-            padding: 20px;
-            margin: 25px 0;
+            padding: 15px;
+            margin: 18px 0;
             background-color: #fafafa;
+            page-break-inside: avoid;
         }
         
         .problem-title {
             font-weight: bold;
             font-size: 12pt;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
         
         .data-list {
-            margin: 20px 0;
-            padding: 15px;
+            margin: 15px 0;
+            padding: 12px;
             background-color: #fff;
             border: 1px solid #666;
+            page-break-inside: avoid;
         }
         
         .data-list h4 {
@@ -167,10 +174,11 @@
         
         /* TEORIA */
         .theory-section {
-            margin: 25px 0;
-            padding: 20px;
+            margin: 18px 0;
+            padding: 15px;
             border-left: 4px solid #000;
             background-color: #f9f9f9;
+            page-break-inside: avoid;
         }
         
         .theory-section h3 {
@@ -182,12 +190,13 @@
         /* FORMULE */
         .equation {
             text-align: center;
-            margin: 20px 0;
-            padding: 15px;
+            margin: 15px 0;
+            padding: 12px;
             background-color: #fff;
             border: 1px solid #999;
             font-family: 'Courier New', monospace;
             font-size: 12pt;
+            page-break-inside: avoid;
         }
         
         .equation-number {
@@ -197,44 +206,47 @@
         
         /* SVOLGIMENTO */
         .solution-section {
-            margin: 30px 0;
+            margin: 20px 0;
         }
         
         .step-box {
-            margin: 20px 0;
-            padding: 15px;
+            margin: 15px 0;
+            padding: 12px;
             border: 1px solid #666;
+            page-break-inside: avoid;
         }
         
         .step-title {
             font-weight: bold;
             font-size: 11pt;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
         
         .calculation-block {
             background-color: #f5f5f5;
-            padding: 12px;
-            margin: 12px 0;
+            padding: 10px;
+            margin: 10px 0;
             font-family: 'Courier New', monospace;
             font-size: 10pt;
             border-left: 3px solid #666;
+            page-break-inside: avoid;
         }
         
         /* RISULTATO FINALE */
         .final-result {
-            margin: 30px 0;
-            padding: 25px;
+            margin: 20px 0;
+            padding: 18px;
             border: 3px double #000;
             text-align: center;
             background-color: #f0f0f0;
+            page-break-inside: avoid;
         }
         
         .final-result-title {
             font-weight: bold;
             font-size: 12pt;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
         
@@ -248,8 +260,9 @@
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 25px 0;
+            margin: 18px 0;
             font-size: 9pt;
+            page-break-inside: avoid;
         }
         
         .data-table caption {
@@ -273,12 +286,13 @@
         
         /* NOTE */
         .note {
-            margin: 20px 0;
-            padding: 15px;
+            margin: 15px 0;
+            padding: 12px;
             border: 1px dashed #666;
             background-color: #fffef0;
             font-size: 10pt;
             font-style: italic;
+            page-break-inside: avoid;
         }
         
         .note strong {
@@ -289,7 +303,7 @@
         /* RIFERIMENTI */
         .reference {
             font-size: 9pt;
-            margin-top: 10px;
+            margin-top: 8px;
             color: #555;
         }
         
@@ -297,7 +311,7 @@
         .page-break {
             page-break-before: always;
             margin-top: 0;
-            padding-top: 40px;
+            padding-top: 25px;
         }
         
         /* NUMERAZIONE */
@@ -305,16 +319,32 @@
             font-size: 20pt;
             font-weight: bold;
             margin-bottom: 5px;
+            page-break-after: avoid;
         }
         
         /* FOOTER */
         .document-footer {
-            margin-top: 60px;
-            padding-top: 20px;
+            margin-top: 40px;
+            padding-top: 15px;
             border-top: 2px solid #000;
             text-align: center;
             font-size: 9pt;
             color: #666;
+            page-break-inside: avoid;
+        }
+        
+        /* IMMAGINI */
+        .image-container {
+            text-align: center;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
         }
         
         @media print {
@@ -329,6 +359,41 @@
             
             .page-break {
                 page-break-before: always;
+            }
+            
+            /* Evita interruzioni indesiderate */
+            .problem-box,
+            .data-list,
+            .theory-section,
+            .step-box,
+            .final-result,
+            .note,
+            .equation,
+            .calculation-block,
+            .data-table,
+            .metadata-table,
+            .image-container {
+                page-break-inside: avoid;
+            }
+            
+            /* Evita interruzioni dopo i titoli */
+            h1, h2, h3, h4,
+            .exercise-number,
+            .step-title,
+            .problem-title {
+                page-break-after: avoid;
+            }
+            
+            /* Forza interruzione prima delle esercitazioni */
+            .page-break {
+                page-break-before: always;
+            }
+            
+            /* Mantieni insieme titolo e contenuto seguente */
+            h1 + .problem-box,
+            h2 + .theory-section,
+            h2 + .solution-section {
+                page-break-before: avoid;
             }
         }
     </style>
@@ -406,9 +471,10 @@
                     <li>Permeabilità magnetica del vuoto: μ<sub>0</sub> = 4π × 10<sup>-7</sup> H/m</li>
                 </ul>
             </div>
-	    <div style="text-align: center; margin-top: 20px;">
-        		<img src="./mecchine elettriche/esercizio1.jpg" alt="Simulazione" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
-    		</div>
+	    
+            <div class="image-container">
+        		<img src="./mecchine elettriche/esercizio1.jpg" alt="Simulazione">
+    	    </div>
 
             <div class="note">
                 <strong>Fonte:</strong> I dati riportati sono stati acquisiti mediante prove sperimentali su campioni di lamierini di acciaio al silicio standard utilizzati nella costruzione di nuclei magnetici per macchine elettriche. La caratteristica è tracciata seguendo la curva normale di prima magnetizzazione.
@@ -560,9 +626,11 @@ NI = 2000 × 1,0043 + 1.034.126 × 0,001 = 3042,7 A·spire
                     <li>Lunghezza media di una spira: l<sub>s</sub> = 200 mm</li>
                 </ul>
             </div>
-	    <div style="text-align: center; margin-top: 20px;">
-        	<img src="./mecchine elettriche/esercizio2.jpg" alt="Simulazione" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+	    
+            <div class="image-container">
+        	    <img src="./mecchine elettriche/esercizio2.jpg" alt="Simulazione">
     	    </div>
+            
             <h2>Richiami Teorici</h2>
 
             <div class="theory-section">
@@ -712,6 +780,7 @@ NI = 6 × 10<sup>-4</sup> × 3,44 × 10<sup>6</sup> = 2064 A·spire
         </div>
 
         <!-- CONSIDERAZIONI FINALI -->
+        <div class="page-break">
             <h1>Considerazioni Conclusive</h1>
 
             <h2>Confronto Metodologico tra le Due Esercitazioni</h2>
@@ -748,6 +817,7 @@ NI = 6 × 10<sup>-4</sup> × 3,44 × 10<sup>6</sup> = 2064 A·spire
                 </p>
             </div>
         </div>
+        
         <!-- FOOTER -->
         <div class="document-footer">
             <p><strong>Università degli Studi di Palermo - Dipartimento di Ingegneria</strong></p>
