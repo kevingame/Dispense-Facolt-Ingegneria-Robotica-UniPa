@@ -44,6 +44,17 @@ button {
     color: #a00;
     font-style: italic;
 }
+
+/* Forza il testo dei bottoni a essere sempre nero, anche dentro i link */
+a button {
+    color: black;
+    text-decoration: none;
+}
+
+/* Opzionale: toglie il blu anche quando il link è già stato cliccato */
+a:visited button {
+    color: black;
+}
 </style>
 
 <script>
