@@ -1112,6 +1112,85 @@ I₀  = corrente di magnetizzazione (a vuoto: I₁ = I₀)
 
   <p>Il VSI trifase ha sei interruttori (IGBT con diodi in antiparallelo), disposti in tre rami (uno per fase). In ogni ramo, i due switch sono complementari: mai entrambi ON contemporaneamente (cortocircuito del bus DC) né entrambi OFF (tensione indeterminata).</p>
 
+  <h4>Principi di Funzionamento del VSI</h4>
+  <p>Il funzionamento del VSI si basa su due regole fondamentali:</p>
+  <ol>
+    <li><strong>In ogni istante devono trovarsi in conduzione 3 dispositivi</strong>, dei quali uno posto nella parte superiore e due nella parte inferiore del ponte trifase (o viceversa).</li>
+    <li><strong>Non si possono comandare in accensione contemporaneamente due dispositivi statici posti nello stesso ramo</strong>, al fine di evitare il cortocircuito della capacità del DC-link.</li>
+  </ol>
+
+  <h4>Struttura Circuitale del VSI</h4>
+  <p>L'inverter VSI è costituito da tre blocchi principali:</p>
+  <ul>
+    <li><strong>Il DC-link:</strong> la sorgente di energia in ingresso. Nel VSI è un condensatore caricato a tensione continua costante. Il bus DC è simmetrico: due condensatori in serie con il punto centrale O (punto di controllo dei condensatori), i poli positivo P e negativo N distano ciascuno V<sub>dc</sub>/2 dal centro.</li>
+    <li><strong>Il ponte di potenza:</strong> una struttura a 6 interruttori elettronici chiamati MOSFET (o IGBT). Sono suddivisi in 3 gambe (una per ogni fase del motore A, B, C). Su questi rami troviamo i MOSFET e i <em>diodi di ricircolo</em> (fanno scorrere la corrente del motore e evitano picchi di tensione). I semiconduttori di potenza, a differenza di un interruttore comune, possono aprirsi e chiudersi migliaia di volte al secondo senza rompersi.</li>
+    <li><strong>Il driver:</strong> un microprocessore che regola l'accensione e lo spegnimento dei dispositivi elettronici di potenza.</li>
+  </ul>
+
+  <h4>Modello Matematico del VSI (funzioni di commutazione)</h4>
+  <p>Nel modello matematico equivalente si suppone che i dispositivi siano ideali e la commutazione istantanea. Si associa una variabile binaria ad ogni switch:</p>
+  <ul>
+    <li>S<sub>k</sub> = 0 se lo switch è aperto</li>
+    <li>S<sub>k</sub> = 1 se lo switch è chiuso</li>
+  </ul>
+  <p>In un inverter, gli switch dello stesso ramo sono comandati in modo complementare, quindi:</p>
+
+  <div class="formula">
+    S<sub>A</sub> = 1 &nbsp;⟹&nbsp; si chiude S<sub>A+</sub> &nbsp;⟹&nbsp; la tensione al polo della fase è +V<sub>dc</sub>/2
+    <br>
+    S<sub>A</sub> = 0 &nbsp;⟹&nbsp; si chiude S<sub>A−</sub> &nbsp;⟹&nbsp; la tensione al polo della fase è −V<sub>dc</sub>/2
+    <br><br>
+    Espressioni delle tensioni di polo rispetto al punto centrale O:
+    <br>
+    V<sub>AO</sub> = (2S<sub>A</sub> − 1) · V<sub>dc</sub>/2
+    <br>
+    V<sub>BO</sub> = (2S<sub>B</sub> − 1) · V<sub>dc</sub>/2
+    <br>
+    V<sub>CO</sub> = (2S<sub>C</sub> − 1) · V<sub>dc</sub>/2
+    <br><br>
+    <em>Verifica:</em> se S<sub>A</sub> = 1 &nbsp;⟹&nbsp; V<sub>AO</sub> = (2−1)·V<sub>dc</sub>/2 = +V<sub>dc</sub>/2 ✓
+    <br>
+    se S<sub>A</sub> = 0 &nbsp;⟹&nbsp; V<sub>AO</sub> = (0−1)·V<sub>dc</sub>/2 = −V<sub>dc</sub>/2 ✓
+  </div>
+
+  <p>Le tensioni di polo si possono anche esprimere come somma della tensione sulla fase del motore (V<sub>AN</sub>) e la tensione tra i due centri (V<sub>NO</sub>):</p>
+
+  <div class="formula">
+    V<sub>AO</sub> = V<sub>AN</sub> + V<sub>NO</sub>
+    <br>
+    V<sub>BO</sub> = V<sub>BN</sub> + V<sub>NO</sub>
+    <br>
+    V<sub>CO</sub> = V<sub>CN</sub> + V<sub>NO</sub>
+    <br><br>
+    In un sistema trifase equilibrato (carico simmetrico), la somma delle 3 tensioni di fase deve essere sempre zero:
+    <br>
+    V<sub>AN</sub> + V<sub>BN</sub> + V<sub>CN</sub> = 0
+    <br><br>
+    Segue che: &nbsp; V<sub>NO</sub> = (V<sub>AO</sub> + V<sub>BO</sub> + V<sub>CO</sub>) / 3
+    <br><br>
+    Sostituendo, le tensioni di fase diventano:
+    <br>
+    V<sub>AN</sub> = (2V<sub>AO</sub> − V<sub>BO</sub> − V<sub>CO</sub>) / 3
+    <br>
+    V<sub>BN</sub> = (2V<sub>BO</sub> − V<sub>CO</sub> − V<sub>AO</sub>) / 3
+    <br>
+    V<sub>CN</sub> = (2V<sub>CO</sub> − V<sub>AO</sub> − V<sub>BO</sub>) / 3
+    <br><br>
+    In forma matriciale: &nbsp; [V<sub>SN</sub>] = M · [V<sub>SO</sub>]
+    <br><br>
+    con &nbsp; M = (1/3) · <span style="display:inline-block; border-left:2px solid var(--ink); border-right:2px solid var(--ink); padding:4px 8px; line-height:1.8">
+      &nbsp;2 &nbsp;−1 &nbsp;−1<br>
+      −1 &nbsp;&nbsp;2 &nbsp;−1<br>
+      −1 &nbsp;−1 &nbsp;&nbsp;2
+    </span>
+    <br><br>
+    <em>Nota:</em> i 2 sulla diagonale indicano che la tensione di quella fase è influenzata maggiormente dal proprio polo; i −1 indicano che le altre 2 fasi sottraggono potenziale a causa del collegamento a stella.
+  </div>
+
+  <h4>Simulazione: Esempio di Configurazione</h4>
+  <p>Consideriamo la configurazione tipo: S<sub>A</sub>=1, S<sub>B</sub>=0, S<sub>C</sub>=0 (quindi S<sub>A+</sub> chiuso, S<sub>B−</sub> chiuso, S<sub>C−</sub> chiuso).</p>
+  <p>L'energia parte dal condensatore in alto, passa attraverso S<sub>A+</sub> ed esce dal punto A; entra nel 1° avvolgimento del motore, attraverso R ed L, e arriva al centro stella (N). Qui la corrente si divide: torna indietro attraverso gli avv. B e C, passando per gli interruttori S<sub>B−</sub> e S<sub>C−</sub>, e torna al polo negativo del DC-link.</p>
+
   <h3>4.3 Controllo del VSI: Onda Quadra</h3>
   <p>Nel controllo ad <strong>onda quadra</strong> (a 6 impulsi), ogni switch conduce per 180°. La tensione di uscita è un'onda quadra sfasata di 120° tra le fasi. Vantaggi: semplicità, perdite di commutazione basse. Svantaggi: contenuto armonico elevato (5ª, 7ª, 11ª armonica…), non permette di variare continuamente l'ampiezza della fondamentale.</p>
 
@@ -1137,6 +1216,14 @@ I₀  = corrente di magnetizzazione (a vuoto: I₁ = I₀)
     Indice di modulazione di frequenza: m<sub>f</sub> = f<sub>sw</sub> / f<sub>out</sub>
     <br><br>
     Fondamentale di uscita: V₁ = m<sub>a</sub> · (V<sub>dc</sub>/2) &nbsp;&nbsp;&nbsp; (per m<sub>a</sub> ≤ 1)
+    <br><br>
+    <strong>Duty Cycle (d):</strong> l'inverter funziona a cicli velocissimi chiamati duty cycle, ovvero il rapporto tra il periodo di modulazione e il tempo in cui l'interruttore è acceso durante il ciclo:
+    <br>
+    d = T<sub>ON</sub> / T<sub>PWM</sub>
+    <br><br>
+    <em>Esempio:</em> T<sub>ON</sub> = 50 ms &nbsp;⟹&nbsp; d = 50/100 = 0,5 (50%). Il motore riceverà il 50% della tensione. L'inverter carica a istante per istante.
+    <br><br>
+    <strong>Regime di saturazione:</strong> se m<sub>a</sub> &gt; 1 la sinusoide è troppo grande e lo switch rimane sempre ON (blocco della commutazione) → si entra in sovramodulazione.
   </div>
 
   <h4>Serie di Fourier della Tensione PWM</h4>
@@ -1155,6 +1242,14 @@ I₀  = corrente di magnetizzazione (a vuoto: I₁ = I₀)
 
   <h4>Definizione e Modello Matematico</h4>
   <p>Nel CSI la sorgente DC è una corrente costante I<sub>dc</sub> mantenuta costante da una grande induttanza in serie. L'inverter controlla <em>quale fase del motore</em> riceve la corrente in ogni istante; la tensione è conseguenza del carico. Il CSI è duale rispetto al VSI: dove nel VSI c'era il condensatore (sorgente rigida di tensione), nel CSI c'è l'induttore (sorgente rigida di corrente).</p>
+
+  <h4>Principi di Funzionamento del CSI</h4>
+  <p>Il funzionamento del CSI si basa su 2 principi fondamentali:</p>
+  <ol>
+    <li><strong>Occorre evitare che si interrompa la circolazione di corrente sul DC-link</strong>: pertanto non si deve mai verificare che i 3 dispositivi inferiori o quelli superiori siano simultaneamente spenti.</li>
+    <li><strong>In ogni istante occorre che solo due dispositivi statici siano in conduzione</strong>, dei quali uno posto nella parte superiore e l'altro nella parte inferiore del ponte trifase.</li>
+  </ol>
+  <p>Nel comando di spegnimento dei dispositivi si introduce un <strong>intenzionale ritardo</strong> di ciascun dispositivo rispetto all'istante in cui viene comandata l'accensione del successivo, assicurando così una sovrapposizione parziale dei comandi (dead-time).</p>
 
   <div class="formula">
     Modello matematico CSI (fase a):
@@ -1326,7 +1421,7 @@ I₀  = corrente di magnetizzazione (a vuoto: I₁ = I₀)
 <!-- FINE -->
 <div style="text-align:center; padding: 2cm; border-top: 2px solid var(--border); color: var(--ink-soft);">
   <p style="font-family:'Cinzel',serif; font-size:14pt; margin-bottom:0.5cm;">Fine della Dispensa</p>
-  <p style="font-style:italic; font-size:10pt;">Università degli Studi di Palermo — Facoltà di Ingegneria — A.A. 2026/2027</p>
+  <p style="font-style:italic; font-size:10pt;">Università degli Studi di Palermo — Facoltà di Ingegneria — A.A. 2025/2026</p>
   <p style="color:var(--accent-gold); font-size:12pt; margin-top:0.3cm;">✦ ✦ ✦</p>
 </div>
 
