@@ -38,8 +38,10 @@ button {
     margin-right: 10px;
     padding: 5px 10px;
     cursor: pointer;
+    border: 1px solid #767676;
+    background-color: #efefef;
 }
-
+    
 .missing {
     color: #a00;
     font-style: italic;
@@ -58,18 +60,16 @@ a:visited button {
 
 /* Rende i bottoni disabilitati grigi e cambia il cursore */
 button:disabled {
-    background-color: #f0f0f0 !important; 
-    color: #bbb !important;               /* Grigio ancora più chiaro */
-    border: 1px solid #ddd !important;
-    cursor: not-allowed !important;
-    opacity: 0.4 !important;              /* Più trasparente */
-    box-shadow: none !important;          /* Toglie eventuali ombre */
+    color: #999 !important;         /* Testo grigio sbiadito */
+    background-color: #e0e0e0 !important; /* Sfondo grigio chiaro */
+    border: 1px solid #ccc !important;    /* Bordo meno visibile */
+    cursor: not-allowed !important;       /* Icona di divieto */
+    opacity: 0.6;                         /* Effetto semitrasparente */
 }
 
 /* Opzionale: impedisce al link esterno di attivarsi */
 a:has(button:disabled) {
     pointer-events: none;
-    cursor: default;
 }
 </style>
 
