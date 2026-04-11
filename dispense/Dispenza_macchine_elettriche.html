@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispensa — Macchine e Azionamenti Elettrici per la Robotica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Fira+Code:wght@400;500&family=Cinzel:wght@400;600;700&display=swap');
+
+:root {
+  --ink: #1a1a2e;
+  --ink-soft: #2d2d4e;
+  --paper: #faf8f3;
+  --paper-warm: #f5f0e8;
+  --accent: #8b1a1a;
+  --accent-gold: #c9a227;
+  --accent-blue: #1a3a5c;
+  --accent-teal: #1a5c4a;
+  --border: #c8b89a;
+  --formula-bg: #f0ece2;
+  --highlight: #fff3cd;
+  --note-bg: #e8f0e8;
+  --chapter-line: #8b1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'EB Garamond', 'Times New Roman', serif;
+  font-size: 11.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  max-width: 21cm;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* FRONTPAGE */
+.frontpage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3cm;
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+.frontpage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,162,39,0.04) 40px, rgba(201,162,39,0.04) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,162,39,0.04) 40px, rgba(201,162,39,0.04) 41px);
+}
+.frontpage .border-deco {
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(201,162,39,0.3);
+  pointer-events: none;
+}
+.frontpage .border-deco::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(201,162,39,0.15);
+}
+.frontpage h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 13pt;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 0.5cm;
+  position: relative;
+}
+.frontpage h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 10pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,248,243,0.6);
+  margin-bottom: 1.5cm;
+  position: relative;
+}
+.frontpage .title-main {
+  font-family: 'Cinzel', serif;
+  font-size: 28pt;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--paper);
+  margin-bottom: 0.3cm;
+  position: relative;
+}
+.frontpage .title-sub {
+  font-family: 'EB Garamond', serif;
+  font-size: 14pt;
+  font-style: italic;
+  color: var(--accent-gold);
+  margin-bottom: 2cm;
+  position: relative;
+}
+.frontpage .ornament {
+  color: var(--accent-gold);
+  font-size: 20pt;
+  margin: 0.5cm 0;
+  position: relative;
+}
+.frontpage .details {
+  font-size: 10.5pt;
+  line-height: 2;
+  color: rgba(250,248,243,0.75);
+  position: relative;
+}
+.frontpage .details strong {
+  color: var(--accent-gold);
+}
+
+/* INDEX */
+.index-page {
+  padding: 2cm 2.5cm;
+  page-break-after: always;
+  border-bottom: 2px solid var(--border);
+}
+.index-page h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 18pt;
+  text-align: center;
+  margin-bottom: 0.8cm;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+}
+.index-page h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  margin: 8px auto 0;
+}
+.toc-section { margin-bottom: 1.2cm; }
+.toc-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11pt;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+.toc-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 0 3px 12px;
+  font-size: 10.5pt;
+}
+.toc-entry .num {
+  color: var(--accent);
+  font-weight: 600;
+  min-width: 30px;
+}
+.toc-entry .dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--border);
+  margin: 0 6px;
+  height: 1em;
+}
+
+/* CHAPTERS */
+.chapter {
+  padding: 1.5cm 2.5cm;
+  page-break-before: always;
+}
+.chapter-header {
+  border-bottom: 3px double var(--chapter-line);
+  padding-bottom: 10px;
+  margin-bottom: 1cm;
+}
+.chapter-number {
+  font-family: 'Cinzel', serif;
+  font-size: 9pt;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  display: block;
+  margin-bottom: 4px;
+}
+.chapter-header h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 20pt;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin: 1.2em 0 0.5em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+h4 {
+  font-size: 11.5pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--accent);
+  margin: 1em 0 0.4em;
+}
+p {
+  text-align: justify;
+  margin: 0.5em 0;
+  font-size: 11pt;
+}
+ul, ol {
+  margin: 0.4em 0 0.6em 1.5em;
+}
+li {
+  margin: 0.25em 0;
+  font-size: 11pt;
+  text-align: justify;
+}
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* FORMULA BOX */
+.formula {
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 10px 16px;
+  margin: 12px 0;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 10.5pt;
+  text-align: center;
+  line-height: 1.8;
+  color: var(--ink);
+}
+.formula-label {
+  font-family: 'EB Garamond', serif;
+  font-size: 9pt;
+  color: var(--accent);
+  text-align: right;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* NOTE BOX */
+.note {
+  background: var(--note-bg);
+  border: 1px solid #a8c8a8;
+  border-left: 4px solid var(--accent-teal);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 10.5pt;
+}
+.note-title {
+  font-weight: 700;
+  color: var(--accent-teal);
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* IMPORTANT BOX */
+.important {
+  background: #fdf3e0;
+  border: 1px solid #e8c87a;
+  border-left: 4px solid var(--accent-gold);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 10.5pt;
+}
+.important-title {
+  font-weight: 700;
+  color: #7a5c00;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* WARNING BOX */
+.warning {
+  background: #fdf0f0;
+  border: 1px solid #e8a0a0;
+  border-left: 4px solid var(--accent);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 10.5pt;
+}
+
+/* DIAGRAM */
+.diagram {
+  font-family: 'Fira Code', monospace;
+  white-space: pre;
+  background: #f8f5ee;
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  margin: 12px 0;
+  font-size: 9pt;
+  overflow-x: auto;
+  line-height: 1.4;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 10.5pt;
+}
+th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 7px 10px;
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 9.5pt;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:nth-child(even) td { background: var(--paper-warm); }
+tr:hover td { background: var(--highlight); }
+
+/* SECTION DIVIDER */
+.section-divider {
+  text-align: center;
+  margin: 1.5em 0;
+  color: var(--accent-gold);
+  font-size: 14pt;
+}
+
+/* HIGHLIGHT */
+mark {
+  background: var(--highlight);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* DEFINITION */
+.def {
+  border: 1px solid var(--border);
+  background: var(--paper-warm);
+  padding: 10px 14px;
+  margin: 10px 0;
+  border-radius: 2px;
+}
+.def-term {
+  font-family: 'Cinzel', serif;
+  font-size: 10pt;
+  color: var(--accent-blue);
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* SCHEMA CIRCUITALE BOX */
+.schema-box {
+  background: white;
+  border: 2px solid var(--ink-soft);
+  padding: 16px;
+  margin: 14px 0;
+  text-align: center;
+}
+.schema-title {
+  font-family: 'Cinzel', serif;
+  font-size: 9pt;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+@media print {
+  .chapter { page-break-before: always; }
+  body { margin: 0; padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- FRONTPAGE -->
+<div class="frontpage">
+  <div class="border-deco"></div>
+  <div class="ornament">✦ ✦ ✦</div>
+  <h1>Università degli Studi di Palermo</h1>
+  <h2>Facoltà di Ingegneria — Corso di Ing. Robotica</h2>
+  <div class="title-main">Macchine e Azionamenti<br>Elettrici per la Robotica</div>
+  <div class="title-sub">Trasformatori · Macchine Sincrone · Macchine Asincrone · Inverter</div>
+  <div class="ornament">— ❦ —</div>
+  <div class="details">
+    <strong>Studente:</strong> Petrone Kevin<br>
+    <strong>Matricola:</strong> 0774409<br>
+    <strong>Docente:</strong> Miceli Rosario<br>
+    <strong>Corso:</strong> Ing. Robotica<br>
+    <strong>Anno Accademico:</strong> 2023/2024<br>
+    <strong>Data:</strong> Aprile 2026
+  </div>
+</div>
+
+<!-- INDICE -->
+<div class="index-page">
+  <h2>Indice</h2>
+  
+  <div class="toc-section">
+    <div class="toc-section-title">I — Il Trasformatore</div>
+    <div class="toc-entry"><span class="num">1.</span> Generalità e costruzione<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">2.</span> Perdite nel trasformatore<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">3.</span> Raffreddamento<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">4.</span> Principio di funzionamento<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">5.</span> Schema circuitale — riporto al primario<span class="dots"></span></div>
+  </div>
+  
+  <div class="toc-section">
+    <div class="toc-section-title">II — La Macchina Sincrona</div>
+    <div class="toc-entry"><span class="num">6.</span> Struttura e principio di funzionamento<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">7.</span> Reazione d'armatura<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">8.</span> Diagramma fasoriale (Behn-Eschenburg)<span class="dots"></span></div>
+  </div>
+  
+  <div class="toc-section">
+    <div class="toc-section-title">III — La Macchina Asincrona</div>
+    <div class="toc-entry"><span class="num">9.</span> Struttura e tipi di rotore<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">10.</span> Principio di funzionamento e scorrimento<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">11.</span> Caratteristica meccanica<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">12.</span> Circuito equivalente di Steinmetz<span class="dots"></span></div>
+  </div>
+  
+  <div class="toc-section">
+    <div class="toc-section-title">IV — L'Inverter</div>
+    <div class="toc-entry"><span class="num">13.</span> VSI — Voltage Source Inverter<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">14.</span> CSI — Current Source Inverter<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">15.</span> Controllo PWM e serie di Fourier<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">16.</span> Confronto VSI–CSI e CRPWM<span class="dots"></span></div>
+  </div>
+  
+  <div class="toc-section">
+    <div class="toc-section-title">V — Leggi Fondamentali</div>
+    <div class="toc-entry"><span class="num">A.</span> Flusso magnetico, campo, permeabilità<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">B.</span> Ampere–Maxwell, Faraday–Lenz, Hopkinson<span class="dots"></span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPITOLO 1 — IL TRASFORMATORE
+     ═══════════════════════════════════════════════════════ -->
+<div class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-number">Capitolo I</span>
+    <h2>Il Trasformatore</h2>
+  </div>
+
+  <h3>1.1 Generalità</h3>
+  <p>Il <strong>trasformatore</strong> è una macchina elettrica <em>statica</em> (priva di parti in movimento) che trasferisce energia elettrica tra due o più circuiti mediante induzione elettromagnetica, <mark>funzionando esclusivamente con corrente alternata (AC)</mark>. Il principio è basato sulla legge di Faraday: una variazione di flusso magnetico nel tempo induce una forza elettromotrice. In corrente continua il flusso è costante, quindi la f.e.m. indotta è nulla e il trasformatore non funziona.</p>
+
+  <div class="def">
+    <div class="def-term">Definizione</div>
+    Il trasformatore è un convertitore AC/AC che trasforma tensioni e correnti mantenendo invariata la frequenza: una tensione elevata a corrente ridotta può essere convertita in una tensione ridotta a corrente elevata (e viceversa), con perdite minime.
+  </div>
+
+  <h4>Perché si usa solo in AC?</h4>
+  <p>La legge di Faraday afferma che la f.e.m. indotta è proporzionale alla derivata temporale del flusso: <em>e = −dΦ/dt</em>. In regime alternato il flusso varia sinusoidalmente, quindi la derivata è diversa da zero. In corrente continua il flusso è stazionario → derivata nulla → nessuna f.e.m. indotta → il trasformatore si comporta come un semplice avvolgimento resistivo, surriscaldandosi rapidamente.</p>
+
+  <h3>1.2 Materiali del Nucleo</h3>
+  <p>Il nucleo magnetico deve avere <strong>alta permeabilità magnetica</strong> per guidare il flusso con minima riluttanza, e <strong>basse perdite</strong> per isteresi e correnti parassite. Si usano principalmente:</p>
+  <ul>
+    <li><strong>Lamierini di acciaio al silicio (Fe-Si):</strong> con tenore di silicio del 3–4%. Il silicio aumenta la resistività elettrica (riducendo le correnti di Foucault) e riduce le perdite per isteresi. Spessore tipico: 0,3–0,5 mm (distribuzione di rete) oppure 0,05–0,15 mm (alta frequenza).</li>
+    <li><strong>Acciaio a grani orientati (GO):</strong> per trasformatori di potenza: lamierini a cristalli orientati nella direzione del flusso, con perdite magnetiche inferiori del 30–40% rispetto all'acciaio ordinario.</li>
+    <li><strong>Ferrite e materiali amorfi:</strong> per frequenze elevate (kHz–MHz), usati in alimentatori switching.</li>
+  </ul>
+
+  <h3>1.3 La Relazione H = NI e la Legge di Hopkinson</h3>
+  <p>La <strong>forza magnetomotrice (f.m.m.)</strong> prodotta da un avvolgimento di N spire percorse da corrente I è:</p>
+  <div class="formula">
+    ℱ = N · I &nbsp;&nbsp;&nbsp; [Amperspire, A·spire]
+  </div>
+  <p>Per la <strong>legge di Ampere</strong>, la circuitazione del vettore H lungo un percorso chiuso è uguale alla corrente totale concatenata:</p>
+  <div class="formula">
+    ∮ H · dl = I<sub>tot</sub> = N · I
+  </div>
+  <p>Nel nucleo toroidale di lunghezza media <em>l</em>, sezione <em>S</em> e permeabilità <em>μ</em>, con campo uniforme: H·l = N·I → <em>H = NI/l</em>. Poiché B = μH e Φ = B·S, la <strong>legge di Hopkinson</strong> (analoga alla legge di Ohm per i circuiti magnetici) afferma:</p>
+  <div class="formula">
+    N · I = R<sub>m</sub> · Φ &nbsp;&nbsp;&nbsp; con R<sub>m</sub> = l / (μ · S) [riluttanza magnetica, H⁻¹]
+  </div>
+
+  <h3>1.4 Parti Principali del Trasformatore</h3>
+  
+  <h4>Il Nucleo Magnetico</h4>
+  <p>Il nucleo è il "circuito magnetico" che guida il flusso. È composto da:</p>
+  <ul>
+    <li><strong>Colonne:</strong> parti verticali su cui sono avvolti gli avvolgimenti. Sono la sede principale del flusso utile.</li>
+    <li><strong>Gioghi (o traferri):</strong> parti orizzontali che connettono le colonne, chiudendo il percorso del flusso.</li>
+  </ul>
+
+  <h4>Trasformatori Monofase</h4>
+  <table>
+    <tr>
+      <th>Tipo</th>
+      <th>Struttura</th>
+      <th>Caratteristiche</th>
+    </tr>
+    <tr>
+      <td><strong>Nucleo normale (a colonne)</strong></td>
+      <td>Gli avvolgimenti circondano il nucleo. Il flusso percorre le colonne.</td>
+      <td>Semplice, economico, adatto a medie e basse potenze.</td>
+    </tr>
+    <tr>
+      <td><strong>Nucleo corazzato (a mantello)</strong></td>
+      <td>Il nucleo circonda gli avvolgimenti. Doppia via per il flusso.</td>
+      <td>Migliore schermatura, minori dispersioni, più costoso.</td>
+    </tr>
+  </table>
+
+  <h4>Trasformatori Trifase</h4>
+  <p>Nei trasformatori trifase il nucleo ha tre colonne (una per fase). Esistono varianti con cinque colonne per consentire la circolazione dei flussi omopolari.</p>
+  <ul>
+    <li><strong>Nucleo trifase normale:</strong> tre colonne sullo stesso piano, gioghi superiori e inferiori. Il flusso di ciascuna fase è indipendente.</li>
+    <li><strong>Nucleo trifase corazzato:</strong> cinque colonne — tre centrali con avvolgimenti, due esterne senza avvolgimenti che consentono la circolazione dei flussi di sequenza zero (omopolare). Indispensabile quando il trasformatore trifase ha il neutro accessibile e deve sopportare carichi squilibrati.</li>
+  </ul>
+
+  <div class="important">
+    <span class="important-title">⚠ Flussi Liberi nei Nuclei Trifase</span>
+    Nei nuclei a tre colonne i flussi omopolari (di sequenza zero) non hanno percorso a bassa riluttanza nel ferro → devono chiudersi nell'aria o nelle masse metalliche circostanti → grandi dispersioni e surriscaldamenti. Il nucleo a cinque colonne risolve questo problema offrendo un percorso nel ferro per i flussi omopolari.
+  </div>
+
+  <h4>Gli Avvolgimenti</h4>
+  <p>Gli avvolgimenti trasportano la corrente e sono sede della f.e.m. I principali sono:</p>
+  <ul>
+    <li><strong>Avvolgimento primario (1):</strong> collegato alla sorgente di tensione. Assorbe potenza dalla rete.</li>
+    <li><strong>Avvolgimento secondario (2):</strong> collegato al carico. Eroga potenza.</li>
+    <li><strong>Avvolgimento terziario (3, "a volte"):</strong> presente in trasformatori di grande potenza per alimentare ausiliari, compensatori sincroni, o per ridurre le componenti armoniche di terza.</li>
+  </ul>
+
+  <h4>Disposizione degli Avvolgimenti</h4>
+  <table>
+    <tr><th>Tipo</th><th>Descrizione</th><th>Vantaggi</th></tr>
+    <tr>
+      <td><strong>Sovrapposti (concentrici)</strong></td>
+      <td>Un avvolgimento è posto internamente (vicino al nucleo), l'altro esternamente, coassiali sulla stessa colonna.</td>
+      <td>Buon isolamento, flusso disperso più controllabile, tipico di trasformatori a olio.</td>
+    </tr>
+    <tr>
+      <td><strong>Intercalati (alternati)</strong></td>
+      <td>Settori del primario e del secondario si alternano lungo la colonna.</td>
+      <td>Riduzione del flusso di dispersione, migliore accoppiamento magnetico, usati quando si richiede bassa reattanza di cortocircuito.</td>
+    </tr>
+  </table>
+
+  <h4>Sezione dei Conduttori</h4>
+  <ul>
+    <li><strong>Circolare:</strong> per correnti basse, semplice da avvolgere.</li>
+    <li><strong>Piattina (rettangolare):</strong> per correnti medie, migliore fattore di riempimento nelle cave.</li>
+    <li><strong>Nastro:</strong> per correnti molto elevate; avvolgimenti a nastro in cui le spire sono strati sovrapposti.</li>
+  </ul>
+
+  <h4>Materiali di Costruzione e Isolamento</h4>
+  <table>
+    <tr><th>Tipo</th><th>Mezzo isolante</th><th>Applicazioni</th></tr>
+    <tr>
+      <td><strong>In olio</strong></td>
+      <td>Olio minerale dielettrico che immerge il nucleo e gli avvolgimenti. Funge da isolante e refrigerante.</td>
+      <td>Trasformatori di potenza, cabine di trasformazione, alta tensione.</td>
+    </tr>
+    <tr>
+      <td><strong>A secco</strong></td>
+      <td>Aria come isolante. Avvolgimenti in carta impregnata o nastro aramidico.</td>
+      <td>Ambienti interni, edifici civili, dove l'olio è vietato per rischio incendio.</td>
+    </tr>
+    <tr>
+      <td><strong>In resina (cast resin)</strong></td>
+      <td>Avvolgimenti colati in resina epossidica. Eccellente isolamento, impermeabile all'umidità.</td>
+      <td>Ambienti aggressivi, metropolitane, ospedali, offshore.</td>
+    </tr>
+  </table>
+
+  <h4>Classificazione per Servizio</h4>
+  <ul>
+    <li><strong>SC (Servizio Continuo):</strong> funzionamento a pieno carico senza interruzioni per durata indeterminata.</li>
+    <li><strong>SL (Servizio a Lungo termine):</strong> carichi variabili ma prevedibili.</li>
+    <li><strong>SIF / SIR (Servizio Intermittente Fisso / Regolare):</strong> cicli di lavoro e riposo definiti, con fattore di servizio espresso in % (es. 40% → 4 min ON, 6 min OFF).</li>
+  </ul>
+
+  <h3>1.5 Perdite nel Trasformatore</h3>
+  <p>Le perdite totali si dividono in tre categorie principali:</p>
+
+  <h4>1.5.1 Perdite nel Ferro (a vuoto)</h4>
+  <p>Sono indipendenti dal carico e presenti ogni volta che il trasformatore è eccitato. Si dividono in:</p>
+
+  <div class="def">
+    <div class="def-term">Isteresi Magnetica</div>
+    <p>L'<strong>isteresi magnetica</strong> è il fenomeno per cui il comportamento magnetico di un materiale ferromagnetico dipende non solo dal campo magnetico applicato H nell'istante presente, ma anche dalla "storia" magnetica del materiale (i valori passati di H).</p>
+    <br>
+    <p><strong>Fisicamente:</strong> i materiali ferromagnetici sono suddivisi in microscopiche regioni chiamate <em>domini di Weiss</em>, ciascuno magnetizzato spontaneamente in una direzione. In assenza di campo esterno, i domini sono orientati casualmente e il materiale appare non magnetizzato. Quando si applica un campo H crescente, i domini tendono ad allinearsi con il campo: prima crescono i domini già orientati (moto delle pareti), poi i domini ruotano.</p>
+    <br>
+    <p><strong>Il ciclo di isteresi (curva B–H):</strong></p>
+    <ul>
+      <li>Si parte da materiale vergine (H=0, B=0) e si aumenta H: B cresce seguendo la curva di prima magnetizzazione fino alla <em>saturazione</em> B<sub>s</sub>.</li>
+      <li>Si riduce H a zero: B non torna a zero ma rimane a un valore residuo detto <strong>induzione residua o rimanenza B<sub>r</sub></strong> (magnetismo residuo).</li>
+      <li>Si inverte H: per annullare B occorre un campo coercitivo negativo H<sub>c</sub> detto <strong>campo coercitivo</strong>.</li>
+      <li>Aumentando H negativo fino a saturazione e poi tornando, si completa il ciclo: una curva chiusa asimmetrica rispetto all'origine.</li>
+    </ul>
+    <br>
+    <p><strong>Perdite per isteresi:</strong> l'area racchiusa dal ciclo B–H rappresenta l'energia dissipata per unità di volume in ogni ciclo di magnetizzazione. In un trasformatore a 50 Hz, il nucleo compie 50 cicli al secondo → le perdite per isteresi sono proporzionali alla frequenza e all'area del ciclo:</p>
+  </div>
+  <div class="formula">
+    P<sub>ist</sub> = k<sub>h</sub> · f · B<sub>max</sub><sup>n</sup> · V &nbsp;&nbsp;&nbsp; (n ≈ 1,6–2 per acciaio al silicio, legge di Steinmetz)
+  </div>
+  <p>dove k<sub>h</sub> è una costante del materiale, f la frequenza, B<sub>max</sub> l'induzione massima, V il volume del nucleo.</p>
+
+  <div class="def">
+    <div class="def-term">Correnti Parassite o di Foucault</div>
+    <p>Il nucleo in ferro conduttore è attraversato da un flusso variabile nel tempo. Per la legge di Faraday, in ogni sezione trasversale del nucleo si induce una f.e.m. che fa circolare delle correnti dette <strong>correnti parassite</strong> o <strong>correnti di Foucault</strong> (dal nome del fisico Jean Bernard Léon Foucault che le scoprì nel 1851).</p>
+    <br>
+    <p>Queste correnti circolano in loop chiusi all'interno del metallo, dissipando energia per effetto Joule (P = I²R). La potenza dissipata è proporzionale al quadrato della frequenza e al quadrato del campo:</p>
+  </div>
+  <div class="formula">
+    P<sub>Foucault</sub> = k<sub>e</sub> · f² · B<sub>max</sub>² · d² · V
+  </div>
+  <p>dove d è lo spessore dei lamierini. <mark>Per ridurre drasticamente queste perdite, il nucleo viene costruito con <strong>lamierini sottili</strong> (0,3–0,5 mm) isolati tra loro da vernice o ossido.</mark> Il frazionamento aumenta la resistenza al percorso delle correnti parassite, riducendone l'intensità e quindi le perdite proporzionalmente al quadrato dello spessore.</p>
+
+  <div class="note">
+    <span class="note-title">Nuclei Laminati: Affacciati vs Intercalati</span>
+    <ul>
+      <li><strong>Lamierini affacciati (a giunti sovrapposti):</strong> le lamiere di colonne e gioghi si affiancano con giunto dritto. Semplice da costruire, ma presenta riluttanza elevata nelle giunzioni.</li>
+      <li><strong>Lamierini intercalati (a giunti alternati):</strong> le lamiere sono tagliate a L o a T e alternate strato per strato. La giunzione è sfalsata di layer in layer, minimizzando la riluttanza al flusso e migliorando le prestazioni magnetiche. È la tecnica standard nei trasformatori moderni di qualità.</li>
+    </ul>
+  </div>
+
+  <h4>1.5.2 Perdite nel Rame (sotto carico)</h4>
+  <p>Le <strong>perdite nel rame</strong> (o perdite a carico) sono dovute alla resistenza ohmica degli avvolgimenti. Sono proporzionali al quadrato della corrente:</p>
+  <div class="formula">
+    P<sub>Cu</sub> = R<sub>1</sub> · I<sub>1</sub>² + R<sub>2</sub> · I<sub>2</sub>² &nbsp;&nbsp; (effetto Joule negli avvolgimenti)
+  </div>
+
+  <h4>1.5.3 Perdite Addizionali</h4>
+  <ul>
+    <li><strong>Distorsione del flusso magnetico:</strong> il flusso reale non è perfettamente uniforme nel nucleo (effetti di bordo, saturazione locale) → perdite aggiuntive rispetto al modello ideale.</li>
+    <li><strong>Distribuzione non uniforme della corrente:</strong> l'effetto pelle (skin effect) e l'effetto di prossimità (proximity effect) concentrano la corrente sulla superficie esterna dei conduttori ad alta frequenza, aumentando la resistenza effettiva.</li>
+    <li><strong>Correnti parassite nelle masse metalliche vicine agli avvolgimenti:</strong> bulloni, chiavette, serbatoi in acciaio vengono percorsi da correnti indotte dal campo magnetico disperso → surriscaldamenti localizzati.</li>
+  </ul>
+
+  <h3>1.6 Raffreddamento</h3>
+  <p>Il calore generato dalle perdite deve essere smaltito per mantenere le temperature entro i limiti della classe di isolamento. I sistemi sono classificati secondo la norma IEC:</p>
+
+  <table>
+    <tr><th>Sigla</th><th>Significato</th><th>Descrizione</th></tr>
+    <tr>
+      <td><strong>ONAN</strong></td>
+      <td>Oil Natural, Air Natural</td>
+      <td>Olio in circolazione naturale (convezione), raffreddato dall'aria per convezione naturale attraverso radiatori. Il sistema più semplice e silenzioso.</td>
+    </tr>
+    <tr>
+      <td><strong>ONAF</strong></td>
+      <td>Oil Natural, Air Forced</td>
+      <td>Olio in circolazione naturale, aria forzata da ventilatori sui radiatori. Capacità di raffreddamento maggiore senza circolazione forzata dell'olio.</td>
+    </tr>
+    <tr>
+      <td><strong>AN</strong></td>
+      <td>Air Natural</td>
+      <td>Raffreddamento solo ad aria naturale, per trasformatori a secco di piccola-media potenza.</td>
+    </tr>
+  </table>
+
+  <h3>1.7 Principio di Funzionamento del Trasformatore</h3>
+  <p>Consideriamo un trasformatore ideale con nucleo toroidale (per semplicità). La catena di causalità è:</p>
+
+  <div class="schema-box">
+    <div class="schema-title">Catena di Trasduzione del Trasformatore</div>
+    <div class="diagram">
+v₁(t) → i₁(t) → N₁·i₁(t)  [avv. primario]
+                    ↓
+               Φ(t) [flusso nel nucleo]
+                    ↓
+     e₂ = −d(N₂·Φ)/dt  [f.e.m. indotta al secondario]
+                    ↓
+  [se secondario chiuso su carico R_L]
+     e₂(t) → i₂(t) → N₂·i₂(t)
+                    ↓
+  nucleo sollecitato da due f.m.m. contrarie:
+  N₁·i₁ + N₂·i₂ = N₁·i₀  (amperspire risultanti)
+    </div>
+  </div>
+
+  <h4>Flusso Utile e Flussi Dispersi</h4>
+  <p>Il flusso totale si divide in:</p>
+  <ul>
+    <li><strong>Flusso utile Φ<sub>u</sub>:</strong> si concatena con <em>entrambi</em> gli avvolgimenti e costituisce il mezzo di trasferimento dell'energia. Si chiude nel ferro del nucleo.</li>
+    <li><strong>Flusso disperso del primario Φ<sub>σ1</sub>:</strong> generato dal primario ma che non si concatena con il secondario. Si chiude parzialmente nell'aria attorno all'avvolgimento primario.</li>
+    <li><strong>Flusso disperso del secondario Φ<sub>σ2</sub>:</strong> generato dal secondario ma che non si concatena con il primario.</li>
+  </ul>
+
+  <p>Ciascun flusso disperso induce la propria f.e.m. di dispersione:</p>
+  <div class="formula">
+    e<sub>σ1</sub> = −N₁ · dΦ<sub>σ1</sub>/dt = −L<sub>σ1</sub> · di₁/dt
+    <br>
+    e<sub>σ2</sub> = −N₂ · dΦ<sub>σ2</sub>/dt = −L<sub>σ2</sub> · di₂/dt
+  </div>
+  <p>dove L<sub>σ1</sub> e L<sub>σ2</sub> sono le <strong>induttanze di dispersione</strong>, associate alle reattanze di dispersione X<sub>σ1</sub> = ωL<sub>σ1</sub> e X<sub>σ2</sub> = ωL<sub>σ2</sub>.</p>
+
+  <h4>Equazioni di Funzionamento</h4>
+  <p>Le equazioni alle maglie (convenzione generatore per il primario, convenzione utilizzatore per il secondario):</p>
+  <div class="formula">
+    V₁ = −E₁ + I₁(R₁ + jX<sub>σ1</sub>) = −E₁ + Z₁·I₁
+    <br><br>
+    E₂ = V₂ + I₂(R₂ + jX<sub>σ2</sub>) = V₂ + Z₂·I₂
+  </div>
+  <p>dove E₁ ed E₂ sono le f.e.m. indotte dal flusso utile e valgono:</p>
+  <div class="formula">
+    E₁ = −jωN₁Φ<sub>u</sub> &nbsp;&nbsp;&nbsp; E₂ = −jωN₂Φ<sub>u</sub>
+    <br><br>
+    ⟹ &nbsp;&nbsp; E₁/E₂ = ±N₁/N₂ = K<sub>s</sub> &nbsp;&nbsp; (rapporto di spire)
+  </div>
+  <p>Il segno + vale per avvolgimenti <em>concordi</em> (stesso verso di avvolgimento), il segno − per avvolgimenti <em>discordi</em>.</p>
+
+  <h3>1.8 Schema Circuitale a T e Riporto al Primario</h3>
+  <p>Lo schema elettrico equivalente è lo <strong>schema a T</strong>. Per semplificarne l'analisi si riportano al primario le grandezze del secondario tramite le seguenti trasformazioni:</p>
+  <div class="formula">
+    V₂' = K<sub>s</sub>·V₂ &nbsp;&nbsp;&nbsp; (tensione secondaria riportata)
+    <br>
+    I₂' = I₂/K<sub>s</sub> &nbsp;&nbsp;&nbsp; (corrente secondaria riportata)
+    <br>
+    Z₂' = K<sub>s</sub>²·Z₂ &nbsp;&nbsp;&nbsp; (impedenza secondaria riportata)
+  </div>
+  <p>Queste trasformazioni garantiscono la conservazione della potenza: P = V₂·I₂ = V₂'·I₂'.</p>
+
+  <div class="schema-box">
+    <div class="schema-title">Schema Circuitale a T (riportato al primario)</div>
+    <div class="diagram">
+         Z₁=R₁+jX₁       Z₂'=R₂'+jX₂'
+  V₁ o──┤/\/\/|─┬─────┤/\/\/|─── o  V₂'
+            │   │         │
+           R₀  jXμ       Carico
+           │   │         │
+  V₁ o────┴───┴─────────── o  GND
+
+R₀  = resistenza modellante le perdite nel ferro
+jXμ = reattanza di magnetizzazione (crea il campo rotante)
+I₀  = corrente di magnetizzazione (a vuoto: I₁ = I₀)
+    </div>
+  </div>
+
+  <p>Le equazioni del sistema completo sono:</p>
+  <div class="formula">
+    V₁ = I₁·Z₁ − I₂'·Z₂' − V₂'
+    <br>
+    I₁ + I₂' = I₀
+  </div>
+
+  <h4>Rapporto di Trasformazione K<sub>n</sub></h4>
+  <p>Il <strong>rapporto di trasformazione in tensione</strong> è:</p>
+  <div class="formula">
+    K<sub>n</sub> = V₁/V₂ ≈ N₁/N₂ = K<sub>s</sub> &nbsp;&nbsp;&nbsp; (in regime di vuoto, approssimazione)
+  </div>
+
+  <h4>Comportamento a Vuoto (I₂ = 0)</h4>
+  <p>A vuoto non circola corrente nel secondario: I₂ = 0 → I₁ = I₀ (corrente di magnetizzazione). La corrente a vuoto è il 2–5% della corrente nominale. La caduta di tensione su Z₁ è trascurabile: V₁ ≈ −E₁.</p>
+
+  <h4>Comportamento a Pieno Carico</h4>
+  <p>A pieno carico I₂ = I₂n (corrente nominale): I₁ è elevata, I₀ ≪ I₁ è trascurabile → lo schema semplificato a Γ trascura il ramo magnetizzante e porta il carico direttamente ai terminali del generatore equivalente.</p>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPITOLO 2 — MACCHINA SINCRONA
+     ═══════════════════════════════════════════════════════ -->
+<div class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-number">Capitolo II</span>
+    <h2>La Macchina Sincrona</h2>
+  </div>
+
+  <h3>2.1 Definizione e Reversibilità</h3>
+  <p>La <strong>macchina sincrona</strong> è una macchina elettrica rotante a corrente alternata in cui rotore e campo magnetico statorico ruotano alla <em>stessa velocità</em> (in sincronismo). È caratterizzata dalla <strong>reversibilità</strong>: può funzionare sia come <strong>generatore</strong> (conversione di energia meccanica in elettrica — turbogeneratori, alternatori) che come <strong>motore</strong> (conversione di energia elettrica in meccanica — motori sincroni per applicazioni industriali).</p>
+
+  <div class="formula">
+    ω = p · Ω &nbsp;&nbsp;&nbsp; ovvero &nbsp;&nbsp;&nbsp; f = p · n/60
+    <br>
+    dove: ω = pulsazione elettrica, p = coppie polari, Ω = velocità angolare mec., n = giri/min
+  </div>
+
+  <p>Per p = 1 (macchina bipolare), per avere f = 50 Hz serve n = 3000 giri/min. Per p = 2, n = 1500 giri/min, ecc.</p>
+
+  <h3>2.2 Struttura della Macchina Sincrona</h3>
+
+  <h4>Statore (Indotto / Armatura)</h4>
+  <p>Parte fissa della macchina. Realizzato in lamierini ferromagnetici per minimizzare le perdite nel ferro. La sua struttura è caratterizzata da una serie di <strong>cave longitudinali</strong> praticate lungo la periferia interna dello statore, nelle quali vengono disposti i <strong>lati attivi</strong> delle bobine (le parti dei conduttori effettivamente attraversate dal flusso magnetico, che quindi partecipano alla generazione della f.e.m.). Tra una cava e l'altra sono presenti le <strong>sporgenze di materiale ferromagnetico</strong> chiamate <em>denti</em>, che concentrano il flusso.</p>
+
+  <h4>Rotore (Induttore)</h4>
+  <p>Organo in movimento che porta il campo magnetico di eccitazione. Poiché deve ruotare, le correnti continue di eccitazione vengono portate agli avvolgimenti tramite <strong>contatti striscianti</strong> (spazzole fisse su anelli rotanti). Il rotore può essere realizzato seguendo due soluzioni costruttive principali:</p>
+
+  <h4>Rotore Liscio (a poli non salienti)</h4>
+  <p>Struttura di forma <strong>cilindrica</strong>, realizzata in ferro massiccio (in alcuni casi in un unico pezzo forgiato), nella cui periferia sono praticate delle cave dove vengono alloggiati i conduttori dell'avvolgimento di eccitazione. Questi sono collegati tra loro per creare una bobina. Il traferro è <strong>uniforme</strong> lungo tutta la periferia. Si usa per applicazioni ad <strong>elevate velocità</strong> (2–4 poli, turbogeneratori a vapore), ha maggiore resistenza alle sollecitazioni meccaniche centrifughe, ma maggiori perdite nel ferro rispetto al rotore a poli salienti.</p>
+
+  <h4>Rotore a Poli Salienti (con Scarpe Polari)</h4>
+  <p>Ha una struttura centrale massiccia con sporgenze chiamate <strong>scarpe polari</strong> (o poli salienti), realizzate in lamierino (parte laminata). Su di esse vengono avvolte delle bobine che poi vengono collegate in serie tra loro, formando il circuito di eccitazione. La struttura è composta da:</p>
+  <ul>
+    <li><strong>Nucleo centrale (giogo rotorico):</strong> parte non laminata che fa da sostegno meccanico.</li>
+    <li><strong>Scarpe polari (corpi polari):</strong> parte laminata sporgente verso lo statore, che concentra e distribuisce il flusso nel traferro. La loro forma sagomata (con profilo curvato) ottimizza la distribuzione del campo B.</li>
+    <li><strong>Avvolgimenti di eccitazione:</strong> bobine avvolte attorno ai corpi polari, alimentate in corrente continua tramite spazzole e anelli.</li>
+  </ul>
+  <p>Si usa per applicazioni a <strong>bassa velocità</strong> (molti poli, turbine idroelettriche, motori sincroni lenti). Ha minori perdite nel ferro, ma è più sensibile alle sollecitazioni meccaniche centrifughe (per questo si usa a basse velocità).</p>
+
+  <div class="note">
+    <span class="note-title">📌 Rotore Fermo Alimentato in Corrente Continua — Perché la f.e.m. = 0?</span>
+    <p>Se il rotore è fermo, ma i suoi avvolgimenti sono alimentati in corrente continua, il campo magnetico <strong>esiste</strong> ma è <strong>immobile nello spazio</strong>. I lati attivi dello statore sentono il magnetismo, tuttavia, non essendoci <em>movimento relativo</em> tra il campo e i conduttori, la variazione di flusso nel tempo è nulla → per la legge di Faraday: <strong>f.e.m. = 0</strong>.</p>
+    <p>Quando il rotore <strong>comincia a ruotare</strong>, il campo rimane solidale a lui (ruota con lui), ma ora <em>scorre rispetto ai lati attivi</em> dello statore → variazione di flusso nel tempo diversa da zero → si induce la f.e.m. La frequenza di questa f.e.m. è esattamente f = p·n/60, rigidamente legata alla velocità di rotazione.</p>
+  </div>
+
+  <div class="important">
+    <span class="important-title">⚡ Differenza fondamentale: Sincrona vs Asincrona — Chi genera il campo?</span>
+    <p>La differenza principale tra la macchina sincrona e la macchina asincrona sta nel <strong>chi genera il campo magnetico rotante</strong>.</p>
+    <ul>
+      <li><strong>Macchina sincrona:</strong> il campo rotante è generato dal <em>rotore</em> (induttore), alimentato in corrente continua. Il campo statorico non è di per sé rotante: sono i conduttori dello statore a "vedere" il campo del rotore che ruota davanti a loro.</li>
+      <li><strong>Macchina asincrona:</strong> il campo rotante è generato dalle <em>correnti trifase dello statore</em>, che creano già di per sé un campo magnetico rotante sinusoidale (campo di Ferraris). Il rotore non ha alimentazione esterna: sfrutta l'induzione per generare le proprie correnti.</li>
+    </ul>
+  </div>
+
+  <h3>2.3 Distribuzione del Campo nel Traferro</h3>
+  <p>Nel <strong>rotore liscio</strong>, il campo B al traferro ha distribuzione spaziale trapezoidale costante (quando il rotore è fermo) o che ruota solidale al rotore (quando è in moto). I lati attivi dello statore vedono un campo che varia nel tempo con la stessa legge con cui il campo è distribuito spazialmente → f.e.m. indotta di forma simile alla distribuzione.</p>
+
+  <p>All'aumentare delle coppie polari p, il numero di periodi della distribuzione del campo lungo il traferro aumenta proporzionalmente. Per p = 2, i conduttori statorici vedono passare 2 volte la sequenza N–S per ogni giro meccanico → la tensione prodotta compie 2 cicli elettrici nello stesso tempo in cui il rotore ne compie solo 1 meccanico: ω = p·Ω.</p>
+
+  <h3>2.4 Parametri Geometrici e F.e.m. Efficace</h3>
+
+  <h4>Passo Polare</h4>
+  <p>Il <strong>passo polare</strong> (τ) è la distanza angolare tra i centri di 2 poli consecutivi di segno opposto (Nord e Sud). Rappresenta la "larghezza" di mezzo periodo del campo al traferro:</p>
+  <div class="formula">
+    τ = π·D / (2p) &nbsp;&nbsp;&nbsp; [m, sulla circonferenza dello statore]
+    <br>
+    oppure &nbsp;&nbsp;&nbsp; τ = 180° elettrici (per definizione)
+  </div>
+
+  <h4>Passo di Bobina</h4>
+  <p>Il <strong>passo di bobina</strong> (y) è la distanza, misurata lungo l'arco di circonferenza delle cave, tra i due lati attivi della stessa bobina. Si esprime in numero di cave o in gradi elettrici.</p>
+
+  <h4>Bobina a Passo Diametrale</h4>
+  <p>Una bobina è detta a <strong>passo diametrale</strong> quando il suo passo di bobina è uguale esattamente al passo polare (y = τ = 180° el). In questa condizione:</p>
+  <ul>
+    <li>I due lati attivi si trovano sempre sotto poli di segno opposto (uno sotto N, uno sotto S).</li>
+    <li>Le f.e.m. indotte nei due lati sono <strong>uguali in modulo e opposte in segno</strong> → si sommano (e<sub>b</sub> = 2·e<sub>l</sub>).</li>
+    <li>La f.e.m. della bobina è <strong>massima</strong>.</li>
+  </ul>
+
+  <h4>Passo Raccorciato e Fattore di Passo f<sub>p</sub></h4>
+  <p>Nella realtà, le bobine non sono quasi mai perfettamente a passo diametrale, ma hanno un <strong>passo raccorciato</strong> (y < τ). Questo introduce il <strong>fattore di passo f<sub>p</sub></strong> (< 1):</p>
+  <ul>
+    <li>Se il passo è <strong>diametrale</strong> → f<sub>p</sub> = 1 → la f.e.m. è <strong>massima</strong> (e<sub>b</sub> = 2·e<sub>l</sub>).</li>
+    <li>Se il passo è <strong>raccorciato</strong> → f<sub>p</sub> < 1 → la f.e.m. è <strong>inferiore</strong>.</li>
+  </ul>
+  <p>Perché usare allora un passo raccorciato? Perché permette di <strong>eliminare le armoniche di ordine superiore</strong> (in particolare la 5ª e la 7ª) dalla tensione prodotta, "pulendo" la forma d'onda. Il compromesso: si rinuncia a una piccola percentuale di f.e.m. fondamentale (5–10%) per ottenere una forma d'onda molto più sinusoidale. Per correggere il calcolo della f.e.m. tenendo conto del passo raccorciato, si introduce appunto il fattore f<sub>p</sub>.</p>
+
+  <div class="formula">
+    f<sub>p</sub> = sin(y · π / (2τ)) = sin(β/2) &nbsp;&nbsp;&nbsp; dove β = angolo di raccorciamento
+  </div>
+
+  <h4>Fattore di Distribuzione f<sub>d</sub></h4>
+  <p>Il discorso si complica ulteriormente quando si passa dalle singole bobine alla <strong>matassa intera</strong>. Le bobine di una fase non sono tutte nella stessa cava, ma sono <strong>distribuite lungo la periferia dello statore</strong> in più cave. Esse vedono il passaggio del polo in istanti diversi (sfasati tra loro di un angolo elettrico α = 360°/q, dove q è il numero di cave per polo per fase).</p>
+  <p>Di conseguenza <strong>non possiamo fare una somma algebrica dei moduli delle tensioni</strong> delle singole bobine, ma una <strong>somma fasoriale (vettoriale)</strong>, la cui risultante è sempre inferiore alla somma algebrica. Questo fenomeno — la "perdita" di tensione dovuta alla distribuzione — è quantificato dal <strong>fattore di distribuzione f<sub>d</sub></strong> (< 1):</p>
+  <div class="formula">
+    f<sub>d</sub> = sin(q · α/2) / [q · sin(α/2)] &nbsp;&nbsp;&nbsp; dove q = cave/polo/fase, α = angolo tra cave
+  </div>
+
+  <h4>F.e.m. Efficace — Formula Completa</h4>
+  <p>La <strong>f.e.m. efficace</strong> di una macchina sincrona reale, che tiene conto di entrambi i fattori, vale:</p>
+  <div class="formula">
+    E = 4,44 · f · N · Φ · f<sub>d</sub> · f<sub>p</sub> = 4,44 · f · N · Φ · f<sub>a</sub>
+  </div>
+  <p>dove f<sub>a</sub> = f<sub>d</sub>·f<sub>p</sub> è il <strong>fattore di avvolgimento</strong>, sempre ≤ 1. I parametri sono: <em>f</em> = frequenza [Hz], <em>N</em> = numero di spire per fase, <em>Φ</em> = flusso utile per polo [Wb].</p>
+
+  <h3>2.5 Reazione d'Armatura</h3>
+  <p>La <strong>reazione d'armatura</strong> è l'insieme dei fenomeni che nascono a causa della circolazione di corrente negli avvolgimenti di statore (armatura), una volta che la macchina viene collegata a un carico.</p>
+  <p>In un generatore a vuoto, il rotore è alimentato in CC e crea il suo campo B; un motore primario fa girare il rotore, e considerando i singoli lati attivi dello statore, su di essi nasce una f.e.m. data da:</p>
+  <div class="formula">
+    e<sub>l</sub> = ∫ (v⃗ × B⃗) · dl⃗
+  </div>
+  <p>dove <strong>v⃗</strong> rappresenta la velocità relativa del lato attivo rispetto al campo (in realtà è il rotore a muoversi, ma per il calcolo della f.e.m. si immagina che il rotore stia fermo e siano i conduttori dello statore a muoversi rispetto al campo con velocità v = −Ω). Il modulo si calcola come visto prima e il verso con la regola della mano destra.</p>
+  <p>Appena colleghiamo un carico, la E₀ fa circolare corrente nello statore, la quale genera un campo magnetico proprio che interagisce con il campo del rotore, modificandolo. Si distinguono tre casi in base al tipo di carico:</p>
+
+  <h4>Carico Puramente Resistivo</h4>
+  <p>La corrente I<sub>a</sub> è in fase con la f.e.m. E₀ del rotore. Il campo di armatura AS<sub>a</sub> è sfasato di 90° elettrici in ritardo rispetto al campo di eccitazione AS<sub>ecc</sub> → <strong>effetto di traverso (cross-magnetizing)</strong>: il campo risultante AS<sub>R</sub> ha la stessa intensità ma è ruotato rispetto a AS<sub>ecc</sub>. Questo genera una forza tangenziale che crea una <em>coppia resistente</em> che si oppone al moto del generatore → la turbina deve spingere di più. La magnetizzazione totale non cambia molto, ma varia la fase della f.e.m. risultante.</p>
+
+  <h4>Carico Induttivo</h4>
+  <p>La corrente I<sub>a</sub> è in quadratura in ritardo (90° dopo rispetto alla f.e.m.). Il campo di armatura AS<sub>a</sub> è in opposizione di fase (180°) rispetto al campo di eccitazione → <strong>effetto smagnetizzante</strong>: AS<sub>R</sub> < AS<sub>ecc</sub>. Le forze sono solo longitudinali (repulsive) → nessuna coppia resistente. La tensione ai morsetti cade perché il campo totale si indebolisce.</p>
+
+  <h4>Carico Capacitivo</h4>
+  <p>La corrente I<sub>a</sub> è in quadratura in anticipo (90° prima). Il campo di armatura è in fase (0°) con quello del rotore → <strong>effetto magnetizzante</strong>: i due campi si sommano, AS<sub>R</sub> > AS<sub>ecc</sub>. Forze solo longitudinali (attrattive) → nessuna coppia resistente. La tensione ai morsetti aumenta (sovratensione capacitiva).</p>
+
+  <h3>2.6 Diagramma Fasoriale (Behn-Eschenburg)</h3>
+  <p>Il <strong>diagramma fasoriale</strong> (o di Behn-Eschenburg) rappresenta graficamente come le correnti di armatura influenzano la tensione ai morsetti. Le grandezze del diagramma sono:</p>
+  <table>
+    <tr><th>Simbolo</th><th>Significato</th></tr>
+    <tr><td>E₀</td><td>f.e.m. a vuoto del rotore</td></tr>
+    <tr><td>E<sub>R</sub></td><td>f.e.m. risultante (E₀ modificata dalla reazione d'armatura)</td></tr>
+    <tr><td>E<sub>a</sub></td><td>f.e.m. di reazione d'armatura</td></tr>
+    <tr><td>AS<sub>a</sub></td><td>amperspire d'armatura (statore)</td></tr>
+    <tr><td>AS<sub>R</sub></td><td>amperspire risultanti</td></tr>
+    <tr><td>AS<sub>ecc</sub></td><td>amperspire di eccitazione (rotore)</td></tr>
+    <tr><td>I<sub>a</sub></td><td>corrente d'armatura</td></tr>
+  </table>
+
+  <p>Come si nota, per carico resistivo E<sub>R</sub> non cambia molto in modulo, ma è sfasata (subisce una <em>distorsione</em>), il che genera la coppia resistente. Per carico induttivo l'effetto è puramente smagnetizzante (AS<sub>R</sub> < AS<sub>ecc</sub>), per carico capacitivo è puramente magnetizzante (AS<sub>R</sub> > AS<sub>ecc</sub>).</p>
+
+  <div class="note">
+    <span class="note-title">Principio di Sovrapposizione degli Effetti (P.S.E.)</span>
+    Il campo risultante nella macchina può essere considerato come la somma vettoriale del campo di eccitazione (rotore) e del campo di reazione d'armatura (statore). Questo consente di analizzare separatamente i contributi e poi sommarli vettorialmente.
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPITOLO 3 — MACCHINA ASINCRONA
+     ═══════════════════════════════════════════════════════ -->
+<div class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-number">Capitolo III</span>
+    <h2>La Macchina Asincrona</h2>
+  </div>
+
+  <h3>3.1 Definizione</h3>
+  <p>La <strong>macchina asincrona</strong> (o motore a induzione) è una macchina elettrica a corrente alternata in cui rotore e campo magnetico rotante dello statore ruotano a velocità <em>diversa</em> — da qui il nome "asincrona". Il rotore <em>non ha bisogno di alimentazione esterna</em>: sfrutta il principio dell'induzione elettromagnetica per generare le correnti necessarie senza sistema di eccitazione esterno, rendendola la macchina più robusta, economica e diffusa nell'industria.</p>
+
+  <h3>3.2 Struttura</h3>
+
+  <h4>Statore</h4>
+  <p>Identico nella struttura a quello della macchina sincrona: ferro laminato con cave longitudinali che ospitano gli avvolgimenti trifase, le cui fasi sono disposte a 120° elettrici nello spazio. Quando alimentato con corrente alternata trifase, genera il <strong>campo magnetico rotante di Ferraris</strong>.</p>
+
+  <h4>Traferro</h4>
+  <p>Il sottile strato d'aria che separa statore e rotore. Deve essere il più piccolo possibile per minimizzare la riluttanza, ma abbastanza grande per consentire la rotazione e il passaggio del flusso magnetico tra le due parti.</p>
+
+  <h4>Tipi di Rotore</h4>
+
+  <h4>A) Rotore a Gabbia di Scoiattolo (Squirrel Cage)</h4>
+  <p>Il più comune per la sua estrema semplicità. È costituito da barre di alluminio (o rame) inserite nelle cave del nucleo ferroso, cortocircuitate alle estremità da due anelli massicci (detti anelli di cortocircuito). Esteticamente ricorda una gabbia per criceti/scoiattoli. Non ha collegamenti elettrici verso l'esterno. È praticamente indistruttibile, non produce scintille (no spazzole), è molto economico. Tuttavia, presenta correnti di spunto all'avvio molto elevate.</p>
+
+  <h4>B) Rotore Avvolto (o ad Anelli)</h4>
+  <p>Versione più complessa: sul rotore ci sono veri avvolgimenti di filo di rame (simili a quelli dello statore). I terminali di questi avvolgimenti non sono cortocircuitati direttamente, ma sono collegati a tre <strong>anelli collettori</strong> che ruotano con l'albero. Sopra questi anelli poggiano <strong>spazzole fisse</strong> che consentono di connettere resistenze esterne al circuito rotorico. Questo serve a limitare la corrente all'avvio e ad aumentare la coppia di spunto (spostando il picco verso s=1). Una volta a regime, le resistenze esterne vengono rimosse e il rotore viene cortocircuitato.</p>
+
+  <h4>C) Rotore ad Addensamento di Corrente</h4>
+  <ul>
+    <li><strong>Rotore a doppia gabbia:</strong> due gabbie concentriche, esterna ad alta resistenza (per l'avvio) e interna a bassa resistenza (per il regime).</li>
+    <li><strong>Rotore a barre profonde:</strong> barre di grande altezza radiale: all'avvio (alta frequenza rotorica) l'effetto pelle concentra la corrente nella parte superiore della barra (più resistente), migliorando la coppia di spunto. A regime (bassa frequenza rotorica) la corrente si distribuisce uniformemente → bassa resistenza → alta efficienza.</li>
+  </ul>
+
+  <h3>3.3 Principio di Funzionamento</h3>
+
+  <h4>1. Genesi del Campo Rotante</h4>
+  <p>Alimentando gli avvolgimenti statorici con una terna trifase di correnti, nascono le <strong>amperspire statoriche rotanti di Galileo Ferraris</strong>. Queste generano un campo magnetico rotante che ruota nel verso dello sfasamento tra le fasi (A→B→C) con velocità angolare pari alla pulsazione elettrica ω<sub>s</sub> = 2πf/p.</p>
+
+  <h4>2. Induzione nel Rotore (Legge di Faraday)</h4>
+  <p>I conduttori del rotore sono immersi in questo campo rotante. Poiché il rotore è inizialmente fermo, la velocità relativa tra campo e conduttori è massima. Di conseguenza vengono indotte nei conduttori del rotore delle f.e.m. Poiché il rotore è chiuso in cortocircuito, queste f.e.m. determinano la circolazione di una terna trifase di correnti indotte. Queste correnti, a loro volta, generano delle amperspire di indotto (rotanti anch'esse per il principio di Ferraris) che ruotano alla stessa velocità e nella stessa direzione del campo statorico.</p>
+
+  <h4>3. Effetto della Legge di Lenz — Perché si muove?</h4>
+  <p>Per la <strong>legge di Lenz</strong>, le amperspire rotoriche devono opporsi alla causa che le ha generate. Questo si manifesta in due modi:</p>
+  <ul>
+    <li><strong>Effetto Elettrodinamico (Coppia):</strong> il campo rotorico interagisce con quello statorico per ridurre la velocità relativa tra i due. Nasce una coppia motrice che mette in rotazione il rotore nello stesso verso del campo statorico. Il rotore "insegue" il campo.</li>
+    <li><strong>Effetto Magnetico (Reazione d'armatura):</strong> il campo rotorico ha una natura smagnetizzante, ovvero cerca di ridurre la magnetizzazione complessiva della macchina.</li>
+  </ul>
+
+  <h4>4. Interpretazione Fisica — Il Parallelo con la Macchina Sincrona</h4>
+  <p>Qui si fa un passaggio chiave per capire in profondità il funzionamento: <strong>l'avvolgimento rotorico in corto circuito può essere visto come la reazione d'armatura di una macchina sincrona chiusa su un carico R-L (ohmico-induttivo)</strong>. Le correnti indotte nel rotore si scompongono in due componenti fisicamente distinte:</p>
+  <ul>
+    <li><strong>Componente Resistiva (R):</strong> è associata alla <em>trasmissione di potenza attiva</em> e alla nascita della <em>coppia motrice</em>. Questa è la componente "utile" che trasferisce energia dal campo statorico all'albero.</li>
+    <li><strong>Componente Induttiva (L):</strong> ha un effetto <em>fortemente smagnetizzante</em>. Come nel carico induttivo della macchina sincrona, questa componente crea un campo di reazione che si oppone (in fase opposta) al campo principale, riducendo la magnetizzazione complessiva della macchina. Questo è il motivo per cui i motori asincroni assorbono potenza reattiva dalla rete (hanno basso fattore di potenza, specialmente a vuoto).</li>
+  </ul>
+
+  <div class="note">
+    <span class="note-title">🔗 Nota sull'Avviamento "Autosincrono" delle Macchine Sincrone</span>
+    <p>Questa analisi dimostra che la macchina asincrona è sempre in grado di auto-avviarsi. Questo fenomeno viene sfruttato anche nelle macchine <strong>sincrone</strong>, che non saprebbero partire da sole (partirebbero solo se già a velocità di sincronismo).</p>
+    <p>Le macchine sincrone vengono dotate di <strong>avvolgimenti smorzatori</strong> (gabbia di smorzamento) sul rotore, che si comportano esattamente come una gabbia di scoiattolo. In fase di avvio, il rotore si comporta come un motore asincrono e si porta vicino alla velocità di sincronismo. Una volta prossimi alla velocità di sincronismo, vengono eccitati in corrente continua: il rotore si "agganicia" definitivamente alla velocità sincrona.</p>
+  </div>
+  <p>Lo <strong>scorrimento s</strong> (slip) è il parametro fondamentale della macchina asincrona che descrive il "ritardo" del rotore rispetto al campo statorico:</p>
+  <div class="formula">
+    s = (ω<sub>s</sub> − ω<sub>r</sub>) / ω<sub>s</sub> = (n<sub>0</sub> − n) / n<sub>0</sub>
+    <br><br>
+    Velocità di taglio = ω<sub>s</sub> − ω<sub>r</sub>
+  </div>
+  <table>
+    <tr><th>Scorrimento s</th><th>Condizione</th><th>Significato</th></tr>
+    <tr><td>s = 1</td><td>Avvio (n = 0)</td><td>Rotore fermo, frequenza rotorica = frequenza di rete</td></tr>
+    <tr><td>0 < s < 0,05</td><td>Funzionamento nominale</td><td>Motore a regime, carico normale</td></tr>
+    <tr><td>s ≈ 0</td><td>A vuoto (quasi sincrono)</td><td>n ≈ n₀, coppia quasi nulla</td></tr>
+    <tr><td>s = 0</td><td>Sincronismo (impossibile)</td><td>Nessuna variazione di flusso → coppia = 0 → il motore si fermerebbe</td></tr>
+    <tr><td>s < 0</td><td>Funzionamento da generatore</td><td>n > n₀, energia meccanica → elettrica</td></tr>
+  </table>
+
+  <div class="important">
+    <span class="important-title">⚠ Perché la macchina è "Asincrona"?</span>
+    Il rotore non può mai raggiungere la velocità di sincronismo. Se ω<sub>r</sub> = ω<sub>s</sub>, la velocità relativa sarebbe nulla → nessuna variazione di flusso → le f.e.m. sparirebbero → le correnti indotte sparirebbero → il campo di indotto sparirebbe → la coppia motrice diventerebbe nulla → l'attrito frenerebbe il rotore. Per questo la macchina accelera finché non raggiunge una velocità <em>prossima</em> a quella di sincronismo, tale da produrre una coppia che compensi appena gli attriti (funzionamento a vuoto).
+  </div>
+
+  <h3>3.5 Caratteristica Meccanica (Coppia–Velocità)</h3>
+  <p>La <strong>caratteristica meccanica</strong> è il grafico che mette in relazione la coppia elettromagnetica C prodotta dal motore e la sua velocità di rotazione n (o lo scorrimento s).</p>
+
+  <ul>
+    <li><strong>All'avvio (n=0, s=1):</strong> la corrente assorbita è massima ma la coppia iniziale C<sub>avv</sub> è bassa. È il punto critico in cui il motore deve "vincere" il carico per iniziare a girare.</li>
+    <li><strong>Accelerazione:</strong> man mano che la velocità aumenta (s scende), la coppia sale fino a raggiungere un picco.</li>
+    <li><strong>Coppia Massima C<sub>MAX</sub>:</strong> il punto di stallo. Se il carico richiede più di questo, il motore si ferma (si blocca).</li>
+    <li><strong>Vicino alla Sincronia:</strong> la coppia diminuisce e si stabilizza sulla coppia nominale dove il motore lavora normalmente.</li>
+    <li><strong>A n₀ (sincronismo):</strong> la coppia è zero perché non c'è più variazione di flusso.</li>
+  </ul>
+
+  <h4>Tratto Stabile vs Instabile</h4>
+  <ul>
+    <li><strong>Tratto stabile (a destra del picco, n > n<sub>CR</sub>):</strong> se il carico aumenta, il motore rallenta leggermente, ma così facendo la coppia aumenta per compensare. Il motore si auto-regola.</li>
+    <li><strong>Tratto instabile (a sinistra del picco, n < n<sub>CR</sub>):</strong> se il carico aumenta, il motore rallenta, ma la sua coppia diminuisce ulteriormente. Il motore non ce la fa e "muore" (si blocca).</li>
+  </ul>
+
+  <h4>Effetto della Resistenza Rotorica (curve rosse)</h4>
+  <p>Aumentando la resistenza del rotore (possibile solo con il rotore avvolto), la curva si "stira" verso destra: la coppia massima rimane la stessa (non dipende da R₂) ma lo scorrimento critico aumenta. Questo permette di avere coppia massima già all'avviamento, far partire carichi pesantissimi senza bruciare il motore con troppa corrente. La formula della coppia meccanica è:</p>
+  <div class="formula">
+    C<sub>em</sub>(s) = (3·p·R₂') / (ω<sub>s</sub>) · V² / [(R₁+R₂'/s)² + (X<sub>1σ</sub>+X<sub>2σ</sub>')²]
+    <br><br>
+    C<sub>MAX</sub> = (3·p) / (2·ω<sub>s</sub>) · V² / [R₁ + √(R₁² + (X<sub>1σ</sub>+X<sub>2σ</sub>')²)]
+    <br><br>
+    s<sub>CR</sub> = R₂' / √(R₁² + (X<sub>1σ</sub>+X<sub>2σ</sub>')²) &nbsp;&nbsp;&nbsp; (cresce al crescere di R₂')
+  </div>
+
+  <h3>3.6 I Due Grandi Problemi all'Avviamento</h3>
+
+  <h4>A) Corrente di Spunto Troppo Alta (I<sub>u</sub>)</h4>
+  <p>Quando il rotore è fermo (n=0), lo scorrimento è massimo (s=1). In questo istante il motore si comporta esattamente come un trasformatore con il secondario in cortocircuito. La causa: la variazione di flusso massiccia (il campo statorico "taglia" le barre del rotore alla massima velocità relativa) induce tensioni e correnti altissime. L'effetto: la corrente assorbita dallo statore può essere da 5 a 8 volte superiore alla corrente nominale. Il rischio: può scattare le protezioni elettriche, causare cadute di tensione sulla linea e surriscaldare gli avvolgimenti.</p>
+
+  <h4>B) Coppia Iniziale Bassa (M<sub>a</sub>)</h4>
+  <p>Nonostante la corrente altissima, la coppia iniziale è bassa — un paradosso apparente. La causa: all'avvio la frequenza delle correnti nel rotore è uguale a quella di rete (50 Hz). A questa frequenza, l'induttanza del rotore gioca un ruolo enorme, rendendo il circuito rotorico fortemente induttivo. L'effetto: la corrente del rotore risulta fortemente sfasata in ritardo rispetto alla tensione. Questo sfasamento impedisce al campo magnetico del rotore di interagire efficacemente con quello dello statore → coppia relativa bassa.</p>
+
+  <h3>3.7 Soluzioni all'Avviamento</h3>
+  <ul>
+    <li><strong>Avviamento Stella-Triangolo:</strong> si riduce la tensione applicata allo statore nella prima fase (collegamento a stella, tensione ridotta di √3) per abbassare la corrente di spunto. Ma si riduce anche la coppia del fattore 3.</li>
+    <li><strong>Soft-Starter:</strong> dispositivi elettronici che aumentano gradualmente la tensione, controllando la corrente durante l'avvio.</li>
+    <li><strong>Inverter (soluzione moderna definitiva):</strong> variando sia la tensione che la frequenza, l'inverter permette di avere coppia massima già a zero giri mantenendo la corrente sotto controllo.</li>
+    <li><strong>Resistenze Rotoriche (solo per rotore avvolto):</strong> inserendo resistenze nel circuito rotorico si riduce lo sfasamento della corrente, aumentando drasticamente la coppia di avviamento e limitando la corrente.</li>
+  </ul>
+
+  <h3>3.8 Circuito Equivalente di Steinmetz</h3>
+  <p>Il <strong>circuito equivalente di Steinmetz</strong> è la rappresentazione elettrica di ciò che accade all'interno di una fase del motore asincrono. È identico nella topologia allo schema a T del trasformatore, con una differenza fondamentale: la resistenza rotorica R₂'/s dipende dallo scorrimento. Il circuito si divide in tre sezioni principali:</p>
+
+  <h4>A) Il Primario (Statore)</h4>
+  <ul>
+    <li>V₁ = tensione di fase alimentata dalla rete alla frequenza f₁</li>
+    <li>R₁ = resistenza ohmica degli avv. di statore (perdite nel rame statorico)</li>
+    <li>X₁ = reattanza di dispersione statorica</li>
+  </ul>
+
+  <h4>B) Il Ramo Trasversale (Traferro)</h4>
+  <ul>
+    <li>R₀ = resistenza che modella le perdite nel ferro (isteresi e correnti parassite)</li>
+    <li>X<sub>μ</sub> = reattanza di magnetizzazione; crea il campo magnetico rotante al traferro. La corrente I₀ che lo attraversa è la corrente di magnetizzazione.</li>
+  </ul>
+
+  <h4>C) Il Secondario (Rotore Riportato allo Statore)</h4>
+  <p>Le grandezze rotoriche sono "riportate" al primario tramite il rapporto di trasformazione K.</p>
+  <div class="formula">
+    R₂'/s = R₂' + R₂' · (1−s)/s
+  </div>
+  <p>Questa scomposizione separa due fenomeni nel rotore:</p>
+  <ul>
+    <li><strong>R₂' (resistenza fisica del rame):</strong> rappresenta il calore dissipato per effetto Joule nel rotore (perdite nel rame rotorico).</li>
+    <li><strong>R₂' · (1−s)/s (resistenza di carico meccanico):</strong> è una resistenza fittizia che rappresenta la potenza meccanica sviluppata dal motore. Non dissipa calore: "assorbe" l'energia che viene inviata all'albero sotto forma di coppia e rotazione.</li>
+  </ul>
+
+  <h4>Il Caso Resistivo — Analisi con lo Scorrimento</h4>
+  <ul>
+    <li><strong>A vuoto (s≈0):</strong> il termine (1−s)/s → ∞. Una resistenza infinita equivale a un circuito aperto: il rotore non assorbe quasi corrente. I₂' ≈ 0.</li>
+    <li><strong>A pieno carico (0 < s < 0,05):</strong> lo scorrimento è piccolo. La resistenza di carico meccanico stabilizza la corrente I₂ al valore nominale necessario per vincere le coppie resistenti del carico.</li>
+    <li><strong>All'avviamento (s=1):</strong> il rotore è fermo e il termine R₂'·(1−s)/s = 0. Il circuito vede solo la resistenza fisica R₂', che è molto piccola → la corrente I₂ diventa altissima (corrente di spunto).</li>
+  </ul>
+
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPITOLO 4 — INVERTER
+     ═══════════════════════════════════════════════════════ -->
+<div class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-number">Capitolo IV</span>
+    <h2>L'Inverter</h2>
+  </div>
+
+  <h3>4.1 Generalità</h3>
+  <p>Un <strong>inverter</strong> è un convertitore di potenza elettronica che trasforma corrente continua (DC) in corrente alternata (AC) con tensione, frequenza e forma d'onda controllabili. È lo strumento fondamentale per il controllo di velocità dei motori asincroni (variando frequenza e tensione) e sincroni, nonché per la connessione di fonti rinnovabili alla rete.</p>
+  <p>I due grandi famiglie di inverter sono il <strong>VSI</strong> (Voltage Source Inverter, a tensione impressa) e il <strong>CSI</strong> (Current Source Inverter, a corrente impressa).</p>
+
+  <h3>4.2 VSI — Voltage Source Inverter (a Tensione Impressa)</h3>
+
+  <h4>Definizione e Modello Matematico</h4>
+  <p>Nel VSI la sorgente DC è una tensione costante V<sub>dc</sub> (tipicamente un condensatore di grande capacità che mantiene stabile la tensione del bus DC). L'inverter controlla <em>l'ampiezza e la forma</em> della tensione di uscita; la corrente è conseguenza del carico. Il condensatore sul bus DC rende la sorgente "rigida" in tensione: variazioni rapide di carico non cambiano V<sub>dc</sub>.</p>
+
+  <div class="formula">
+    Modello matematico VSI (fase a):
+    <br>
+    v<sub>an</sub>(t) = (V<sub>dc</sub>/2) · s<sub>a</sub>(t) − (V<sub>dc</sub>/6) · [s<sub>a</sub>(t) + s<sub>b</sub>(t) + s<sub>c</sub>(t)]
+    <br><br>
+    dove s<sub>k</sub>(t) ∈ {+1, −1} è la funzione di commutazione del ramo k
+  </div>
+
+  <p>Il VSI trifase ha sei interruttori (IGBT con diodi in antiparallelo), disposti in tre rami (uno per fase). In ogni ramo, i due switch sono complementari: mai entrambi ON contemporaneamente (cortocircuito del bus DC) né entrambi OFF (tensione indeterminata).</p>
+
+  <h3>4.3 Controllo del VSI: Onda Quadra</h3>
+  <p>Nel controllo ad <strong>onda quadra</strong> (a 6 impulsi), ogni switch conduce per 180°. La tensione di uscita è un'onda quadra sfasata di 120° tra le fasi. Vantaggi: semplicità, perdite di commutazione basse. Svantaggi: contenuto armonico elevato (5ª, 7ª, 11ª armonica…), non permette di variare continuamente l'ampiezza della fondamentale.</p>
+
+  <div class="formula">
+    Serie di Fourier della tensione di fase (onda quadra):
+    <br>
+    v(t) = (4·V<sub>dc</sub>/π) · Σ [sin(n·ωt)/n] &nbsp;&nbsp;&nbsp; con n = 1, 5, 7, 11, 13, ...
+    <br><br>
+    Fondamentale: V₁ = (4/π) · (V<sub>dc</sub>/2) ≈ 0,637 · V<sub>dc</sub>
+    <br>
+    Armoniche: V<sub>n</sub> = V₁/n &nbsp;&nbsp;&nbsp; (ampiezze decrescenti col rango n)
+  </div>
+
+  <h3>4.4 Controllo del VSI: PWM (Pulse Width Modulation)</h3>
+  <p>La <strong>modulazione PWM</strong> (modulazione di larghezza di impulso) è la tecnica moderna per controllare la tensione di uscita dell'inverter. Invece di commutare ogni 180°, gli switch commutano ad alta frequenza (frequenza di switching f<sub>sw</sub> >> f<sub>out</sub>). La durata relativa degli impulsi (duty cycle) viene variata per ottenere in media la forma d'onda sinusoidale desiderata.</p>
+
+  <h4>Principio del PWM Sinusoidale (SPWM)</h4>
+  <p>Si confronta un segnale di riferimento sinusoidale (onda di modulazione, frequenza f<sub>m</sub>, ampiezza M·(V<sub>dc</sub>/2)) con un segnale triangolare ad alta frequenza (onda portante, frequenza f<sub>sw</sub>). Quando il segnale di riferimento supera il triangolare, lo switch superiore è ON; quando è al di sotto, è OFF.</p>
+
+  <div class="formula">
+    Indice di modulazione di ampiezza: m<sub>a</sub> = V̂<sub>ref</sub> / V̂<sub>portante</sub> &nbsp;&nbsp;&nbsp; (0 ≤ m<sub>a</sub> ≤ 1 per modulazione lineare)
+    <br><br>
+    Indice di modulazione di frequenza: m<sub>f</sub> = f<sub>sw</sub> / f<sub>out</sub>
+    <br><br>
+    Fondamentale di uscita: V₁ = m<sub>a</sub> · (V<sub>dc</sub>/2) &nbsp;&nbsp;&nbsp; (per m<sub>a</sub> ≤ 1)
+  </div>
+
+  <h4>Serie di Fourier della Tensione PWM</h4>
+  <p>Nel PWM le armoniche non sono più ai ranghi 5, 7, 11… come nell'onda quadra, ma si spostano intorno ai multipli della frequenza di switching:</p>
+  <div class="formula">
+    Armoniche significative: f<sub>harm</sub> = j·f<sub>sw</sub> ± k·f<sub>out</sub> &nbsp;&nbsp;&nbsp; con j=1,2,3... e k=1,3,5...
+    <br><br>
+    Per m<sub>f</sub> elevato (es. 21), le armoniche hanno frequenza molto alta → facile filtraggio con L piccola!
+  </div>
+  <p>Il grande vantaggio del PWM: le armoniche di ordine basso (5ª, 7ª) sono eliminate o drasticamente ridotte. Le armoniche residue sono ad alta frequenza → più facili da filtrare con induttanze di valore ridotto, e naturalmente attenuate dall'induttanza del motore.</p>
+
+  <h4>PWM Digitale</h4>
+  <p>Nella <strong>modulazione PWM digitale</strong>, il confronto tra segnale di riferimento e portante avviene in modo discreto mediante un microcontrollore o DSP. Si campiona il segnale di riferimento e si calcola il duty cycle per ogni periodo di switching. Permette implementazione di algoritmi avanzati (controllo vettoriale, DTC), compensazione di morti tempi (dead-time), sincronizzazione con la frequenza di uscita.</p>
+
+  <h3>4.5 CSI — Current Source Inverter (a Corrente Impressa)</h3>
+
+  <h4>Definizione e Modello Matematico</h4>
+  <p>Nel CSI la sorgente DC è una corrente costante I<sub>dc</sub> mantenuta costante da una grande induttanza in serie. L'inverter controlla <em>quale fase del motore</em> riceve la corrente in ogni istante; la tensione è conseguenza del carico. Il CSI è duale rispetto al VSI: dove nel VSI c'era il condensatore (sorgente rigida di tensione), nel CSI c'è l'induttore (sorgente rigida di corrente).</p>
+
+  <div class="formula">
+    Modello matematico CSI (fase a):
+    <br>
+    i<sub>a</sub>(t) = I<sub>dc</sub> · s<sub>a</sub>(t)
+    <br><br>
+    dove s<sub>a</sub>(t) ∈ {+1, 0, −1} e la corrente è "commutata" tra le fasi
+    <br>
+    Vincolo: I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> = 0 (correnti sempre bilanciate)
+  </div>
+
+  <h3>4.6 Inverter ASCI (Auto Sequential Commutating Inverter)</h3>
+  <p>L'ASCI è un tipo di CSI che utilizza la reazione del circuito LC del carico per spegnere (commutare off) i tiristori (SCR). La commutazione avviene in sequenza automatica grazie all'energia immagazzinata nei condensatori di commutazione. Fu una soluzione diffusa prima dell'avvento degli IGBT (che si spengono per gate), oggi sostituita da convertitori a dispositivi auto-commutabili.</p>
+
+  <h3>4.7 Confronto VSI vs CSI</h3>
+  <table>
+    <tr>
+      <th>Caratteristica</th>
+      <th>VSI</th>
+      <th>CSI</th>
+    </tr>
+    <tr>
+      <td>Sorgente DC</td>
+      <td>Tensione costante (condensatore)</td>
+      <td>Corrente costante (induttore)</td>
+    </tr>
+    <tr>
+      <td>Grandezza controllata</td>
+      <td>Tensione di uscita</td>
+      <td>Corrente di uscita</td>
+    </tr>
+    <tr>
+      <td>Commutazione</td>
+      <td>Auto-commutazione (IGBT/MOSFET)</td>
+      <td>Commutazione naturale o forzata (SCR)</td>
+    </tr>
+    <tr>
+      <td>Sovracorrente</td>
+      <td>Richiede protezione rapida</td>
+      <td>Naturalmente protetto (corrente limitata dall'induttanza)</td>
+    </tr>
+    <tr>
+      <td>Sovratensione</td>
+      <td>Non ci sono problemi di sovratensione</td>
+      <td>Rischio sovratensioni alla commutazione</td>
+    </tr>
+    <tr>
+      <td>Filtro in uscita</td>
+      <td>Induttanze di fase (piccole per PWM ad alta f<sub>sw</sub>)</td>
+      <td>Condensatori in parallelo al carico</td>
+    </tr>
+    <tr>
+      <td>Rigenerazione</td>
+      <td>Richiede ponte di recupero separato</td>
+      <td>Semplice inversione della tensione DC</td>
+    </tr>
+    <tr>
+      <td>Applicazioni tipiche</td>
+      <td>Azionamenti moderni, UPS, rinnovabili</td>
+      <td>Grandi motori, laminatoi, trazione ferroviaria storica</td>
+    </tr>
+    <tr>
+      <td>Diffusione attuale</td>
+      <td>Predominante (>95% dei nuovi impianti)</td>
+      <td>Applicazioni di alta potenza storiche</td>
+    </tr>
+  </table>
+
+  <h3>4.8 Inverter CRPWM (Current Regulated PWM)</h3>
+  <p>Il <strong>CRPWM</strong> (o PWM con regolazione di corrente) è una tecnica di controllo del VSI in cui la modulazione PWM non è generata dal confronto con un segnale di riferimento di tensione, ma da un <strong>regolatore di corrente</strong> in anello chiuso.</p>
+  <p>Principio: si misura istantaneamente la corrente di ogni fase del motore. Si confronta con un riferimento sinusoidale di corrente desiderata. L'errore comanda direttamente la commutazione degli switch attraverso un <em>comparatore a isteresi</em> (hysteresis controller) o un regolatore PI con modulazione PWM. Il vantaggio principale è la risposta dinamica molto rapida alle variazioni di carico, fondamentale nel controllo vettoriale (Field Oriented Control) delle macchine asincrone e sincrone.</p>
+  <div class="formula">
+    Banda di isteresi: il PWM commuta quando i<sub>a</sub>(t) supera [i*<sub>a</sub>(t) ± Δi/2]
+    <br><br>
+    La frequenza di commutazione non è fissa: dipende dall'induttanza di carico e dalla banda Δi
+    <br><br>
+    Errore massimo garantito: |i<sub>a</sub> − i*<sub>a</sub>| ≤ Δi/2
+  </div>
+
+  <h3>4.9 Alimentazione da Inverter — Effetti sul Motore</h3>
+  <p>L'alimentazione da inverter presenta alcune criticità rispetto all'alimentazione diretta da rete sinusoidale:</p>
+  <ul>
+    <li><strong>Armoniche di corrente:</strong> le armoniche della tensione dell'inverter generano correnti armoniche nel motore → perdite aggiuntive nel ferro e nel rame → il motore si riscalda di più → deve essere declassato (derating).</li>
+    <li><strong>dv/dt elevati:</strong> le commutazioni rapide degli IGBT producono fronti di tensione molto ripidi (dv/dt elevato). Nei cavi lunghi tra inverter e motore si generano riflessioni d'onda che possono causare sovratensioni ai morsetti del motore → cavi schermati e filtri dv/dt.</li>
+    <li><strong>Correnti di modo comune:</strong> a causa della struttura dell'inverter, si generano correnti di modo comune che possono circolare attraverso i cuscinetti del motore → deterioramento dei cuscinetti → impiego di cuscinetti isolati o anelli di disaccoppiamento.</li>
+  </ul>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CAPITOLO 5 — LEGGI FONDAMENTALI
+     ═══════════════════════════════════════════════════════ -->
+<div class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-number">Appendice — Leggi Fondamentali</span>
+    <h2>Leggi dell'Elettromagnetismo</h2>
+  </div>
+
+  <h3>A.1 Flusso Magnetico</h3>
+  <div class="formula">
+    Φ(B) = ∬<sub>S</sub> B · dA &nbsp;&nbsp;&nbsp; [Weber, Wb]
+    <br><br>
+    Se il campo è uniforme e la superficie è piana: Φ = B · S · cos α
+  </div>
+  <p>È una grandezza scalare che misura il numero di linee di campo magnetico B che attraversano una superficie S. Le linee di campo sono sempre chiuse.</p>
+
+  <h3>A.2 Campo Magnetico B e Intensità H</h3>
+  <p>Il <strong>campo magnetico B</strong> (induzione magnetica) è un campo vettoriale generato da cariche elettriche in movimento o da magneti. Si misura in Tesla (T). È visualizzabile tramite linee di forza chiuse che vanno dal polo nord al polo sud. La <strong>permeabilità magnetica μ</strong> è la predisposizione di un materiale a lasciarsi attraversare dal flusso magnetico:</p>
+  <div class="formula">
+    B = μ · H &nbsp;&nbsp;&nbsp; con μ = μ₀ · μᵣ
+    <br>
+    μ₀ = 4π×10⁻⁷ H/m (permeabilità del vuoto) &nbsp;&nbsp; μᵣ ≫ 1 per materiali ferromagnetici
+  </div>
+
+  <h3>A.3 Legge di Ampere (Circuitazione Magnetica)</h3>
+  <div class="formula">
+    ∮ H · dl = I<sub>tot</sub> = N · I &nbsp;&nbsp;&nbsp; (Teorema di Ampere)
+    <br><br>
+    Γ<sub>γ</sub>(B) = ∮<sub>γ</sub> B · dl = μ₀ · I<sub>c</sub>
+  </div>
+  <p>La circuitazione del campo magnetico H lungo una linea chiusa e orientata γ è pari alla somma algebrica di tutte le correnti che attraversano la superficie raccchiusa dalla linea γ.</p>
+
+  <h3>A.4 Legge di Faraday–Neumann–Lenz</h3>
+  <p>Se un circuito è attraversato da un flusso magnetico che varia nel tempo, si nasce una tensione (f.e.m.) che fa scorrere corrente:</p>
+  <div class="formula">
+    ε = −dΦ(B)/dt
+  </div>
+  <p>Il segno meno esprime la <strong>legge di Lenz</strong>: la f.e.m. indotta ha verso opposto rispetto alla variazione di flusso che l'ha generata (conseguenza della conservazione dell'energia). La corrente indotta crea un campo di reazione che tenta di contrastare la variazione di flusso.</p>
+
+  <h3>A.5 Legge di Ampere–Maxwell</h3>
+  <p>Maxwell ha generalizzato la legge di Ampere: non sono solo le correnti elettriche a generare un campo magnetico, ma questo può nascere anche da una variazione di flusso del campo elettrico (corrente di spostamento):</p>
+  <div class="formula">
+    ∮ H · dR = I<sub>tot</sub>
+  </div>
+
+  <h3>A.6 Legge di Hopkinson</h3>
+  <p>Analogia tra circuiti elettrici e circuiti magnetici: la forza magnetomotrice (f.m.m.) prodotta dagli avvolgimenti è uguale al prodotto tra il flusso risultante e la riluttanza del percorso nel ferro:</p>
+  <div class="formula">
+    N · I = R<sub>m</sub> · Φ &nbsp;&nbsp;&nbsp; con R<sub>m</sub> = l / (μ · S)
+    <br><br>
+    Analogia: f.m.m. ↔ f.e.m. ; &nbsp; flusso Φ ↔ corrente I ; &nbsp; riluttanza R<sub>m</sub> ↔ resistenza R
+  </div>
+
+  <h3>A.7 Forza di Lorentz</h3>
+  <p>Un conduttore percorso da corrente immerso in un campo magnetico subisce una forza meccanica detta forza di Lorentz:</p>
+  <div class="formula">
+    F = l · (I × B)
+  </div>
+  <p>Questa forza è il principio motore di tutte le macchine elettriche rotanti: il campo magnetico statorico esercita forze sui conduttori rotorici percorsi da corrente, creando la coppia meccanica.</p>
+
+  <div class="section-divider">✦</div>
+
+  <h3>A.8 Richiami — Campo Diretto e in Quadratura</h3>
+  <ul>
+    <li><strong>Asse magnetico diretto:</strong> è l'asse che passa esattamente per il centro dei poli (dove il flusso è massimo).</li>
+    <li><strong>Asse in quadratura:</strong> è l'asse spostato di 90° elettrici rispetto al diretto (dove il flusso è nullo).</li>
+  </ul>
+  <p>Nelle macchine a poli salienti, la riluttanza è diversa sull'asse d (bassa, nucleo ferromagnetico) e sull'asse q (alta, tra i poli). Questa asimmetria genera la <strong>coppia di riluttanza</strong>, sfruttata nei motori sincroni a riluttanza e nelle macchine a magneti permanenti interni (IPM).</p>
+
+  <h3>A.9 Sfasamento Meccanico ed Elettrico</h3>
+  <div class="formula">
+    Θ<sub>mec</sub> = Θ<sub>el</sub> / p
+  </div>
+  <p>In una macchina con p coppie polari, lo sfasamento meccanico tra le fasi è 1/p di quello elettrico. Per p=1 (macchina bipolare): le fasi sono sfasate di 120° elettrici = 120° meccanici. Per p=2: le fasi sono sfasate di 120° elettrici = 60° meccanici. Invertendo l'ordine delle fasi (es. A→C→B invece di A→B→C), il campo rotante inverte il proprio senso di rotazione.</p>
+
+</div>
+
+<!-- FINE -->
+<div style="text-align:center; padding: 2cm; border-top: 2px solid var(--border); color: var(--ink-soft);">
+  <p style="font-family:'Cinzel',serif; font-size:14pt; margin-bottom:0.5cm;">Fine della Dispensa</p>
+  <p style="font-style:italic; font-size:10pt;">Università degli Studi di Palermo — Facoltà di Ingegneria — A.A. 2025/2026</p>
+  <p style="color:var(--accent-gold); font-size:12pt; margin-top:0.3cm;">✦ ✦ ✦</p>
+</div>
+
+</body>
+</html>
