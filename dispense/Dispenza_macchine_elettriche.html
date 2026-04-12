@@ -421,7 +421,8 @@ mark {
     <div class="toc-entry"><span class="num">2.</span> Perdite nel trasformatore<span class="dots"></span></div>
     <div class="toc-entry"><span class="num">3.</span> Raffreddamento<span class="dots"></span></div>
     <div class="toc-entry"><span class="num">4.</span> Principio di funzionamento<span class="dots"></span></div>
-    <div class="toc-entry"><span class="num">5.</span> Schema circuitale — riporto al primario<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">5.</span> Schema circuitale a T — riporto al primario<span class="dots"></span></div>
+    <div class="toc-entry"><span class="num">5.</span> Schema circuitale a Γ — Approssimazione a Pieno Carico<span class="dots"></span></div>
   </div>
   
   <div class="toc-section">
@@ -743,16 +744,16 @@ v₁(t) → i₁(t) → N₁·i₁(t)  [avv. primario]
   </div>
   <p>Il segno + vale per avvolgimenti <em>concordi</em> (stesso verso di avvolgimento), il segno − per avvolgimenti <em>discordi</em>.</p>
 
-  <h3>1.8 Schema Circuitale a T e Riporto al Primario</h3>
+<h3>1.8 Schema Circuitale a T e Riporto al Primario</h3>
   <p>Lo schema elettrico equivalente è lo <strong>schema a T</strong>. Per semplificarne l'analisi si riportano al primario le grandezze del secondario tramite le seguenti trasformazioni:</p>
   <div class="formula">
-    V₂' = K<sub>s</sub>·V₂ &nbsp;&nbsp;&nbsp; (tensione secondaria riportata)
+    V̄₂' = K<sub>s</sub>·V̄₂ &nbsp;&nbsp;&nbsp; (tensione secondaria riportata)
     <br>
-    I₂' = I₂/K<sub>s</sub> &nbsp;&nbsp;&nbsp; (corrente secondaria riportata)
+    Ī₂' = Ī₂/K<sub>s</sub> &nbsp;&nbsp;&nbsp; (corrente secondaria riportata)
     <br>
-    Z₂' = K<sub>s</sub>²·Z₂ &nbsp;&nbsp;&nbsp; (impedenza secondaria riportata)
+    Ż₂' = K<sub>s</sub>²·Ż₂ &nbsp;&nbsp;&nbsp; (impedenza secondaria riportata)
   </div>
-  <p>Queste trasformazioni garantiscono la conservazione della potenza: P = V₂·I₂ = V₂'·I₂'.</p>
+  <p>Queste trasformazioni garantiscono la conservazione della potenza: la perdita su R₂ vale P = R₂·I₂² = R₂'·I₂'², confermando che la trasformazione è invariante rispetto alle potenze attive, reattive e apparenti in gioco.</p>
 
   <div class="schema-box">
     <div class="schema-title">Schema Circuitale a T (riportato al primario)</div>
@@ -760,32 +761,42 @@ v₁(t) → i₁(t) → N₁·i₁(t)  [avv. primario]
   <div style="display: flex; justify-content: center; gap: 20px;">
     <img src="./macchine elettriche/SchemaT.jpg" alt="SchemaT.jpg" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
   </div>
-R₀  = resistenza modellante le perdite nel ferro
-jXμ = reattanza di magnetizzazione (crea il campo rotante)
-I₀  = corrente di magnetizzazione (a vuoto: I₁ = I₀)
+R₀  = resistenza del ramo magnetizzante → R₀·Iₐ² = potenza attiva perduta nel ferro
+Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiva per la magnetizzazione
+Ī₀  = corrente a vuoto = Iₐ + I_N &nbsp;&nbsp;&nbsp; (a vuoto: Ī₁ = Ī₀)
     </div>
   </div>
 
-  <p>Le equazioni del sistema completo sono:</p>
+  <p>Il sistema di equazioni completo, ricordando che le amperspire soddisfano N₁i₁ + N₂i₂ = N₁i₀, diventa in regime sinusoidale:</p>
   <div class="formula">
-    V₁ = I₁·Z₁ − I₂'·Z₂' − V₂'
+    V̄₁ = Ī₁·Ż₁ − Ī₂'·Ż₂' − V̄₂'
     <br>
-    I₁ + I₂' = I₀
+    Ī₁ + Ī₂' = Ī₀
   </div>
 
-  <h4>Rapporto di Trasformazione K<sub>n</sub></h4>
-  <p>Il <strong>rapporto di trasformazione in tensione</strong> è:</p>
+  <h4>Rapporto di Trasformazione</h4>
+  <p>Si distinguono due rapporti di trasformazione, che differiscono solo per il numeratore e coincidono se la macchina è ben proporzionata:</p>
   <div class="formula">
-    K<sub>n</sub> = V₁/V₂ ≈ N₁/N₂ = K<sub>s</sub> &nbsp;&nbsp;&nbsp; (in regime di vuoto, approssimazione)
+    Rapporto nominale: &nbsp; K<sub>n</sub> = V<sub>1n</sub> / V<sub>2n</sub> = V<sub>1n</sub> / (V<sub>20</sub>)<sub>V₁=V₁ₙ</sub>
+    <br><br>
+    Rapporto spire: &nbsp; K<sub>s</sub> = E₁ / E₂ = N₁ / N₂
   </div>
 
   <h4>Comportamento a Vuoto (I₂ = 0)</h4>
-  <p>A vuoto non circola corrente nel secondario: I₂ = 0 → I₁ = I₀ (corrente di magnetizzazione). La corrente a vuoto è il 2–5% della corrente nominale. La caduta di tensione su Z₁ è trascurabile: V₁ ≈ −E₁.</p>
+  <p>A vuoto non circola corrente nel secondario: I₂ = 0 → Ī₁ = Ī₀ (corrente di magnetizzazione). La corrente a vuoto è il 2–5% della corrente nominale, quindi la caduta di tensione su Z₁ è trascurabile: V₁ ≈ −E₁, e la corrente I₀ cresce.</p>
 
   <h4>Comportamento a Pieno Carico</h4>
-  <p>A pieno carico I₂ = I₂n (corrente nominale): I₁ è elevata, I₀ ≪ I₁ è trascurabile → lo schema semplificato a Γ trascura il ramo magnetizzante e porta il carico direttamente ai terminali del generatore equivalente.</p>
+  <p>A pieno carico I₂ = I₂n: I₁ è elevata, I₀ ≪ I₁ è trascurabile. Si adotta lo <strong>schema semplificato a Γ</strong>: il ramo magnetizzante (Z₀) viene spostato ai morsetti di ingresso e l'impedenza ridotta al primario diventa Z̄ᵣ = Ż₁ + Ż₂', che raggruppa le cadute di entrambi gli avvolgimenti in un unico elemento serie.</p>
 
-</div>
+  <div class="schema-box">
+    <div class="schema-title">Schema Circuitale a Γ (pieno carico)</div>
+    <div class="diagram">
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <img src="./macchine elettriche/SchemaGamma.jpg" alt="SchemaGamma.jpg" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+  </div>
+Ż_r = Ż₁ + Ż₂' &nbsp;&nbsp;&nbsp; (impedenza risultante ridotta al primario)
+    </div>
+  </div>
 
 
 <!-- ═══════════════════════════════════════════════════════
