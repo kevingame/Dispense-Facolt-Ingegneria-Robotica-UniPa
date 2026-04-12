@@ -1337,6 +1337,22 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
     <br>
     Vincolo: I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> = 0 (correnti sempre bilanciate)
   </div>
+  
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <img src="./macchine elettriche/CSI.jpg" alt="CSI.jpg" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+  </div>
+  <p>
+    In questo schema analizziamo un <strong>CSI (Current Source Inverter)</strong>. Partendo <strong>da sinistra</strong>, notiamo subito la differenza principale: in ingresso non abbiamo condensatori, ma una <strong>grande induttanza di linea (L<sub>o</sub>)</strong>. Questo componente serve a livellare la corrente <strong>i<sub>DC</sub></strong>, rendendo il convertitore un vero e proprio generatore di corrente costante per le fasi successive.
+  </p>
+  <p>
+    Al centro troviamo le <strong>tre gambe</strong> dell'inverter. A differenza del VSI, qui i <strong>diodi (D1-D6) sono posti in serie</strong> ai transistor (S1-S6). Questa configurazione è necessaria perché il CSI deve essere in grado di bloccare tensioni inverse e gestire la commutazione della corrente tra le fasi in modo unidirezionale.
+  </p>
+  <p>
+    Spostandoci verso destra, prima del carico, notiamo tre <strong>condensatori (C)</strong> collegati in parallelo alle fasi. Questi sono fondamentali nel CSI per assorbire le punte di tensione durante le commutazioni (poiché la corrente nell'induttanza del motore non può variare istantaneamente) e per migliorare la forma d'onda della tensione sul carico.
+  </p>
+  <p>
+    Infine, i rami terminano sul carico trifase (R-L-e) che converge nel punto <strong>N</strong>, il <strong>centro stella</strong> del sistema.
+  </p>
 
   <h3>4.6 Inverter ASCI (Auto Sequential Commutating Inverter)</h3>
   <p>L'ASCI è un tipo di CSI che utilizza la reazione del circuito LC del carico per spegnere (commutare off) i tiristori (SCR). La commutazione avviene in sequenza automatica grazie all'energia immagazzinata nei condensatori di commutazione. Fu una soluzione diffusa prima dell'avvento degli IGBT (che si spengono per gate), oggi sostituita da convertitori a dispositivi auto-commutabili.</p>
