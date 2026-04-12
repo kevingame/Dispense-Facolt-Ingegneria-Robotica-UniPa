@@ -1249,6 +1249,20 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
     <img src="./macchine elettriche/VSI.jpg" alt="VSI.jpg" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
   </div>
   
+  <div style="margin: 20px 0; line-height: 1.6; font-family: sans-serif;">
+    <p>
+      Analizzando il circuito partendo <strong>da sinistra</strong>, notiamo la sezione di alimentazione composta da <strong>due condensatori in serie</strong> (C). 
+      I punti <strong>P</strong> e <strong>n</strong> rappresentano rispettivamente i poli positivo e negativo del bus DC, mentre il punto <strong>O</strong> è il punto centrale di riferimento (neutro del DC-link) situato tra i due condensatori.
+    </p>
+    <p>
+      Procedendo verso destra, troviamo <strong>tre rami verticali</strong> (identificati dai punti A, B e C) chiamati <strong>gambe</strong> dell'inverter. 
+      Ognuna di queste gambe ha il compito di controllare una singola fase del motore. Su questi rami sono installati i <strong>MOSFET</strong> (o IGBT) accoppiati a dei <strong>diodi di ricircolo</strong>; questi ultimi sono fondamentali per far scorrere la corrente reattiva del motore ed evitare picchi di tensione (sovratensioni) che potrebbero danneggiare i componenti durante le commutazioni.
+    </p>
+    <p>
+      Infine, la parte destra mostra i tre rami di uscita che terminano nel punto <strong>N</strong>, il quale rappresenta il <strong>centro stella</strong> del carico trifase.
+    </p>
+  </div>
+  
   <h4>Simulazione: Esempio di Configurazione</h4>
   <p>Consideriamo la configurazione tipo: S<sub>A</sub>=1, S<sub>B</sub>=0, S<sub>C</sub>=0 (quindi S<sub>A+</sub> chiuso, S<sub>B−</sub> chiuso, S<sub>C−</sub> chiuso).</p>
   <p>L'energia parte dal condensatore in alto, passa attraverso S<sub>A+</sub> ed esce dal punto A; entra nel 1° avvolgimento del motore, attraverso R ed L, e arriva al centro stella (N). Qui la corrente si divide: torna indietro attraverso gli avv. B e C, passando per gli interruttori S<sub>B−</sub> e S<sub>C−</sub>, e torna al polo negativo del DC-link.</p>
