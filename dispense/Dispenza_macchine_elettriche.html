@@ -1287,6 +1287,10 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
   <h4>Principio del PWM Sinusoidale (SPWM)</h4>
   <p>Si confronta un segnale di riferimento sinusoidale (onda di modulazione, frequenza f<sub>m</sub>, ampiezza M·(V<sub>dc</sub>/2)) con un segnale triangolare ad alta frequenza (onda portante, frequenza f<sub>sw</sub>). Quando il segnale di riferimento supera il triangolare, lo switch superiore è ON; quando è al di sotto, è OFF.</p>
 
+  <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+    <img src="./macchine elettriche/PWM_confronto.jpg" alt="Confronto Segnali PWM" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+  </div>
+  
   <div class="formula">
     Indice di modulazione di ampiezza: m<sub>a</sub> = V̂<sub>ref</sub> / V̂<sub>portante</sub> &nbsp;&nbsp;&nbsp; (0 ≤ m<sub>a</sub> ≤ 1 per modulazione lineare)
     <br><br>
@@ -1302,7 +1306,11 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
     <br><br>
     <strong>Regime di saturazione:</strong> se m<sub>a</sub> &gt; 1 la sinusoide è troppo grande e lo switch rimane sempre ON (blocco della commutazione) → si entra in sovramodulazione.
   </div>
-
+  
+  <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+    <img src="./macchine elettriche/sovramodulazione.jpg" alt="Caratteristica di Sovramodulazione" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+  </div>
+  
   <h4>Serie di Fourier della Tensione PWM</h4>
   <p>Nel PWM le armoniche non sono più ai ranghi 5, 7, 11… come nell'onda quadra, ma si spostano intorno ai multipli della frequenza di switching:</p>
   <div class="formula">
@@ -1414,6 +1422,11 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
   <h3>4.8 Inverter CRPWM (Current Regulated PWM)</h3>
   <p>Il <strong>CRPWM</strong> (o PWM con regolazione di corrente) è una tecnica di controllo del VSI in cui la modulazione PWM non è generata dal confronto con un segnale di riferimento di tensione, ma da un <strong>regolatore di corrente</strong> in anello chiuso.</p>
   <p>Principio: si misura istantaneamente la corrente di ogni fase del motore. Si confronta con un riferimento sinusoidale di corrente desiderata. L'errore comanda direttamente la commutazione degli switch attraverso un <em>comparatore a isteresi</em> (hysteresis controller) o un regolatore PI con modulazione PWM. Il vantaggio principale è la risposta dinamica molto rapida alle variazioni di carico, fondamentale nel controllo vettoriale (Field Oriented Control) delle macchine asincrone e sincrone.</p>
+  
+  <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+    <img src="./macchine elettriche/CRPWM_isteresi.jpg" alt="Banda di Isteresi CRPWM" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+  </div>
+  
   <div class="formula">
     Banda di isteresi: il PWM commuta quando i<sub>a</sub>(t) supera [i*<sub>a</sub>(t) ± Δi/2]
     <br><br>
