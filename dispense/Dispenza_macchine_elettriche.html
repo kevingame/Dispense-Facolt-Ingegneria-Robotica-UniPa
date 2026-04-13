@@ -695,26 +695,18 @@ mark {
 
   <div class="schema-box">
     <div class="schema-title">Catena di Trasduzione del Trasformatore</div>
-    <div class="diagram" style="text-align: center; line-height: 2;">
-    \( v_1(t) \rightarrow i_1(t) \rightarrow N_1 \cdot i_1(t) \) <br>
-    <span style="color: var(--accent);">[avvolgimento primario]</span> <br>
-    <span style="font-size: 1.5em;">↓</span> <br>
-    
-    \( \Phi(t) \) <br>
-    <span style="color: var(--accent);">[flusso nel nucleo]</span> <br>
-    <span style="font-size: 1.5em;">↓</span> <br>
-    
-    \( e_2 = -\frac{d(N_2 \cdot \Phi)}{dt} \) <br>
-    <span style="color: var(--accent);">[f.e.m. indotta al secondario]</span> <br>
-    <span style="font-size: 1.5em;">↓</span> <br>
-    
-    <span style="font-style: italic;">(se il secondario è chiuso sul carico \( R_L \))</span> <br>
-    \( e_2(t) \rightarrow i_2(t) \rightarrow N_2 \cdot i_2(t) \) <br>
-    <span style="font-size: 1.5em;">↓</span> <br>
-    
-    <span style="font-weight: bold;">Nucleo sollecitato da due f.m.m. contrarie:</span> <br>
-    \( N_1 \cdot i_1 + N_2 \cdot i_2 = N_1 \cdot i_0 \) <br>
-    <span style="color: var(--accent);">[amperspire risultanti]</span>
+    <div class="diagram" style="text-align: left; font-family: 'Fira Code', monospace; line-height: 1.6;">
+  <div>\( v_1(t) \rightarrow i_1(t) \rightarrow N_1 \cdot i_1(t) \) <span style="color: var(--accent); margin-left: 10px;">[avv. primario]</span></div>
+  <div style="padding-left: 100px; font-size: 1.2em;">↓</div>
+  <div style="padding-left: 85px;">\( \Phi(t) \) <span style="color: var(--accent); margin-left: 10px;">[flusso nel nucleo]</span></div>
+  <div style="padding-left: 100px; font-size: 1.2em;">↓</div>
+  <div>\( e_2 = -\frac{d(N_2 \cdot \Phi)}{dt} \) <span style="color: var(--accent); margin-left: 10px;">[f.e.m. indotta al secondario]</span></div>
+  <div style="padding-left: 100px; font-size: 1.2em;">↓</div>
+  <div style="font-style: italic; color: var(--ink-soft); font-size: 0.9em;">[se secondario chiuso su carico \( R_L \)]</div>
+  <div>\( e_2(t) \rightarrow i_2(t) \rightarrow N_2 \cdot i_2(t) \)</div>
+  <div style="padding-left: 100px; font-size: 1.2em;">↓</div>
+  <div style="font-weight: bold; font-size: 0.95em;">nucleo sollecitato da due f.m.m. contrarie:</div>
+  <div>\( N_1 \cdot i_1 + N_2 \cdot i_2 = N_1 \cdot i_0 \) <span style="color: var(--accent); margin-left: 10px;">(amperspire risultanti)</span></div>
     </div>
   </div>
 
