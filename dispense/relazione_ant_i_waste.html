@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ant-I-Waste — Relazione Tecnica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:   #1a4a2e;
+    --lime:    #5a9e4a;
+    --gold:    #c8a84b;
+    --cream:   #f5f0e8;
+    --paper:   #faf7f2;
+    --ink:     #1c1a16;
+    --mid:     #4a4540;
+    --light:   #9a9088;
+    --rule:    #d4cfc6;
+    --plastic: #e8b800;
+    --carta:   #2e6fa3;
+    --metallo: #2e7a3e;
+    --indiff:  #c0392b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: var(--green);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgba(255,255,255,0.04) 39px,
+        rgba(255,255,255,0.04) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 79px,
+        rgba(255,255,255,0.03) 79px,
+        rgba(255,255,255,0.03) 80px
+      );
+  }
+
+  .cover-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.35em 1.2em;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .cover-university {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 900;
+    line-height: 0.92;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    position: relative;
+    margin-bottom: 0.25rem;
+  }
+
+  .cover h1 span {
+    color: var(--gold);
+  }
+
+  .cover-subtitle {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(245,240,232,0.7);
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .cover-meta {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 4rem;
+    max-width: 720px;
+    width: 100%;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(200,168,75,0.4);
+  }
+
+  .meta-block { text-align: left; }
+  .meta-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .meta-value {
+    font-size: 0.92rem;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  /* ===== LAYOUT ===== */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    margin-bottom: 5rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lime);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--green);
+    margin-bottom: 1.8rem;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 2.4rem;
+    margin-bottom: 0.9rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--lime);
+  }
+
+  h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  p { margin-bottom: 1.1rem; color: var(--ink); }
+
+  /* ===== CODE ===== */
+  pre, code {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  code {
+    background: rgba(90,158,74,0.1);
+    color: var(--green);
+    padding: 0.1em 0.45em;
+    border-radius: 3px;
+    font-size: 0.87em;
+  }
+  pre {
+    background: var(--ink);
+    color: #c8ffc8;
+    padding: 1.5rem 1.8rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1.5rem 0 2rem;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    border-left: 4px solid var(--lime);
+  }
+  pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+  /* ===== CALLOUTS ===== */
+  .callout {
+    border-left: 4px solid var(--gold);
+    background: rgba(200,168,75,0.08);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p { margin-bottom: 0; }
+  .callout strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ===== TABLE ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.8rem 0 2.5rem;
+    font-size: 0.9rem;
+  }
+  thead tr {
+    background: var(--green);
+    color: var(--cream);
+  }
+  thead th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  tbody tr { border-bottom: 1px solid var(--rule); }
+  tbody tr:nth-child(even) { background: rgba(90,158,74,0.05); }
+  tbody td { padding: 0.8rem 1rem; vertical-align: top; }
+  tbody td:first-child { font-family: 'IBM Plex Mono', monospace; font-size: 0.85em; color: var(--green); }
+
+  /* ===== BIN BADGES ===== */
+  .bin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.8rem 0 2.5rem;
+  }
+  .bin-card {
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .bin-card .bin-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .bin-card .bin-pos {
+    font-size: 0.82rem;
+    opacity: 0.75;
+  }
+  .bin-card .bin-classes {
+    font-size: 0.83rem;
+    font-style: italic;
+  }
+  .bin-plastica  { background: rgba(232,184,0,0.15);  border: 2px solid var(--plastic); }
+  .bin-carta     { background: rgba(46,111,163,0.1);  border: 2px solid var(--carta); }
+  .bin-metallo   { background: rgba(46,122,62,0.12);  border: 2px solid var(--metallo); }
+  .bin-indiff    { background: rgba(192,57,43,0.1);   border: 2px solid var(--indiff); }
+  .bin-plastica .bin-name  { color: #a07800; }
+  .bin-carta .bin-name     { color: var(--carta); }
+  .bin-metallo .bin-name   { color: var(--metallo); }
+  .bin-indiff .bin-name    { color: var(--indiff); }
+
+  /* ===== FLOW DIAGRAM ===== */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 2rem 0 3rem;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+  .flow-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+  }
+  .flow-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .flow-line {
+    width: 2px;
+    flex: 1;
+    min-height: 28px;
+    background: linear-gradient(to bottom, var(--lime), rgba(90,158,74,0.2));
+    margin: 2px 0;
+  }
+  .flow-content {
+    padding: 0.6rem 0 1.4rem;
+  }
+  .flow-content strong {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--green);
+    margin-bottom: 0.25rem;
+  }
+  .flow-content p { margin-bottom: 0; font-size: 0.93rem; }
+
+  /* ===== ROS2 NODES ===== */
+  .ros2-arch {
+    background: #0d1117;
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: #8b949e;
+    overflow-x: auto;
+  }
+  .ros2-arch .node { color: #79c0ff; }
+  .ros2-arch .topic { color: #56d364; }
+  .ros2-arch .srv { color: #ffa657; }
+  .ros2-arch .arrow { color: #6e7681; }
+  .ros2-arch .comment { color: #484f58; font-style: italic; }
+
+  .ros2-node-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .ros2-node-card {
+    background: rgba(13,17,23,0.05);
+    border: 1px solid rgba(90,158,74,0.3);
+    border-radius: 8px;
+    padding: 1.2rem;
+  }
+  .ros2-node-card h4 { margin-top: 0; font-size: 0.78rem; }
+  .ros2-node-card .topics { margin-top: 0.6rem; }
+  .ros2-node-card .topic-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    padding: 0.2rem 0;
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .pub  { color: var(--lime); }
+  .sub  { color: var(--gold); }
+  .tag {
+    font-size: 0.65rem;
+    padding: 0.1em 0.5em;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .tag-pub  { background: rgba(90,158,74,0.15); color: var(--lime); }
+  .tag-sub  { background: rgba(200,168,75,0.15); color: var(--gold); }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: rgba(26,74,46,0.06);
+    border: 1px solid rgba(26,74,46,0.15);
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 4rem;
+  }
+  .toc-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 1rem;
+  }
+  .toc ol { padding-left: 1.5rem; }
+  .toc li { margin-bottom: 0.4rem; }
+  .toc a {
+    color: var(--green);
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-bottom: 1px dotted rgba(26,74,46,0.3);
+    transition: border-color 0.2s;
+  }
+  .toc a:hover { border-color: var(--lime); color: var(--lime); }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .cover { min-height: auto; page-break-after: always; }
+    pre { white-space: pre-wrap; }
+  }
+
+  @media (max-width: 600px) {
+    .cover-meta { grid-template-columns: 1fr; }
+    .bin-grid { grid-template-columns: 1fr; }
+    .ros2-node-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================================================================ COVER -->
+<div class="cover">
+  <div class="cover-badge">Relazione Tecnica · A.A. 2025–2026</div>
+  <div class="cover-university">Università degli Studi di Palermo · Facoltà di Ingegneria Robotica</div>
+
+  <h1>Ant-<span>I</span>-Waste</h1>
+  <div class="cover-subtitle">Sistema Robotico Intelligente per la Raccolta Differenziata Automatizzata</div>
+
+  <div class="cover-meta">
+    <div class="meta-block">
+      <span class="meta-label">Corso</span>
+      <span class="meta-value">Intelligenza Artificiale<br>per la Robotica</span>
+    </div>
+    <div class="meta-block">
+      <span class="meta-label">Docente</span>
+      <span class="meta-value">Prof. Antonino Chella</span>
+    </div>
+    <div class="meta-block">
+      <span class="meta-label">Studenti</span>
+      <span class="meta-value">Kevin Petrone · 0774409<br>Marta Di Peri · 0774023</span>
+    </div>
+    <div class="meta-block">
+      <span class="meta-label">Anno Accademico</span>
+      <span class="meta-value">2025–2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ BODY -->
+<div class="page">
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">Indice</div>
+    <ol>
+      <li><a href="#introduzione">Introduzione e Obiettivi</a></li>
+      <li><a href="#architettura">Architettura del Sistema</a></li>
+      <li><a href="#vision">Sottosistema di Visione (vision.py)</a></li>
+      <li><a href="#material-map">Mappa dei Materiali (material_map.py)</a></li>
+      <li><a href="#robot-control">Controllo del Robot (main_real.py)</a></li>
+      <li><a href="#dataset">Raccolta Dataset (collect_dataset.py)</a></li>
+      <li><a href="#modello">Modello Teachable Machine e Dataset</a></li>
+      <li><a href="#firmware">Firmware ESP32 — sim2real.ino</a></li>
+      <li><a href="#flusso">Flusso di Esecuzione Completo</a></li>
+      <li><a href="#ros2">Integrazione con ROS 2</a></li>
+      <li><a href="#conclusioni">Conclusioni e Sviluppi Futuri</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============================================================ 1 -->
+  <section class="section" id="introduzione">
+    <span class="section-num">— Sezione 01 —</span>
+    <h2>Introduzione e Obiettivi</h2>
+
+    <p>
+      <strong>Ant-I-Waste</strong> è un sistema robotico intelligente progettato per automatizzare la raccolta differenziata dei rifiuti. Il nome richiama il comportamento delle formiche (<em>ant</em>), insetti noti per la loro capacità di organizzare e trasportare materiali con precisione, unito al concetto di rifiuto (<em>waste</em>) e alla negazione (<em>anti-</em>): il robot combatte attivamente il problema della gestione scorretta dei rifiuti.
+    </p>
+
+    <p>
+      Il sistema integra visione artificiale basata su reti neurali convoluzionali, pianificazione del movimento con cinematica inversa, simulazione fisica in tempo reale tramite PyBullet e controllo diretto di un braccio robotico a sei assi tramite comunicazione seriale con un microcontrollore ESP32.
+    </p>
+
+    <h3>Obiettivi principali</h3>
+    <p>
+      Il progetto si propone di dimostrare l'applicabilità concreta di tecniche di intelligenza artificiale alla robotica industriale leggera. In particolare:
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Obiettivo</th><th>Tecnologia Impiegata</th><th>Modulo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Classificazione automatica dei rifiuti</td><td>Rete neurale Teachable Machine (Keras/MobileNet)</td><td>vision.py</td></tr>
+        <tr><td>Mappatura materiale → cestino</td><td>Tabelle di lookup deterministiche</td><td>material_map.py</td></tr>
+        <tr><td>Pianificazione del moto</td><td>Cinematica inversa (IK) PyBullet</td><td>main_real.py</td></tr>
+        <tr><td>Gemello digitale</td><td>Simulazione fisica real-time</td><td>main_real.py</td></tr>
+        <tr><td>Controllo hardware</td><td>Comunicazione seriale UART → ESP32 → Servo</td><td>main_real.py</td></tr>
+        <tr><td>Raccolta dati di training</td><td>Acquisizione webcam categorizzata</td><td>collect_dataset.py</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Nota Metodologica</strong>
+      <p>L'intero sistema è progettato secondo un'architettura <em>human-in-the-loop</em>: quando la rete neurale non raggiunge la soglia di confidenza minima (55%), il sistema non agisce autonomamente ma richiede conferma o scelta manuale all'operatore, garantendo così sicurezza e robustezza nelle situazioni ambigue.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ 2 -->
+  <section class="section" id="architettura">
+    <span class="section-num">— Sezione 02 —</span>
+    <h2>Architettura del Sistema</h2>
+
+    <p>
+      Il sistema è strutturato in due <strong>thread concorrenti</strong> che comunicano attraverso code thread-safe (<code>queue.Queue</code>) e oggetti di sincronizzazione (<code>threading.Event</code>):
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Thread</th><th>Responsabilità</th><th>Frequenza</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Thread A — Main</td><td>PyBullet simulation, IK, controllo seriale ESP32, interfaccia utente OpenCV</td><td>240 Hz (sim) / 30 Hz (seriale)</td></tr>
+        <tr><td>Thread B — Vision</td><td>Acquisizione webcam, inferenza Keras, overlay visivo</td><td>~30 fps (webcam)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Code di comunicazione inter-thread</h3>
+    <table>
+      <thead>
+        <tr><th>Coda / Evento</th><th>Direzione</th><th>Contenuto</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>detection_queue</td><td>Vision → Main</td><td>Detections confermate da smistare al robot</td></tr>
+        <tr><td>frame_queue</td><td>Vision → Main</td><td>Frame video elaborati per la GUI OpenCV</td></tr>
+        <tr><td>scan_result_queue</td><td>Vision → Main</td><td>Risultato della scansione singola (label, material, conf)</td></tr>
+        <tr><td>scan_requested</td><td>Main → Vision</td><td>Evento: l'operatore ha premuto [P]</td></tr>
+        <tr><td>shutdown_requested</td><td>Main → Vision</td><td>Evento: terminazione globale</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Design Pattern: Digital Twin</strong>
+      <p>PyBullet funge da <em>gemello digitale</em> del robot fisico. Ogni angolo articolare calcolato tramite IK nella simulazione viene trasmesso in real-time all'ESP32 tramite porta seriale (COM5, 115200 baud). Questo garantisce che la simulazione rispecchi fedelmente il comportamento del robot reale e permette di verificare la traiettoria prima e durante l'esecuzione.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ 3 -->
+  <section class="section" id="vision">
+    <span class="section-num">— Sezione 03 —</span>
+    <h2>Sottosistema di Visione</h2>
+    <p>Il file <code>vision.py</code> implementa la classe <code>VisionSystem</code>, cuore del riconoscimento degli oggetti.</p>
+
+    <h3>Caricamento del modello</h3>
+    <p>
+      Il sistema carica un modello <strong>Teachable Machine</strong> esportato in formato Keras (<code>keras_model.h5</code>). La funzione <code>_load_dataset_model()</code> implementa una strategia di caricamento a due tentativi per garantire compatibilità con versioni diverse di TensorFlow:
+    </p>
+    <ol style="padding-left:1.5rem; margin-bottom:1rem;">
+      <li style="margin-bottom:0.4rem;"><strong>Tentativo 1:</strong> usa <code>tf_keras</code> (Keras 2 legacy) — compatibile con modelli TM su TF ≤ 2.15.</li>
+      <li><strong>Tentativo 2:</strong> usa <code>tensorflow.keras</code> con patch su <code>DepthwiseConv2D</code> per rimuovere il parametro <code>groups</code> non supportato nelle versioni più recenti di Keras 3.</li>
+    </ol>
+
+    <h3>Inferenza e ROI</h3>
+    <p>
+      L'inferenza non viene eseguita sull'intero frame, ma su una <strong>Region of Interest (ROI) centrale</strong> pari al 50% del frame. Questo riduce il rumore di fondo e concentra la rete sulla zona dove l'oggetto viene posizionato dall'operatore.
+    </p>
+    <pre><code># Normalizzazione Teachable Machine
+img = cv2.resize(roi, (224, 224))
+img = img.astype(np.float32) / 127.5 - 1.0
+img = np.expand_dims(img, 0)
+probs    = model.predict(img, verbose=0)[0]
+best_idx = int(np.argmax(probs))
+conf     = float(probs[best_idx])</code></pre>
+
+    <h3>Gestione della confidenza</h3>
+    <p>Il sistema applica una soglia di confidenza (<code>DATASET_THRESHOLD = 0.55</code>) per discriminare tra riconoscimento affidabile e incerto:</p>
+
+    <table>
+      <thead>
+        <tr><th>Condizione</th><th>Azione</th><th>Source tag</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>conf ≥ 0.55</code></td><td>Materiale riconosciuto, restituito alla coda</td><td><code>"keras"</code></td></tr>
+        <tr><td><code>conf &lt; 0.55</code></td><td>Materiale = indifferenziato, richiesta conferma operatore</td><td><code>"low_conf"</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Classi riconosciute</h3>
+    <p>Il modello è addestrato a riconoscere le seguenti 6 classi, definite in <code>labels.txt</code>:</p>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Classe</th><th>Categoria</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>bicchiere di carta</td><td>carta</td></tr>
+        <tr><td>1</td><td>tovagliolo</td><td>carta</td></tr>
+        <tr><td>2</td><td>toy</td><td>indifferenziato</td></tr>
+        <tr><td>3</td><td>elastico per capelli</td><td>indifferenziato</td></tr>
+        <tr><td>4</td><td>lattina</td><td>metallo/vetro</td></tr>
+        <tr><td>5</td><td>bicchiere di plastica</td><td>plastica</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Metodi principali</h3>
+    <table>
+      <thead>
+        <tr><th>Metodo</th><th>Descrizione</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>get_frame()</td><td>Cattura un frame dalla webcam tramite OpenCV</td></tr>
+        <tr><td>get_roi(frame)</td><td>Ritaglia la ROI centrale e restituisce offset (ox, oy)</td></tr>
+        <tr><td>_run_keras(frame)</td><td>Preprocessing + inferenza + thresholding</td></tr>
+        <tr><td>detect(frame)</td><td>Wrapper pubblico: ritorna lista di tuple (label, mat, bbox, conf, source)</td></tr>
+        <tr><td>scan_once(frame)</td><td>Scansione singola su comando [P]: include flag needs_confirm</td></tr>
+        <tr><td>draw_overlay(frame, dets)</td><td>Disegna bounding box, ROI, barra titolo e indicatori di confidenza</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ 4 -->
+  <section class="section" id="material-map">
+    <span class="section-num">— Sezione 04 —</span>
+    <h2>Mappa dei Materiali</h2>
+    <p>Il modulo <code>material_map.py</code> è il dizionario semantico del sistema: traduce le etichette prodotte dai modelli di visione in categorie di smistamento e coordinate fisiche dei cestini.</p>
+
+    <h3>I quattro cestini di raccolta</h3>
+    <div class="bin-grid">
+      <div class="bin-card bin-plastica">
+        <span class="bin-name">🟡 Plastica</span>
+        <span class="bin-pos">Posizione: [+0.20, −0.08, 0.002]</span>
+        <span class="bin-classes">Classi: plastic, bottle, plastic bag, bicchiere di plastica</span>
+      </div>
+      <div class="bin-card bin-carta">
+        <span class="bin-name">🔵 Carta / Cartone</span>
+        <span class="bin-pos">Posizione: [−0.20, −0.18, 0.002]</span>
+        <span class="bin-classes">Classi: cardboard, paper, book, bicchiere di carta, tovagliolo</span>
+      </div>
+      <div class="bin-card bin-metallo">
+        <span class="bin-name">🟢 Metallo / Vetro</span>
+        <span class="bin-pos">Posizione: [−0.20, −0.08, 0.002]</span>
+        <span class="bin-classes">Classi: metal, glass, wine glass, can, scissors, fork, spoon</span>
+      </div>
+      <div class="bin-card bin-indiff">
+        <span class="bin-name">🔴 Indifferenziato</span>
+        <span class="bin-pos">Posizione: [+0.20, −0.18, 0.002]</span>
+        <span class="bin-classes">Classi: trash, cell phone, keyboard, toy, elastico per capelli</span>
+      </div>
+    </div>
+
+    <h3>Gerarchia di mapping</h3>
+    <p>Il modulo implementa tre livelli di mapping, usati in sequenza secondo la sorgente della classificazione:</p>
+    <table>
+      <thead>
+        <tr><th>Funzione</th><th>Sorgente</th><th>Fallback</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>get_material_dataset(label)</td><td>Teachable Machine (dataset_objects)</td><td>None (non riconosciuto)</td></tr>
+        <tr><td>get_material(label)</td><td>TrashNet (YOLO)</td><td>"indifferenziato"</td></tr>
+        <tr><td>get_material_coco(label)</td><td>COCO (oggetti generici)</td><td>None (ignorato)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>API di accesso</h3>
+    <pre><code>from material_map import get_drop_pos, get_color, get_label
+
+# Posizione 3D del cestino
+pos = get_drop_pos("plastica")   # → [0.20, -0.08, 0.002]
+
+# Colore RGBA per PyBullet
+col = get_color("carta")         # → [0.0, 0.35, 0.55, 1.0]
+
+# Etichetta leggibile
+lbl = get_label("metallo_vetro") # → "METALLO/VETRO"</code></pre>
+  </section>
+
+  <!-- ============================================================ 5 -->
+  <section class="section" id="robot-control">
+    <span class="section-num">— Sezione 05 —</span>
+    <h2>Controllo del Robot</h2>
+    <p>Il file <code>main_real.py</code> costituisce il nucleo del sistema: orchestra la simulazione, la comunicazione hardware e l'interfaccia operatore.</p>
+
+    <h3>Hardware: braccio a 6 assi</h3>
+    <p>
+      Il robot fisico è un braccio a 6 gradi di libertà (DoF) con gripper (<code>r_grip_joint</code>). Il modello URDF viene caricato in PyBullet per la simulazione. I joint controllati sono: <code>joint_1</code> … <code>joint_6</code> e <code>r_grip_joint</code>.
+    </p>
+
+    <h3>Cinematica Inversa (IK)</h3>
+    <p>
+      La funzione <code>move_to_tcp()</code> implementa un pianificatore di traiettoria con interpolazione lineare e IK calcolata da PyBullet a ogni step:
+    </p>
+    <pre><code>ik = p.calculateInverseKinematics(
+    arm_id, ee_idx,
+    adjusted_target,   # pos target + offset di calibrazione
+    tcp_target_orn,    # quaternione orientamento EE
+    maxNumIterations=200,
+    residualThreshold=1e-5
+)</code></pre>
+    <p>
+      L'interpolazione lineare nel tempo (<code>alpha = step / n_steps</code>) garantisce un movimento fluido tra la posizione corrente e quella target. A ogni step, gli angoli calcolati vengono trasmessi all'ESP32 tramite pacchetto seriale ASCII.
+    </p>
+
+    <h3>Protocollo seriale ESP32</h3>
+    <p>
+      Il protocollo è estremamente semplice e robusto: 7 valori interi in gradi separati da virgola, terminati da newline. Ogni valore corrisponde all'angolo servo di un joint, mappato dall'angolo IK con:
+    </p>
+    <pre><code>servo_deg = 90.0 + degrees(joint_angle - home_angle)
+servo_deg = clamp(servo_deg, 0, 180)
+
+# Pacchetto: "j1,j2,j3,j4,j5,j6,gripper\n"
+packet = "92,88,95,90,87,91,140\n"</code></pre>
+
+    <h3>Sequenza Pick & Place</h3>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Apertura gripper</strong><p>Sim: <code>r_grip_joint → −0.19 rad</code> &nbsp;|&nbsp; ESP32: servo → 90°</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Hover sopra l'oggetto</strong><p>EE si posiziona 12 cm sopra il target di pick</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Pre-approach</strong><p>Avvicinamento laterale a 5 cm dall'oggetto</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">4</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Discesa sul target</strong><p>EE scende fino alla sommità dell'oggetto (<code>cube_top</code>)</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">5</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Chiusura gripper (PICK)</strong><p>Sim: <code>r_grip_joint → 0.4 rad</code> &nbsp;|&nbsp; ESP32: servo → 140°</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">6</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Risalita con presa chiusa</strong><p>Percorso inverso: target → pre-approach → hover</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">7</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Trasferimento al cestino</strong><p>IK verso <code>bin_hover</code> (12 cm sopra il cestino corretto)</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">8</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Discesa nel cestino</strong><p>EE scende alla posizione di rilascio</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">9</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Apertura gripper (PLACE)</strong><p>Rilascio oggetto nel cestino corretto</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">10</div></div>
+        <div class="flow-content"><strong>Ritorno a home</strong><p>Il braccio torna alla posa di riposo (<em>idle pose</em>), pronto per il ciclo successivo</p></div>
+      </div>
+    </div>
+
+    <h3>Interfaccia Operatore (Human-in-the-loop)</h3>
+    <p>Quando la vision produce un risultato con <code>needs_confirm = True</code> (bassa confidenza), il sistema entra in uno stato di attesa e mostra all'operatore tre opzioni:</p>
+    <table>
+      <thead>
+        <tr><th>Tasto</th><th>Azione</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>[1]</code></td><td>Mi fido del modello → invia al robot</td></tr>
+        <tr><td><code>[2]</code></td><td>No, rescansiona → nuovo ciclo di inferenza</td></tr>
+        <tr><td><code>[3]</code></td><td>Scelta manuale → menù materiale (tasti 4–7)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ 6 -->
+  <section class="section" id="dataset">
+    <span class="section-num">— Sezione 06 —</span>
+    <h2>Raccolta Dataset</h2>
+    <p>
+      Il file <code>collect_dataset.py</code> è uno strumento standalone per la creazione del dataset di training. Permette all'utente di fotografare oggetti reali con la webcam e categorizzarli manualmente in tempo reale.
+    </p>
+
+    <h3>Struttura cartelle generate</h3>
+    <pre><code>dataset/
+├── carta/
+│   ├── carta_20260130_143201_001234.jpg
+│   └── ...
+├── plastica/
+├── metallo_vetro/
+└── indifferenziato/</code></pre>
+
+    <h3>Comandi dello strumento</h3>
+    <table>
+      <thead>
+        <tr><th>Tasto</th><th>Azione</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>[1]</code></td><td>Seleziona categoria: carta</td></tr>
+        <tr><td><code>[2]</code></td><td>Seleziona categoria: plastica</td></tr>
+        <tr><td><code>[3]</code></td><td>Seleziona categoria: metallo/vetro</td></tr>
+        <tr><td><code>[4]</code></td><td>Seleziona categoria: indifferenziato</td></tr>
+        <tr><td><code>[SPAZIO] / [P]</code></td><td>Scatta foto e salva</td></tr>
+        <tr><td><code>[Z]</code></td><td>Annulla e cancella ultima foto (undo stack)</td></tr>
+        <tr><td><code>[Q]</code></td><td>Esci e mostra riepilogo</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Le immagini raccolte vengono poi caricate su <strong>Google Teachable Machine</strong> per addestrare il modello di classificazione MobileNet, oppure su <strong>Roboflow</strong> per pipeline di Object Detection con annotazione manuale dei bounding box.
+    </p>
+  </section>
+
+  <!-- ============================================================ 7 -->
+  <section class="section" id="modello">
+    <span class="section-num">— Sezione 07 —</span>
+    <h2>Modello Teachable Machine e Dataset</h2>
+
+    <h3>Architettura della rete</h3>
+    <p>
+      Il modello è basato su <strong>MobileNetV2</strong>, un'architettura convoluzionale progettata per l'efficienza su dispositivi con risorse limitate. Teachable Machine esporta il modello come <code>keras_model.h5</code> con il seguente preprocessing:
+    </p>
+    <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+      <li>Resize: 224×224 pixel</li>
+      <li>Normalizzazione: <code>pixel / 127.5 − 1.0</code> (range [−1, +1])</li>
+      <li>Output: vettore softmax di dimensione uguale al numero di classi</li>
+    </ul>
+
+    <h3>Vantaggi dell'approccio Teachable Machine</h3>
+    <p>
+      Teachable Machine permette di addestrare rapidamente un classificatore visivo personalizzato senza richiedere una vasta esperienza in deep learning. Il modello viene esportato in formato Keras/TFLite e può essere integrato direttamente in Python con poche righe di codice. Per un progetto accademico con un numero limitato di classi (6), questa soluzione offre un ottimo trade-off tra semplicità di addestramento e accuratezza.
+    </p>
+
+    <h3>File labels.txt</h3>
+    <p>Il file associa ogni indice di output a un nome di classe:</p>
+    <pre><code>0 bicchiere di carta
+1 tovagliolo
+2 toy
+3 elestico per capelli
+4 lattina
+5 bicchiere di plastica</code></pre>
+
+    <div class="callout">
+      <strong>Nota sulla soglia di confidenza</strong>
+      <p>La soglia <code>DATASET_THRESHOLD = 0.55</code> è stata scelta sperimentalmente per bilanciare il numero di falsi positivi (classificazioni errate accettate) e falsi negativi (oggetti correttamente identificati ma scartati). Un valore più alto (es. 0.80) riduce gli errori automatici ma aumenta le interruzioni per l'operatore.</p>
+    </div>
+
+    <h3>Riaddestrare il modello con Teachable Machine</h3>
+    <p>
+      Una volta raccolte nuove immagini con <code>collect_dataset.py</code>, è possibile aggiornare il modello di classificazione senza dover ripartire da zero. Il file <code>.tm</code> del progetto Teachable Machine consente di riprendere l'addestramento esattamente da dove era stato salvato.
+    </p>
+
+    <h4>Procedura passo per passo</h4>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Aprire Teachable Machine</strong>
+          <p>Andare su <a href="https://teachablemachine.withgoogle.com" target="_blank">teachablemachine.withgoogle.com</a> e selezionare <em>Image Project → Standard image model</em>. Cliccare su <strong>Apri progetto esistente da un file</strong> e caricare il file <code>.tm</code> salvato in precedenza in <code>dataset_objects/</code>. Tutte le classi e le immagini già presenti verranno ripristinate.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Aggiungere le nuove immagini</strong>
+          <p>Per ciascuna classe (es. <em>lattina</em>, <em>bicchiere di plastica</em>, …) cliccare su <em>Aggiungi campioni</em> e caricare le foto scattate con <code>collect_dataset.py</code> dalla cartella <code>dataset_objects/&lt;categoria&gt;/</code>. È consigliabile aggiungere almeno 50–80 immagini per classe, con variazioni di sfondo, angolazione e illuminazione.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Impostare i parametri di addestramento</strong>
+          <p>Cliccare su <em>Avanzato</em> nel pannello di addestramento e configurare i seguenti iperparametri:</p>
+          <table style="margin-top:0.8rem; margin-bottom:0;">
+            <thead><tr><th>Parametro</th><th>Valore consigliato</th><th>Motivazione</th></tr></thead>
+            <tbody>
+              <tr><td>Epoche</td><td>80 – 100</td><td>Sufficiente per convergere senza overfitting su dataset di piccole dimensioni</td></tr>
+              <tr><td>Dimensione batch</td><td>16</td><td>Buon compromesso tra stabilità del gradiente e velocità su CPU/GPU</td></tr>
+              <tr><td>Tasso di apprendimento</td><td>0.001</td><td>Learning rate standard per fine-tuning di MobileNetV2; evita oscillazioni</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">4</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Avviare l'addestramento</strong>
+          <p>Cliccare <em>Addestra il modello</em>. Teachable Machine eseguirà il fine-tuning di MobileNetV2 nel browser tramite TensorFlow.js. Al termine viene mostrata la matrice di confusione e la precisione per classe: verificare che tutte le classi superino almeno il 70% di accuratezza prima di procedere.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">5</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Esportare il modello in formato Keras</strong>
+          <p>Cliccare su <em>Esporta il modello</em> e selezionare la scheda <strong>TensorFlow → Keras</strong>. Scegliere <em>Scarica il modello</em>: verrà scaricato uno ZIP contenente i file <code>keras_model.h5</code> e <code>labels.txt</code>.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">6</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Sostituire il modello nel progetto</strong>
+          <p>Estrarre lo ZIP e copiare <code>keras_model.h5</code> e <code>labels.txt</code> nella cartella <code>dataset_objects/</code> del progetto, sovrascrivendo i file precedenti. Al prossimo avvio di <code>main_real.py</code> (o <code>vision.py</code>), il sistema caricherà automaticamente il nuovo modello aggiornato senza alcuna modifica al codice.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Salvare il progetto .tm prima di esportare</strong>
+      <p>Prima di ogni esportazione è buona norma salvare anche il file <code>.tm</code> aggiornato (Cliccare le tre liniette in alto a sinistra, tasto su <em>Salva progetto su Drive</em> o <em>Scarica progetto come file</em>). Questo file contiene le immagini di training e la configurazione: senza di esso non sarà possibile aggiungere ulteriori campioni in futuro senza ripartire da zero.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ 8 -->
+  <section class="section" id="firmware">
+    <span class="section-num">— Sezione 08 —</span>
+    <h2>Firmware ESP32 — sim2real.ino (Arduino IDE)</h2>
+
+    <p>
+      Il file <code>sim2real.ino</code> è il firmware che gira sul microcontrollore <strong>ESP32</strong> e rappresenta il ponte fisico tra la simulazione PyBullet e i servomotori del braccio reale. Viene compilato e caricato sull'ESP32 tramite <strong>Arduino IDE</strong> (versione 2.x o superiore).
+    </p>
+
+    <h3>Configurazione Arduino IDE</h3>
+    <p>Prima di poter compilare il firmware per ESP32, è necessario aggiungere il supporto alla board manager di Arduino IDE:</p>
+    <ol style="padding-left:1.5rem; margin-bottom:1rem;">
+      <li style="margin-bottom:0.4rem;">Aprire <strong>File → Preferenze</strong> e nel campo <em>URL aggiuntivi per il gestore schede</em> inserire:<br>
+        <code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code>
+      </li>
+      <li style="margin-bottom:0.4rem;">Aprire <strong>Strumenti → Gestore schede</strong>, cercare <code>esp32</code> e installare il pacchetto <em>esp32 by Espressif Systems</em>.</li>
+      <li style="margin-bottom:0.4rem;">Selezionare <strong>Strumenti → Scheda → ESP32 Arduino → ESP32 Dev Module</strong>.</li>
+      <li>Installare la libreria <code>ESP32Servo</code> dal <strong>Gestore librerie</strong> (Strumenti → Gestisci librerie → cerca "ESP32Servo").</li>
+    </ol>
+
+    <h3>Struttura del firmware</h3>
+    <table>
+      <thead>
+        <tr><th>Blocco</th><th>Funzione</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Pin definitions</td><td>Mappa ciascun joint del braccio a un GPIO dell'ESP32 (BASE=13, SHOULDER=12, ELBOW=14, WRIST_ROLL=27, WRIST_PITCH=26, WRIST_YAW=25, GRIPPER=4)</td></tr>
+        <tr><td>currentAngles / targetAngles</td><td>Array di 7 float che rappresentano rispettivamente la posizione corrente e quella obiettivo dei servo. La posa di partenza è: Base=90°, Shoulder=180°, Elbow=0°, WristRoll=80°, WristPitch=180°, WristYaw=105°, Gripper=90°</td></tr>
+        <tr><td>readSerialAngles()</td><td>Legge dalla porta seriale (115200 baud) una riga ASCII nel formato <code>a,b,c,d,e,f,g\n</code>, dove ogni valore è un angolo intero in gradi [0–180], e aggiorna targetAngles[]</td></tr>
+        <tr><td>updateServosSmooth()</td><td>Ad ogni loop, interpola fluidamente currentAngles verso targetAngles con velocità massima di 80°/s. Usa <code>millis()</code> per calcolare il delta-tempo e garantire un movimento indipendente dalla frequenza del loop</td></tr>
+        <tr><td>Inversione assi</td><td>Gli assi ELBOW (idx 2) e WRIST_YAW (idx 5) vengono invertiti software (<code>180 − θ</code>) per compensare la cinematica fisica del braccio reale rispetto al modello URDF della simulazione</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Caricamento e test</h3>
+    <p>
+      Una volta cablati i servo ai pin definiti, collegare l'ESP32 via USB, selezionare la porta COM corretta in <strong>Strumenti → Porta</strong> e premere il pulsante <em>Carica</em> (→). Dopo il flash, aprire il Monitor Seriale a 115200 baud e inviare manualmente una stringa di test come <code>90,120,30,80,180,75,90</code> per verificare che i servo si muovano come atteso.
+    </p>
+
+    <div class="callout">
+      <strong>Nota sull'inversione degli assi</strong>
+      <p>Le righe <code>targetAngles[2] = 180.0f - targetAngles[2]</code> e <code>targetAngles[5] = 180.0f - targetAngles[5]</code> sono fondamentali: il modello URDF PyBullet e il braccio fisico hanno convenzioni angolari opposte su quei due giunti. Senza questa correzione il braccio reale si muove in direzione opposta alla simulazione.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ 9 -->
+  <section class="section" id="flusso">
+    <span class="section-num">— Sezione 09 —</span>
+    <h2>Flusso di Esecuzione Completo</h2>
+
+    <p>Il ciclo di vita completo di una operazione di smistamento si articola nelle seguenti fasi:</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">A</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Avvio sistema</strong><p>Thread Main avvia PyBullet, carica URDF, inizializza connessione seriale COM5. Thread Vision apre webcam e carica keras_model.h5.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">B</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Standby — Preview continua</strong><p>Thread Vision cattura frame continuamente, li elabora con overlay e li invia al frame_queue. Thread Main li mostra nella finestra OpenCV. Il robot è in posa idle.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">C</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Richiesta scansione [P]</strong><p>Thread Main setta scan_requested. Thread Vision esegue scan_once(): inferenza Keras sulla ROI, produce (label, material, conf, needs_confirm).</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">D</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Valutazione confidenza</strong><p><strong>Se conf ≥ 0.55:</strong> confirm_state = "confirm", operatore vede il risultato e sceglie [1/2/3]. <strong>Se conf &lt; 0.55:</strong> stessa UI, ma material = "indifferenziato" di default.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">E</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Conferma operatore [1]</strong><p>on_detection() inserisce il dict {label, material, bbox, confidence} nella detection_queue.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">F</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Esecuzione Pick & Place</strong><p>Thread Main estrae dalla detection_queue, crea il cubo virtuale in PyBullet, esegue la sequenza in 10 passi (IK + seriale), aggiorna HUD.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot" style="background:var(--lima);">G</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Ritorno a idle</strong><p>Robot torna alla posa di riposo. Sistema pronto per un nuovo ciclo (→ fase B).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ 10 -->
+  <section class="section" id="ros2">
+    <span class="section-num">— Sezione 10 —</span>
+    <h2>Integrazione con ROS 2</h2>
+
+    <p>
+      L'architettura attuale di Ant-I-Waste, basata su thread Python e code condivise, è già concettualmente allineata con il paradigma <strong>publish/subscribe</strong> di ROS 2. Una migrazione verso ROS 2 porterebbe numerosi vantaggi: comunicazione distribuita, supporto a tempo reale tramite rclcpp, integrazione con MoveIt 2 per la pianificazione del moto, e interoperabilità con l'ecosistema ROS.
+    </p>
+
+    <div class="callout">
+      <strong>Prerequisiti</strong>
+      <p>La seguente progettazione è compatibile con <strong>ROS 2 Humble Hawksbill</strong> (o versioni successive), Python 3.10+, e assume l'installazione di <code>rclpy</code>, <code>sensor_msgs</code>, <code>std_msgs</code>, <code>geometry_msgs</code> e <code>cv_bridge</code>.</p>
+    </div>
+
+    <h3>Grafo dei nodi ROS 2 proposto</h3>
+    <div class="ros2-arch">
+<span class="comment">## Grafo dei nodi Ant-I-Waste in ROS 2</span>
+
+<span class="node">[camera_node]</span>
+    <span class="arrow">──publish──►</span> <span class="topic">/camera/image_raw</span>            <span class="comment">(sensor_msgs/Image)</span>
+
+<span class="node">[vision_node]</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/camera/image_raw</span>
+    <span class="arrow">──publish──►</span>  <span class="topic">/recyclebot/detection</span>         <span class="comment">(RecycleDetection.msg)</span>
+    <span class="arrow">──publish──►</span>  <span class="topic">/camera/image_annotated</span>      <span class="comment">(sensor_msgs/Image)</span>
+
+<span class="node">[classifier_node]</span>   <span class="comment"># alternativa: dentro vision_node</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/camera/image_raw</span>
+    <span class="arrow">──publish──►</span>  <span class="topic">/recyclebot/classification</span>    <span class="comment">(ClassificationResult.msg)</span>
+
+<span class="node">[decision_node]</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/recyclebot/detection</span>
+    <span class="arrow">──service──►</span>  <span class="srv">/recyclebot/confirm_material</span>  <span class="comment">(ConfirmMaterial.srv)</span>
+    <span class="arrow">──publish──►</span>  <span class="topic">/recyclebot/task</span>              <span class="comment">(PickPlaceTask.msg)</span>
+
+<span class="node">[robot_controller_node]</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/recyclebot/task</span>
+    <span class="arrow">──publish──►</span>  <span class="topic">/joint_states</span>                 <span class="comment">(sensor_msgs/JointState)</span>
+    <span class="arrow">──publish──►</span>  <span class="topic">/recyclebot/robot_status</span>     <span class="comment">(std_msgs/String)</span>
+
+<span class="node">[serial_bridge_node]</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/joint_states</span>
+    <span class="arrow">──write──►</span>    <span class="comment">ESP32 via UART (COM5, 115200 baud)</span>
+
+<span class="node">[operator_ui_node]</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/camera/image_annotated</span>
+    <span class="arrow">──subscribe──</span> <span class="topic">/recyclebot/robot_status</span>
+    <span class="arrow">──service client──►</span> <span class="srv">/recyclebot/confirm_material</span>
+    </div>
+
+    <h3>Nodi e responsabilità</h3>
+    <div class="ros2-node-grid">
+      <div class="ros2-node-card">
+        <h4>camera_node</h4>
+        <p style="font-size:0.85rem;">Wrapper della webcam. Usa <code>cv_bridge</code> per convertire i frame OpenCV in messaggi <code>sensor_msgs/Image</code> e pubblica a ~30 Hz.</p>
+        <div class="topics">
+          <div class="topic-item"><span class="tag tag-pub">PUB</span><span class="pub">/camera/image_raw</span></div>
+        </div>
+      </div>
+      <div class="ros2-node-card">
+        <h4>vision_node</h4>
+        <p style="font-size:0.85rem;">Sostituisce <code>VisionSystem</code>. Sottoscrive il topic immagine, esegue l'inferenza Keras e pubblica la classificazione con confidenza e bounding box.</p>
+        <div class="topics">
+          <div class="topic-item"><span class="tag tag-sub">SUB</span><span class="sub">/camera/image_raw</span></div>
+          <div class="topic-item"><span class="tag tag-pub">PUB</span><span class="pub">/recyclebot/detection</span></div>
+          <div class="topic-item"><span class="tag tag-pub">PUB</span><span class="pub">/camera/image_annotated</span></div>
+        </div>
+      </div>
+      <div class="ros2-node-card">
+        <h4>decision_node</h4>
+        <p style="font-size:0.85rem;">Implementa la logica human-in-the-loop. Espone un servizio ROS 2 (<code>ConfirmMaterial.srv</code>) che l'interfaccia operatore chiama per confermare o correggere la classificazione.</p>
+        <div class="topics">
+          <div class="topic-item"><span class="tag tag-sub">SUB</span><span class="sub">/recyclebot/detection</span></div>
+          <div class="topic-item"><span class="tag tag-pub">PUB</span><span class="pub">/recyclebot/task</span></div>
+          <div class="topic-item"><span class="tag tag-pub">SRV</span><span class="pub">/recyclebot/confirm_material</span></div>
+        </div>
+      </div>
+      <div class="ros2-node-card">
+        <h4>robot_controller_node</h4>
+        <p style="font-size:0.85rem;">Riceve il task di pick & place, pianifica la traiettoria IK (o via MoveIt 2), e pubblica gli angoli articolari su <code>/joint_states</code>. Gestisce la macchina a stati del robot.</p>
+        <div class="topics">
+          <div class="topic-item"><span class="tag tag-sub">SUB</span><span class="sub">/recyclebot/task</span></div>
+          <div class="topic-item"><span class="tag tag-pub">PUB</span><span class="pub">/joint_states</span></div>
+          <div class="topic-item"><span class="tag tag-pub">PUB</span><span class="pub">/recyclebot/robot_status</span></div>
+        </div>
+      </div>
+      <div class="ros2-node-card">
+        <h4>serial_bridge_node</h4>
+        <p style="font-size:0.85rem;">Traduce i <code>JointState</code> ROS 2 nel protocollo seriale ASCII per l'ESP32. Sostituisce le funzioni <code>build_servo_packet()</code> e <code>send_to_robot()</code>.</p>
+        <div class="topics">
+          <div class="topic-item"><span class="tag tag-sub">SUB</span><span class="sub">/joint_states</span></div>
+        </div>
+      </div>
+      <div class="ros2-node-card">
+        <h4>operator_ui_node</h4>
+        <p style="font-size:0.85rem;">Interfaccia operatore: visualizza il feed video annotato e lo stato del robot. Chiama il servizio di conferma in risposta ai tasti [1/2/3]. Può essere implementato con rqt o una GUI web (roslibjs).</p>
+        <div class="topics">
+          <div class="topic-item"><span class="tag tag-sub">SUB</span><span class="sub">/camera/image_annotated</span></div>
+          <div class="topic-item"><span class="tag tag-sub">SUB</span><span class="sub">/recyclebot/robot_status</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Messaggi personalizzati</h3>
+    <pre><code># RecycleDetection.msg
+string   label          # "lattina"
+string   material       # "metallo_vetro"
+float32  confidence     # 0.0 – 1.0
+int32[4] bbox           # [x1, y1, x2, y2]
+bool     needs_confirm  # true se conf < soglia
+
+# PickPlaceTask.msg
+string   label
+string   material
+float32[3] pick_position   # coord. XYZ oggetto (m)
+float32[3] place_position  # coord. XYZ cestino (m)
+float32  confidence
+
+# ConfirmMaterial.srv
+# REQUEST
+RecycleDetection detection
+---
+# RESPONSE
+string  confirmed_material  # materiale scelto dall'operatore
+bool    rescan              # se true, ri-eseguire la scansione</code></pre>
+
+    <h3>Esempio di nodo vision in rclpy</h3>
+    <pre><code>import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+from recyclebot_msgs.msg import RecycleDetection
+from vision import VisionSystem   # riuso diretto del modulo esistente
+
+class VisionNode(Node):
+    def __init__(self):
+        super().__init__('vision_node')
+        self.bridge  = CvBridge()
+        self.vision  = VisionSystem()
+        self.sub     = self.create_subscription(
+            Image, '/camera/image_raw', self.image_cb, 10)
+        self.pub     = self.create_publisher(
+            RecycleDetection, '/recyclebot/detection', 10)
+        self.img_pub = self.create_publisher(
+            Image, '/camera/image_annotated', 10)
+
+    def image_cb(self, msg):
+        frame = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
+        label, mat, bbox, conf, src, needs_confirm = \
+            self.vision.scan_once(frame)
+
+        if label:
+            det = RecycleDetection()
+            det.label         = label
+            det.material      = mat
+            det.confidence    = conf
+            det.bbox          = bbox
+            det.needs_confirm = needs_confirm
+            self.pub.publish(det)
+
+        annotated = self.vision.draw_overlay(frame, [])
+        self.img_pub.publish(
+            self.bridge.cv2_to_imgmsg(annotated, 'bgr8'))
+
+def main():
+    rclpy.init()
+    node = VisionNode()
+    rclpy.spin(node)
+
+if __name__ == '__main__':
+    main()</code></pre>
+
+    <h3>Integrazione con MoveIt 2</h3>
+    <p>
+      Con ROS 2 è possibile sostituire il pianificatore IK custom con <strong>MoveIt 2</strong>, che offre pianificazione di traiettoria con obstacle avoidance, gestione di collisioni e supporto a diversi algoritmi (OMPL, STOMP, PILZ). Il file URDF del braccio è già disponibile e può essere importato direttamente in MoveIt Setup Assistant.
+    </p>
+    <pre><code># Avvio con MoveIt 2
+ros2 launch alve_x_moveit_config move_group.launch.py
+
+# Nel robot_controller_node, usare MoveGroupInterface:
+from moveit.planning import MoveGroupInterface
+move_group = MoveGroupInterface(node, "arm")
+move_group.set_position_target(pick_pos)
+move_group.go(wait=True)</code></pre>
+
+    <h3>Vantaggi della migrazione a ROS 2</h3>
+    <table>
+      <thead>
+        <tr><th>Aspetto</th><th>Attuale (thread Python)</th><th>Con ROS 2</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Distribuzione</td><td>Monolitico, single-machine</td><td>Multi-nodo, multi-macchina (DDS)</td></tr>
+        <tr><td>Debugging</td><td>print() / log manuale</td><td>ros2 topic echo, rqt_plot, RViz2</td></tr>
+        <tr><td>Pianificazione moto</td><td>IK custom PyBullet</td><td>MoveIt 2 (OMPL, STOMP, PIlZ)</td></tr>
+        <tr><td>Real-time</td><td>Nessun supporto RT</td><td>rclcpp con Executor RT (con Linux PREEMPT-RT)</td></tr>
+        <tr><td>Simulazione</td><td>PyBullet</td><td>Gazebo / Isaac Sim con ros2_control</td></tr>
+        <tr><td>Registrazione dati</td><td>Nessuna</td><td>ros2 bag record (replay, analisi offline)</td></tr>
+        <tr><td>Scalabilità</td><td>Difficile aggiungere sensori</td><td>Nuovi sensori = nuovi nodi indipendenti</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ 11 -->
+  <section class="section" id="conclusioni">
+    <span class="section-num">— Sezione 11 —</span>
+    <h2>Conclusioni e Sviluppi Futuri</h2>
+
+    <p>
+      Ant-I-Waste dimostra concretamente come tecniche di intelligenza artificiale — in particolare le reti neurali convoluzionali basate su transfer learning — possano essere integrate con efficacia in sistemi robotici reali a basso costo. Il sistema è operativo, testato su hardware fisico, e implementa correttamente il ciclo completo percezione → decisione → azione.
+    </p>
+
+    <h3>Risultati raggiunti</h3>
+    <ul style="padding-left:1.5rem; margin-bottom:1.5rem;">
+      <li style="margin-bottom:0.5rem;">Classificazione automatica di rifiuti in 4 categorie con modello Keras su CPU</li>
+      <li style="margin-bottom:0.5rem;">Controllo real-time di braccio a 6 DoF tramite IK PyBullet + seriale ESP32</li>
+      <li style="margin-bottom:0.5rem;">Gemello digitale sincronizzato col robot fisico a 30 Hz</li>
+      <li style="margin-bottom:0.5rem;">Interfaccia human-in-the-loop robusta per gestire l'incertezza del modello</li>
+      <li>Pipeline completa di raccolta dati per l'aggiornamento del dataset</li>
+    </ul>
+
+    <h3>Possibili sviluppi futuri</h3>
+    <table>
+      <thead>
+        <tr><th>Area</th><th>Sviluppo proposto</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Visione</td><td>Sostituire classificazione con rilevazione oggetti (YOLOv11) per gestire più oggetti simultaneamente e stimare la posizione 3D tramite stereo o depth camera</td></tr>
+        <tr><td>Modello AI</td><td>Fine-tuning di EfficientNet su dataset più ampio (TrashNet, TACO) per migliorare la generalizzazione a oggetti non visti</td></tr>
+        <tr><td>Architettura SW</td><td>Migrazione completa a ROS 2 con MoveIt 2 per pianificazione avanzata del moto</td></tr>
+        <tr><td>Hardware</td><td>Aggiunta di sensore di forza/coppia al gripper per feedback tattile durante il pick</td></tr>
+        <tr><td>Autonomia</td><td>Riduzione della dipendenza dall'operatore tramite soglia adattiva basata sulla cronologia delle classificazioni</td></tr>
+        <tr><td>Deployment</td><td>Esportazione del modello in TFLite per inferenza su Raspberry Pi / NVIDIA Jetson integrato nel robot</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Considerazione Finale</strong>
+      <p>Il progetto Ant-I-Waste costituisce una base solida e modulare su cui costruire un sistema di smistamento robotico industriale. L'approccio human-in-the-loop adottato è particolarmente rilevante dal punto di vista dell'IA responsabile: il sistema non agisce autonomamente quando incerto, ma coinvolge l'operatore nella decisione, riducendo il rischio di errori di smistamento con conseguenze ambientali.</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
