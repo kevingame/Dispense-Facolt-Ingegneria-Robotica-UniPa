@@ -389,7 +389,6 @@ mark {
   body { margin: 0; padding: 0; }
 }
 </style>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -909,12 +908,72 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
     f<sub>d</sub> = sin(q · α/2) / [q · sin(α/2)] &nbsp;&nbsp;&nbsp; dove q = cave/polo/fase, α = angolo tra cave
   </div>
 
-  <h4>F.e.m. Efficace — Formula Completa</h4>
-  <p>La <strong>f.e.m. efficace</strong> di una macchina sincrona reale, che tiene conto di entrambi i fattori, vale:</p>
-  <div class="formula">
-    \( E = 4,44 \cdot f \cdot N \cdot \Phi \cdot f_d \cdot f_p \) = \( 4,44 \cdot f \cdot N \cdot \Phi \cdot f_a \)
+  <h4>F.e.m. Efficace — Dimostrazione e Formula Completa</h4>
+
+  <div class="note">
+    <span class="note-title">Derivazione dalla Legge di Faraday — Bobina a Passo Diametrale, Avvolgimento Concentrato</span>
+    <p><strong>Passo 1 — Il flusso nel nucleo.</strong> Il flusso utile per polo varia sinusoidalmente nel tempo (campo rotante sinusoidale):</p>
   </div>
-  <p>dove f<sub>a</sub> = f<sub>d</sub>·f<sub>p</sub> è il <strong>fattore di avvolgimento</strong>, sempre ≤ 1. I parametri sono: <em>f</em> = frequenza [Hz], <em>N</em> = numero di spire per fase, <em>Φ</em> = flusso utile per polo [Wb].</p>
+  <div class="formula">
+    \( \Phi(t) = \Phi_{max} \cdot \sin(\omega t) \)
+  </div>
+  <div class="note" style="margin-top:0; border-top:none;">
+    <p><strong>Passo 2 — Legge di Faraday su N spire.</strong> Il flusso concatenato con un avvolgimento di N spire e' \( \lambda = N \cdot \Phi(t) \). La f.e.m. istantanea vale:</p>
+  </div>
+  <div class="formula">
+    \( e(t) = -\frac{d\lambda}{dt} = -N \cdot \frac{d\Phi}{dt} = -N \cdot \Phi_{max} \cdot \omega \cdot \cos(\omega t) \)
+    <br><br>
+    \( e(t) = N \cdot \omega \cdot \Phi_{max} \cdot \sin\!\left(\omega t - \tfrac{\pi}{2}\right) \)
+    <br><br>
+    Valore di picco: \( E_{max} = N \cdot \omega \cdot \Phi_{max} = 2\pi f \cdot N \cdot \Phi_{max} \)
+  </div>
+  <div class="note" style="margin-top:0; border-top:none;">
+    <p><strong>Passo 3 — Valore efficace (RMS).</strong> Per una sinusoide il valore efficace e' il picco diviso \(\sqrt{2}\):</p>
+  </div>
+  <div class="formula">
+    \( E = \frac{E_{max}}{\sqrt{2}} = \frac{2\pi f \cdot N \cdot \Phi_{max}}{\sqrt{2}} = \sqrt{2}\,\pi \cdot f \cdot N \cdot \Phi_{max} \)
+    <br><br>
+    \( \sqrt{2}\,\pi = \sqrt{2} \times 3{,}14159\ldots \approx 4{,}443 \approx \mathbf{4{,}44} \)
+    <br><br>
+    \( \Longrightarrow \quad E = 4{,}44 \cdot f \cdot N \cdot \Phi_{max} \) &nbsp;&nbsp; (avvolgimento concentrato, passo diametrale)
+  </div>
+  <div class="note" style="margin-top:0; border-top:none;">
+    <p><strong>Passo 4 — Rappresentazione fasoriale.</strong> In regime sinusoidale si usano i fasori. Il flusso e' il fasoriale di riferimento \(\overline{\Phi} = \Phi_{max}\angle 0°\). La derivata temporale nel dominio fasoriale equivale a moltiplicare per \(j\omega\):</p>
+  </div>
+  <div class="formula">
+    \( \bar{E} = -j\,N\,\omega\,\overline{\Phi} \)
+    <br><br>
+    Il fattore \(-j\) indica uno sfasamento di <strong>&minus;90&deg;</strong>: la f.e.m. e' in <em>quadratura ritardante</em> rispetto al flusso che la genera.
+    <br><br>
+    \( |\bar{E}| = N\,\omega\,\Phi_{max} = 2\pi f N \Phi_{max} \quad\Rightarrow\quad E_{eff} = \frac{|\bar{E}|}{\sqrt{2}} = 4{,}44\,f\,N\,\Phi_{max} \)
+  </div>
+  <div class="important">
+    <span class="important-title">Fattori Correttivi — Avvolgimento Distribuito e Passo Raccorciato</span>
+    <p><strong>Passo 5 — Fattore di passo f<sub>p</sub>.</strong> Se y &ne; &tau;, i due lati della bobina non sono a 180&deg; elettrici di distanza: le loro f.e.m. parziali non si sommano in fase. La somma fasoriale dei due contributi (ciascuno sfasato di &plusmn;&beta;/2 rispetto al caso diametrale) da' la risultante ridotta:</p>
+    <div class="formula" style="margin:6px 0;">
+      \( f_p = \sin\!\left(\frac{y}{\tau}\cdot\frac{\pi}{2}\right) = \sin\!\left(\frac{\beta}{2}\right) \quad\leq 1 \)
+    </div>
+    <p>Per passo diametrale y = &tau; &rarr; f<sub>p</sub> = sin(&pi;/2) = 1 (massimo). Il passo raccorciato riduce le armoniche superiori a scapito di una modesta riduzione della fondamentale.</p>
+    <br>
+    <p><strong>Passo 6 — Fattore di distribuzione f<sub>d</sub>.</strong> Le q bobine della stessa fase sono distribuite in cave adiacenti, sfasate spazialmente di &alpha; = 180&deg;/q gradi elettrici l'una dall'altra. Le loro f.e.m. si sommano fasorialmente: la risultante e' la corda dell'arco (poligono di fasori) invece della somma delle lunghezze:</p>
+    <div class="formula" style="margin:6px 0;">
+      \( f_d = \frac{\sin(q\,\alpha/2)}{q\,\sin(\alpha/2)} \quad\leq 1 \)
+    </div>
+    <p>Geometricamente: q fasori uguali in modulo, sfasati di &alpha; tra loro, formano un arco di poligono; la corda (risultante) e' sempre &le; della somma delle lunghezze (q lati), da cui f<sub>d</sub> &le; 1.</p>
+  </div>
+  <div class="note">
+    <span class="note-title">Sezione dei Conduttori e cos&phi;</span>
+    <p>Il numero di spire N si ricava da potenza e tensione nominale; la <strong>sezione del conduttore</strong> si sceglie imponendo la densita' di corrente J [A/mm&sup2;]: S<sub>c</sub> = I/J. Il <strong>fattore di potenza cos&phi;</strong> e' l'angolo tra la corrente d'armatura I<sub>a</sub> e la f.e.m. E: dipende dal tipo di carico (resistivo &rarr; cos&phi; = 1; induttivo &rarr; cos&phi; &lt; 1 in ritardo; capacitivo &rarr; cos&phi; &lt; 1 in anticipo). La potenza attiva erogata (trifase) e':</p>
+    <div class="formula" style="margin:6px 0;">
+      \( P = 3\,E\,I_a\,\cos\varphi \)
+    </div>
+  </div>
+
+  <p>La <strong>f.e.m. efficace</strong> di una macchina sincrona reale, che tiene conto di entrambi i fattori correttivi, vale:</p>
+  <div class="formula">
+    \( E = 4{,}44 \cdot f \cdot N \cdot \Phi \cdot f_d \cdot f_p = 4{,}44 \cdot f \cdot N \cdot \Phi \cdot f_a \)
+  </div>
+  <p>dove f<sub>a</sub> = f<sub>d</sub>&middot;f<sub>p</sub> e' il <strong>fattore di avvolgimento</strong>, sempre &le; 1. I parametri sono: <em>f</em> = frequenza [Hz], <em>N</em> = numero di spire per fase, <em>&Phi;</em> = flusso utile per polo [Wb].</p>
 
   <h3>2.5 Reazione d'Armatura</h3>
   <p>La <strong>reazione d'armatura</strong> è l'insieme dei fenomeni che nascono a causa della circolazione di corrente negli avvolgimenti di statore (armatura), una volta che la macchina viene collegata a un carico.</p>
