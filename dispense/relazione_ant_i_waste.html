@@ -941,6 +941,107 @@ packet = "92,88,95,90,87,91,140\n"</code></pre>
       <strong>Salvare il progetto .tm prima di esportare</strong>
       <p>Prima di ogni esportazione è buona norma salvare anche il file <code>.tm</code> aggiornato (Cliccare le tre liniette in alto a sinistra, tasto su <em>Salva progetto su Drive</em> o <em>Scarica progetto come file</em>). Questo file contiene le immagini di training e la configurazione: senza di esso non sarà possibile aggiungere ulteriori campioni in futuro senza ripartire da zero.</p>
     </div>
+
+    <h3>Aggiornare il codice dopo il riaddestramento del modello</h3>
+    <p>
+      Se il riaddestramento introduce <strong>nuove classi</strong> o rinomina quelle esistenti, il solo aggiornamento di <code>keras_model.h5</code> e <code>labels.txt</code> non è sufficiente: il sistema non saprà a quale cestino assegnare le nuove etichette. È necessario aggiornare anche due file Python.
+    </p>
+
+    <div class="callout">
+      <strong>Regola d'oro</strong>
+      <p>Le chiavi di <code>DATASET_OBJECTS_TO_MATERIAL</code> in <code>material_map.py</code> devono corrispondere <em>esattamente</em> — incluse maiuscole/minuscole e spazi — ai nomi delle classi che compaiono in <code>labels.txt</code> dopo il prefisso numerico. Il codice applica automaticamente <code>.lower().strip()</code>, quindi è sufficiente scriverle in minuscolo.</p>
+    </div>
+
+    <h4>File 1 — material_map.py: DATASET_OBJECTS_TO_MATERIAL</h4>
+    <p>
+      Questo dizionario mappa ogni etichetta del modello Teachable Machine a una delle quattro categorie di smistamento. Va aggiornato ogni volta che una classe viene aggiunta, rimossa o rinominata.
+    </p>
+    <p>Struttura attuale (corrispondente al <code>labels.txt</code> in uso):</p>
+    <pre><code># material_map.py — da aggiornare dopo ogni riaddestramento
+
+DATASET_OBJECTS_TO_MATERIAL = {
+    # ── Etichetta in labels.txt ──────── ── Categoria ──────────
+    "bicchiere di carta":    "carta",           # classe 0
+    "tovagliolo":            "carta",           # classe 1
+    "toy":                   "indifferenziato", # classe 2
+    "elestico per capelli":  "indifferenziato", # classe 3
+    "lattina":               "metallo_vetro",   # classe 4
+    "bicchiere di plastica": "plastica",        # classe 5
+    # ── Aggiungi qui le nuove classi ────────────────────────────
+    # "bottiglia di vetro":  "metallo_vetro",
+    # "giornale":            "carta",
+}</code></pre>
+
+    <p>Le quattro categorie ammesse come valore sono:</p>
+    <table>
+      <thead>
+        <tr><th>Valore stringa</th><th>Cestino fisico</th><th>Colore</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>"carta"</code></td><td>Carta / Cartone</td><td style="color:var(--carta);">■ Azzurro</td></tr>
+        <tr><td><code>"plastica"</code></td><td>Plastica</td><td style="color:#a07800;">■ Giallo</td></tr>
+        <tr><td><code>"metallo_vetro"</code></td><td>Metallo / Vetro</td><td style="color:var(--metallo);">■ Verde</td></tr>
+        <tr><td><code>"indifferenziato"</code></td><td>Indifferenziato</td><td style="color:var(--indiff);">■ Rosso</td></tr>
+      </tbody>
+    </table>
+
+    <h4>File 2 — vision.py: parsing di labels.txt</h4>
+    <p>
+      Il formato di <code>labels.txt</code> prodotto da Teachable Machine è sempre <code>INDICE SPAZIO NOME_CLASSE</code>. Il codice lo legge con:
+    </p>
+    <pre><code>labels = [line.strip().split(" ", 1)[1] for line in f if line.strip()]</code></pre>
+    <p>
+      Questo parsing è robusto e non richiede modifiche purché il file mantenga il formato standard. Verificare però che non ci siano righe vuote finali o caratteri non visibili nel file esportato da Teachable Machine.
+    </p>
+
+    <h4>Procedura completa di aggiornamento del codice</h4>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Aprire labels.txt</strong>
+          <p>Aprire il nuovo <code>labels.txt</code> scaricato dallo ZIP di Teachable Machine con un editor di testo. Prendere nota di tutti i nomi di classe (la parte a destra del numero, es. <code>0 bicchiere di carta</code> → <code>bicchiere di carta</code>).</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Aggiornare DATASET_OBJECTS_TO_MATERIAL</strong>
+          <p>In <code>material_map.py</code>, modificare il dizionario <code>DATASET_OBJECTS_TO_MATERIAL</code>: aggiungere le nuove classi, rimuovere quelle eliminate, correggere eventuali nomi rinominati. Ogni chiave deve essere scritta in minuscolo esattamente come appare in <code>labels.txt</code>.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Copiare i nuovi file del modello</strong>
+          <p>Estrarre lo ZIP e copiare <code>keras_model.h5</code> e <code>labels.txt</code> nella cartella <code>dataset_objects/</code>, sovrascrivendo i file precedenti.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">4</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Verificare la soglia DATASET_THRESHOLD</strong>
+          <p>Se il nuovo modello ha più classi o classi visivamente simili tra loro, potrebbe essere necessario abbassare leggermente la soglia in <code>vision.py</code>. Partire da <code>DATASET_THRESHOLD = 0.55</code> e osservare quante scansioni finiscono in <em>bassa confidenza</em>: se sono troppe, provare 0.45–0.50.</p>
+          <pre style="margin-top:0.6rem;"><code>DATASET_THRESHOLD = 0.55  # abbassare se il modello è incerto troppo spesso</code></pre>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-connector"><div class="flow-dot">5</div><div class="flow-line"></div></div>
+        <div class="flow-content">
+          <strong>Test standalone con vision.py</strong>
+          <p>Prima di avviare il sistema completo, testare il solo modulo visione eseguendo direttamente <code>python vision.py</code>. La finestra di preview mostrerà la classificazione in tempo reale. Premere <code>[P]</code> su diversi oggetti e verificare che le etichette e le categorie siano corrette. Solo quando il test è soddisfacente, avviare <code>main_real.py</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Esempio: aggiunta di una nuova classe "bottiglia di vetro"</strong>
+      <p>
+        Supponiamo di aggiungere in Teachable Machine una nuova classe chiamata <em>bottiglia di vetro</em> (diventa la classe 6 in <code>labels.txt</code>). Dopo aver esportato e copiato i nuovi file, in <code>material_map.py</code> è sufficiente aggiungere una sola riga:<br>
+        <code style="display:block; margin-top:0.5rem;">"bottiglia di vetro": "metallo_vetro",</code>
+        Il sistema riconoscerà automaticamente la nuova classe e la instraderà verso il cestino verde senza altre modifiche.
+      </p>
+    </div>
   </section>
 
   <!-- ============================================================ 8 -->
