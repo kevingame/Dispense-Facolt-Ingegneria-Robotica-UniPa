@@ -931,11 +931,25 @@ Xᵣ  = reattanza di magnetizzazione del ferro → Xᵣ·I_N² = potenza reattiv
     <p><strong>Passo 3 — Valore efficace (RMS).</strong> Per una sinusoide il valore efficace e' il picco diviso \(\sqrt{2}\):</p>
   </div>
   <div class="formula">
-    \( E = \frac{E_{max}}{\sqrt{2}} = \frac{2\pi f \cdot N \cdot \Phi_{max}}{\sqrt{2}} = \sqrt{2}\,\pi \cdot f \cdot N \cdot \Phi_{max} \)
-    <br><br>
-    \( \sqrt{2}\,\pi = \sqrt{2} \times 3{,}14159\ldots \approx 4{,}443 \approx \mathbf{4{,}44} \)
-    <br><br>
-    \( \Longrightarrow \quad E = 4{,}44 \cdot f \cdot N \cdot \Phi_{max} \) &nbsp;&nbsp; (avvolgimento concentrato, passo diametrale)
+    \( E = \frac{E_{max}}{\sqrt{2}} = \frac{2\pi f \cdot N \cdot \Phi_{max}}{\sqrt{2}} = \frac{2\pi}{\sqrt{2}} \cdot f \cdot N \cdot \Phi_{max} = \sqrt{2}\,\pi \cdot f \cdot N \cdot \Phi_{max} \)
+  </div>
+  <div class="note" style="margin-top:0; border-top:none;">
+    <p><strong>Come si ottiene numericamente 4,44.</strong> Il coefficiente \(\sqrt{2}\,\pi\) si calcola esplicitamente:</p>
+  </div>
+  <div class="formula">
+    \[
+      \frac{2\pi}{\sqrt{2}}
+      = \frac{2 \times 3{,}14159\ldots}{1{,}41421\ldots}
+      = \frac{6{,}28318\ldots}{1{,}41421\ldots}
+      = \sqrt{2}\,\pi
+      = 1{,}41421\ldots \times 3{,}14159\ldots
+      = 4{,}4429\ldots
+      \approx \mathbf{4{,}44}
+    \]
+    \[
+      \Longrightarrow \quad \boxed{E = 4{,}44 \cdot f \cdot N \cdot \Phi_{max}}
+      \quad \text{(avvolgimento concentrato, passo diametrale)}
+    \]
   </div>
   <div class="note" style="margin-top:0; border-top:none;">
     <p><strong>Passo 4 — Rappresentazione fasoriale.</strong> In regime sinusoidale si usano i fasori. Il flusso e' il fasoriale di riferimento \(\overline{\Phi} = \Phi_{max}\angle 0°\). La derivata temporale nel dominio fasoriale equivale a moltiplicare per \(j\omega\):</p>
