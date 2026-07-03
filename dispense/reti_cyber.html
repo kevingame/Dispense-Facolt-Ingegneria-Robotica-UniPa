@@ -152,6 +152,24 @@
   height: auto;
   max-width: 300px; /* Un "freno di emergenza" per evitare che diventi enorme su schermi giganti */
 }
+
+/* Contenitore per affiancare più tabelle in modo equo */
+.container-tre-tabelle {
+  display: flex;
+  justify-content: space-between; /* Distribuisce lo spazio uniformemente */
+  align-items: flex-start; /* Allinea le tabelle in alto */
+  gap: 15px; /* Spazio tra le tabelle */
+  margin: 20px 0;
+  width: 100%;
+  flex-wrap: wrap; /* Permette alle tabelle di andare a capo se lo schermo è troppo piccolo */
+}
+
+/* Fa in modo che le tabelle occupino uno spazio simile e non si schiaccino troppo */
+.container-tre-tabelle table.dati {
+  flex: 1 1 30%; /* Le tabelle partono dal 30% dello spazio e si adattano */
+  min-width: 200px; /* Sotto i 200px andranno a capo */
+  margin: 0; /* Rimuove il margin auto di base per evitare scompensi nel flex */
+}
 </style>
 </head>
 <body>
@@ -1651,19 +1669,19 @@ Calcola il cammino a costo minimo da un nodo (origine) a tutti gli altri nodi de
 <b>15</b> Finché N' = N
 </div>
 
-<h4>Algoritmo di Dijkstra: esempio</h4>
+<h4>Algoritmo di Dijkstra: esempio 1</h4>
 <p>Grafo di esempio con nodi u,v,w,x,y,z e costi: c(u,v)=2, c(u,x)=1, c(u,w)=5, c(x,v)=2, c(x,w)=3, c(x,y)=1, c(w,y)=3, c(w,z)=5, c(v,w)=3, c(y,z)=2. Applicando l'algoritmo a partire dall'origine u si ottiene la seguente tabella d'iterazione:</p>
 
 <div class="container-affiancato">
   
   <table class="dati">
     <tr><th>Passo</th><th>N'</th><th>D(v),p(v)</th><th>D(w),p(w)</th><th>D(x),p(x)</th><th>D(y),p(y)</th><th>D(z),p(z)</th></tr>
-    <tr><td>0</td><td>u</td><td>2,u</td><td>5,u</td><td>1,u</td><td>∞</td><td>∞</td></tr>
-    <tr><td>1</td><td>ux</td><td>2,u</td><td>4,x</td><td></td><td>2,x</td><td>∞</td></tr>
-    <tr><td>2</td><td>uxy</td><td>2,u</td><td>3,y</td><td></td><td></td><td>4,y</td></tr>
-    <tr><td>3</td><td>uxyv</td><td></td><td>3,y</td><td></td><td></td><td>4,y</td></tr>
-    <tr><td>4</td><td>uxyvw</td><td></td><td></td><td></td><td></td><td>4,y</td></tr>
-    <tr><td>5</td><td>uxyvwz</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>0</td><td>u</td><td>7,u</td><td><span style="background-color: salmon;">3,u</span></td><td>5,u</td><td>∞</td><td>∞</td></tr>
+    <tr><td>1</td><td>uw</td><td>6,w</td><td></td><td><span style="background-color: salmon;">5,u</span></td><td>11,w</td><td>∞</td></tr>
+    <tr><td>2</td><td>uwx</td><td><span style="background-color: salmon;">6,w</span></td><td></td><td></td><td>11,w</td><td>14,x</td></tr>
+    <tr><td>3</td><td>uwxv</td><td></td><td></td><td></td><td><span style="background-color: salmon;">10,v</span></td><td>14,x</td></tr>
+    <tr><td>4</td><td>uwxvy</td><td></td><td></td><td></td><td></td><td><span style="background-color: salmon;">12,y</span></td></tr>
+    <tr><td>5</td><td>uwxvyz</td><td></td><td></td><td></td><td></td><td></td></tr>
   </table>
 
   <div class="imgbox">
@@ -1675,14 +1693,18 @@ Calcola il cammino a costo minimo da un nodo (origine) a tutti gli altri nodi de
 <p class="caption">Le celle vuote indicano che il valore resta invariato rispetto all'iterazione precedente (il nodo è già entrato in N' oppure non viene aggiornato).</p>
 
 </div>
+<h4>Algoritmo di Dijkstra: esempio 2</h4>
+  <div class="imgbox">
+    <img src="./reti_cyber/Dijkstra2.jpg" alt="Controllo per-router vs centralizzato" style="border: 1px solid #ccc; border-radius: 8px;">
+  </div>
 <p>Dai valori di p(v) si ricostruisce il cammino a costo minimo da u verso ogni altro nodo, e da questo la tabella d'inoltro del nodo u:</p>
 
 <table class="dati">
 <tr><th>Destinazione</th><th>Collegamento in uscita</th></tr>
-<tr><td>v</td><td>(u,x)</td></tr>
-<tr><td>w</td><td>(u,x)</td></tr>
+<tr><td>v</td><td>(u,v)</td></tr>
 <tr><td>x</td><td>(u,x)</td></tr>
 <tr><td>y</td><td>(u,x)</td></tr>
+<tr><td>w</td><td>(u,x)</td></tr>
 <tr><td>z</td><td>(u,x)</td></tr>
 </table>
 
@@ -1701,27 +1723,364 @@ dove min riguarda tutti i vicini di x.
 </div>
 
 <div class="imgbox"><img src="./reti_cyber/bellman_ford1.jpg" alt="Bellman-Ford - definizioni e primo esempio" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
-<p class="caption">Esempio: d<sub>y</sub>(z)=5, d<sub>x</sub>(z)=3, d<sub>w</sub>(z)=3 ⟹ Bellman-Ford determina d<sub>u</sub>(z) = min{c(u,v)+d<sub>v</sub>(z), c(u,x)+d<sub>x</sub>(z), c(u,w)+d<sub>w</sub>(z)} = min{2+5, 1+3, 5+3} = 4.</p>
+<p class="caption">Esempio: d<sub>v</sub>(z)=5, d<sub>x</sub>(z)=3, d<sub>w</sub>(z)=3 ⟹ Bellman-Ford determina d<sub>u</sub>(z) = min{c(u,v)+d<sub>v</sub>(z), c(u,x)+d<sub>x</sub>(z), c(u,w)+d<sub>w</sub>(z)} = min{2+5, 1+3, 5+3} = 4.</p>
 
-<p>D<sub>x</sub>(y) = stima del costo del percorso a costo minimo da x stesso al nodo y. <b>Vettore distanze</b>: D<sub>x</sub> = [D<sub>x</sub>(y) : ∀y∈N], aggiornato dal nodo x. Il nodo x conosce il costo verso ciascun vicino v: c(x,v). Il nodo x mantiene D<sub>x</sub> = [D<sub>x</sub>(y) : ∀y∈N], e anche i vettori distanza di ciascuno dei suoi vicini D<sub>v</sub> = [D<sub>v</sub>(y) : ∀y∈N].</p>
+<p>D<sub>x</sub>(y) = stima del costo del percorso a costo minimo da se stesso al nodo y.<br>
+<b>Vettore distanze</b>: D<sub>x</sub> = [D<sub>x</sub>(y) : y in N] <i>array</i>.<br>
+Il nodo x conosce il costo verso ciascun vicino v: c(x,v).<br>
+Il nodo x mantiene D<sub>x</sub> = [D<sub>x</sub>(y) : y in N], e anche i vettori distanza di ciascuno dei suoi vicini D<sub>v</sub> = [D<sub>v</sub>(y) : y in N].</p>
 
 <p>È un algoritmo <b>iterativo, asincrono, distribuito</b>. Ogni iterazione locale è causata da: cambio del costo di un collegamento locale; ricezione da qualche vicino di un vettore distanza aggiornato. <b>Distribuito</b>: ogni nodo informa i propri vicini solo quando il proprio DV cambia.</p>
 
 <div class="box def">
 Ciascun nodo:<br>
-1. Attende (un messaggio del cambio del costo di porta del vicino)<br>
-2. Effettua il calcolo<br>
-3. Se DV cambia, lo notifica ai vicini
+<pre>
++----+
+|    |
+|    v
+| Attende (un messaggio del cambio del costo di porta del vicino)
+|    |
+|    v
+| Effettua il calcolo
+|    |
+|    v
+| Se DV cambia, lo notifica ai vicini
+|    |
++----+
+</pre>
 </div>
 
 <h4>Esempio numerico completo</h4>
-<p>Iterazioni di convergenza dell'algoritmo a vettore distanza (con esempio della "conta all'infinito"); tabella di confronto complessità messaggi/velocità di convergenza/robustezza tra Link-State (LS) e Distance-Vector (DV).</p>
+<h4>Esempio 1</h4>
+<p>Rete a tre nodi x, y, z con costi diretti c(x,y)=2, c(x,z)=7, c(y,z)=1:</p>
+<pre>
+        2
+   x ------- y
+    \       /
+   7 \     / 1
+      \   /
+        z
+</pre>
+
+<p><b>t=0</b> — ciascun nodo conosce solo i costi verso i propri vicini diretti; tutte le altre distanze sono impostate a infinito:</p>
+<div class="container-tre-tabelle">
+  
+  <table class="dati">
+    <tr><th>nodo x</th><th colspan="3">costo verso</th></tr>
+    <tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+    <tr><td>x</td><td style="background-color: salmon;">0</td><td style="background-color: salmon;">2</td><td style="background-color: salmon;">7</span></td></tr>
+    <tr><td>y</td><td>∞</td><td>∞</td><td>∞</td></tr>
+    <tr><td>z</td><td>∞</td><td>∞</td><td>∞</td></tr>
+  </table>
+
+<table class="dati">
+  <tr><th>nodo y</th><th colspan="3">costo verso</th></tr>
+  <tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+  <tr><td>x</td><td>∞</td><td>∞</td><td>∞</td></tr>
+  <tr>
+    <td>y</td>
+    <td style="background-color: salmon;">2</td>
+    <td style="background-color: salmon;">0</td>
+    <td style="background-color: salmon;">1</td>
+  </tr>
+  <tr><td>z</td><td>∞</td><td>∞</td><td>∞</td></tr>
+</table>
+
+  <table class="dati">
+    <tr><th>nodo z</th><th colspan="3">costo verso</th></tr>
+    <tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+    <tr><td>x</td><td>∞</td><td>∞</td><td>∞</td></tr>
+    <tr><td>y</td><td>∞</td><td>∞</td><td>∞</td></tr>
+    <tr><td>z</td><td style="background-color: salmon;">7</td><td style="background-color: salmon;">1</td><td style="background-color: salmon;">0</td></tr>
+  </table>
+
+</div>
+<p>Dopo il primo scambio dei vettori distanza con i vicini, ogni nodo applica Bellman-Ford. Ad esempio il nodo x calcola:</p>
+<div class="box formula">
+D<sub>x</sub>(y) = min{c(x,y) + D<sub>y</sub>(y), c(x,z) + D<sub>z</sub>(y)} = min{2+0, 7+1} = <b>2</b><br>
+D<sub>x</sub>(z) = min{c(x,y) + D<sub>y</sub>(z), c(x,z) + D<sub>z</sub>(z)} = min{2+1, 7+0} = <b>3</b>
+</div>
+
+<p><b>Convergenza</b> (dopo lo scambio delle tabelle aggiornate, il calcolo si ripete finché nessun DV cambia più):</p>
+<div class="container-tre-tabelle">
+<table class="dati">
+<tr><th>nodo x</th><th colspan="3">costo verso</th></tr>
+<tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+<tr><td>x</td><td style="background-color: salmon;">0</td><td style="background-color: salmon;">2</td><td style="background-color: salmon;">3</td></tr>
+<tr><td>y</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>z</td><td>7</td><td>1</td><td>0</td></tr>
+</table>
+<table class="dati">
+<tr><th>nodo y</th><th colspan="3">costo verso</th></tr>
+<tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+<tr><td>x</td><td>0</td><td>2</td><td>7</td></tr>
+<tr><td>y</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>z</td><td>7</td><td>1</td><td>0</td></tr>
+</table>
+<table class="dati">
+<tr><th>nodo z</th><th colspan="3">costo verso</th></tr>
+<tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+<tr><td>x</td><td>0</td><td>2</td><td>7</td></tr>
+<tr><td>y</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>z</td><td style="background-color: salmon;">3</td><td style="background-color: salmon;">1</td><td style="background-color: salmon;">0</td></tr>
+</table>
+</div>
+<p class="caption">Ogni nodo converge alla stessa matrice dei costi minimi: D<sub>x</sub>=[0,2,3], D<sub>y</sub>=[2,0,1], D<sub>z</sub>=[3,1,0]. Da questo momento nessun nodo modifica più il proprio DV e l'algoritmo si ferma finché non cambia il costo di un collegamento.</p>
+<div class="container-tre-tabelle">
+<table class="dati">
+<tr><th>nodo x</th><th colspan="3">costo verso</th></tr>
+<tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+<tr><td>x</td><td>0</td><td>2</td><td>3</td></tr>
+<tr><td>y</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>z</td><td>3</td><td>1</td><td>0</td></tr>
+</table>
+<table class="dati">
+<tr><th>nodo y</th><th colspan="3">costo verso</th></tr>
+<tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+<tr><td>x</td><td>0</td><td>2</td><td>3</td></tr>
+<tr><td>y</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>z</td><td>3</td><td>1</td><td>0</td></tr>
+</table>
+<table class="dati">
+<tr><th>nodo z</th><th colspan="3">costo verso</th></tr>
+<tr><th>da</th><th>x</th><th>y</th><th>z</th></tr>
+<tr><td>x</td><td>0</td><td>2</td><td>3</td></tr>
+<tr><td>y</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>z</td><td>3</td><td>1</td><td>0</td></tr>
+</table>
+</div>
+
+<h4>Esempio 2</h4>
+<h4>Distance vector: cambio del costo dei link</h4>
+<p>Quando un nodo rileva che un collegamento a cui è direttamente connesso ha cambiato costo, aggiorna il proprio vettore distanza; se il costo del percorso minimo verso qualche destinazione è cambiato, lo notifica ai vicini.</p>
+<div class="box esercizio">
+<h4>"Le buone notizie viaggiano veloci"</h4>
+<pre>
+       4→1
+   x ------- y
+    \       /
+   1 \     / 50
+      \   /
+        z
+</pre>
+<p>Situazione iniziale (convergente): c(x,y)=4, c(y,z)=50, c(z,x)=1. I nodi hanno già calcolato <br>D<sub>z</sub>(x)=5<br>D<sub>x</sub>(x)=0<br>
+<p>
+D<sub>y</sub>(x) = C(y,z)+D<sub>z</sub>(x) = 1 + 5 = 6<br>
+oppure<br>
+D<sub>y</sub>(x) = C(y,x)+D<sub>x</sub>(x) = 4 + 0 = 4 <- minimo<br>
+<br>
+<b>Se C(x,y) diventa 1<br></b>
+<br>D<sub>z</sub>(x)=<span  style="background-color: salmon;">2</span><br>
+D<sub>x</sub>(x)=0<br>
+<br>
+D<sub>y</sub>(x) = C(y,z)+D<sub>z</sub>(x) = 1 + <span  style="background-color: salmon;">2</span> = <span  style="background-color: salmon;">3</span><br>
+oppure<br>
+D<sub>y</sub>(x) = C(y,x)+D<sub>x</sub>(x) = <span  style="background-color: salmon;">1</span> + 0 = <span  style="background-color: salmon;">1</span> <- minimo
+</p>
+</div>
+
+<h4>Esempio 3</h4>
+<div class="box warn">
+<h4>"Le cattive notizie viaggiano lentamente" — il problema del conteggio all'infinito</h4>
+<pre>
+       4→60
+   x ------- y
+    \       /
+  50 \     / 1
+      \   /
+        z
+</pre>
+<p>Stessa rete, ma questa volta il costo C(x,y) <b>aumenta</b> da 4 a 60. Prima del cambio, z raggiungeva x passando per y (costo 5). Quando y rileva il cambiamento di C(y,x), ricalcola il proprio vettore distanza usando il valore D<sub>z</sub>(x)=5, che però dipendeva da y stesso!</p>
+
+<p><b>Nodo y</b><br>
+C(y,x) + D<sub>x</sub>(x) = 60 + 0 = 60<br>
+C(y,z) + D<sub>z</sub>(x) = 1 + 5 = <span style="background-color: salmon;">6</span> &larr; minimo D<sub>y</sub> = [(x, 6)]
+</p>
+
+<p>y crede di poter usare z con costo 6 e glielo notifica. Inizia il loop:</p>
+
+<p><b>Nodo z</b><br>
+C(z,x) + D<sub>x</sub>(x) = 50 + 0 = 50<br>
+C(z,y) + D<sub>y</sub>(x) = 1 + 6 = <span style="background-color: salmon;">7</span> &larr; minimo D<sub>z</sub> = [(x, 7)]
+</p>
+
+<p><b>Nodo y</b><br>
+C(y,x) + D<sub>x</sub>(x) = 60 + 0 = 60<br>
+C(y,z) + D<sub>z</sub>(x) = 1 + 7 = <span style="background-color: salmon;">8</span> &larr; minimo D<sub>y</sub> = [(x, 8)]
+</p>
+
+<p><b>Nodo z</b><br>
+C(z,x) + D<sub>x</sub>(x) = 50 + 0 = 50<br>
+C(z,y) + D<sub>y</sub>(x) = 1 + 8 = <span style="background-color: salmon;">9</span> &larr; minimo D<sub>z</sub> = [(x, 9)]
+</p>
+<p><i>...e così via.</i> I costi aumentano di 1 in 1 fino a superare 50. Questo è il conteggio all'infinito.</p>
+</div>
+
+<div class="box esercizio">
+<h4>La soluzione: Inversione Avvelenata (Poisoned Reverse)</h4>
+<pre>
+       4→60
+   x ------- y
+    \       /
+  50 \     / 1
+      \   /
+        z
+</pre>
+<p>Per risolvere il problema ed evitare le oscillazioni, si applica questa regola: se <b>z</b> usa <b>y</b> per raggiungere x, <b>z</b> mente a <b>y</b> dicendogli che la sua distanza per x è infinita (D<sub>z</sub>(x) = &infin;). In questo modo y non proverà a usare z come percorso alternativo.</p>
+
+<p><b>Cambio C(y,x) = 60</b></p>
+
+<p><b>Nodo y</b><br>
+C(y,x) + D<sub>x</sub>(x) = 60 + 0 = <span style="background-color: lightgreen;">60</span> &larr; minimo D<sub>y</sub> = [(x, 60)]<br>
+C(y,z) + D<sub>z</sub>(x) = 1 + &infin; = &infin; <i>(avvelenato da z)</i>
+</p>
+
+<p><b>Nodo z</b><br>
+C(z,x) + D<sub>x</sub>(x) = 50 + 0 = <span style="background-color: lightgreen;">50</span> &larr; minimo D<sub>z</sub> = [(x, 50)]<br>
+C(z,y) + D<sub>y</sub>(x) = 1 + 60 = 61<br>
+<i>(Passando direttamente da x, z non ha più bisogno di y. Quindi smette di avvelenare il percorso e notifica il suo costo reale: 50)</i>
+</p>
+
+<p><b>Nodo y</b><br>
+C(y,x) + D<sub>x</sub>(x) = 60 + 0 = 60<br>
+C(y,z) + D<sub>z</sub>(x) = 1 + 50 = <span style="background-color: lightgreen;">51</span> &larr; minimo D<sub>y</sub> = [(x, 51)]
+</p>
+
+<p><b>Nodo z</b> (controllo finale)<br>
+C(z,x) + D<sub>x</sub>(x) = 50 + 0 = <span style="background-color: lightgreen;">50</span> &larr; minimo D<sub>z</sub> = [(x, 50)]<br>
+C(z,y) + D<sub>y</sub>(x) = 1 + 51 = 52
+</p>
+
+<p>La rete converge istantaneamente ai valori corretti senza conteggi infiniti.</p>
+</div>
+
+<h4>Distance vector: inversione avvelenata (poisoned reverse)</h4>
+<div class="box def">
+<p>Regola generale per attenuare (non eliminare del tutto) il problema del conteggio all'infinito: se z instrada verso x passando per y, allora z comunica a y che la propria distanza (di z) verso x è infinita — anche se non è vero. In questo modo y non sceglierà mai z come prossimo salto per raggiungere x, evitando che si formi un ciclo d'instradamento y→z→y tra i due nodi.</p>
+<p>Limiti: l'inversione avvelenata risolve i cicli a due nodi, ma non impedisce cicli d'instradamento che coinvolgono tre o più nodi.</p>
+</div>
+
+<h4>Confronto tra gli algoritmi Link-State e Distance-Vector</h4>
+<p>Tabella di confronto complessità messaggi/velocità di convergenza/robustezza tra Link-State (LS) e Distance-Vector (DV).</p>
 
 <table class="dati">
 <tr><th></th><th>Complessità dei messaggi</th><th>Velocità di convergenza</th><th>Robustezza</th></tr>
 <tr><td><b>LS</b></td><td>con n nodi, E collegamenti, implica l'invio di O(nE) messaggi</td><td>algoritmo O(n²) richiede O(nE) messaggi</td><td>un router può comunicare via broadcast un costo sbagliato per uno dei suoi collegamenti (non per gli altri); i nodi si occupano solo di calcolare le proprie tabelle</td></tr>
 <tr><td><b>DV</b></td><td>richiede scambi tra nodi adiacenti</td><td>può convergere lentamente: può presentare cicli d'instradamento; può presentare il problema del conteggio all'infinito</td><td>un nodo può comunicare cammini a costo minimo errati a tutte le destinazioni; la tabella di ciascun nodo è usata da altri — un calcolo errato si può diffondere per l'intera rete</td></tr>
 </table>
+
+<h2 id="routing-gerarchico">4.4 Instradamento Gerarchico</h2>
+<p>Finora la rete è stata vista come una collezione di router interconnessi, tutti indistinguibili tra loro — una visione omogenea della rete. Nella pratica le cose non sono così semplici, per due motivi principali:</p>
+<ul>
+  <li><b>Scala</b>: con 200 milioni di destinazioni, archiviare le informazioni d'instradamento su ciascun host richiederebbe un'enorme quantità di memoria, e il traffico generato dagli aggiornamenti LS non lascerebbe banda per i pacchetti di dati.</li>
+  <li><b>Autonomia amministrativa</b>: Internet è la "rete delle reti" — da un punto di vista ideale, ciascuno dovrebbe poter amministrare la propria rete nel modo desiderato, pur mantenendo la possibilità di connetterla alle reti esterne.</li>
+</ul>
+
+<div class="box def">
+<b>Sistema Autonomo (AS, Autonomous System)</b><br>
+I router vengono organizzati in sistemi autonomi. I router di un gruppo autonomo eseguono lo stesso algoritmo d'instradamento (<b>protocollo intra-AS</b>). Router appartenenti a AS differenti possono eseguire protocolli intra-AS diversi.<br><br>
+<b>Router gateway</b>: hanno il compito aggiuntivo d'inoltrare pacchetti verso destinazioni esterne all'AS.
+</div>
+
+<div class="imgbox"><img src="./reti_cyber/sistemi_autonomi.jpg" alt="Sistemi autonomi interconnessi AS1 AS2 AS3" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<p class="caption">Sistemi autonomi interconnessi: AS1, AS2, AS3. Ciascun sistema autonomo sa come inoltrare pacchetti lungo il percorso ottimo verso qualsiasi destinazione interna al gruppo (algoritmo d'instradamento intra-AS + tabella d'inoltro). I protocolli d'instradamento dei diversi AS non sono necessariamente gli stessi. I router 1b, 1c, 2a e 3a sono gateway.</p>
+
+<h2 id="routing-internet">4.5 Instradamento in Internet</h2>
+
+<h3>RIP (Routing Information Protocol)</h3>
+<ul>
+  <li>È un protocollo a <b>vettore distanza</b>, tipicamente incluso in UNIX dal 1982.</li>
+  <li>Usa il <b>conteggio degli hop</b> come metrica di costo (max = 15 hop), includendo la sottorete di destinazione.</li>
+</ul>
+
+<div class="imgbox"><img src="./reti_cyber/rip_hop.jpg" alt="Esempio tabella hop RIP dal router A" style="max-width: 55%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<p class="caption">Esempio: dal router A alle varie sottoreti u, v, w, x, y, z — destinazione u = 1 hop; v, w = 2 hop; x, y = 3 hop; z = 2 hop.</p>
+
+<div class="box def">
+<b>Annunci RIP</b><br>
+I router adiacenti si scambiano gli aggiornamenti d'instradamento ogni 30 secondi circa, tramite un messaggio di risposta RIP (<b>RIP advertisement</b>). Ogni messaggio contiene un elenco di fino a 25 sottoreti di destinazione all'interno del sistema autonomo, insieme alla distanza del mittente rispetto a ciascuna di esse.
+</div>
+
+<p><b>Tabella d'instradamento RIP</b>: un processo chiamato <code>routed</code> esegue RIP, mantenendo le informazioni d'instradamento e scambiando messaggi con i processi <code>routed</code> dei router vicini. Poiché RIP è implementato come processo a livello di applicazione, può inviare e ricevere messaggi su una socket standard usando un protocollo di trasporto standard (UDP), appoggiandosi sopra IP e il livello di collegamento fisico.</p>
+
+<h3>OSPF (Open Shortest Path First)</h3>
+<ul>
+  <li><b>"Open"</b>: le specifiche del protocollo sono pubblicamente disponibili.</li>
+  <li>È un protocollo a <b>stato del collegamento</b>: utilizza il <i>flooding</i> di informazioni di stato del collegamento e l'algoritmo di Dijkstra per determinare il percorso a costo minimo.</li>
+  <li>Ogni volta che lo stato di un collegamento cambia, il router manda informazioni d'instradamento a tutti gli altri router dell'AS, tramite flooding.</li>
+</ul>
+<div class="box formula">
+I messaggi OSPF vengono trasportati direttamente da IP (non da TCP o UDP), con codice di protocollo di livello superiore 89. OSPF deve quindi implementare autonomamente i meccanismi di trasferimento affidabile.
+</div>
+
+<h3>BGP (Border Gateway Protocol)</h3>
+<p>Rappresenta l'attuale standard de facto per l'<b>instradamento inter-AS</b> in Internet, ed è basato su Distance-Vector. BGP mette a disposizione di ciascun AS un modo per:</p>
+<ol>
+  <li>ottenere informazioni sulla raggiungibilità delle sottoreti da parte di AS confinanti;</li>
+  <li>propagare le informazioni di raggiungibilità a tutti i router interni di un AS;</li>
+  <li>determinare percorsi "buoni" verso le sottoreti sulla base delle informazioni di raggiungibilità e delle politiche dell'AS.</li>
+</ol>
+<p>BGP consente inoltre a ciascuna sottorete di comunicare la propria esistenza al resto di Internet.</p>
+
+<div class="imgbox"><img src="./reti_cyber/bgp_intro.jpg" alt="Instradamento tra sistemi autonomi AS1 AS2 AS3" style="max-width: 70%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<p class="caption">Se un router in AS1 riceve un datagramma la cui destinazione ricade fuori da AS1, deve inoltrarlo verso uno dei due gateway — ma quale? AS1 deve: (1) sapere quali destinazioni sono raggiungibili attraverso AS2 e quali attraverso AS3; (2) informare tutti i router interni in modo che ciascuno configuri la propria tabella d'inoltro per le destinazioni esterne. Questo è il compito dell'instradamento inter-AS.</p>
+
+<h4>Sessioni eBGP e iBGP</h4>
+<p>I router gateway eseguono entrambi i protocolli <b>eBGP</b> (tra AS differenti) e <b>iBGP</b> (all'interno dello stesso AS).</p>
+
+<div class="box def">
+<b>Sessione BGP</b><br>
+Due router BGP si scambiano messaggi tramite connessioni <b>TCP</b>, pubblicizzando un percorso verso differenti prefissi di rete (destinazione). Ad esempio, quando il router gateway 3a di AS3 pubblicizza il percorso "AS3, X" verso il gateway router 2c di AS2, AS3 promette a AS2 che inoltrerà i datagrammi verso X.
+</div>
+
+<h4>Attributi dei percorsi</h4>
+<p>I messaggi BGP rappresentano i percorsi come <b>prefisso + attributi = "route"</b>. Due attributi importanti:</p>
+<ul>
+  <li><b>AS-PATH</b>: lista degli AS da attraversare.</li>
+  <li><b>NEXT-HOP</b>: router interno all'AS che rappresenta il next hop.</li>
+</ul>
+<p><b>Policy-based routing</b>: i router gateway decidono se accettare o declinare un percorso in base alla <i>import policy</i> (es. mai instradare attraverso l'AS Y). La policy determina anche a quali AS pubblicizzare i propri percorsi.</p>
+
+<p>Il router gateway può apprendere percorsi multipli verso una stessa destinazione. Ad esempio, il router gateway 1c di AS1 può apprendere il percorso "AS2,AS3,X" da 2a e il percorso "AS3,X" da 3a: in base alle politiche di AS1, 1c sceglie il percorso "AS3,X" e lo annuncia all'interno di AS1 tramite iBGP.</p>
+
+<div class="box def">
+<b>BGP, OSPF e le tabelle d'inoltro</b><br>
+I router che apprendono una destinazione X tramite iBGP (es. "il percorso verso X passa da 1c") usano poi il protocollo intra-dominio (es. OSPF) per determinare l'interfaccia locale corretta su cui inoltrare verso quel router interno — combinando così instradamento inter-AS (BGP) e intra-AS (OSPF) nella tabella d'inoltro finale.
+</div>
+
+<h2 id="icmp">4.6 ICMP: Internet Control Message Protocol</h2>
+<p>Viene usato da host e router per scambiarsi informazioni a livello di rete:</p>
+<ul>
+  <li><b>Report degli errori</b>: host, rete, porta o protocollo irraggiungibili.</li>
+  <li><b>Echo request/reply</b> (usato dal programma <code>ping</code>).</li>
+</ul>
+<p>Si trova a livello di rete "sopra" IP: ICMP è considerato parte di IP. I messaggi ICMP hanno un campo tipo e un campo codice, e contengono l'intestazione e i primi 8 byte del datagramma IP che ha causato l'errore.</p>
+
+<table class="dati">
+<tr><th>Tipo</th><th>Codice</th><th>Descrizione</th></tr>
+<tr><td>0</td><td>0</td><td>Risposta eco (a ping)</td></tr>
+<tr><td>3</td><td>0</td><td>Rete destinazione irraggiungibile</td></tr>
+<tr><td>3</td><td>1</td><td>Host destinazione irraggiungibile</td></tr>
+<tr><td>3</td><td>2</td><td>Protocollo destinazione irraggiungibile</td></tr>
+<tr><td>3</td><td>3</td><td>Porta destinazione irraggiungibile</td></tr>
+<tr><td>3</td><td>6</td><td>Rete destinazione sconosciuta</td></tr>
+<tr><td>3</td><td>7</td><td>Host destinazione sconosciuto</td></tr>
+<tr><td>4</td><td>0</td><td>Riduzione sorgente (controllo di congestione)</td></tr>
+<tr><td>8</td><td>0</td><td>Richiesta eco</td></tr>
+<tr><td>9</td><td>0</td><td>Annuncio del router</td></tr>
+<tr><td>10</td><td>0</td><td>Scoperta del router</td></tr>
+<tr><td>11</td><td>0</td><td>TTL scaduto</td></tr>
+<tr><td>12</td><td>0</td><td>Errata intestazione IP</td></tr>
+</table>
+
+<h3>Traceroute e ICMP</h3>
+<p>Il programma <code>traceroute</code> invia una serie di datagrammi IP alla destinazione: il primo con TTL = 1, il secondo con TTL = 2, e così via, verso un numero di porta improbabile.</p>
+<p>Quando l'n-esimo datagramma arriva all'n-esimo router, il router lo scarta e invia all'origine un messaggio di allerta ICMP (<b>tipo 11, codice 0</b>), che include il nome del router e il suo indirizzo IP. Quando il messaggio ICMP arriva, l'origine può calcolare l'RTT. Traceroute ripete l'operazione per 3 volte per ogni TTL.</p>
+
+<div class="box def">
+<b>Criteri di arresto dell'invio</b><br>
+Quando un segmento UDP arriva all'host di destinazione, quest'ultimo restituisce un messaggio ICMP di porta non raggiungibile (<b>tipo 3, codice 3</b>). Quando l'origine riceve questo messaggio ICMP, si blocca e termina l'esecuzione.
+</div>
 
 <hr class="sep">
 
