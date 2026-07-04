@@ -559,6 +559,12 @@
           <div class="note"><b>MSS è il payload</b> (dati utili del segmento, senza header), <b>MTU</b> è la dimensione totale realmente trasmessa sul link (payload + overhead/header). Quindi T<sub>trasm</sub> = (MSS + overhead) · 8 / R è la stessa cosa scritta in termini di MSS invece di MTU. Se le dimensioni sono in byte, ·8 converte in bit; se R è in Mbps ricorda 1 Mbps = 10⁶ bps.<br>
           <i>Es.: MSS = 256 B, overhead ≈ 0 → MTU = 256 B, R = 200 Mbps &nbsp;→&nbsp; L = 256·8 = 2048 bit; R = 200·10⁶ = 200.000.000 bps &nbsp;→&nbsp; T<sub>trasm</sub> = 2048/200.000.000 = 1,024·10⁻⁵ s = 0,01024 ms.</i></div>
         </div>
+        <div class="f wide" style="border-left-color:#1b5e8a;">
+          <div class="name">Tempo di trasmissione dell'intero file (N pacchetti)</div>
+          <div class="formula">T<sub>trasm(file)</sub> = (File + N · overhead) · 8 / R</div>
+          <div class="note">questo è diverso dal caso del singolo pacchetto sopra: qui <b>File</b> è la dimensione totale dei dati utili (in byte, l'intero messaggio da spedire, <u>non</u> il singolo MSS), <b>N</b> = ⌈File/MSS⌉ è il numero di pacchetti necessari (formula in sez. 2), <b>overhead</b> è l'header aggiunto <i>una volta per ciascun pacchetto</i> (quindi si moltiplica per N, non si aggiunge una sola volta). ·8 converte byte→bit prima di dividere per R (in bps).<br>
+          <i>Es.: File = 2048 B, MSS = 536 B &nbsp;→&nbsp; N = ⌈2048/536⌉ = 4 pacchetti; overhead = 40 B/pacchetto; R = 200 Mbps &nbsp;→&nbsp; T<sub>trasm(file)</sub> = (2048 + 4·40)·8 / (200·10⁶) = (2048+160)·8/200.000.000 = 17664/200.000.000 = 8,832·10⁻⁵ s ≈ 0,0883 ms.</i></div>
+        </div>
         <div class="f">
           <div class="name">Ritardo di nodo</div>
           <div class="formula">d<sub>nodo</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub></div>
@@ -566,9 +572,9 @@
         </div>
         <div class="f">
           <div class="name">Ritardo di propagazione (T<sub>prop</sub>)</div>
-          <div class="formula">T<sub>prop</sub> = d / V<sub>p</sub></div>
-          <div class="note">d = lunghezza del collegamento fisico (in metri), V<sub>p</sub> = velocità di propagazione del mezzo (tipicamente ≈ 2,8·10⁸ m/s in rame/fibra). Dipende solo dalla distanza, <b>non</b> dalla banda del link né dalla dimensione del pacchetto.<br>
-          <i>Es.: d = 100 m, V<sub>p</sub> = 2,8·10⁸ m/s &nbsp;→&nbsp; T<sub>prop</sub> = 100/2,8·10⁸ = 3,57·10⁻⁷ s ≈ 0,357 μs.</i></div>
+          <div class="formula">T<sub>prop</sub> = L / V<sub>p</sub></div>
+          <div class="note">L = lunghezza del collegamento fisico (in metri), V<sub>p</sub> = velocità di propagazione del mezzo (tipicamente ≈ 2,8·10⁸ m/s in rame/fibra). Dipende solo dalla distanza, <b>non</b> dalla banda del link né dalla dimensione del pacchetto. Attenzione: qui L è la <b>lunghezza fisica del link</b>, diversa dall'L "bit da trasmettere" usato nella formula T<sub>trasm</sub>=L/R sopra — stessa lettera, significato diverso a seconda della formula.<br>
+          <i>Es.: L = 100 m, V<sub>p</sub> = 2,8·10⁸ m/s &nbsp;→&nbsp; T<sub>prop</sub> = 100/2,8·10⁸ = 3,57·10⁻⁷ s ≈ 0,357 μs.</i></div>
         </div>
         <div class="f">
           <div class="name">RTT (caso semplice, solo propagazione)</div>
@@ -779,7 +785,7 @@ T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 80m / 2,8·10<sup>8</sup> m/
 T<sub>Tras</sub> = (PL+OH)·8 bit / R = (536+28)·8 / 512 Kbps = 8,8125·10<sup>-3</sup>s ≈ 8,81 ms<br/>
 a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto?<br/> 
 T<sub>P1</sub> = 3·T<sub>Tras</sub> + (T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub>) ≈ 26,43 ms<br/>
-b) Dopo quanto tempo l'host B riceve interamente il secondo pacchetto?<br/>
+b) Dopo quanto tempo l'host B riceve interamente il primo pacchetto?<br/>
 T<sub>P2</sub> = T<sub>P1</sub> + T<sub>Tras</sub><br/>
 c) Tempo totale per l'intero messaggio.<br/>
 T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)·T<sub>Tras</sub> + T<sub>Tras,last</sub> ≈ <b>51,75 s</b></div>
@@ -813,7 +819,7 @@ T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)�
               
                 <div class="solution-panel" id="sol-2" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
-                  <div class="solution-body"><p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1024byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br/>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 440 byte<br/>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p>
+                  <div class="solution-body"><p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1026byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br/>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 392 byte<br/>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p>
 <div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2_2.jpg"/></div>
 <p>
 T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 200m / 2,8·10<sup>8</sup> m/s = 7,14·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,714 μs<br/>
@@ -861,95 +867,15 @@ T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 160m / 2,8·10<sup>8</sup> m
                 <div class="solution-panel" id="sol-3" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body"><p>
-<b>Dati e calcoli preliminari:</b><br>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_3_svolgimento.jpg" alt="Esercizio 3 - svolgimento" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
-Pagina = 3 kB = 3 · 1024 = 3072 Byte<br>
-IMG = 1,5 MB = 1,5 · 1024 · 1024 = 1.572.864 Byte<br>
-L = 500 m<br>
-Larghezza banda LAN e link L = 100 Mbps = 100 · 10<sup>6</sup> bps<br>
-RTT<sub>LAN</sub> = 10 μs = 10 · 10<sup>-6</sup> s<br>
-V<sub>link</sub> = 2,8 · 10<sup>8</sup> m/s<br>
-MTU = 1500 byte, Overhead = 48 byte<br><br>
-
-<b>scambio messaggi HTTP:</b><br>
-<p><b>Fase 1: Richiesta dell'Host 1 (Cache Vuota)</b></p>
-
-<p><b>① Richiesta del file base (HTML)</b></p>
-<pre><code>GET /index.html HTTP/1.1
-Host: server-remoto.it
-Connection: open</code></pre>
-
-<p><b>② Risposta con il file base</b></p>
-<pre><code>HTTP/1.1 200 OK
-Connection: open
-Content-Type: text/html
-Content-Length: 3072
-Last-Modified: Data_X
-(DATI DEL FILE BASE)</code></pre>
-<p><i>conversione: (3 kB in Byte: 3 * 1024 = 3072 Byte)</i></p>
-
-<p><b>③ Richiesta immagine</b></p>
-<pre><code>GET /img.jpg HTTP/1.1
-Host: server-remoto.it
-Connection: open</code></pre>
-
-<p><b>④ Risposta con immagine</b></p>
-<pre><code>HTTP/1.1 200 OK
-Connection: open
-Content-Type: image/jpeg
-Content-Length: 1572864
-Last-Modified: Data_Y
-(DATI DELL'IMMAGINE)</code></pre>
-<p><i>conversione: (1.5 MB in Byte: 1.5 * 1024 * 1024 = 1572864 Byte)</i></p>
-
-<p><b>Fase 2: Richiesta dell'Host 2 (Cache Hit + GET Condizionale)</b></p>
-
-<p><b>⑤ Richiesta del file base da Host 2 a Proxy</b></p>
-<pre><code>GET /index.html HTTP/1.1
-Host: server-remoto.it
-Connection: open</code></pre>
-
-<p><b>⑥ GET Condizionale dal Proxy verso il Server</b></p>
-<pre><code>GET /index.html HTTP/1.1
-Host: server-remoto.it
-Connection: open
-If-Modified-Since: Data_X</code></pre>
-
-<p><b>⑦ Risposta del Server al Proxy (File non modificato)</b></p>
-<pre><code>HTTP/1.1 304 Not Modified
-Connection: open</code></pre>
-
-<p><b>⑧ Risposta del Proxy all'Host 2 (File servito dalla cache)</b></p>
-<pre><code>HTTP/1.1 200 OK
-Connection: open
-Content-Type: text/html
-Content-Length: 3072
-Last-Modified: Data_X
-(DATI DEL FILE BASE DALLA CACHE)</code></pre>
-
-<p><b>⑨ Richiesta dell'immagine da Host 2 a Proxy</b></p>
-<pre><code>GET /img.jpg HTTP/1.1
-Host: server-remoto.it
-Connection: open</code></pre>
-
-<p><b>⑩ GET Condizionale dal Proxy verso il Server (per l'immagine)</b></p>
-<pre><code>GET /img.jpg HTTP/1.1
-Host: server-remoto.it
-Connection: open
-If-Modified-Since: Data_Y</code></pre>
-
-<p><b>⑪ Risposta del Server al Proxy (Immagine non modificata)</b></p>
-<pre><code>HTTP/1.1 304 Not Modified
-Connection: open</code></pre>
-
-<p><b>⑫ Risposta del Proxy all'Host 2 (Immagine servita dalla cache)</b></p>
-<pre><code>HTTP/1.1 200 OK
-Connection: open
-Content-Type: image/jpeg
-Content-Length: 1572864
-Last-Modified: Data_Y
-(DATI DELL'IMMAGINE DALLA CACHE)</code></pre>
-<b>Calcolore i tempi:</b><br>
+<b>Dati e calcoli preliminari:</b><br/>
+<div class="imgbox"><img alt="Esercizio 3 - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_3_svolgimento.jpg"/></div>
+Pagina = 3 kB = 3 · 1024 = 3072 Byte<br/>
+IMG = 1,5 MB = 1,5 · 1024 · 1024 = 1.572.864 Byte<br/>
+L = 500 m<br/>
+Larghezza banda LAN e link L = 100 Mbps = 100 · 10<sup>6</sup> bps<br/>
+RTT<sub>LAN</sub> = 10 μs = 10 · 10<sup>-6</sup> s<br/>
+V<sub>link</sub> = 2,8 · 10<sup>8</sup> m/s<br/>
+MTU = 1500 byte, Overhead = 48 byte<br/><br/>
 T<sub>prop_link</sub> = L / V = 500 m / (2,8 · 10<sup>8</sup> m/s) ≈ 1,786 μs<br/>
 RTT<sub>tot</sub> = RTT<sub>LAN</sub> + 2 · T<sub>prop_L</sub> = 10 μs + 2 · 1,786 μs ≈ 13,57 μs<br/>
 Payload = MTU - Overhead = 1500 - 48 = 1452 byte<br/>
