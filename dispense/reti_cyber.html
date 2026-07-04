@@ -403,7 +403,7 @@ informazione di intestazione: Overhead  OH 28byte</br>
 payload: peso di ogni singolo pacchetto PL 536 byte</br>
 </br>
 Numero di pacchetti:</br>
-N = ⌈S<sub>mess</sub> / PL⌉ = ⌈3 MB / 536 byte⌉ = ⌈5868,89⌉ = 5869 pacchetti<br>
+N = ⌈S<sub>mess</sub> / PL⌉ = ⌈(3 MB · 1024 · 1024)byte/ 536 byte⌉ = ⌈5868,89⌉ = 5869 pacchetti<br>
 </br>
 Come calcoliamo la dimensione dell'ultimo pacchetto?<br>
 S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 3·2²⁰ − 5868·536 = 480 byte
