@@ -771,7 +771,7 @@ Last-Modified: Z
 <div class="imgbox"><img src="./reti_cyber/esercizio1_2_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <p>RTT = 2·T<sub>prop</sub> (tempo di andata e ritorno). Il tempo totale della prima richiesta è quindi:</p>
-<p>T<sub>1</sub> = (T<sub>prop</sub>+T<sub>prop</sub>)<sub>handshake</sub> + (T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich./risp. ①②</sub> + T<sub>trasm</sub>(FB) + (T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich. pipeline ③⑤</sub> + T<sub>trasm</sub>(IMG1) + T<sub>trasm</sub>(IMG2)<br>
+<p>T<sub>1</sub> = <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>handshake</sub></span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich./risp. ①②</sub></span> + <span style="border-bottom: 2px solid blue; padding-bottom: 2px;">T<sub>trasm</sub>(FB)</span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich. pipeline ③⑤</sub></span> + <span style="border-bottom: 2px solid purple; padding-bottom: 2px;">T<sub>trasm</sub>(IMG1)</span> + <span style="border-bottom: 2px solid darkorange; padding-bottom: 2px;">T<sub>trasm</sub>(IMG2)</span><br>
 T<sub>1</sub> = 3·RTT + T<sub>trasm</sub>(FB) + T<sub>trasm</sub>(IMG1) + T<sub>trasm</sub>(IMG2)</p>
 <p><b>Calcolo dei tempi di trasmissione</b><br>
 Payload = MTU − overhead = 1500 − 48 = <b>1452 B</b></p>
