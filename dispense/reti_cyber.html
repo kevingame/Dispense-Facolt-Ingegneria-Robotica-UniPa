@@ -743,7 +743,7 @@ Last-Modified: X
 <p><i>conversione: (3kB in Byte: 3 * 1024 = 3072 Byte)</i></p>
 
 <p><b>③ Richiesta immagine 1</b></p>
-<pre><code>GET /topo.png HTTP/1.1
+<pre><code>GET /img1.png HTTP/1.1
 Host: unipa.it
 Connection: open</code></pre>
 <p><b>④ Risposta con immagine 1</b></p>
@@ -801,7 +801,7 @@ If-Modified-Since: X</code></pre>
 Connection: open</code></pre>
 
 <p><b>⑨ Richiesta condizionale immagine 1</b></p>
-<pre><code>GET /topo.png HTTP/1.1
+<pre><code>GET /img1.png HTTP/1.1
 Host: unipa.it
 Connection: open
 If-Modified-Since: Y</code></pre>
@@ -876,7 +876,7 @@ Connection: open</code></pre>
 Connection: open
 Content-Type: image/jpg
 Content-Length: 4194304
-Set-Cookie: X12</code></pre>
+Set-Cookie: XYZ</code></pre>
 <p>IMG1 = 4 MB = 4·1024·1024 = <b>4.194.304 B</b>; cookie = <b>100 B</b></p>
 
 <p><b>Peso del messaggio con cookie</b><br>
