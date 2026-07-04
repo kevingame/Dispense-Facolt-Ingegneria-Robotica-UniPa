@@ -495,7 +495,7 @@
           <li><a href="#sec-f3">3. Tempo di risposta / RTT</a></li>
           <li><a href="#sec-f4">4. TCP — finestra, throughput, goodput</a></li>
           <li><a href="#sec-f5">5. Indirizzamento IP / Subnetting</a></li>
-          <li><a href="#sec-f6">6. Instradamento — Distance Vector</a></li>
+          <li><a href="#sec-f6">6. Instradamento — Link-State &amp; Distance Vector</a></li>
           <li><a href="#sec-f7">7. Crittografia</a></li>
         </ul>
       </div>
@@ -553,16 +553,27 @@
           <div class="formula">T<sub>trasm</sub> = L / R</div>
           <div class="note">L in <b>bit</b>, R in <b>bps</b>. Se L è dato in byte, moltiplica ×8; se R è dato in Mbps/Gbps, moltiplica ×10⁶/×10⁹ per averlo in bps.</div>
         </div>
-        <div class="f">
+        <div class="f wide">
           <div class="name">Tempo di trasmissione (con overhead)</div>
-          <div class="formula">T<sub>trasm</sub> = (MSS + overhead) · 8 / R</div>
-          <div class="note">se le dimensioni sono in byte, ·8 converte in bit; se R è in Mbps ricorda 1 Mbps = 10⁶ bps.<br>
-          <i>Es.: MSS = 256 B, overhead ≈ 0, R = 200 Mbps &nbsp;→&nbsp; L = 256·8 = 2048 bit; R = 200·10⁶ = 200.000.000 bps &nbsp;→&nbsp; T<sub>trasm</sub> = 2048/200.000.000 = 1,024·10⁻⁵ s = 0,01024 ms.</i></div>
+          <div class="formula">T<sub>trasm</sub> = MTU · 8 / R &nbsp;&nbsp;con&nbsp;&nbsp; MTU = MSS + overhead</div>
+          <div class="note"><b>MSS è il payload</b> (dati utili del segmento, senza header), <b>MTU</b> è la dimensione totale realmente trasmessa sul link (payload + overhead/header). Quindi T<sub>trasm</sub> = (MSS + overhead) · 8 / R è la stessa cosa scritta in termini di MSS invece di MTU. Se le dimensioni sono in byte, ·8 converte in bit; se R è in Mbps ricorda 1 Mbps = 10⁶ bps.<br>
+          <i>Es.: MSS = 256 B, overhead ≈ 0 → MTU = 256 B, R = 200 Mbps &nbsp;→&nbsp; L = 256·8 = 2048 bit; R = 200·10⁶ = 200.000.000 bps &nbsp;→&nbsp; T<sub>trasm</sub> = 2048/200.000.000 = 1,024·10⁻⁵ s = 0,01024 ms.</i></div>
         </div>
         <div class="f">
           <div class="name">Ritardo di nodo</div>
           <div class="formula">d<sub>nodo</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub></div>
           <div class="note">elaborazione + accodamento + trasmissione + propagazione</div>
+        </div>
+        <div class="f">
+          <div class="name">Ritardo di propagazione (T<sub>prop</sub>)</div>
+          <div class="formula">T<sub>prop</sub> = d / V<sub>p</sub></div>
+          <div class="note">d = lunghezza del collegamento fisico (in metri), V<sub>p</sub> = velocità di propagazione del mezzo (tipicamente ≈ 2,8·10⁸ m/s in rame/fibra). Dipende solo dalla distanza, <b>non</b> dalla banda del link né dalla dimensione del pacchetto.<br>
+          <i>Es.: d = 100 m, V<sub>p</sub> = 2,8·10⁸ m/s &nbsp;→&nbsp; T<sub>prop</sub> = 100/2,8·10⁸ = 3,57·10⁻⁷ s ≈ 0,357 μs.</i></div>
+        </div>
+        <div class="f">
+          <div class="name">RTT (caso semplice, solo propagazione)</div>
+          <div class="formula">RTT = 2 · T<sub>prop</sub></div>
+          <div class="note">tempo di andata e ritorno di un bit tra due host direttamente connessi (nessun accodamento/elaborazione)</div>
         </div>
         <div class="f">
           <div class="name">Intensità di traffico (queuing)</div>
@@ -596,7 +607,7 @@
         <div class="f">
           <div class="name">Payload utile</div>
           <div class="formula">PL = MTU − overhead</div>
-          <div class="note">es. MTU 1500 B − 40 B header = 1460 B</div>
+          <div class="note">es. MTU 1500 B − 40 B header = 1460 B. PL è lo stesso concetto di MSS (il payload/dati utili): MTU = PL + overhead = MSS + overhead.</div>
         </div>
         <div class="f wide">
           <div class="name">Conversioni comuni</div>
@@ -636,7 +647,7 @@
         <div class="f wide">
           <div class="name">Numero di segmenti</div>
           <div class="formula">N = File(byte) / MSS(byte)</div>
-          <div class="note">File e MSS devono essere nella <b>stessa unità (byte)</b> prima di dividere. Il File è quasi sempre dato in KB/MB (potenze di 2): convertilo in byte con ·1024 (KB→B) o ·1024² (MB→B). L'MSS è quasi sempre già in byte, non va convertito.<br>
+          <div class="note">File e MSS devono essere nella <b>stessa unità (byte)</b> prima di dividere. Il File è quasi sempre dato in KB/MB (potenze di 2): convertilo in byte con ·1024 (KB→B) o ·1024² (MB→B). L'MSS è quasi sempre già in byte, non va convertito. Ricorda: <b>MSS = payload</b> (dati utili per segmento) = MTU − overhead, lo stesso PL già visto in sezione 2.<br>
           <i>Es.: File = 5 kB, MSS = 512 B &nbsp;→&nbsp; File in byte = 5·1024 = 5120 B &nbsp;→&nbsp; N = 5120/512 = 10 segmenti.</i></div>
         </div>
         <div class="f">
@@ -678,14 +689,24 @@
           <div class="formula">Sottorete = Indirizzo AND Netmask</div>
           <div class="note">Broadcast = Sottorete OR (NOT Netmask)</div>
         </div>
+        <div class="f wide">
+          <div class="name">Frammentazione IP — campo Spiazzamento (offset)</div>
+          <div class="formula">Spiazzamento = posizione del frammento nel datagramma originale (in byte) / 8</div>
+          <div class="note">l'offset nell'header IP è espresso in multipli di 8 byte. <i>Es.: datagramma di 4000 B, MTU = 1500 B (1480 B dati/frammento) → 2° frammento inizia al byte 1480 → Spiazzamento = 1480/8 = 185.</i></div>
+        </div>
       </div>
 
-      <h3 class="subsection" id="sec-f6">6. Instradamento — Distance Vector</h3>
+      <h3 class="subsection" id="sec-f6">6. Instradamento — Link-State (Dijkstra) &amp; Distance Vector (Bellman-Ford)</h3>
       <div class="formule-grid">
         <div class="f wide">
           <div class="name">Equazione di Bellman-Ford</div>
           <div class="formula">D<sub>x</sub>(y) = min<sub>v</sub> { c(x,v) + D<sub>v</sub>(y) }</div>
           <div class="note">costo minimo da x a y passando per il vicino v</div>
+        </div>
+        <div class="f wide">
+          <div class="name">Algoritmo di Dijkstra (Link-State) — passo di aggiornamento</div>
+          <div class="formula">D(v) = min( D(v), D(w) + c(w,v) )</div>
+          <div class="note">w = nodo appena aggiunto a N' (con D(w) minimo tra i nodi non ancora in N'); v = nodo adiacente a w non ancora in N'. Complessità: O(n²) nell'implementazione semplice, O(n log n) in quella ottimizzata.</div>
         </div>
       </div>
 
