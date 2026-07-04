@@ -743,26 +743,31 @@ Content-Type: image/jpeg
 Content-Length: 1572864
 Last-Modified: Data_Y
 (DATI DELL'IMMAGINE DALLA CACHE)</code></pre>
-<b>Calcolore i tempi:</b><br>
-T<sub>prop_link</sub> = L / V = 500 m / (2,8 · 10<sup>8</sup> m/s) ≈ 1,786 μs<br>
-RTT<sub>tot</sub> = RTT<sub>LAN</sub> + 2 · T<sub>prop_L</sub> = 10 μs + 2 · 1,786 μs ≈ 13,57 μs<br>
+  
+<b>Calcolo dei tempi</b><br>
+T<sub>prop_L</sub> = L / V = 500 m / (2,8 · 10<sup>8</sup> m/s) ≈ 1,786 μs<br>
+RTT<sub>LAN</sub> = 10 μs = 0,01 ms<br>
+RTT<sub>L</sub> = 2 · T<sub>prop_L</sub> = 2 · 1,786 μs ≈ 3,57 μs = 0,00357 ms<br>
 Payload = MTU - Overhead = 1500 - 48 = 1452 byte<br>
-N<sub>html</sub> = ⌈S<sub>html</sub> / Payload⌉ = ⌈3072 / 1452⌉ = 3 pacchetti<br>
-N<sub>img</sub> = ⌈S<sub>img</sub> / Payload⌉ = ⌈1.572.864 / 1452⌉ = 1084 pacchetti<br>
+N<sub>html</sub> = ⌈3072 / 1452⌉ = 3 pacchetti<br>
+N<sub>img</sub> = ⌈1.572.864 / 1452⌉ = 1084 pacchetti<br>
 Dim<sub>html</sub> = S + N<sub>html</sub> · 48 = 3072 + (3 · 48) = 3216 byte<br>
 Dim<sub>img</sub> = S + N<sub>img</sub> · 48 = 1.572.864 + (1084 · 48) = 1.624.896 byte<br>
-T<sub>trasm_html</sub> = (3216 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) = 257,3 μs<br>
-T<sub>trasm_img</sub> = (1.624.896 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) ≈ 130 ms<br><br>
+T<sub>trasm_p1</sub> (singolo pacchetto) = (1500 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) = 120 μs = 0,12 ms<br>
+T<sub>trasm_html</sub> = (3216 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) = 257,3 μs ≈ 0,257 ms<br>
+T<sub>trasm_img</sub> = (1.624.896 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) ≈ 130.000 μs = 130 ms<br><br>
 
-<b>Host 1 senza cache:</b><br>
-T<sub>prop_LAN</sub> = RTT / 2 = 5 μs<br>
-T<sub>prop_L</sub> = L / V = 1,786 μs<br>
-T<sub>html</sub> = 3(T<sub>prop_LAN</sub>) + T<sub>trasm_html</sub> + 2(T<sub>prop_LAN</sub>) + 2(T<sub>prop_L</sub>) + 2(T<sub>prop_LAN</sub>) + 2(T<sub>prop_LAN</sub>) + T<sub>trasm_pw</sub> = 254,56 μs<br>
-T<sub>img</sub> = 2(T<sub>prop_LAN</sub>) + 2(T<sub>prop_L</sub>) + T<sub>trasm_img</sub> + 2(T<sub>prop_L</sub>) + 2(T<sub>prop_LAN</sub>) = 4(5 μs) + 4(1,786 μs) + 130.000 μs = 20 + 7,144 + 130.000 = <b>130.027,144 μs</b> (circa 130 ms)<br><br>
+<b>Host 1 senza cache (Totale da t<sub>0</sub> a t<sub>f</sub>):</b><br>
+<i>Note: 3 RTT (Handshake + req HTML + req IMG) + 2 ritardi di Store&Forward al proxy (uno per file) + Tempi di trasmissione.</i><br>
+T<sub>tot_H1</sub> = 3(RTT<sub>LAN</sub>) + 3(RTT<sub>L</sub>) + 2(T<sub>trasm_p1</sub>) + T<sub>trasm_html</sub> + T<sub>trasm_img</sub><br>
+T<sub>tot_H1</sub> = 3(0,01) + 3(0,00357) + 2(0,12) + 0,257 + 130<br>
+T<sub>tot_H1</sub> = 0,03 + 0,01071 + 0,24 + 0,257 + 130 = <b>130,537 ms</b><br><br>
 
-<b>Host 2 + cache (cache hit):</b><br>
-T<sub>html</sub> = 9(T<sub>prop_LAN</sub>) + 4(T<sub>prop_L</sub>) + T<sub>trasm_html</sub> = 9(5 μs) + 4(1,786 μs) + 257,3 μs = 45 + 7,144 + 257,3 = <b>309,44 μs</b><br>
-T<sub>img</sub> = 4(T<sub>prop_LAN</sub>) + T<sub>trasm_img</sub> = 4(5 μs) + 130.000 μs = 20 + 130.000 = <b>130.020 μs</b> (circa 130 ms) <i>(Nota: link L non attraversato per l'immagine grazie alla cache)</i>
+<b>Host 2 + cache (Cache Hit con GET Condizionale):</b><br>
+<i>Note: I file non vengono riscaricati dal server remoto, ma le GET condizionali viaggiano lungo tutto il percorso. L'HTML e l'Immagine vengono poi trasmessi direttamente dalla cache (LAN).</i><br>
+T<sub>tot_H2</sub> = 3(RTT<sub>LAN</sub>) + 3(RTT<sub>L</sub>) + T<sub>trasm_html</sub> + T<sub>trasm_img</sub><br>
+T<sub>tot_H2</sub> = 3(0,01) + 3(0,00357) + 0,257 + 130<br>
+T<sub>tot_H2</sub> = 0,03 + 0,01071 + 0,257 + 130 = <b>130,297 ms</b>
 </p>
 </div>
 </div>
