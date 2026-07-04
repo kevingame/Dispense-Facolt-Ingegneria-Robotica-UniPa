@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario e Formulario Esercizi — Reti e Cyber-Sicurezza</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --paper: #f4f6f2;
+    --paper-line: #dde3dc;
+    --ink: #16212c;
+    --ink-soft: #4b5a63;
+    --navy: #123a5c;
+    --navy-deep: #0b2740;
+    --teal: #1f8a72;
+    --teal-deep: #146955;
+    --amber: #c98a2e;
+    --panel-dark: #0f1b22;
+    --panel-mint: #8fe3c7;
+    --card-bg: #ffffff;
+    --radius: 10px;
+    --maxw: 820px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      linear-gradient(var(--paper-line) 1px, transparent 1px) 0 0 / 100% 28px,
+      var(--paper);
+    line-height: 1.65;
+  }
+
+  a { color: var(--navy); }
+
+  /* ---------- top bar / progress ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--navy-deep);
+    color: #eaf1f5;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  }
+  .topbar .brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 0.95em;
+    white-space: nowrap;
+  }
+  .topbar .brand small {
+    display: block;
+    font-weight: 400;
+    opacity: 0.65;
+    font-size: 0.78em;
+    letter-spacing: 0.3px;
+  }
+  .progress-wrap {
+    flex: 1 1 220px;
+    min-width: 180px;
+  }
+  .progress-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72em;
+    opacity: 0.75;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .progress-track {
+    height: 8px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.15);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--teal), var(--panel-mint));
+    transition: width 0.35s ease;
+  }
+  .toc-toggle {
+    display: none;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #eaf1f5;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78em;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* ---------- layout ---------- */
+  .layout {
+    display: grid;
+    grid-template-columns: 230px minmax(0, var(--maxw));
+    gap: 40px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 34px 22px 100px;
+    align-items: start;
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 78px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82em;
+  }
+  .toc-chapter { margin-bottom: 18px; }
+  .toc-chapter-link {
+    display: block;
+    font-weight: 600;
+    color: var(--navy-deep);
+    text-decoration: none;
+    margin-bottom: 6px;
+  }
+  .toc-code {
+    color: var(--teal-deep);
+    margin-right: 6px;
+  }
+  .toc-sub {
+    list-style: none;
+    margin: 0 0 0 6px;
+    padding: 0 0 0 10px;
+    border-left: 2px solid var(--paper-line);
+  }
+  .toc-sub li { margin: 5px 0; }
+  .toc-sub a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.94em;
+  }
+  .toc-sub a:hover { color: var(--teal-deep); }
+
+  main { min-width: 0; }
+
+  .intro {
+    background: var(--card-bg);
+    border: 1px solid var(--paper-line);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    margin-bottom: 34px;
+  }
+  .intro h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.5em;
+    color: var(--navy-deep);
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+  .intro .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    font-size: 0.72em;
+    letter-spacing: 1.5px;
+    color: var(--teal-deep);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .intro p { color: var(--ink-soft); margin: 8px 0 0; }
+  .intro .howto {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .howto-step {
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.88em;
+  }
+  .howto-step b {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--navy);
+    font-size: 0.85em;
+    margin-bottom: 2px;
+  }
+
+  /* ---------- chapter bands ---------- */
+  .chapter-band {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    background: linear-gradient(120deg, var(--navy-deep), var(--navy));
+    color: #eef4f7;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    margin: 46px 0 20px;
+  }
+  .chapter:first-of-type .chapter-band { margin-top: 0; }
+  .chapter-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85em;
+    background: rgba(255,255,255,0.12);
+    padding: 3px 8px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+  }
+  .chapter-title { margin: 0; font-size: 1.25em; font-weight: 600; }
+
+  .subsection {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95em;
+    color: var(--teal-deep);
+    border-left: 4px solid var(--teal);
+    padding-left: 10px;
+    margin: 30px 0 14px;
+  }
+
+  /* ---------- exercise card ---------- */
+  .ex-card {
+    background: var(--card-bg);
+    border: 1px solid var(--paper-line);
+    border-radius: var(--radius);
+    margin-bottom: 22px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .ex-card.is-done {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 1px var(--teal) inset;
+  }
+  .ex-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px dashed var(--paper-line);
+    flex-wrap: wrap;
+  }
+  .ex-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .ex-num {
+    background: var(--navy-deep);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85em;
+    padding: 3px 8px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+  }
+  .ex-meta {
+    font-size: 0.72em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .ex-title {
+    margin: 0;
+    font-size: 1.02em;
+    color: var(--ink);
+    flex: 1 1 auto;
+    font-weight: 600;
+  }
+  .done-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75em;
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+  }
+  .done-toggle input { accent-color: var(--teal); width: 15px; height: 15px; }
+
+  .ex-statement {
+    padding: 16px 20px 4px;
+    text-align: justify;
+  }
+  .ex-statement p { margin: 0 0 10px; }
+  .ex-statement code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--paper);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  .ex-figure {
+    display: block;
+    max-width: 70%;
+    height: auto;
+    margin: 12px auto;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+  }
+
+  .ex-workarea { padding: 6px 20px 4px; }
+  .workarea-label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .workarea {
+    width: 100%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88em;
+    padding: 10px 12px;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink);
+    resize: vertical;
+  }
+  .workarea:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 1px;
+  }
+
+  .ex-actions {
+    padding: 12px 20px 18px;
+  }
+  .btn-solution {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82em;
+    font-weight: 600;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-solution:hover { background: var(--teal-deep); }
+  .btn-solution:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .btn-solution[disabled] {
+    background: var(--paper-line);
+    color: var(--ink-soft);
+    cursor: not-allowed;
+  }
+
+  .solution-panel {
+    background: var(--panel-dark);
+    color: var(--panel-mint);
+    margin: 0 0 0;
+    padding: 16px 20px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88em;
+    line-height: 1.6;
+  }
+  .solution-tag {
+    color: #6fb3ff;
+    opacity: 0.8;
+    font-size: 0.82em;
+    margin-bottom: 10px;
+  }
+  .solution-body p { margin: 0 0 10px; }
+  .solution-body b, .solution-body strong { color: #fff; }
+  .solution-body code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .solution-body pre {
+    background: rgba(255,255,255,0.06);
+    padding: 10px 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  .solution-body table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 0.92em;
+  }
+  .solution-body th, .solution-body td {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 5px 8px;
+    text-align: left;
+  }
+  .solution-body th { background: rgba(255,255,255,0.08); color: #fff; }
+  .solution-body .ex-figure { border-color: rgba(255,255,255,0.2); }
+  .solution-body .caption {
+    text-align: center;
+    font-size: 0.85em;
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  footer.note {
+    max-width: var(--maxw);
+    margin: 40px auto 0 auto;
+    grid-column: 2;
+    color: var(--ink-soft);
+    font-size: 0.85em;
+    text-align: center;
+    border-top: 1px dashed var(--paper-line);
+    padding-top: 18px;
+  }
+
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc {
+      position: static;
+      display: none;
+      background: #fff;
+      border: 1px solid var(--paper-line);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    nav.toc.open { display: block; }
+    .toc-toggle { display: inline-block; }
+    .intro .howto { grid-template-columns: 1fr; }
+    .ex-figure { max-width: 100%; }
+  }
+
+  /* ---------- scoped styles: formulario "solo formule" (CH.00) ---------- */
+  #formule-section .formule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  #formule-section .f {
+    background: #f3f0ff;
+    border-left: 4px solid #7a4fd6;
+    border-radius: 6px;
+    padding: 10px 14px;
+  }
+  #formule-section .f .name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #5a37a8;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  #formule-section .f .formula {
+    font-family: 'Cambria Math', Georgia, serif;
+    font-size: 1.15em;
+    color: var(--ink);
+    margin: 2px 0;
+  }
+  #formule-section .f .note {
+    font-size: 0.82em;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  #formule-section .f.wide { grid-column: 1 / -1; }
+  #formule-section code {
+    font-family: 'Cambria Math','Courier New',monospace;
+    background: #eee;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">RETI &amp; CYBER-SICUREZZA<small>formulario esercizi &middot; A.A. 2025/2026</small></div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>avanzamento</span><span id="progress-count">0 / 15</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+  <button class="toc-toggle" onclick="document.querySelector('nav.toc').classList.toggle('open')">indice ☰</button>
+</div>
+
+<div class="layout">
+  <nav class="toc">
+    
+      <div class="toc-chapter">
+        <a class="toc-chapter-link" href="#ch-00"><span class="toc-code">CH.00</span>Formulario — solo formule</a>
+        <ul class="toc-sub">
+          <li><a href="#sec-f1">1. Ritardi e trasmissione</a></li>
+          <li><a href="#sec-f2">2. Numero di pacchetti / frammentazione</a></li>
+          <li><a href="#sec-f3">3. Tempo di risposta / RTT</a></li>
+          <li><a href="#sec-f4">4. TCP — finestra, throughput, goodput</a></li>
+          <li><a href="#sec-f5">5. Indirizzamento IP / Subnetting</a></li>
+          <li><a href="#sec-f6">6. Instradamento — Distance Vector</a></li>
+          <li><a href="#sec-f7">7. Crittografia</a></li>
+        </ul>
+      </div>
+      <div class="toc-chapter">
+        <a class="toc-chapter-link" href="#ch-01"><span class="toc-code">CH.01</span>Introduzione alle Reti e a Internet</a>
+        <ul class="toc-sub"><li><a href="#sec-2592736826910067282">1.5 Esercitazione Capitolo 1</a></li></ul>
+      </div>
+      <div class="toc-chapter">
+        <a class="toc-chapter-link" href="#ch-02"><span class="toc-code">CH.02</span>Livello di Applicazione</a>
+        <ul class="toc-sub"><li><a href="#sec-3349936174248509446">2.4 HTTP — HyperText Transfer Protocol</a></li><li><a href="#sec-3569967250641500301">2.5 Posta Elettronica</a></li><li><a href="#sec-6557144362487691362">2.6 DNS — Domain Name System</a></li></ul>
+      </div>
+      <div class="toc-chapter">
+        <a class="toc-chapter-link" href="#ch-03"><span class="toc-code">CH.03</span>Livello di Trasporto — TCP</a>
+        <ul class="toc-sub"><li><a href="#sec-6232715086188238955">3.5 Esercizi TCP</a></li><li><a href="#sec-6076757256145458197">3.6 Trasferimento Dati Affidabile: Go-Back-N e Selective Repeat</a></li></ul>
+      </div>
+  </nav>
+
+  <main>
+    <div class="intro">
+      <span class="kicker">Formulario di autoverifica</span>
+      <h1>Esercizi svolti — pronto per l'allenamento</h1>
+      <p>Gli enunciati sono tratti dalla dispensa del corso. Prova a risolvere ogni esercizio da solo, poi confronta il procedimento con la soluzione a comparsa.</p>
+      <div class="howto">
+        <div class="howto-step"><b>1. Leggi</b>l'enunciato con calma, individuando i dati numerici.</div>
+        <div class="howto-step"><b>2. Risolvi</b>annotando il procedimento nell'area di lavoro.</div>
+        <div class="howto-step"><b>3. Verifica</b>mostrando la soluzione e segnando l'esercizio come fatto.</div>
+      </div>
+    </div>
+
+    
+    <section class="chapter" id="formule-section" style="margin-bottom:46px;">
+      <header class="chapter-band">
+        <span class="chapter-code">CH.00</span>
+        <h2 class="chapter-title">Formulario — solo formule</h2>
+      </header>
+      <p style="color:var(--ink-soft); margin: 0 0 20px;">Solo formule, per consultazione rapida ed esercizi &middot; basato sulla dispensa del corso (Prof.ssa A. De Paola, UniPa).</p>
+
+      <h3 class="subsection" id="sec-f1">1. Ritardi e trasmissione</h3>
+      <div class="formule-grid">
+        <div class="f">
+          <div class="name">Tempo di trasmissione</div>
+          <div class="formula">T<sub>trasm</sub> = L / R</div>
+          <div class="note">L = bit da trasmettere, R = velocità del link (bps)</div>
+        </div>
+        <div class="f">
+          <div class="name">Tempo di trasmissione (con overhead)</div>
+          <div class="formula">T<sub>trasm</sub> = (MSS + overhead) · 8 / R</div>
+          <div class="note">se le dimensioni sono in byte, ·8 converte in bit</div>
+        </div>
+        <div class="f">
+          <div class="name">Ritardo di nodo</div>
+          <div class="formula">d<sub>nodo</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub></div>
+          <div class="note">elaborazione + accodamento + trasmissione + propagazione</div>
+        </div>
+        <div class="f">
+          <div class="name">Intensità di traffico (queuing)</div>
+          <div class="formula">I = L·a / R</div>
+          <div class="note">a = tasso arrivo pacchetti; I≈0 poco ritardo, I→1 ritardo cresce, I&gt;1 ritardo infinito</div>
+        </div>
+        <div class="f">
+          <div class="name">Throughput end-to-end</div>
+          <div class="formula">Th = min(R<sub>c</sub>, R<sub>s</sub>, R/10)</div>
+          <div class="note">collo di bottiglia tra client, server e core della rete</div>
+        </div>
+        <div class="f wide">
+          <div class="name">Store-and-forward (pacchetto di L bit, link R bps)</div>
+          <div class="formula">Per ricevere 1° pacchetto: 2L/R &nbsp;·&nbsp; per N pacchetti in serie su k hop: T = k·L/R + (N−1)·L/R</div>
+        </div>
+      </div>
+
+      <h3 class="subsection" id="sec-f2">2. Numero di pacchetti / frammentazione</h3>
+      <div class="formule-grid">
+        <div class="f">
+          <div class="name">Numero di pacchetti</div>
+          <div class="formula">N = ⌈S<sub>mess</sub> / PL⌉</div>
+          <div class="note">S<sub>mess</sub> = dimensione messaggio, PL = payload per pacchetto</div>
+        </div>
+        <div class="f">
+          <div class="name">Dimensione ultimo pacchetto</div>
+          <div class="formula">S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL</div>
+        </div>
+        <div class="f">
+          <div class="name">Payload utile</div>
+          <div class="formula">PL = MTU − overhead</div>
+          <div class="note">es. MTU 1500 B − 40 B header = 1460 B</div>
+        </div>
+        <div class="f">
+          <div class="name">Conversioni comuni</div>
+          <div class="formula">1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Byte = 8 bit &nbsp;·&nbsp; 1 KB = 1024 B</div>
+        </div>
+      </div>
+
+      <h3 class="subsection" id="sec-f3">3. Tempo di risposta / RTT</h3>
+      <div class="formule-grid">
+        <div class="f wide">
+          <div class="name">Tempo di risposta totale (richiesta oggetto singolo)</div>
+          <div class="formula">T<sub>risp</sub> = 2·RTT + T<sub>trasm(file)</sub></div>
+          <div class="note">RTT include propagazione + accodamento + elaborazione (andata e ritorno)</div>
+        </div>
+        <div class="f">
+          <div class="name">RTT stimato (EWMA)</div>
+          <div class="formula">EstimatedRTT(t) = (1−α)·EstimatedRTT(t−1) + α·SampleRTT(t)</div>
+          <div class="note">α tipico = 0,125</div>
+        </div>
+        <div class="f">
+          <div class="name">Deviazione RTT</div>
+          <div class="formula">DevRTT(t) = (1−β)·DevRTT(t−1) + β·|SampleRTT(t) − EstimatedRTT(t)|</div>
+          <div class="note">β tipico = 0,25</div>
+        </div>
+        <div class="f wide">
+          <div class="name">Intervallo di timeout TCP</div>
+          <div class="formula">TimeoutInterval = EstimatedRTT + 4·DevRTT</div>
+        </div>
+      </div>
+
+      <h3 class="subsection" id="sec-f4">4. TCP — finestra, throughput, goodput</h3>
+      <div class="formule-grid">
+        <div class="f">
+          <div class="name">Numero di segmenti</div>
+          <div class="formula">N = File / MSS</div>
+        </div>
+        <div class="f">
+          <div class="name">Frequenza d'invio (regime)</div>
+          <div class="formula">freq. invio ≈ CongWin / RTT &nbsp;[byte/s]</div>
+        </div>
+        <div class="f">
+          <div class="name">Throughput</div>
+          <div class="formula">Throughput = Dati<sub>trasmessi totali</sub> / T<sub>tot</sub></div>
+          <div class="note">include ritrasmissioni (dati "sprecati")</div>
+        </div>
+        <div class="f">
+          <div class="name">Goodput</div>
+          <div class="formula">Goodput = Dati<sub>utili (file)</sub> / T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub></div>
+          <div class="note">solo dati utili consegnati, esclude ritrasmissioni</div>
+        </div>
+        <div class="f wide">
+          <div class="name">Dilemma numeri di sequenza (GBN / SR)</div>
+          <div class="formula">dimensione finestra ≤ 2<sup>numero bit seq.</sup> ⁄ 2 &nbsp;(occorrono 2N sequenze con finestra N)</div>
+        </div>
+      </div>
+
+      <h3 class="subsection" id="sec-f5">5. Indirizzamento IP / Subnetting</h3>
+      <div class="formule-grid">
+        <div class="f">
+          <div class="name">Indirizzo IP</div>
+          <div class="formula">32 bit → 4 ottetti in notazione decimale puntata (0–255).0–255.0–255.0–255</div>
+        </div>
+        <div class="f">
+          <div class="name">Prefisso di rete /n</div>
+          <div class="formula">n bit di rete, (32−n) bit di host</div>
+          <div class="note">host disponibili = 2<sup>(32−n)</sup> − 2 (rete + broadcast esclusi)</div>
+        </div>
+        <div class="f wide">
+          <div class="name">AND bit-a-bit (indirizzo di sottorete)</div>
+          <div class="formula">Sottorete = Indirizzo AND Netmask</div>
+          <div class="note">Broadcast = Sottorete OR (NOT Netmask)</div>
+        </div>
+      </div>
+
+      <h3 class="subsection" id="sec-f6">6. Instradamento — Distance Vector</h3>
+      <div class="formule-grid">
+        <div class="f wide">
+          <div class="name">Equazione di Bellman-Ford</div>
+          <div class="formula">D<sub>x</sub>(y) = min<sub>v</sub> { c(x,v) + D<sub>v</sub>(y) }</div>
+          <div class="note">costo minimo da x a y passando per il vicino v</div>
+        </div>
+      </div>
+
+      <h3 class="subsection" id="sec-f7">7. Crittografia</h3>
+      <div class="formule-grid">
+        <div class="f">
+          <div class="name">Cifratura simmetrica</div>
+          <div class="formula">Y = E(K, X) &nbsp;·&nbsp; X = D(K, Y)</div>
+          <div class="note">stessa chiave K per cifrare/decifrare</div>
+        </div>
+        <div class="f">
+          <div class="name">Numero di chiavi (simmetrica, N utenti)</div>
+          <div class="formula">N_chiavi = N·(N−1) / 2</div>
+        </div>
+        <div class="f wide">
+          <div class="name">Cifratura asimmetrica</div>
+          <div class="formula">Segretezza: Y = E(PU<sub>a</sub>, X) &nbsp;→&nbsp; X = D(PR<sub>a</sub>, Y) &nbsp;&nbsp;|&nbsp;&nbsp; Autenticazione: Y = E(PR<sub>b</sub>, X) &nbsp;→&nbsp; X = D(PU<sub>b</sub>, Y)</div>
+          <div class="note">PU = chiave pubblica, PR = chiave privata</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch-01">
+      <header class="chapter-band">
+        <span class="chapter-code">CH.01</span>
+        <h2 class="chapter-title">Introduzione alle Reti e a Internet</h2>
+      </header>
+    
+<h3 class="subsection" id="sec-2592736826910067282">1.5 Esercitazione Capitolo 1</h3>
+
+            <article class="ex-card" id="ex-1" data-ex="1">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">01</span>
+                  <span class="ex-meta">CH.01 &middot; 1.5</span>
+                </div>
+                <h4 class="ex-title">Esercizio 1</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(1, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Si vuole trasmettere un messaggio di dimensione <b>3 MB</b> attraverso la rete a commutazione di pacchetto schematizzata in figura (Host A — R1 — R2 — Host B). I 3 link sono lunghi rispettivamente 100 m, 50 m e 80 m, ed ognuno ha un'ampiezza di banda pari a 512 kbps e velocità di propagazione 2,8×10⁸ m/s. Si calcoli il tempo necessario a trasmettere l'intero messaggio assumendo pacchetti di 536 byte di payload, con overhead di 28 byte.</p>
+<p><i>Nota: per le dimensioni dei file si usano potenze di 2; per i tassi di trasmissione potenze di 10.</i></p>
+<p>Domande aggiuntive: (a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto? (b) Dopo quanto tempo riceve interamente il secondo pacchetto? (c) Tempo totale per l'intero messaggio.</p>
+<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 1" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-1">Il tuo procedimento</label>
+                <textarea id="ta-1" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(1, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-1" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">informazione di intestazione: Overhead  OH 28byte
+payload: peso di ogni singolo pacchetto PL 536 byte
+Numero di pacchetti:
+N = ⌈S<sub>mess</sub> / PL⌉ = ⌈3 MB / 536 byte⌉ = ⌈5868,89⌉ = 5869 pacchetti<br/>
+Come calcoliamo la dimensione dell'ultimo pacchetto?<br/>
+S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 3·2²⁰ − 5868·536 = 480 byte
+<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2.jpg"/></div>
+<p class="caption">Calcolo dei tempi di propagazione T<sub>prop1,2,3</sub>, del tempo di trasmissione T<sub>Tras</sub>, e risposte ai punti a) b) c).</p>
+T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 100m / 2,8·10<sup>8</sup> m/s = 3,57·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,357 μs<br/>
+T<sub>prop2</sub> = L<sub>2</sub> / V<sub>p</sub> = 50m / 2,8·10<sup>8</sup> m/s = 1,78·10<sup>-7</sup> s ≈ 0,178 μs<br/>
+T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 80m / 2,8·10<sup>8</sup> m/s = 2,86·10<sup>-7</sup> s ≈ 0,286 μs<br/>
+T<sub>Tras</sub> = (PL+OH)·8 bit / R = (536+28)·8 / 512 Kbps = 8,8125·10<sup>-3</sup>s ≈ 8,81 ms<br/>
+a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto?<br/> 
+T<sub>P1</sub> = 3·T<sub>Tras</sub> + (T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub>) ≈ 26,43 ms<br/>
+b) Dopo quanto tempo l'host B riceve interamente il primo pacchetto?<br/>
+T<sub>P2</sub> = T<sub>P1</sub> + T<sub>Tras</sub><br/>
+c) Tempo totale per l'intero messaggio.<br/>
+T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)·T<sub>Tras</sub> + T<sub>Tras,last</sub> ≈ <b>51,75 s</b></div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-2" data-ex="2">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">02</span>
+                  <span class="ex-meta">CH.01 &middot; 1.5</span>
+                </div>
+                <h4 class="ex-title">Esercizio 2</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(2, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Si vuole trasmettere un messaggio di dimensione <b>2 KB</b> attraverso la stessa topologia. Ogni link è lungo 200 m, 100 m e 160 m, ed ha velocità di propagazione 2,8×10⁸ m/s. I 3 link hanno ampiezza di banda rispettivamente pari a 200 Mbps, 20 Mbps e 2 Gbps. Si assumano pacchetti di 536 byte di payload, con overhead di 28 byte. Si calcolino gli eventuali ritardi di accodamento subiti dai pacchetti lungo il percorso e il tempo necessario a trasmettere l'intero messaggio.</p>
+<div class="imgbox"><img alt="Esercizio 2 - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-2">Il tuo procedimento</label>
+                <textarea id="ta-2" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(2, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-2" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1026byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br/>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 392 byte<br/>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p>
+<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2_2.jpg"/></div>
+<p>
+T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 200m / 2,8·10<sup>8</sup> m/s = 7,14·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,714 μs<br/>
+T<sub>prop2</sub> = L<sub>2</sub> / V<sub>p</sub> = 100m / 2,8·10<sup>8</sup> m/s = 3,57·10<sup>-7</sup> s ≈ 0,357 μs<br/>
+T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 160m / 2,8·10<sup>8</sup> m/s = 5,714·10<sup>-7</sup> s ≈ 0,571 μs<br/>
+</p></div>
+                </div>
+            </article>
+            
+</section>
+
+    <section class="chapter" id="ch-02">
+      <header class="chapter-band">
+        <span class="chapter-code">CH.02</span>
+        <h2 class="chapter-title">Livello di Applicazione</h2>
+      </header>
+    
+<h3 class="subsection" id="sec-3349936174248509446">2.4 HTTP — HyperText Transfer Protocol</h3>
+
+            <article class="ex-card" id="ex-3" data-ex="3">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">03</span>
+                  <span class="ex-meta">CH.02 &middot; 2.4</span>
+                </div>
+                <h4 class="ex-title">Esercizio 3</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(3, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Data la configurazione indicata in figura si supponga che l'host1 richieda al web server remoto tramite protocollo HTTP/1.1 una pagina web di dimensione 3 kB contenente al suo interno una immagine di 1.5 MB. Successivamente anche l'host2 richiede la stessa pagina. Supponendo che entrambi gli host siano configurati per utilizzare il proxy e che la pagina sia statica, si calcolino i tempi per entrambe le trasmissioni. Si assuma che il RTT tra due host della LAN sia pari in media a 10 μs, che il link L sia lungo 500 m e abbia velocità di propagazione 2,8×10⁸ m/s e che le ampiezze di banda per la LAN e per il link L siano di 100 Mbps. Si assuma inoltre una MTU pari a 1500 byte e un overhead complessivo di pacchetto pari a 48 byte e si considerino i canali privi di errori o perdite.</p>
+<div class="imgbox"><img alt="Esercizio 3 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_3.jpg"/>
+</div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-3">Il tuo procedimento</label>
+                <textarea id="ta-3" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(3, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-3" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p>
+<b>Dati e calcoli preliminari:</b><br/>
+<div class="imgbox"><img alt="Esercizio 3 - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_3_svolgimento.jpg"/></div>
+Pagina = 3 kB = 3 · 1024 = 3072 Byte<br/>
+IMG = 1,5 MB = 1,5 · 1024 · 1024 = 1.572.864 Byte<br/>
+L = 500 m<br/>
+Larghezza banda LAN e link L = 100 Mbps = 100 · 10<sup>6</sup> bps<br/>
+RTT<sub>LAN</sub> = 10 μs = 10 · 10<sup>-6</sup> s<br/>
+V<sub>link</sub> = 2,8 · 10<sup>8</sup> m/s<br/>
+MTU = 1500 byte, Overhead = 48 byte<br/><br/>
+T<sub>prop_link</sub> = L / V = 500 m / (2,8 · 10<sup>8</sup> m/s) ≈ 1,786 μs<br/>
+RTT<sub>tot</sub> = RTT<sub>LAN</sub> + 2 · T<sub>prop_L</sub> = 10 μs + 2 · 1,786 μs ≈ 13,57 μs<br/>
+Payload = MTU - Overhead = 1500 - 48 = 1452 byte<br/>
+N<sub>html</sub> = ⌈S<sub>html</sub> / Payload⌉ = ⌈3072 / 1452⌉ = 3 pacchetti<br/>
+N<sub>img</sub> = ⌈S<sub>img</sub> / Payload⌉ = ⌈1.572.864 / 1452⌉ = 1084 pacchetti<br/>
+Dim<sub>html</sub> = S + N<sub>html</sub> · 48 = 3072 + (3 · 48) = 3216 byte<br/>
+Dim<sub>img</sub> = S + N<sub>img</sub> · 48 = 1.572.864 + (1084 · 48) = 1.624.896 byte<br/>
+T<sub>trasm_html</sub> = (3216 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) = 257,3 μs<br/>
+T<sub>trasm_img</sub> = (1.624.896 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) ≈ 130 ms<br/><br/>
+<b>Host 1 senza cache:</b><br/>
+T<sub>prop_LAN</sub> = RTT / 2 = 5 μs<br/>
+T<sub>prop_L</sub> = L / V = 1,786 μs<br/>
+T<sub>html</sub> = 3(T<sub>prop_LAN</sub>) + T<sub>trasm_html</sub> + 2(T<sub>prop_LAN</sub>) + 2(T<sub>prop_L</sub>) + 2(T<sub>prop_LAN</sub>) + 2(T<sub>prop_LAN</sub>) + T<sub>trasm_pw</sub> = 254,56 μs<br/>
+T<sub>img</sub> = 2(T<sub>prop_LAN</sub>) + 2(T<sub>prop_L</sub>) + T<sub>trasm_img</sub> + 2(T<sub>prop_L</sub>) + 2(T<sub>prop_LAN</sub>) = 4(5 μs) + 4(1,786 μs) + 130.000 μs = 20 + 7,144 + 130.000 = <b>130.027,144 μs</b> (circa 130 ms)<br/><br/>
+<b>Host 2 + cache (cache hit):</b><br/>
+T<sub>html</sub> = 9(T<sub>prop_LAN</sub>) + 4(T<sub>prop_L</sub>) + T<sub>trasm_html</sub> = 9(5 μs) + 4(1,786 μs) + 257,3 μs = 45 + 7,144 + 257,3 = <b>309,44 μs</b><br/>
+T<sub>img</sub> = 4(T<sub>prop_LAN</sub>) + T<sub>trasm_img</sub> = 4(5 μs) + 130.000 μs = 20 + 130.000 = <b>130.020 μs</b> (circa 130 ms) <i>(Nota: link L non attraversato per l'immagine grazie alla cache)</i>
+</p></div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-4" data-ex="4">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">04</span>
+                  <span class="ex-meta">CH.02 &middot; 2.4</span>
+                </div>
+                <h4 class="ex-title">Esercizio 1</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(4, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Un host, direttamente connesso ad un server tramite un canale privo di errori o perdite, richiede una 
+pagina web statica, di dimensione 3 kB, contenente due immagini di dimensioni 50 kB e 80 kB 
+rispettivamente. Nell’ipotesi che, subito dopo avere ricevuto i file richiesti, l’utente inoltri una seconda 
+richiesta per la stessa pagina, e che il client web implementi una cache del web, qual è il tempo totale 
+per lo scambio di file? 
+Si supponga che il protocollo utilizzato sia HTTP/1.1; si assuma inoltre che il canale abbia RTT = 1 
+ms, ampiezza di banda pari a 10 Mbps ed MTU = 1500 byte e che l’overhead complessivo di pacchetto 
+sia pari a 48 byte.<br/><b>Note:</b><br/> Per le dimensioni relative ai file si considerino le grandezze come potenze di 2 e quindi in particolare:<br/>
+1 MB = 1.024 kB; 1 kB = 1.024 byte <br/>
+Per le dimensioni relative ai tassi di trasmissione e alle ampiezze di banda si considerino le grandezze 
+come potenze di 10 e quindi in particolare:<br/> 
+1 kbps = 1.000 bps; 1 Mbps = 1.000.000 bps </p>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_html.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-4">Il tuo procedimento</label>
+                <textarea id="ta-4" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(4, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-4" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p><b>Prima richiesta della pagina (oggetti non ancora in cache)</b></p>
+<p>Scambio di messaggi (connessione persistente, HTTP/1.1): il client apre la connessione (handshake TCP, 1 RTT), richiede <code>/index.html</code> e riceve il file base — FB (200 OK); non appena ricevuto, invia in pipeline le due richieste per <code>img1</code> (50 kB) e <code>img2</code> (80 kB), che il server serve in sequenza sulla stessa connessione; infine la connessione viene chiusa.</p>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_1_html.jpg"/></div>
+<p><b>① Richiesta del file base</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: unipa.it
+Connection: open</code></pre>
+<p><b>② Risposta con il file base</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 3072
+Last-Modified: X
+(VUOTO)</code></pre>
+<p><i>conversione: (3kB in Byte: 3 * 1024 = 3072 Byte)</i></p>
+<p><b>③ Richiesta immagine 1</b></p>
+<pre><code>GET /img1.png HTTP/1.1
+Host: unipa.it
+Connection: open</code></pre>
+<p><b>④ Risposta con immagine 1</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/png
+Content-Length: 51200
+Last-Modified: Y
+(DATI)</code></pre>
+<p>(50 kB = 50·1024 = 51200 B)</p>
+<p><b>⑤ Richiesta immagine 2</b> (in pipeline con la ③, stesso schema)</p>
+<pre><code>GET /img2.png HTTP/1.1
+Host: unipa.it
+Connection: open</code></pre>
+<p><b>⑥ Risposta con immagine 2</b> (al termine la connessione viene chiusa)</p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/png
+Content-Length: 81920
+Last-Modified: Z
+(DATI)</code></pre>
+<p>(80 kB = 80·1024 = 81920 B)</p>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_2_html.jpg"/></div>
+<p>RTT = 2·T<sub>prop</sub> (tempo di andata e ritorno). Il tempo totale della prima richiesta è quindi:</p>
+<p>T<sub>1</sub> = <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>handshake</sub></span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich./risp. ①②</sub></span> + <span style="border-bottom: 2px solid blue; padding-bottom: 2px;">T<sub>trasm</sub>(FB)</span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich. pipeline ③⑤</sub></span> + <span style="border-bottom: 2px solid purple; padding-bottom: 2px;">T<sub>trasm</sub>(IMG1)</span> + <span style="border-bottom: 2px solid darkorange; padding-bottom: 2px;">T<sub>trasm</sub>(IMG2)</span><br/>
+T<sub>1</sub> = 3·RTT + T<sub>trasm</sub>(FB) + T<sub>trasm</sub>(IMG1) + T<sub>trasm</sub>(IMG2)</p>
+<p><b>Calcolo dei tempi di trasmissione</b><br/>
+Payload = MTU − overhead = 1500 − 48 = <b>1452 B</b></p>
+<p><i>File base — FB (3 kB = 3.072 B)</i><br/>
+N<sub>FB</sub> = ⌈3072/1452⌉ = ⌈2,12⌉ = <b>3 pacchetti</b><br/>
+Dati<sub>trasm</sub>(FB) = 3072 + (3·48) = <b>3216 B</b><br/>
+T<sub>trasm</sub>(FB) = 3216·8/10<sup>7</sup> bps = 2,573·10<sup>-3</sup> s ≈ <b>2,57 ms</b></p>
+<p><i>Immagine 1 (50 kB = 51.200 B)</i><br/>
+N<sub>IMG1</sub> = ⌈51200/1452⌉ = ⌈35,26⌉ = <b>36 pacchetti</b><br/>
+Dati<sub>trasm</sub>(IMG1) = 51200 + (36·48) = <b>52.928 B</b><br/>
+T<sub>trasm</sub>(IMG1) = 52928·8/10<sup>7</sup> bps = 4,234·10<sup>-3</sup> s ≈ <b>4,23 ms</b></p>
+<p><i>Immagine 2 (80 kB = 81.920 B)</i><br/>
+N<sub>IMG2</sub> = ⌈81920/1452⌉ = ⌈56,42⌉ = <b>57 pacchetti</b><br/>
+Dati<sub>trasm</sub>(IMG2) = 81920 + (57·48) = <b>84.656 B</b><br/>
+T<sub>trasm</sub>(IMG2) = 84656·8/10<sup>7</sup> bps = 6,772·10<sup>-3</sup> s ≈ <b>6,77 ms</b></p>
+<p><b>T<sub>1</sub></b> = 3·(1 ms) + 2,57 ms + 4,23 ms + 6,77 ms ≈ <b>16,58 ms</b></p>
+<p><b>Seconda richiesta della pagina (con cache del client, GET condizionali quasi simultanee/in pipeline)</b></p>
+<p><b>⑦ Richiesta condizionale del file base</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: unipa.it
+Connection: open
+If-Modified-Since: X</code></pre>
+<p><b>⑧ Risposta: file non modificato</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+<p><b>⑨ Richiesta condizionale immagine 1</b></p>
+<pre><code>GET /img1.png HTTP/1.1
+Host: unipa.it
+Connection: open
+If-Modified-Since: Y</code></pre>
+<p><b>⑩ Risposta: immagine non modificata</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+<p><b>⑪ Richiesta condizionale immagine 2</b> (in pipeline con la ⑨)</p>
+<pre><code>GET /img2.png HTTP/1.1
+Host: unipa.it
+Connection: open
+If-Modified-Since: Z</code></pre>
+<p><b>⑫ Risposta: immagine non modificata</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+<p>Il client apre una nuova connessione (1 RTT di handshake ⑦-⑧... ), invia la GET condizionale (<code>If-Modified-Since</code>) per il file base ottenendo <code>304 Not Modified</code> (1 RTT), quindi, quasi simultaneamente/in pipeline, le GET condizionali per le due immagini, ottenendo per entrambe <code>304 Not Modified</code> (1 RTT complessivo). Le risposte 304 non trasportano il corpo del file, quindi il loro tempo di trasmissione è trascurabile.</p>
+<p>T<sub>1→2</sub> = 3·RTT = 3·1 ms = <b>3 ms</b></p>
+<p><b>Tempo totale per lo scambio di file</b><br/>
+T<sub>tot</sub> = T<sub>1</sub> + T<sub>1→2</sub> ≈ 16,58 ms + 3 ms ≈ <b>19,58 ms</b></p>
+<p><b>Riepilogo dei risultati</b></p>
+<table class="dati">
+<tr><th>Grandezza</th><th>Valore</th></tr>
+<tr><td>Payload</td><td>1452 B</td></tr>
+<tr><td>N<sub>FB</sub> / Dati<sub>trasm</sub>(FB) / T<sub>trasm</sub>(FB)</td><td>3 pacchetti / 3216 B / 2,57 ms</td></tr>
+<tr><td>N<sub>IMG1</sub> / Dati<sub>trasm</sub>(IMG1) / T<sub>trasm</sub>(IMG1)</td><td>36 pacchetti / 52.928 B / 4,23 ms</td></tr>
+<tr><td>N<sub>IMG2</sub> / Dati<sub>trasm</sub>(IMG2) / T<sub>trasm</sub>(IMG2)</td><td>57 pacchetti / 84.656 B / 6,77 ms</td></tr>
+<tr><td>T<sub>1</sub> (prima richiesta)</td><td>≈ 16,58 ms</td></tr>
+<tr><td>T<sub>1→2</sub> (seconda richiesta, con cache)</td><td>3 ms</td></tr>
+<tr><td><b>T<sub>tot</sub></b></td><td><b>≈ 19,58 ms</b></td></tr>
+</table></div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-5" data-ex="5">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">05</span>
+                  <span class="ex-meta">CH.02 &middot; 2.4</span>
+                </div>
+                <h4 class="ex-title">Esercizio 2</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(5, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Data la configurazione schematizzata in figura, si assuma che l'host H richieda una pagina web al server <code>www.ebay.com</code>, costituita da un file HTML di 12 kB e dall'immagine <code>www.foo.it/pics/img1.jpg</code> di 4 MB, e che, successivamente, lo stesso host richieda una pagina web al server <code>www.amazon.it</code>, costituita da un file HTML di 10 kB e dall'immagine <code>www.foo.it/pics/img2.jpg</code> di 3 MB.<br/>
+Assumendo che tutte le interazioni avvengano con HTTP/1.1 e che il server <code>www.foo.it</code> utilizzi cookie di 100 byte, si calcoli il tempo totale necessario ad ottenere le due pagine.<br/>
+Si considerino tutti i collegamenti caratterizzati da ampiezza di banda di 200 Mbps, tempo di propagazione medio pari a 0,1 ms, MTU pari a 1500 byte e overhead di 40 byte.</p>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio2_html.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-5">Il tuo procedimento</label>
+                <textarea id="ta-5" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(5, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-5" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p>Topologia: H — R1 — www.ebay.com, con R2 e www.amazon.com a valle di R1; il server <code>www.foo.it</code>, che ospita le immagini, è raggiungibile da H attraverso R1 e R2 (non è collocato sugli stessi host di ebay/amazon), quindi le immagini vanno recuperate con richieste separate verso <code>www.foo.it</code>. Il tempo di attraversamento dei router R1/R2 è considerato trascurabile; le risposte contenenti il file base e le immagini vengono frammentate su più pacchetti (in base a MTU e overhead) per il loro invio.</p>
+<p>Payload = MTU − overhead = 1500 − 40 = <b>1460 B</b></p>
+<p><i>Per il funzionamento e la struttura dell'header <code>Set-Cookie</code>/<code>Cookie</code> si veda il paragrafo <b>"Cookie"</b> trattato in precedenza in questa dispensa; qui ci si limita a considerarne il peso (100 B) nel calcolo dei dati trasmessi.</i></p>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio2_1_html.jpg"/></div>
+<p><b>① Richiesta del file base a www.ebay.com</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: www.ebay.com
+Connection: open</code></pre>
+<p><b>② Risposta con il file base (FB), frammentata su più pacchetti</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 12288</code></pre>
+<p>(12 kB = 12·1024 = 12288 B; il file base referenzia l'immagine <code>www.foo.it/pics/img1.jpg</code>)</p>
+<p><b>③ Richiesta dell'immagine a www.foo.it</b> (attraverso R1 e R2)</p>
+<pre><code>GET /pics/img1.jpg HTTP/1.1
+Host: www.foo.it
+Connection: open</code></pre>
+<p><b>④ Risposta con l'immagine, frammentata su più pacchetti, con cookie impostato dal server</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/jpg
+Content-Length: 4194304
+Set-Cookie: XYZ</code></pre>
+<p>IMG1 = 4 MB = 4·1024·1024 = <b>4.194.304 B</b>; cookie = <b>100 B</b></p>
+<p><b>Peso del messaggio con cookie</b><br/>
+Size(msg<sub>IMG1</sub>) = Size(IMG1) + Size(cookie) = 4.194.304 + 100 = <b>4.194.404 B</b><br/>
+N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
+<p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p></div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-6" data-ex="6">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">06</span>
+                  <span class="ex-meta">CH.02 &middot; 2.4</span>
+                </div>
+                <h4 class="ex-title">Traccia dell'esercizio</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(6, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Un client visita per la prima volta la pagina web <code>zappe.it/index.html</code>. Questa pagina contiene al suo interno un'immagine ospitata su un server di terze parti, <code>foo.it/img1.png</code>. Dopo una settimana, lo stesso utente visita un sito di scarpe, <code>scarpe.it/index.html</code>, all'interno del quale è presente un banner ospitato sempre dal server di tracciamento <code>foo.it/banners.gif</code>.</p>
+<p>Descrivere lo scambio di messaggi HTTP tra client e server, illustrando come il server <code>foo.it</code> utilizzi i cookie per tracciare l'utente attraverso siti differenti e fornire contenuti personalizzati.</p></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-6">Il tuo procedimento</label>
+                <textarea id="ta-6" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(6, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-6" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p><b>Svolgimento e Analisi dei Messaggi HTTP</b>
+Il protocollo HTTP è intrinsecamente <strong>senza stato (stateless)</strong>. I cookie rappresentano un artificio tecnico che permette al server di ricordare le interazioni passate dell'utente. Tramite questo meccanismo, il server attribuisce un identificativo anonimo al client durante la prima interazione, e il client lo riutilizzerà in seguito per farsi riconoscere. Affinché funzioni, il server deve possedere un database dove salvare tutti gli identificativi assegnati.
+<h5>Fase 1: Prima interazione (Client senza cookie su zappe.it)</h5>
+<ul>
+<li>Nella primissima richiesta verso <code>foo.it</code>, il client non invia alcun cookie poiché non gli è stato ancora assegnato.</li>
+<li>Il client invia la richiesta iniziale per la pagina base a <code>zappe.it</code>, che risponde con il file HTML (200 OK) contenente il riferimento all'oggetto <code>img1.png</code> ospitato su <code>foo.it</code>.</li>
+<li>Il client effettua quindi una richiesta al server di terze parti <code>foo.it</code>:
+<pre><code>GET /img1.png HTTP/1.1
+Host: foo.it
+Connection: open</code></pre>
+</li>
+<li>Il server <code>foo.it</code> riceve la richiesta, genera un nuovo identificativo (ad esempio <strong>1518</strong>), lo memorizza all'interno di un proprio database associandolo al profilo dell'utente e invia la risposta includendo l'header <code>Set-Cookie</code>:
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Length: 5786
+Content-Type: image/png
+Set-Cookie: 1518</code></pre>
+</li>
+</ul>
+<hr/>
+<h5>Fase 2: Seconda interazione (Dopo una settimana su scarpe.it)</h5>
+<ul>
+<li>L'utente visita il sito <code>scarpe.it/index.html</code> a distanza di una settimana.</li>
+<li>Il browser incontra un nuovo riferimento al server <code>foo.it</code> all'interno della pagina, questa volta per il file <code>banners.gif</code>.</li>
+<li>Poiché il client possiede già l'identificativo rilasciato da <code>foo.it</code> (che funge da cookie di terza parte per il tracciamento incrociato), lo include automaticamente nella nuova richiesta HTTP verso quel dominio:
+<pre><code>GET /banners.gif HTTP/1.1
+Host: foo.it
+Connection: open
+Cookie: 1518</code></pre>
+</li>
+<li>Il server <code>foo.it</code> legge l'header <code>Cookie: 1518</code> e consulta il proprio database per risalire allo storico della sessione dell'utente, sapendo che aveva già visitato <code>zappe.it</code> in precedenza.</li>
+<li>Riconoscendo il profilo dell'utente, il server elabora una risposta mirata, proponendo ad esempio una pubblicità personalizzata come "un dondolo da giardino".</li>
+</ul>
+<div class="imgbox"><img alt="Funzionamento GET condizionale" class="ex-figure" loading="lazy" src="./reti_cyber/ese_cookie.jpg"/></div>
+</p></div>
+                </div>
+            </article>
+            
+<h3 class="subsection" id="sec-3569967250641500301">2.5 Posta Elettronica</h3>
+
+            <article class="ex-card" id="ex-7" data-ex="7">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">07</span>
+                  <span class="ex-meta">CH.02 &middot; 2.5</span>
+                </div>
+                <h4 class="ex-title">Esercizio 7</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(7, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Data la configurazione indicata in figura, si supponga che l'utente <b>marco.rossi@unipa.it</b> spedisca una email contenente un testo di 4 KB e un allegato di 100KB agli utenti <b>piero.neri@unipa.it</b> e <b>carlo.verdi@gmail.com.</b> Si calcoli il tempo necessario alla trasmissione della email fino alla ricezione, assumendo che non vi siano tempi morti tra le due fasi e che i destinatari utilizzino entrambi il protocollo POP3. Si assuma che la LAN-UNIPA e tutti i link siano caratterizzati dalle seguenti caratteristiche: un'ampiezza di banda pari a 100 Mbps, un tempo medio di propagazione pari a 1 ms, MTU 1500 byte e che l'overhead complessivo di pacchetto sia pari a 48 byte.</p>
+<div class="imgbox"><img alt="Esercizio 4 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_4.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-7">Il tuo procedimento</label>
+                <textarea id="ta-7" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(7, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-7" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p>
+<b>Dati e calcoli preliminari:</b><br/>
+<div class="imgbox"><img alt="Esercizio 4 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_4_svolgimento.jpg"/></div>
+Dimensione Email + Allegato = 4 KB + 100 KB = 104 KB = 104 · 1024 = 106.496 byte<!-- --><br/>
+Banda = 100 Mbps = 10<sup>8</sup> bps<!-- --><br/>
+T<sub>prop</sub> = 1 ms per ogni singolo link<!-- --><br/>
+MTU = 1500 byte, Overhead = 48 byte<!-- --><br/><br/>
+Payload per pacchetto = 1500 - 48 = 1452 byte<!-- --><br/>
+N<sub>pack_tot</sub> = ⌈106.496 / 1452⌉ = 74 pacchetti<!-- --><br/>
+L<sub>bit</sub> = 1500 byte · 8 = 12.000 bit<!-- --><br/>
+T<sub>trasm_1_pack</sub> = 12.000 / 10<sup>8</sup> = 0,00012 s = 0,12 ms<!-- --><br/>
+Dimensione Tot = 74 pack · 1500 = 111.000 byte<!-- --><br/>
+Tempo Trasmissione intera email (T<sub>trasm_tot</sub>) = (111.000 · 8) / 10<sup>8</sup> = 0,00888 s = 8,88 ms<!-- --><br/><br/>
+<b>Fase 1: Marco -&gt; mail.unipa.it (SMTP)</b><br/>
+<i>Attraversa solo la LAN (T<sub>prop</sub> = 1 ms). Nessun router intermedio per l'accodamento.</i><br/>
+T<sub>1</sub> = 12(T<sub>prop</sub>) + (T<sub>prop</sub> + T<sub>trasm_tot</sub>) + 3(T<sub>prop</sub>) = 12(1) + (1 + 8,88) + 3(1) = 12 + 9,88 + 3 = <b>24,88 ms</b><!-- --><br/><br/>
+<b>Fase 2: mail.unipa.it -&gt; mail.google.com (SMTP)</b><br/>
+<i>Attraversa LAN, L<sub>1</sub>, L<sub>2</sub> (T<sub>prop_tot</sub> = 1 + 1 + 1 = 3 ms). Ci sono 2 router di mezzo (R<sub>1</sub> e R<sub>2</sub>), che aggiungono tempi di ritrasmissione/accodamento del primo pacchetto.</i><br/>
+T<sub>2</sub> = 12(T<sub>prop_tot</sub>) + (T<sub>prop_tot</sub> + 2(T<sub>trasm_1_pack</sub>) + T<sub>trasm_tot</sub>) + 3(T<sub>prop_tot</sub>)<br/>
+T<sub>2</sub> = 12(3) + (3 + 2(0,12) + 8,88) + 3(3) = 36 + 12,12 + 9 = <b>57,12 ms</b><!-- --><br/><br/>
+<b>Fase 3: Ricezione piero.neri (POP3 da mail.unipa.it)</b><br/>
+<i>Attraversa solo la LAN (T<sub>prop</sub> = 1 ms).</i><br/>
+T<sub>3</sub> = 11(T<sub>prop</sub>) + (T<sub>prop</sub> + T<sub>trasm_tot</sub>) + 2(T<sub>prop</sub>) = 11(1) + (1 + 8,88) + 2(1) = 11 + 9,88 + 2 = <b>22,88 ms</b><!-- --><br/><br/>
+<b>Fase 4: Ricezione carlo.verdi (POP3 da mail.google.com)</b><br/>
+<i>Attraversa L<sub>3</sub> e L<sub>2</sub> (T<sub>prop_tot</sub> = 1 + 1 = 2 ms). C'è 1 router di mezzo (R<sub>2</sub>).</i><br/>
+T<sub>4</sub> = 11(T<sub>prop_tot</sub>) + (T<sub>prop_tot</sub> + 1(T<sub>trasm_1_pack</sub>) + T<sub>trasm_tot</sub>) + 2(T<sub>prop_tot</sub>)<br/>
+T<sub>4</sub> = 11(2) + (2 + 0,12 + 8,88) + 2(2) = 22 + 11,00 + 4 = <b>37,00 ms</b><!-- --><br/><br/>
+<b>Tempo Totale Finale:</b><br/>
+<i>Poiché le operazioni di ricezione avvengono in parallelo sui due server, il tempo totale per far sì che la mail giunga a *tutti* i destinatari è dettato dal percorso più lungo (ovvero quello verso Carlo):</i><br/>
+T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,88 + 57,12 + 37,00 = <b>119,00 ms</b><!-- -->
+</p></div>
+                </div>
+            </article>
+            
+<h3 class="subsection" id="sec-6557144362487691362">2.6 DNS — Domain Name System</h3>
+
+            <article class="ex-card" id="ex-8" data-ex="8">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">08</span>
+                  <span class="ex-meta">CH.02 &middot; 2.6</span>
+                </div>
+                <h4 class="ex-title">Esercizio 8</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(8, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Si consideri una rete in cui l'host H deve scaricare una Pagina Web (file base) di 300 KB situata sul server s1.foo.it e una successiva Immagine di 1 MB situata sul server s2.foo.it. La rete è caratterizzata da una larghezza di banda R di 100 Mbps, una MTU di 1500 B e un overhead trascurabile. Prima dello scaricamento dei file tramite protocollo HTTP, l'host deve effettuare la risoluzione dei nomi a dominio tramite protocollo DNS. Si calcolino i tempi necessari per ottenere il file base e l'immagine, considerando che per la seconda richiesta il DNS locale utilizza i dati in cache per contattare direttamente il DNS Autorevole.</p>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-8">Il tuo procedimento</label>
+                <textarea id="ta-8" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(8, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-8" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><p><b>Dati preliminari:</b><br/>
+Pagina Web (s1.foo.it/index.htm) = 300 KB<br/>
+Immagine (s2.foo.it/pics/img.jpg) = 1 MB<br/>
+Banda (R) = 100 Mbps, MTU = 1500 B, Overhead = 0 B</p>
+<hr style="border: 1px solid #ddd; margin: 15px 0;"/>
+<p><b>FASE 1: Risoluzione DNS e scaricamento Pagina Web (s1.foo.it)</b></p>
+<p><i>H.-&gt;DNS LOCALE-&gt;DNS ROOT-&gt;DNS LOCALE-&gt;DNS TDL-&gt;DNS LOCALE-&gt;DNS AUT-&gt;DNS LOCALE-&gt;H.-&gt;S<sub>1</sub></i></p>
+<p><i>L'Host H non conosce l'IP di s1.foo.it. Il DNS Locale interroga iterativamente la gerarchia DNS. Di seguito la tabella dettagliata dei messaggi scambiati:</i></p>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia1.jpg"/></div>
+<table border="1" style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
+<tr style="background-color: #f2f2f2;">
+<th style="padding: 5px; width: 5%;">#</th>
+<th style="padding: 5px;">Name</th>
+<th style="padding: 5px;">Value</th>
+<th style="padding: 5px; width: 10%;">Type</th>
+<th style="padding: 5px; width: 10%;">TTL</th>
+<th style="padding: 5px;">Azione (Flusso)</th>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">1</td>
+<td style="padding: 5px;">s1.foo.it</td>
+<td style="padding: 5px; text-align: center;">/</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Richiesta</b> (H. richiede l'indirizzo IP del server di s1.foo.it al DNS Locale)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">2</td>
+<td style="padding: 5px;">.it</td>
+<td style="padding: 5px; text-align: center;">/</td>
+<td style="padding: 5px; text-align: center;">NS</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Richiesta</b> (DNS Locale chiede l'indirizzo IP del DNS TLD a DNS Root)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">3</td>
+<td style="padding: 5px;">.it<br/>tld.it</td>
+<td style="padding: 5px;">tld.it<br/>192.32.1.1</td>
+<td style="padding: 5px; text-align: center;">NS<br/>A</td>
+<td style="padding: 5px; text-align: center;">X<br/>X</td>
+<td style="padding: 5px;"><b>Risposta</b> (il ROOT fornisce il NS e l'IP del TLD)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">4</td>
+<td style="padding: 5px;">foo.it</td>
+<td style="padding: 5px; text-align: center;">/</td>
+<td style="padding: 5px; text-align: center;">NS</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Richiesta</b> (Il DNS Locale chiede l'indirizzo IP del DNS AUT al Server TLD)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">5</td>
+<td style="padding: 5px;">foo.it<br/>dns.foo.it</td>
+<td style="padding: 5px;">dns.foo.it<br/>192.32.4.1</td>
+<td style="padding: 5px; text-align: center;">NS<br/>A</td>
+<td style="padding: 5px; text-align: center;">X<br/>X</td>
+<td style="padding: 5px;"><b>Risposta</b> (Il TLD fornisce il NS e l'IP dell'AUT)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">6</td>
+<td style="padding: 5px;">s1.foo.it</td>
+<td style="padding: 5px; text-align: center;">/</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Richiesta</b> (Il DNS Locale chide l'indirizzo IP del Server a l'Autorevole)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">7</td>
+<td style="padding: 5px;">s1.foo.it</td>
+<td style="padding: 5px;">197.198.37.1</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Risposta</b> (l'Autorevole restituisce l'IP finale)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">8</td>
+<td style="padding: 5px;">s1.foo.it</td>
+<td style="padding: 5px;">197.198.37.1</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Risposta finale</b> (Il DNS Locale inoltra l'IP all'Host H)</td>
+</tr>
+</table>
+<p><b>Trasmissione HTTP (File Base):</b><br/>
+L'Host H invia la richiesta HTTP GET al server S1:</p>
+<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">GET /index.html HTTP/1.1
+Host: s1.foo.it</pre>
+<p>Il server S1 risponde (File Base, 300 KB):</p>
+<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 300 KB
+Connection: open</pre>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia1_html.jpg"/></div>
+<p><i>Tempo calcolato per il File Base: 20 propagazioni DNS + 12 propagazioni per i link + 2 trasmissioni pacchetto + 1 trasmissione pagina.</i><br/>
+<b>T<sub>FB</sub> = 12(T<sub>prop</sub>) + 2(T<sub>trasm_pac</sub>) + 1(T<sub>trasm_pag</sub>) + 20(T<sub>prop_dns</sub>)</b></p>
+<hr style="border: 1px solid #ddd; margin: 15px 0;"/>
+<p><b>FASE 2: Risoluzione DNS e scaricamento Immagine (s2.foo.it)</b></p>
+<p><i>L'Host H deve scaricare l'immagine. Il DNS Locale ha memorizzato in cache l'IP del Server Autorevole (dns.foo.it). Salta quindi i server Root e TLD, interrogando direttamente l'AUT.</i></p>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia2.jpg"/></div>
+<table border="1" style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
+<tr style="background-color: #f2f2f2;">
+<th style="padding: 5px; width: 5%;">#</th>
+<th style="padding: 5px;">Name</th>
+<th style="padding: 5px;">Value</th>
+<th style="padding: 5px; width: 10%;">Type</th>
+<th style="padding: 5px; width: 10%;">TTL</th>
+<th style="padding: 5px;">Azione (Flusso)</th>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">1</td>
+<td style="padding: 5px;">s2.foo.it</td>
+<td style="padding: 5px; text-align: center;">/</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Richiesta</b> (H. richiede l'indirizzo IP del server di s2.foo.it al DNS Locale)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">2</td>
+<td style="padding: 5px;">s2.foo.it</td>
+<td style="padding: 5px; text-align: center;">/</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Richiesta</b> (Il DNS Locale chiede l'indirizzo IP del Server al DNS Autorevole)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">3</td>
+<td style="padding: 5px;">s2.foo.it</td>
+<td style="padding: 5px;">192.198.25.2</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Risposta</b> (l'Autorevole restituisce l'IP del secondo server)</td>
+</tr>
+<tr>
+<td style="padding: 5px; text-align: center;">4</td>
+<td style="padding: 5px;">s2.foo.it</td>
+<td style="padding: 5px;">192.198.25.2</td>
+<td style="padding: 5px; text-align: center;">A</td>
+<td style="padding: 5px; text-align: center;">X</td>
+<td style="padding: 5px;"><b>Risposta</b> (Il DNS Locale inoltra l'IP all'Host H.)</td>
+</tr>
+</table>
+<p><b>Trasmissione HTTP (Immagine):</b><br/>
+L'Host H invia la richiesta HTTP GET al server S2:</p>
+<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">GET /pics/img.jpg HTTP/1.1
+Host: s2.foo.it</pre>
+<p>Il server S2 risponde (Immagine, 1 MB):</p>
+<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">HTTP/1.1 200 OK
+Content-Type: image/jpeg
+Content-Length: 1 MB
+Connection: open</pre>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia2_html.jpg"/></div>
+<p><i>Tempo calcolato per l'Immagine: 8 propagazioni DNS (grazie alla cache si riducono da 10 a 8) + 12 propagazioni per i link + 2 trasmissioni pacchetto + 1 trasmissione immagine.</i><br/>
+<b>T<sub>IMG</sub> = 12(T<sub>prop</sub>) + 2(T<sub>trasm_pac</sub>) + 1(T<sub>trasm_immag</sub>) + 8(T<sub>prop_dns</sub>)</b></p></div>
+                </div>
+            </article>
+            
+</section>
+
+    <section class="chapter" id="ch-03">
+      <header class="chapter-band">
+        <span class="chapter-code">CH.03</span>
+        <h2 class="chapter-title">Livello di Trasporto — TCP</h2>
+      </header>
+    
+<h3 class="subsection" id="sec-6232715086188238955">3.5 Esercizi TCP</h3>
+
+            <article class="ex-card" id="ex-9" data-ex="9">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">09</span>
+                  <span class="ex-meta">CH.03 &middot; 3.5</span>
+                </div>
+                <h4 class="ex-title">Esercizio 1</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(9, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Considerando la configurazione Host A — Router — Host B, l'host A deve trasferire un file di dimensione 4 kB all'host B utilizzando il protocollo TCP. Entrambi i link sono privi di errori, ampiezza di banda 10 Mbps, RTT = 2 ms, MSS = 512 byte; si trascurino gli overhead. Si calcoli il tempo necessario all'intero trasferimento, includendo l'instaurazione della connessione, supponendo non ci sia ulteriore traffico né congestione.</p>
+<div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-9">Il tuo procedimento</label>
+                <textarea id="ta-9" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(9, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-9" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">File = 4KB<br/>R = 10Mbs<br/>RTT = 2ms<br/>MSS = 512byte<br/><br/>N = 4·1024/512 = 8 pacchetti.
+<div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1_grafico.jpg"/>
+</div>
+T<sub>F</sub> = SRTT + 4·T<sub>trans1</sub> + 4·T<sub>tras2</sub> &lt; SRTT + 8·T<sub>trans</sub><br/>
+T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br/>
+409,6 µs = 0,04096 ms<br/>
+5·(2) + 8·(0,4096) ≈ 10 + 3,2768 = 13,28 ms</div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-10" data-ex="10">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">10</span>
+                  <span class="ex-meta">CH.03 &middot; 3.5</span>
+                </div>
+                <h4 class="ex-title">Esercizio 2</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(10, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Tra due host direttamente connessi tramite un link con ampiezza di banda pari a 10 Mbps, RTT = 2 ms, MSS = 512 byte si stabilisce una connessione TCP ormai a regime. Si calcoli il tempo necessario alla trasmissione di un file di dimensione 5 kB. Si assuma il valore della finestra di congestione all'inizio della trasmissione di 4MSS, trascurando gli overhead. Si assuma inoltre che si perda il 3° segmento della trasmissione e che il timeout sia fissato a 4,5 ms.</p></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-10">Il tuo procedimento</label>
+                <textarea id="ta-10" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(10, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-10" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">File = 5KB<br/>R = 10Mbs<br/>RTT = 2ms<br/>MSS = 512byte<br/>W = 4<br/>Overhead = 0<br/>3°segmento perso<br/><br/>N = 5·1024/512 = 10 pacchetti
+<div class="imgbox"><img alt="Esercizio 2 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp2.jpg"/>
+</div>
+3·T<sub>Trans</sub> + T<sub>out</sub> &lt; 2RTT + 3·T<sub>Tras</sub><br/>4,5 &lt; 4 ? No avviene prima il triplice ACK<br/><br/>
+T<sub>Tras</sub> = (MSS+Overhead)·8/R = 512·8/10 = 409,6 µs<br/>
+T = 5·RTT + 7·T<sub>Tras</sub> ≈ 12,87 ms</div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-11" data-ex="11">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">11</span>
+                  <span class="ex-meta">CH.03 &middot; 3.5</span>
+                </div>
+                <h4 class="ex-title">Esercizio 3 — controllo di congestione + controllo di flusso</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(11, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Si assuma che due host A e B siano direttamente connessi tramite un link privo di errori/perdite con ampiezza di banda 10 Mbps, RTT = 2 ms, MSS = 512 byte. L'host A invia all'host B un file di dimensione 5 kB, e al termine dell'handshake l'applicazione in esecuzione sull'host B rimane bloccata nell'interazione con l'utente per 12 ms, e al termine elabora tutti i segmenti ricevuti ed invia all'host A un segmento con payload di 1 byte. La dimensione del buffer di ricezione di B è pari a 5MSS. Si calcoli il tempo totale necessario alla trasmissione del file valutando l'impatto delle tecniche per il controllo della congestione e del controllo del flusso.</p></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-11">Il tuo procedimento</label>
+                <textarea id="ta-11" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(11, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-11" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">B = 10Mbps<br/>RTT = 2ms<br/>MSS = 5KB<br/>Blocco applicativo = 12ms<br/>Payload = 1ms<br/>W = 5<br/>Overhead 0 0<br/><br/>N = 5·1024/512 = 10 pacchetti
+<div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_sr2.jpg"/>
+</div>
+Slow start con RcvWindow che limita la crescita della finestra (CW≤RcvWin); blocco applicativo di 12 ms.<br/>
+T<sub>Trasm</sub> = MTU/R = (MSS+Overhead)·8/R = (512·8)/10 Mbps = 409,6 µs = 0,409 ms<br/>
+T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <b>20,045 ms</b></div>
+                </div>
+            </article>
+            
+<h3 class="subsection" id="sec-6076757256145458197">3.6 Trasferimento Dati Affidabile: Go-Back-N e Selective Repeat</h3>
+
+            <article class="ex-card" id="ex-12" data-ex="12">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">12</span>
+                  <span class="ex-meta">CH.03 &middot; 3.6</span>
+                </div>
+                <h4 class="ex-title">Esercizio 1</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(12, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5 kB, usando il protocollo <b>GoBackN</b>. Si assuma un RTT tra i due host pari a 0,2 ms ed ampiezze di banda per i due collegamenti rispettivamente pari a R1=200 Mbps e R2=100 Mbps, MSS=256 byte, overhead di pacchetto trascurabili e timeout pari ad 1 ms. Ipotizzando che si perda il <b>quinto segmento</b>, e che la dimensione statica della finestra di spedizione sia pari a 4MSS, si calcolino il <i>throughput</i> e il <i>goodput</i>.</p>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-12">Il tuo procedimento</label>
+                <textarea id="ta-12" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(12, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-12" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">File=2,5KB<br/>MSS = 256byte<br/>W = 4<br/><br/>
+2,5KB · 1024 = 2560 byte<br/>
+N = File/MSS = 2560/256 = 10 pacchetti<br/>
+<div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_gbn1.jpg"/>
+</div>
+T<sub>tot</sub> = RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> + T<sub>trasm1</sub>  + T<sub>timeout</sub> + RTT + T<sub>trasm1</sub>  + T<sub>trasm2</sub> +RTT + T<sub>trasm1</sub>  +T<sub>trasm2</sub><br/><br/>
+Throughput = Dati<sub>totali mandati</sub>/Tempo<sub>tot</sub> = Dati<sub>trasm</sub>/Tempo<sub>tot</sub> = 14·MTU (Mbps)/Tempo<sub>tot</sub> &lt; <i>"collo di bottiglia 100Mbps"</i><br/>
+Goodpout = File/Tempo<sub>tot</sub></div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-13" data-ex="13">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">13</span>
+                  <span class="ex-meta">CH.03 &middot; 3.6</span>
+                </div>
+                <h4 class="ex-title">Esercizio 13</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(13, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Stesso scenario, ma si ipotizza che si perda il <b>riscontro del quinto segmento</b> (non il segmento stesso), con timeout pari a 1 ms.</p>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-13">Il tuo procedimento</label>
+                <textarea id="ta-13" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(13, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-13" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body"><div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_gbn2.jpg"/>
+</div>
+Diagramma con perdita del 5° pacchetto e ritrasmissione GBN dei pacchetti 5-8<br/>
+File = 2,5KB<br/>MSS = 256byte<br/>W = 4<br/><br/>
+2,5KB · 1024 = 2560 byte<br/>
+N = File/MSS = 2560/256 = 10 pacchetti<br/>
+T<sub>trasm1</sub> = 256·8/200·10<sup>6</sup> = 2048/200·10<sup>6</sup> = 1,024·10<sup>-5</sup> s = 0,01024 ms<br/>
+T<sub>trasm2</sub> = 256·8/100·10<sup>6</sup> = 2048/100·10<sup>6</sup> = 2048·10<sup>-5</sup> s = 0,02048 ms<br/>
+T<sub>tot</sub> = <span style="border-bottom: 2px solid blue; padding-bottom: 2px;">RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub></span> + <span style="border-bottom: 2px solid #d4b500; padding-bottom: 2px;">RTT + 2(T<sub>trasm2</sub>)</span> + <span style="border-bottom: 2px solid green; padding-bottom: 2px;">RTT + T<sub>trasm1</sub> + 2(T<sub>trasm2</sub>)</span> = 3RTT + 2(T<sub>trasm1</sub>) + 5(T<sub>trasm2</sub>) = 0,73312 ms = 0,00073312 s<br/><br/>
+Throughput = Dati/Tempo<sub>tot</sub> = 2,5KB/0,00073312 = 27,94Mbps <i>"Deve essere &lt; 100 (collo di bottiglia)"</i><br/>
+Goodpout = File/Tempo<sub>tot</sub> = 2560·8/0,00073312 = 27,94Mbps</div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-14" data-ex="14">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">14</span>
+                  <span class="ex-meta">CH.03 &middot; 3.6</span>
+                </div>
+                <h4 class="ex-title">Esercizio 3</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(14, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5kB, usando il protocollo <b>Selective Repeat</b>. RTT = 0,2 ms, L1=100 Mbps, L2=200 Mbps, MSS=256 byte, overhead trascurabile, timeout = 1 ms. Si perde il <b>quarto segmento</b>, finestra statica = 4MSS. Si calcolino throughput e goodput.<br/>
+</p>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-14">Il tuo procedimento</label>
+                <textarea id="ta-14" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(14, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-14" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">Diagramma Selective Repeat con buffer dei segmenti 5,6 in attesa del segmento 4, timeout e ritrasmissione del solo segmento 4; calcolo finale di throughput (~16,3 Mbps) e goodput (~15,96 Mbps).<br/><br/>
+File = 2,5kB = 2,5kB · 1024 = 2560 byte<br/>MSS = 256byte<br/>W = 4<br/><br/>
+N = File/MSS = 2560/256 = 10 pacchetti
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_selective1.jpg"/>
+</div>
+1 Mbs = 10<sup>6</sup> bps<br/>
+1 Byte = 8 bit<br/>
+T<sub>trasm1</sub> = L(bit)/B(bps) = (256)·8/100·10<sup>6</sup> = 0,00002048s = 0,02048ms<br/>
+T<sub>trasm2</sub> = L(bit)/B(bps) = (256)·8/200·10<sup>6</sup> = 0,00001024s = 0,01024ms<br/>
+Tf = 4·(T<sub>trasm1</sub>) + Timeout + RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> + 2·(T<sub>trasm1</sub>) + RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> = 2·RTT + 8·(T<sub>trasm1</sub>) + 2·(T<sub>trasm2</sub>) + Timeout = 2(0,2) + 8(0,02048) + 2(0,01024) + 1 = 1,58432 ms<br/>
+Throughput = Dati/T<sub>tot</sub> = (256·8)·11 / T<sub>tot</sub> = 14258227,85 bps ≈ 14,3 Mbps<br/>
+Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 12,96 Mbps</div>
+                </div>
+            </article>
+            
+
+            <article class="ex-card" id="ex-15" data-ex="15">
+              <div class="ex-header">
+                <div class="ex-badge">
+                  <span class="ex-num">15</span>
+                  <span class="ex-meta">CH.03 &middot; 3.6</span>
+                </div>
+                <h4 class="ex-title">Esercizio 4 — variante: perdita del riscontro del quarto segmento</h4>
+                <label class="done-toggle">
+                  <input type="checkbox" onchange="toggleDone(15, this.checked)">
+                  <span>fatto</span>
+                </label>
+              </div>
+              <div class="ex-statement"><p>Stesso scenario, ma con perdita del <b>riscontro del quarto segmento</b> (non del segmento), Selective Repeat.</p>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+              <div class="ex-workarea">
+                <label class="workarea-label" for="ta-15">Il tuo procedimento</label>
+                <textarea id="ta-15" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
+              </div>
+              <div class="ex-actions">
+                <button class="btn-solution" onclick="toggleSolution(15, this)" >
+                  Mostra soluzione
+                </button>
+              </div>
+              
+                <div class="solution-panel" id="sol-15" hidden>
+                  <div class="solution-tag">$ svolgimento --verbose</div>
+                  <div class="solution-body">NOTA BENE: Il diagramma analogo all'esercizio 3, con la differenza che il segmento 4 arriva correttamente a destinazione ma il relativo ACK4 viene perso; il mittente ritrasmette il segmento 4 dopo il timeout, il ricevente lo riconosce come duplicato già bufferizzato e rinvia semplicemente ACK4.
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_selective2.jpg"/>
+</div>
+1 Mbs = 10<sup>6</sup> bps<br/>
+1 Byte = 8 bit<br/>
+T<sub>trasm1</sub> = L(bit)/B(bps) = (256)·8/100·10<sup>6</sup> = 0,00002048s = 0,02048ms<br/>
+T<sub>trasm2</sub> = L(bit)/B(bps) = (256)·8/200·10<sup>6</sup> = 0,00001024s = 0,01024ms<br/>
+Tf = 4·(T<sub>trasm1</sub>) + Timeout + RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> + 2·(T<sub>trasm1</sub>) + RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> = 2·RTT + 8·(T<sub>trasm1</sub>) + 2·(T<sub>trasm2</sub>) + Timeout = 2(0,2) + 8(0,02048) + 2(0,01024) + 1 = 1,58432 ms<br/>
+Throughput = Dati/T<sub>tot</sub> = (256·8)·11 / T<sub>tot</sub> = 14258227,85 bps ≈ 14,3 Mbps<br/>
+Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 12,96 Mbps</div>
+                </div>
+            </article>
+            
+</section>
+
+    <footer class="note">
+      Formulario generato a partire dalla dispensa "Reti e Cyber-Sicurezza" (Prof.ssa Alessandra De Paola, Università degli Studi di Palermo).<br>
+      Le immagini di supporto richiedono la cartella <code>reti_cyber/</code> nella stessa directory di questo file.
+    </footer>
+  </main>
+</div>
+
+<script>
+  const total = 15;
+  const done = new Set();
+
+  function toggleDone(n, checked) {
+    const card = document.getElementById('ex-' + n);
+    if (checked) {
+      done.add(n);
+      card.classList.add('is-done');
+    } else {
+      done.delete(n);
+      card.classList.remove('is-done');
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = total ? Math.round((done.size / total) * 100) : 0;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = done.size + ' / ' + total;
+  }
+
+  function toggleSolution(n, btn) {
+    const panel = document.getElementById('sol-' + n);
+    if (!panel) return;
+    const isHidden = panel.hasAttribute('hidden');
+    if (isHidden) {
+      panel.removeAttribute('hidden');
+      btn.textContent = 'Nascondi soluzione';
+    } else {
+      panel.setAttribute('hidden', '');
+      btn.textContent = 'Mostra soluzione';
+    }
+  }
+</script>
+
+</body>
+</html>
