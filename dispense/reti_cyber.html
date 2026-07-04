@@ -342,11 +342,11 @@ d<sub>nodo</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<
 </ul>
 
 <h3>Ritardo di accodamento</h3>
-<p>Siano R la frequenza di trasmissione (bps), L la lunghezza del pacchetto (bit) e a il tasso medio di arrivo dei pacchetti. Si definisce <b>intensità di traffico</b> il rapporto La/R. Poiché il primo e l'ultimo pacchetto hanno ritardi molto diversi, si ricorre a misure statistiche.</p>
+<p>Siano R la frequenza di trasmissione (bps), L la lunghezza del pacchetto (bit) e a il tasso medio di arrivo dei pacchetti. Si definisce <b>intensità di traffico</b> il rapporto L·a/R. Poiché il primo e l'ultimo pacchetto hanno ritardi molto diversi, si ricorre a misure statistiche.</p>
 <div class="box formula">
-La/R ≈ 0: poco ritardo<br>
-La/R → 1: il ritardo si fa consistente<br>
-La/R &gt; 1: più "lavoro" in arrivo di quanto possa essere effettivamente svolto, ritardo medio infinito (anche con buffer di dimensione infinita)
+L·a/R ≈ 0: poco ritardo<br>
+L·a/R → 1: il ritardo si fa consistente<br>
+L·a/R &gt; 1: più "lavoro" in arrivo di quanto possa essere effettivamente svolto, ritardo medio infinito (anche con buffer di dimensione infinita)
 </div>
 
 <h3>Ritardi e percorsi in Internet</h3>
