@@ -758,10 +758,9 @@ T<sub>trasm_html</sub> = (3216 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps)
 T<sub>trasm_img</sub> = (1.624.896 byte · 8 bit/byte) / (100 · 10<sup>6</sup> bps) ≈ 130.000 μs = 130 ms<br><br>
 
 <b>Host 1 senza cache (Totale da t<sub>0</sub> a t<sub>f</sub>):</b><br>
-<i>Note: 3 RTT (Handshake + req HTML + req IMG) + 2 ritardi di Store&Forward al proxy (uno per file) + Tempi di trasmissione.</i><br>
-T<sub>tot_H1</sub> = 3(RTT<sub>LAN</sub>) + 3(RTT<sub>L</sub>) + 2(T<sub>trasm_p1</sub>) + T<sub>trasm_html</sub> + T<sub>trasm_img</sub><br>
-T<sub>tot_H1</sub> = 3(0,01) + 3(0,00357) + 2(0,12) + 0,257 + 130<br>
-T<sub>tot_H1</sub> = 0,03 + 0,01071 + 0,24 + 0,257 + 130 = <b>130,537 ms</b><br><br>
+T<sub>tot_H1</sub> = 3(RTT<sub>LAN</sub>) + 3(RTT<sub>L</sub>) + 2(T<sub>trasm_p1</sub>) + 2(T<sub>trasm_html</sub>) + 2(T<sub>trasm_img</sub>)<br>
+T<sub>tot_H1</sub> = 3(0,01) + 3(0,00357) + 2(0,12) + 2(0,257) + 2(130)<br>
+T<sub>tot_H1</sub> = 0,03 + 0,01071 + 0,24 + 0,514 + 260 = <b>160,795 ms</b><br><br>
 
 <b>Host 2 + cache (Cache Hit con GET Condizionale):</b><br>
 <i>Note: I file non vengono riscaricati dal server remoto, ma le GET condizionali viaggiano lungo tutto il percorso. L'HTML e l'Immagine vengono poi trasmessi direttamente dalla cache (LAN).</i><br>
