@@ -861,15 +861,95 @@ T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 160m / 2,8·10<sup>8</sup> m
                 <div class="solution-panel" id="sol-3" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body"><p>
-<b>Dati e calcoli preliminari:</b><br/>
-<div class="imgbox"><img alt="Esercizio 3 - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_3_svolgimento.jpg"/></div>
-Pagina = 3 kB = 3 · 1024 = 3072 Byte<br/>
-IMG = 1,5 MB = 1,5 · 1024 · 1024 = 1.572.864 Byte<br/>
-L = 500 m<br/>
-Larghezza banda LAN e link L = 100 Mbps = 100 · 10<sup>6</sup> bps<br/>
-RTT<sub>LAN</sub> = 10 μs = 10 · 10<sup>-6</sup> s<br/>
-V<sub>link</sub> = 2,8 · 10<sup>8</sup> m/s<br/>
-MTU = 1500 byte, Overhead = 48 byte<br/><br/>
+<b>Dati e calcoli preliminari:</b><br>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_3_svolgimento.jpg" alt="Esercizio 3 - svolgimento" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+Pagina = 3 kB = 3 · 1024 = 3072 Byte<br>
+IMG = 1,5 MB = 1,5 · 1024 · 1024 = 1.572.864 Byte<br>
+L = 500 m<br>
+Larghezza banda LAN e link L = 100 Mbps = 100 · 10<sup>6</sup> bps<br>
+RTT<sub>LAN</sub> = 10 μs = 10 · 10<sup>-6</sup> s<br>
+V<sub>link</sub> = 2,8 · 10<sup>8</sup> m/s<br>
+MTU = 1500 byte, Overhead = 48 byte<br><br>
+
+<b>scambio messaggi HTTP:</b><br>
+<p><b>Fase 1: Richiesta dell'Host 1 (Cache Vuota)</b></p>
+
+<p><b>① Richiesta del file base (HTML)</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: server-remoto.it
+Connection: open</code></pre>
+
+<p><b>② Risposta con il file base</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 3072
+Last-Modified: Data_X
+(DATI DEL FILE BASE)</code></pre>
+<p><i>conversione: (3 kB in Byte: 3 * 1024 = 3072 Byte)</i></p>
+
+<p><b>③ Richiesta immagine</b></p>
+<pre><code>GET /img.jpg HTTP/1.1
+Host: server-remoto.it
+Connection: open</code></pre>
+
+<p><b>④ Risposta con immagine</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/jpeg
+Content-Length: 1572864
+Last-Modified: Data_Y
+(DATI DELL'IMMAGINE)</code></pre>
+<p><i>conversione: (1.5 MB in Byte: 1.5 * 1024 * 1024 = 1572864 Byte)</i></p>
+
+<p><b>Fase 2: Richiesta dell'Host 2 (Cache Hit + GET Condizionale)</b></p>
+
+<p><b>⑤ Richiesta del file base da Host 2 a Proxy</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: server-remoto.it
+Connection: open</code></pre>
+
+<p><b>⑥ GET Condizionale dal Proxy verso il Server</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: server-remoto.it
+Connection: open
+If-Modified-Since: Data_X</code></pre>
+
+<p><b>⑦ Risposta del Server al Proxy (File non modificato)</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+
+<p><b>⑧ Risposta del Proxy all'Host 2 (File servito dalla cache)</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 3072
+Last-Modified: Data_X
+(DATI DEL FILE BASE DALLA CACHE)</code></pre>
+
+<p><b>⑨ Richiesta dell'immagine da Host 2 a Proxy</b></p>
+<pre><code>GET /img.jpg HTTP/1.1
+Host: server-remoto.it
+Connection: open</code></pre>
+
+<p><b>⑩ GET Condizionale dal Proxy verso il Server (per l'immagine)</b></p>
+<pre><code>GET /img.jpg HTTP/1.1
+Host: server-remoto.it
+Connection: open
+If-Modified-Since: Data_Y</code></pre>
+
+<p><b>⑪ Risposta del Server al Proxy (Immagine non modificata)</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+
+<p><b>⑫ Risposta del Proxy all'Host 2 (Immagine servita dalla cache)</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/jpeg
+Content-Length: 1572864
+Last-Modified: Data_Y
+(DATI DELL'IMMAGINE DALLA CACHE)</code></pre>
+<b>Calcolore i tempi:</b><br>
 T<sub>prop_link</sub> = L / V = 500 m / (2,8 · 10<sup>8</sup> m/s) ≈ 1,786 μs<br/>
 RTT<sub>tot</sub> = RTT<sub>LAN</sub> + 2 · T<sub>prop_L</sub> = 10 μs + 2 · 1,786 μs ≈ 13,57 μs<br/>
 Payload = MTU - Overhead = 1500 - 48 = 1452 byte<br/>
