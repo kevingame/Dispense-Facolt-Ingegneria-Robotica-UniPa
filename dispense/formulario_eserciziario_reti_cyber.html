@@ -539,7 +539,7 @@
           <b>1. Dimensioni dei dati</b> (File, MSS, MTU, payload, header/overhead) → si usano <b>potenze di 2</b>:<br>
           &nbsp;&nbsp;1 KB = 1024 B &nbsp;·&nbsp; 1 MB = 1024 KB = 1.048.576 B &nbsp;·&nbsp; 1 B = 8 bit<br><br>
           <b>2. Velocità/tassi di trasmissione</b> (R, banda del link, throughput, goodput) → si usano <b>potenze di 10</b>:<br>
-          &nbsp;&nbsp;1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Gbps = 10⁹ bps<br><br>
+          &nbsp;&nbsp;1 kbps = 10³ bps &nbsp;·&nbsp; 1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Gbps = 10⁹ bps<br><br>
           <b>3. Prima di dividere due grandezze, portale sempre alla stessa unità.</b> Il caso più comune è N = File/MSS: se File è dato in KB/MB e MSS in byte, va prima convertito il File in byte (·1024 o ·1024²), <u>non</u> il contrario.<br>
           <i>Es.: File = 2,5 KB, MSS = 256 B &nbsp;→&nbsp; File in byte = 2,5 · 1024 = 2560 B &nbsp;→&nbsp; N = 2560 / 256 = 10 pacchetti.</i><br><br>
           <b>4. Per i tempi di trasmissione</b> (T = L/R) L va in <b>bit</b> e R in <b>bps</b>: se una dimensione è data in byte, moltiplicarla ×8 prima di dividere per R.
@@ -551,12 +551,13 @@
         <div class="f">
           <div class="name">Tempo di trasmissione</div>
           <div class="formula">T<sub>trasm</sub> = L / R</div>
-          <div class="note">L = bit da trasmettere, R = velocità del link (bps)</div>
+          <div class="note">L in <b>bit</b>, R in <b>bps</b>. Se L è dato in byte, moltiplica ×8; se R è dato in Mbps/Gbps, moltiplica ×10⁶/×10⁹ per averlo in bps.</div>
         </div>
         <div class="f">
           <div class="name">Tempo di trasmissione (con overhead)</div>
           <div class="formula">T<sub>trasm</sub> = (MSS + overhead) · 8 / R</div>
-          <div class="note">se le dimensioni sono in byte, ·8 converte in bit</div>
+          <div class="note">se le dimensioni sono in byte, ·8 converte in bit; se R è in Mbps ricorda 1 Mbps = 10⁶ bps.<br>
+          <i>Es.: MSS = 256 B, overhead ≈ 0, R = 200 Mbps &nbsp;→&nbsp; L = 256·8 = 2048 bit; R = 200·10⁶ = 200.000.000 bps &nbsp;→&nbsp; T<sub>trasm</sub> = 2048/200.000.000 = 1,024·10⁻⁵ s = 0,01024 ms.</i></div>
         </div>
         <div class="f">
           <div class="name">Ritardo di nodo</div>
@@ -597,10 +598,13 @@
           <div class="formula">PL = MTU − overhead</div>
           <div class="note">es. MTU 1500 B − 40 B header = 1460 B</div>
         </div>
-        <div class="f">
+        <div class="f wide">
           <div class="name">Conversioni comuni</div>
-          <div class="formula">1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Byte = 8 bit &nbsp;·&nbsp; 1 KB = 1024 B &nbsp;·&nbsp; 1 MB = 1024 KB</div>
-          <div class="note">Dimensioni file/pacchetti → potenze di 2 (KB, MB). Velocità/banda → potenze di 10 (Mbps, Gbps). Non mischiare le due basi nello stesso calcolo.</div>
+          <div class="formula">
+            1 kbps = 10³ bps = 1.000 bps &nbsp;·&nbsp; 1 Mbps = 10⁶ bps = 1.000.000 bps &nbsp;·&nbsp; 1 Gbps = 10⁹ bps<br>
+            1 Byte = 8 bit &nbsp;·&nbsp; 1 KB = 1024 B &nbsp;·&nbsp; 1 MB = 1024 KB = 1.048.576 B
+          </div>
+          <div class="note">Dimensioni file/pacchetti/MTU/MSS → potenze di 2 (KB, MB). Velocità/banda/tassi di trasmissione (kbps, Mbps, Gbps) → potenze di 10. Non mischiare le due basi nello stesso calcolo.</div>
         </div>
       </div>
 
@@ -643,12 +647,14 @@
         <div class="f">
           <div class="name">Throughput</div>
           <div class="formula">Throughput = Dati<sub>trasmessi totali</sub>·8 / T<sub>tot</sub></div>
-          <div class="note">include anche le ritrasmissioni (dati "sprecati"). Dati in byte ×8 per avere bit, T<sub>tot</sub> in secondi → risultato in bps (dividi per 10⁶ per i Mbps).</div>
+          <div class="note">include anche le ritrasmissioni (dati "sprecati"). Dati in byte ×8 per avere bit, T<sub>tot</sub> in secondi → risultato in bps (dividi per 10⁶ per i Mbps).<br>
+          <i>Es.: 11 segmenti da 256 B trasmessi in totale (con 1 ritrasmissione), T<sub>tot</sub> = 1,58432 ms = 0,00158432 s &nbsp;→&nbsp; Throughput = (256·8)·11 / 0,00158432 ≈ 14.258.228 bps = 14.258.228/10⁶ ≈ 14,3 Mbps.</i></div>
         </div>
         <div class="f">
           <div class="name">Goodput</div>
           <div class="formula">Goodput = Dati<sub>utili (file)</sub>·8 / T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub></div>
-          <div class="note">solo dati utili consegnati (esclude ritrasmissioni). N·MSS = dimensione file in byte; ·8 converte in bit; T<sub>tot</sub> in secondi → risultato in bps.</div>
+          <div class="note">solo dati utili consegnati (esclude ritrasmissioni). N·MSS = dimensione file in byte; ·8 converte in bit; T<sub>tot</sub> in secondi → risultato in bps.<br>
+          <i>Es.: N = 10 segmenti utili, MSS = 256 B, T<sub>tot</sub> = 0,00158432 s &nbsp;→&nbsp; Goodput = 10·256·8 / 0,00158432 ≈ 12.930.116 bps ≈ 12,93 Mbps.</i></div>
         </div>
         <div class="f wide">
           <div class="name">Dilemma numeri di sequenza (GBN / SR)</div>
