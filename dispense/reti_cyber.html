@@ -397,7 +397,6 @@ Throughput end-to-end per ciascuna connessione (scenario Internet):
 <p><i>Nota: per le dimensioni dei file si usano potenze di 2; per i tassi di trasmissione potenze di 10.</i></p>
 <p>Domande aggiuntive: (a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto? (b) Dopo quanto tempo riceve interamente il secondo pacchetto? (c) Tempo totale per l'intero messaggio.</p>
 <div class="imgbox"><img src="./reti_cyber/esercitazione1_1.jpg" alt="Esercizio 1 - svolgimento parte 1" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
-</div>
 
 <div class="box formula">
 informazione di intestazione: Overhead  OH 28byte</br>
@@ -408,43 +407,39 @@ N = ⌈S<sub>mess</sub> / PL⌉ = ⌈3 MB / 536 byte⌉ = ⌈5868,89⌉ = 5869 p
 </br>
 Come calcoliamo la dimensione dell'ultimo pacchetto?<br>
 S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 3·2²⁰ − 5868·536 = 480 byte
-</div>
 
 <div class="imgbox"><img src="./reti_cyber/esercitazione1_2.jpg" alt="Esercizio 1 - svolgimento parte 2" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
 <p class="caption">Calcolo dei tempi di propagazione T<sub>prop1,2,3</sub>, del tempo di trasmissione T<sub>Tras</sub>, e risposte ai punti a) b) c).</p>
 
-<div class="box formula">
+
 T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 100m / 2,8·10<sup>8</sup> m/s = 3,57·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,357 μs<br>
 T<sub>prop2</sub> = L<sub>2</sub> / V<sub>p</sub> = 50m / 2,8·10<sup>8</sup> m/s = 1,78·10<sup>-7</sup> s ≈ 0,178 μs<br>
 T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 80m / 2,8·10<sup>8</sup> m/s = 2,86·10<sup>-7</sup> s ≈ 0,286 μs<br>
 T<sub>Tras</sub> = (PL+OH)·8 bit / R = (536+28)·8 / 512 Kbps = 8,8125·10<sup>-3</sup>s ≈ 8,81 ms<br>
-</div>
-
-<div class="box formula">
 a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto?<br> 
 T<sub>P1</sub> = 3·T<sub>Tras</sub> + (T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub>) ≈ 26,43 ms<br>
 b) Dopo quanto tempo l'host B riceve interamente il primo pacchetto?<br>
 T<sub>P2</sub> = T<sub>P1</sub> + T<sub>Tras</sub><br>
 c) Tempo totale per l'intero messaggio.<br>
 T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)·T<sub>Tras</sub> + T<sub>Tras,last</sub> ≈ <b>51,75 s</b>
-</div>
-
+</div></div>
+<hr class="sep">
 <h4>Esercizio 2</h4>
 <div class="box esercizio">
 <p>Si vuole trasmettere un messaggio di dimensione <b>2 KB</b> attraverso la stessa topologia. Ogni link è lungo 200 m, 100 m e 160 m, ed ha velocità di propagazione 2,8×10⁸ m/s. I 3 link hanno ampiezza di banda rispettivamente pari a 200 Mbps, 20 Mbps e 2 Gbps. Si assumano pacchetti di 536 byte di payload, con overhead di 28 byte. Si calcolino gli eventuali ritardi di accodamento subiti dai pacchetti lungo il percorso e il tempo necessario a trasmettere l'intero messaggio.</p>
 <div class="imgbox"><img src="./reti_cyber/esercitazione1_1.jpg" alt="Esercizio 2 - svolgimento"></div>
-</div>
+
 <div class="box formula">
-<p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1026byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 392 byte<br>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p></div>
+<p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1026byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 392 byte<br>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p>
 
 <div class="imgbox"><img src="./reti_cyber/esercitazione1_2_2.jpg" alt="Esercizio 1 - svolgimento parte 2" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
-<div class="box formula">
+
 <p>
 T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 200m / 2,8·10<sup>8</sup> m/s = 7,14·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,714 μs<br>
 T<sub>prop2</sub> = L<sub>2</sub> / V<sub>p</sub> = 100m / 2,8·10<sup>8</sup> m/s = 3,57·10<sup>-7</sup> s ≈ 0,357 μs<br>
 T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 160m / 2,8·10<sup>8</sup> m/s = 5,714·10<sup>-7</sup> s ≈ 0,571 μs<br>
 </p>
-</div>
+</div></div>
 <hr class="sep">
 
 <!-- ============ CAPITOLO 2 ============ -->
@@ -615,6 +610,7 @@ Tempo di risposta totale = 2·RTT + tempo di trasmissione del file
 <p><b>HTTP/2</b> nasce per superare i limiti di prestazioni di HTTP/1.1 (es. richieste bloccanti in sequenza); introduce tecniche come la suddivisione dei messaggi in frame, l'invio parallelo di più richieste/risposte su un'unica connessione TCP (multiplexing) e la possibilità per il server di assegnare priorità ai frame nelle connessioni con i singoli client.</p>
 <p><b>HTTP/3</b> si basa sul protocollo di trasporto <b>QUIC</b>, che integra le funzionalità di controllo di congestione, affidabilità e sicurezza (cifratura) tipiche di TCP + TLS ma a livello applicativo e sopra UDP, eliminando il problema dell'<i>head-of-line blocking</i> a livello di trasporto: la perdita di un pacchetto relativo a un singolo oggetto non blocca più la consegna degli altri oggetti multiplexati sulla stessa connessione.</p>
 
+
 <h3>Cookie</h3>
 <div class="box def">
 HTTP è un protocollo senza stato: non ricorda i messaggi che sono stati scambiati, dunque per il server ogni richiesta è come se fosse la prima volta che la vede.
@@ -705,7 +701,195 @@ T<sub>img</sub> = 4(T<sub>prop_LAN</sub>) + T<sub>trasm_img</sub> = 4(5 μs) + 1
 
 </div>
 
-<h3>Esercitazione 2: Funzionamento dei Cookie e Tracciamento</h3>
+<hr class="sep">
+
+<h3>Esercitazione 2: Esercizi su Connessioni HTTP, Cache del Client e GET Condizionale</h3>
+<p>Le due tracce seguenti richiedono i concetti di cache del client, GET condizionale e cookie appena introdotti, e vengono quindi proposte a questo punto della trattazione.</p>
+
+<div class="box esercizio">
+<h4>Esercizio 1</h4>
+<p>Un host, direttamente connesso ad un server tramite un canale privo di errori o perdite, richiede una 
+pagina web statica, di dimensione 3 kB, contenente due immagini di dimensioni 50 kB e 80 kB 
+rispettivamente. Nell’ipotesi che, subito dopo avere ricevuto i file richiesti, l’utente inoltri una seconda 
+richiesta per la stessa pagina, e che il client web implementi una cache del web, qual è il tempo totale 
+per lo scambio di file? 
+Si supponga che il protocollo utilizzato sia HTTP/1.1; si assuma inoltre che il canale abbia RTT = 1 
+ms, ampiezza di banda pari a 10 Mbps ed MTU = 1500 byte e che l’overhead complessivo di pacchetto 
+sia pari a 48 byte.<br><b>Note:</b><br> Per le dimensioni relative ai file si considerino le grandezze come potenze di 2 e quindi in particolare:<br>
+1 MB = 1.024 kB; 1 kB = 1.024 byte <br>
+Per le dimensioni relative ai tassi di trasmissione e alle ampiezze di banda si considerino le grandezze 
+come potenze di 10 e quindi in particolare:<br> 
+1 kbps = 1.000 bps; 1 Mbps = 1.000.000 bps </p>
+
+<div class="imgbox"><img src="./reti_cyber/esercizio1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+
+<div class="box formula">
+<p><b>Prima richiesta della pagina (oggetti non ancora in cache)</b></p>
+<p>Scambio di messaggi (connessione persistente, HTTP/1.1): il client apre la connessione (handshake TCP, 1 RTT), richiede <code>/index.html</code> e riceve il file base — FB (200 OK); non appena ricevuto, invia in pipeline le due richieste per <code>img1</code> (50 kB) e <code>img2</code> (80 kB), che il server serve in sequenza sulla stessa connessione; infine la connessione viene chiusa.</p>
+
+<div class="imgbox"><img src="./reti_cyber/esercizio1_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+
+<p><b>① Richiesta del file base</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: unipa.it
+Connection: open</code></pre>
+<p><b>② Risposta con il file base</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 3072
+Last-Modified: X
+(VUOTO)</code></pre>
+<p><i>conversione: (3kB in Byte: 3 * 1024 = 3072 Byte)</i></p>
+
+<p><b>③ Richiesta immagine 1</b></p>
+<pre><code>GET /topo.png HTTP/1.1
+Host: unipa.it
+Connection: open</code></pre>
+<p><b>④ Risposta con immagine 1</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/png
+Content-Length: 51200
+Last-Modified: Y
+(DATI)</code></pre>
+<p>(50 kB = 50·1024 = 51200 B)</p>
+
+<p><b>⑤ Richiesta immagine 2</b> (in pipeline con la ③, stesso schema)</p>
+<pre><code>GET /img2.png HTTP/1.1
+Host: unipa.it
+Connection: open</code></pre>
+<p><b>⑥ Risposta con immagine 2</b> (al termine la connessione viene chiusa)</p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/png
+Content-Length: 81920
+Last-Modified: Z
+(DATI)</code></pre>
+<p>(80 kB = 80·1024 = 81920 B)</p>
+
+<div class="imgbox"><img src="./reti_cyber/esercizio1_2_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+
+<p>RTT = 2·T<sub>prop</sub> (tempo di andata e ritorno). Il tempo totale della prima richiesta è quindi:</p>
+<p>T<sub>1</sub> = (T<sub>prop</sub>+T<sub>prop</sub>)<sub>handshake</sub> + (T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich./risp. ①②</sub> + T<sub>trasm</sub>(FB) + (T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich. pipeline ③⑤</sub> + T<sub>trasm</sub>(IMG1) + T<sub>trasm</sub>(IMG2)<br>
+T<sub>1</sub> = 3·RTT + T<sub>trasm</sub>(FB) + T<sub>trasm</sub>(IMG1) + T<sub>trasm</sub>(IMG2)</p>
+<p><b>Calcolo dei tempi di trasmissione</b><br>
+Payload = MTU − overhead = 1500 − 48 = <b>1452 B</b></p>
+<p><i>File base — FB (3 kB = 3.072 B)</i><br>
+N<sub>FB</sub> = ⌈3072/1452⌉ = ⌈2,12⌉ = <b>3 pacchetti</b><br>
+Dati<sub>trasm</sub>(FB) = 3072 + (3·48) = <b>3216 B</b><br>
+T<sub>trasm</sub>(FB) = 3216·8/10<sup>7</sup> bps = 2,573·10<sup>-3</sup> s ≈ <b>2,57 ms</b></p>
+<p><i>Immagine 1 (50 kB = 51.200 B)</i><br>
+N<sub>IMG1</sub> = ⌈51200/1452⌉ = ⌈35,26⌉ = <b>36 pacchetti</b><br>
+Dati<sub>trasm</sub>(IMG1) = 51200 + (36·48) = <b>52.928 B</b><br>
+T<sub>trasm</sub>(IMG1) = 52928·8/10<sup>7</sup> bps = 4,234·10<sup>-3</sup> s ≈ <b>4,23 ms</b></p>
+<p><i>Immagine 2 (80 kB = 81.920 B)</i><br>
+N<sub>IMG2</sub> = ⌈81920/1452⌉ = ⌈56,42⌉ = <b>57 pacchetti</b><br>
+Dati<sub>trasm</sub>(IMG2) = 81920 + (57·48) = <b>84.656 B</b><br>
+T<sub>trasm</sub>(IMG2) = 84656·8/10<sup>7</sup> bps = 6,772·10<sup>-3</sup> s ≈ <b>6,77 ms</b></p>
+<p><b>T<sub>1</sub></b> = 3·(1 ms) + 2,57 ms + 4,23 ms + 6,77 ms ≈ <b>16,58 ms</b></p>
+
+<p><b>Seconda richiesta della pagina (con cache del client, GET condizionali quasi simultanee/in pipeline)</b></p>
+
+<p><b>⑦ Richiesta condizionale del file base</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: unipa.it
+Connection: open
+If-Modified-Since: X</code></pre>
+<p><b>⑧ Risposta: file non modificato</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+
+<p><b>⑨ Richiesta condizionale immagine 1</b></p>
+<pre><code>GET /topo.png HTTP/1.1
+Host: unipa.it
+Connection: open
+If-Modified-Since: Y</code></pre>
+<p><b>⑩ Risposta: immagine non modificata</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+
+<p><b>⑪ Richiesta condizionale immagine 2</b> (in pipeline con la ⑨)</p>
+<pre><code>GET /img2.png HTTP/1.1
+Host: unipa.it
+Connection: open
+If-Modified-Since: Z</code></pre>
+<p><b>⑫ Risposta: immagine non modificata</b></p>
+<pre><code>HTTP/1.1 304 Not Modified
+Connection: open</code></pre>
+
+<p>Il client apre una nuova connessione (1 RTT di handshake ⑦-⑧... ), invia la GET condizionale (<code>If-Modified-Since</code>) per il file base ottenendo <code>304 Not Modified</code> (1 RTT), quindi, quasi simultaneamente/in pipeline, le GET condizionali per le due immagini, ottenendo per entrambe <code>304 Not Modified</code> (1 RTT complessivo). Le risposte 304 non trasportano il corpo del file, quindi il loro tempo di trasmissione è trascurabile.</p>
+<p>T<sub>1→2</sub> = 3·RTT = 3·1 ms = <b>3 ms</b></p>
+
+<p><b>Tempo totale per lo scambio di file</b><br>
+T<sub>tot</sub> = T<sub>1</sub> + T<sub>1→2</sub> ≈ 16,58 ms + 3 ms ≈ <b>19,58 ms</b></p>
+
+<p><b>Riepilogo dei risultati</b></p>
+<table class="dati">
+<tr><th>Grandezza</th><th>Valore</th></tr>
+<tr><td>Payload</td><td>1452 B</td></tr>
+<tr><td>N<sub>FB</sub> / Dati<sub>trasm</sub>(FB) / T<sub>trasm</sub>(FB)</td><td>3 pacchetti / 3216 B / 2,57 ms</td></tr>
+<tr><td>N<sub>IMG1</sub> / Dati<sub>trasm</sub>(IMG1) / T<sub>trasm</sub>(IMG1)</td><td>36 pacchetti / 52.928 B / 4,23 ms</td></tr>
+<tr><td>N<sub>IMG2</sub> / Dati<sub>trasm</sub>(IMG2) / T<sub>trasm</sub>(IMG2)</td><td>57 pacchetti / 84.656 B / 6,77 ms</td></tr>
+<tr><td>T<sub>1</sub> (prima richiesta)</td><td>≈ 16,58 ms</td></tr>
+<tr><td>T<sub>1→2</sub> (seconda richiesta, con cache)</td><td>3 ms</td></tr>
+<tr><td><b>T<sub>tot</sub></b></td><td><b>≈ 19,58 ms</b></td></tr>
+</table>
+</div>
+</div>
+
+<div class="box esercizio">
+<h4>Esercizio 2</h4>
+<p>Data la configurazione schematizzata in figura, si assuma che l'host H richieda una pagina web al server <code>www.ebay.com</code>, costituita da un file HTML di 12 kB e dall'immagine <code>www.foo.it/pics/img1.jpg</code> di 4 MB, e che, successivamente, lo stesso host richieda una pagina web al server <code>www.amazon.it</code>, costituita da un file HTML di 10 kB e dall'immagine <code>www.foo.it/pics/img2.jpg</code> di 3 MB.<br>
+Assumendo che tutte le interazioni avvengano con HTTP/1.1 e che il server <code>www.foo.it</code> utilizzi cookie di 100 byte, si calcoli il tempo totale necessario ad ottenere le due pagine.<br>
+Si considerino tutti i collegamenti caratterizzati da ampiezza di banda di 200 Mbps, tempo di propagazione medio pari a 0,1 ms, MTU pari a 1500 byte e overhead di 40 byte.</p>
+
+<div class="imgbox"><img src="./reti_cyber/esercizio2_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+
+<div class="box formula">
+<p>Topologia: H — R1 — www.ebay.com, con R2 e www.amazon.com a valle di R1; il server <code>www.foo.it</code>, che ospita le immagini, è raggiungibile da H attraverso R1 e R2 (non è collocato sugli stessi host di ebay/amazon), quindi le immagini vanno recuperate con richieste separate verso <code>www.foo.it</code>. Il tempo di attraversamento dei router R1/R2 è considerato trascurabile; le risposte contenenti il file base e le immagini vengono frammentate su più pacchetti (in base a MTU e overhead) per il loro invio.</p>
+<p>Payload = MTU − overhead = 1500 − 40 = <b>1460 B</b></p>
+
+<p><i>Per il funzionamento e la struttura dell'header <code>Set-Cookie</code>/<code>Cookie</code> si veda il paragrafo <b>"Cookie"</b> trattato in precedenza in questa dispensa; qui ci si limita a considerarne il peso (100 B) nel calcolo dei dati trasmessi.</i></p>
+
+<div class="imgbox"><img src="./reti_cyber/esercizio2_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+
+<p><b>① Richiesta del file base a www.ebay.com</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: www.ebay.com
+Connection: open</code></pre>
+
+<p><b>② Risposta con il file base (FB), frammentata su più pacchetti</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 12288</code></pre>
+<p>(12 kB = 12·1024 = 12288 B; il file base referenzia l'immagine <code>www.foo.it/pics/img1.jpg</code>)</p>
+
+<p><b>③ Richiesta dell'immagine a www.foo.it</b> (attraverso R1 e R2)</p>
+<pre><code>GET /pics/img1.jpg HTTP/1.1
+Host: www.foo.it
+Connection: open</code></pre>
+
+<p><b>④ Risposta con l'immagine, frammentata su più pacchetti, con cookie impostato dal server</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/jpg
+Content-Length: 4194304
+Set-Cookie: X12</code></pre>
+<p>IMG1 = 4 MB = 4·1024·1024 = <b>4.194.304 B</b>; cookie = <b>100 B</b></p>
+
+<p><b>Peso del messaggio con cookie</b><br>
+Size(msg<sub>IMG1</sub>) = Size(IMG1) + Size(cookie) = 4.194.304 + 100 = <b>4.194.404 B</b><br>
+N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
+
+<p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p>
+</div>
+</div>
+
+<hr class="sep">
+
+<h3>Esercitazione 3: Funzionamento dei Cookie e Tracciamento</h3>
 <div class="box esercizio">
 <h4>Traccia dell'esercizio</h4>
 <p>Un client visita per la prima volta la pagina web <code>zeppe.it/index.html</code>. Questa pagina contiene al suo interno un'immagine ospitata su un server di terze parti, <code>foo.it/img1.png</code>. Dopo una settimana, lo stesso utente visita un sito di scarpe, <code>scarpe.it/index.html</code>, all'interno del quale è presente un banner ospitato sempre dal server di tracciamento <code>foo.it/banners.gif</code>.</p>
@@ -882,7 +1066,7 @@ T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,88 + 57,
 <p><b>Database distribuito e gerarchico</b>: Server DNS radice → Server DNS com / org / edu (TLD = Top-Level Domain) → Server DNS autoritativi (3 livelli).</p>
 <p><b>Auto-relativi</b>: il client vuole l'IP di <code>www.amazon.com</code>; il client interroga il server radice per trovare il server DNS com; il client interroga il server DNS com per ottenere l'indirizzo IP di <code>www.amazon.com</code>.</p>
 
-<h3>Esercitazione 3 — Risoluzione DNS gerarchica</h3>
+<h3>Esercitazione 4 — Risoluzione DNS gerarchica</h3>
 <h4>Esercizio (DNS e HTTP)</h4>
 <div class="box esercizio">
 <p>Si consideri una rete in cui l'host H deve scaricare una Pagina Web (file base) di 300 KB situata sul server s1.foo.it e una successiva Immagine di 1 MB situata sul server s2.foo.it. La rete è caratterizzata da una larghezza di banda R di 100 Mbps, una MTU di 1500 B e un overhead trascurabile. Prima dello scaricamento dei file tramite protocollo HTTP, l'host deve effettuare la risoluzione dei nomi a dominio tramite protocollo DNS. Si calcolino i tempi necessari per ottenere il file base e l'immagine, considerando che per la seconda richiesta il DNS locale utilizza i dati in cache per contattare direttamente il DNS Autorevole.</p>
@@ -1204,10 +1388,10 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 <div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg" alt="Esercizio 1 TCP - svolgimento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">
 File = 4KB<br>R = 10Mbs<br>RTT = 2ms<br>MSS = 512byte<br><br>N = 4·1024/512 = 8 pacchetti.
-</div>
+
 <div class="imgbox"><img src="./reti_cyber/esercizi_tcp1_grafico.jpg" alt="Esercizio 1 TCP - svolgimento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
-<div class="box formula">
+
 T<sub>F</sub> = SRTT + 4·T<sub>trans1</sub> + 4·T<sub>tras2</sub> &lt; SRTT + 8·T<sub>trans</sub><br>
 T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br>
 409,6 µs = 0,04096 ms<br>
@@ -1221,28 +1405,26 @@ T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br>
 
 <div class="box formula">
 File = 5KB<br>R = 10Mbs<br>RTT = 2ms<br>MSS = 512byte<br>W = 4<br>Overhead = 0<br>3°segmento perso<br><br>N = 5·1024/512 = 10 pacchetti
-</div>
 
 <div class="imgbox"><img src="./reti_cyber/esercizi_tcp2.jpg" alt="Esercizio 2 TCP - svolgimento" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
-<div class="box formula">
 3·T<sub>Trans</sub> + T<sub>out</sub> &lt; 2RTT + 3·T<sub>Tras</sub><br>4,5 < 4 ? No avviene prima il triplice ACK<br><br>
 T<sub>Tras</sub> = (MSS+Overhead)·8/R = 512·8/10 = 409,6 µs<br>
 T = 5·RTT + 7·T<sub>Tras</sub> ≈ 12,87 ms
 </div>
 </div>
+
 <div class="box esercizio">
 <h4>Esercizio 3 — controllo di congestione + controllo di flusso</h4>
 <p>Si assuma che due host A e B siano direttamente connessi tramite un link privo di errori/perdite con ampiezza di banda 10 Mbps, RTT = 2 ms, MSS = 512 byte. L'host A invia all'host B un file di dimensione 5 kB, e al termine dell'handshake l'applicazione in esecuzione sull'host B rimane bloccata nell'interazione con l'utente per 12 ms, e al termine elabora tutti i segmenti ricevuti ed invia all'host A un segmento con payload di 1 byte. La dimensione del buffer di ricezione di B è pari a 5MSS. Si calcoli il tempo totale necessario alla trasmissione del file valutando l'impatto delle tecniche per il controllo della congestione e del controllo del flusso.</p>
 
 <div class="box formula">
-B = 10Mbps<br>RTT = 2ms<br>MSS = 5KB<br>Blocco applicativo = 12ms<br>Payload = 1ms<br>W = 5<br>Overhead 0 0<br><br>N = 5·1024/512 = 10 pacchetti</div>
+B = 10Mbps<br>RTT = 2ms<br>MSS = 5KB<br>Blocco applicativo = 12ms<br>Payload = 1ms<br>W = 5<br>Overhead 0 0<br><br>N = 5·1024/512 = 10 pacchetti
 
 <div class="imgbox"><img src="./reti_cyber/esercizio_sr2.jpg" alt="placeholder corretto sotto" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
-<div class="box formula">
 Slow start con RcvWindow che limita la crescita della finestra (CW≤RcvWin); blocco applicativo di 12 ms.<br>
 T<sub>Trasm</sub> = MTU/R = (MSS+Overhead)·8/R = (512·8)/10 Mbps = 409,6 µs = 0,409 ms<br>
 T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <b>20,045 ms</b>
@@ -1276,7 +1458,7 @@ T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <
 <b>Dilemma</b>: con esempio N seq = 0,1,2,3 e dimensione finestra=3, occorrono <b>2N</b> sequenze per risolvere il problema dell'ambiguità (es. pacchetti vecchi vs nuovi con stesso numero di sequenza).
 </div>
 
-<h3>Esercitazione 04 — Go-Back-N</h3>
+<h3>Esercitazione 5 — Go-Back-N</h3>
 <div class="box esercizio">
 <h4>Esercizio 1</h4>
 <p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5 kB, usando il protocollo <b>GoBackN</b>. Si assuma un RTT tra i due host pari a 0,2 ms ed ampiezze di banda per i due collegamenti rispettivamente pari a R1=200 Mbps e R2=100 Mbps, MSS=256 byte, overhead di pacchetto trascurabili e timeout pari ad 1 ms. Ipotizzando che si perda il <b>quinto segmento</b>, e che la dimensione statica della finestra di spedizione sia pari a 4MSS, si calcolino il <i>throughput</i> e il <i>goodput</i>.</p>
@@ -1317,7 +1499,7 @@ Goodpout = File/Tempo<sub>tot</sub> = 2560·8/0,00073312 = 27,94Mbps
 </div>
 <hr class="sep">
 
-<h3>Esercitazione — Selective Repeat</h3>
+<h3>Esercitazione 6 — Selective Repeat</h3>
 <div class="box esercizio">
 <h4>Esercizio 3</h4>
 <p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5kB, usando il protocollo <b>Selective Repeat</b>. RTT = 0,2 ms, L1=100 Mbps, L2=200 Mbps, MSS=256 byte, overhead trascurabile, timeout = 1 ms. Si perde il <b>quarto segmento</b>, finestra statica = 4MSS. Si calcolino throughput e goodput.<br>
