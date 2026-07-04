@@ -533,6 +533,19 @@
       </header>
       <p style="color:var(--ink-soft); margin: 0 0 20px;">Solo formule, per consultazione rapida ed esercizi &middot; basato sulla dispensa del corso (Prof.ssa A. De Paola, UniPa).</p>
 
+      <div class="f wide" style="border-left-color:#c98a2e; background:#fff7e6; margin-bottom: 26px;">
+        <div class="name" style="color:#a8701f;">⚠ Regola d'oro sulle unità — leggere prima di ogni esercizio</div>
+        <div class="note" style="font-size:0.92em; color:var(--ink); margin-top:8px;">
+          <b>1. Dimensioni dei dati</b> (File, MSS, MTU, payload, header/overhead) → si usano <b>potenze di 2</b>:<br>
+          &nbsp;&nbsp;1 KB = 1024 B &nbsp;·&nbsp; 1 MB = 1024 KB = 1.048.576 B &nbsp;·&nbsp; 1 B = 8 bit<br><br>
+          <b>2. Velocità/tassi di trasmissione</b> (R, banda del link, throughput, goodput) → si usano <b>potenze di 10</b>:<br>
+          &nbsp;&nbsp;1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Gbps = 10⁹ bps<br><br>
+          <b>3. Prima di dividere due grandezze, portale sempre alla stessa unità.</b> Il caso più comune è N = File/MSS: se File è dato in KB/MB e MSS in byte, va prima convertito il File in byte (·1024 o ·1024²), <u>non</u> il contrario.<br>
+          <i>Es.: File = 2,5 KB, MSS = 256 B &nbsp;→&nbsp; File in byte = 2,5 · 1024 = 2560 B &nbsp;→&nbsp; N = 2560 / 256 = 10 pacchetti.</i><br><br>
+          <b>4. Per i tempi di trasmissione</b> (T = L/R) L va in <b>bit</b> e R in <b>bps</b>: se una dimensione è data in byte, moltiplicarla ×8 prima di dividere per R.
+        </div>
+      </div>
+
       <h3 class="subsection" id="sec-f1">1. Ritardi e trasmissione</h3>
       <div class="formule-grid">
         <div class="f">
@@ -568,10 +581,12 @@
 
       <h3 class="subsection" id="sec-f2">2. Numero di pacchetti / frammentazione</h3>
       <div class="formule-grid">
-        <div class="f">
+        <div class="f wide">
           <div class="name">Numero di pacchetti</div>
           <div class="formula">N = ⌈S<sub>mess</sub> / PL⌉</div>
-          <div class="note">S<sub>mess</sub> = dimensione messaggio, PL = payload per pacchetto</div>
+          <div class="note">S<sub>mess</sub> = dimensione messaggio (in <b>byte</b>), PL = payload utile per pacchetto (in <b>byte</b>). Se S<sub>mess</sub> è dato in KB/MB, convertilo prima in byte — vedi box unità sopra.<br>
+          <i>Es. (KB): S<sub>mess</sub> = 2 KB, PL = 536 B &nbsp;→&nbsp; S<sub>mess</sub> in byte = 2 · 1024 = 2048 B &nbsp;→&nbsp; N = ⌈2048/536⌉ = ⌈3,82⌉ = 4 pacchetti.</i><br>
+          <i>Es. (MB): S<sub>mess</sub> = 3 MB, PL = 536 B &nbsp;→&nbsp; S<sub>mess</sub> in byte = 3 · 1024 · 1024 = 3.145.728 B &nbsp;→&nbsp; N = ⌈3.145.728/536⌉ = ⌈5868,9⌉ = 5869 pacchetti.</i></div>
         </div>
         <div class="f">
           <div class="name">Dimensione ultimo pacchetto</div>
@@ -584,7 +599,8 @@
         </div>
         <div class="f">
           <div class="name">Conversioni comuni</div>
-          <div class="formula">1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Byte = 8 bit &nbsp;·&nbsp; 1 KB = 1024 B</div>
+          <div class="formula">1 Mbps = 10⁶ bps &nbsp;·&nbsp; 1 Byte = 8 bit &nbsp;·&nbsp; 1 KB = 1024 B &nbsp;·&nbsp; 1 MB = 1024 KB</div>
+          <div class="note">Dimensioni file/pacchetti → potenze di 2 (KB, MB). Velocità/banda → potenze di 10 (Mbps, Gbps). Non mischiare le due basi nello stesso calcolo.</div>
         </div>
       </div>
 
@@ -613,23 +629,26 @@
 
       <h3 class="subsection" id="sec-f4">4. TCP — finestra, throughput, goodput</h3>
       <div class="formule-grid">
-        <div class="f">
+        <div class="f wide">
           <div class="name">Numero di segmenti</div>
-          <div class="formula">N = File / MSS</div>
+          <div class="formula">N = File(byte) / MSS(byte)</div>
+          <div class="note">File e MSS devono essere nella <b>stessa unità (byte)</b> prima di dividere. Il File è quasi sempre dato in KB/MB (potenze di 2): convertilo in byte con ·1024 (KB→B) o ·1024² (MB→B). L'MSS è quasi sempre già in byte, non va convertito.<br>
+          <i>Es.: File = 5 kB, MSS = 512 B &nbsp;→&nbsp; File in byte = 5·1024 = 5120 B &nbsp;→&nbsp; N = 5120/512 = 10 segmenti.</i></div>
         </div>
         <div class="f">
           <div class="name">Frequenza d'invio (regime)</div>
           <div class="formula">freq. invio ≈ CongWin / RTT &nbsp;[byte/s]</div>
+          <div class="note">CongWin in byte, RTT in secondi → risultato in byte/s. Per confrontarlo con la banda del link (in bps) moltiplicare ×8.</div>
         </div>
         <div class="f">
           <div class="name">Throughput</div>
-          <div class="formula">Throughput = Dati<sub>trasmessi totali</sub> / T<sub>tot</sub></div>
-          <div class="note">include ritrasmissioni (dati "sprecati")</div>
+          <div class="formula">Throughput = Dati<sub>trasmessi totali</sub>·8 / T<sub>tot</sub></div>
+          <div class="note">include anche le ritrasmissioni (dati "sprecati"). Dati in byte ×8 per avere bit, T<sub>tot</sub> in secondi → risultato in bps (dividi per 10⁶ per i Mbps).</div>
         </div>
         <div class="f">
           <div class="name">Goodput</div>
-          <div class="formula">Goodput = Dati<sub>utili (file)</sub> / T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub></div>
-          <div class="note">solo dati utili consegnati, esclude ritrasmissioni</div>
+          <div class="formula">Goodput = Dati<sub>utili (file)</sub>·8 / T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub></div>
+          <div class="note">solo dati utili consegnati (esclude ritrasmissioni). N·MSS = dimensione file in byte; ·8 converte in bit; T<sub>tot</sub> in secondi → risultato in bps.</div>
         </div>
         <div class="f wide">
           <div class="name">Dilemma numeri di sequenza (GBN / SR)</div>
