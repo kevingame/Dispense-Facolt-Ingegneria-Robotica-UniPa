@@ -892,7 +892,7 @@ N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
 <h3>Esercitazione 3: Funzionamento dei Cookie e Tracciamento</h3>
 <div class="box esercizio">
 <h4>Traccia dell'esercizio</h4>
-<p>Un client visita per la prima volta la pagina web <code>zeppe.it/index.html</code>. Questa pagina contiene al suo interno un'immagine ospitata su un server di terze parti, <code>foo.it/img1.png</code>. Dopo una settimana, lo stesso utente visita un sito di scarpe, <code>scarpe.it/index.html</code>, all'interno del quale è presente un banner ospitato sempre dal server di tracciamento <code>foo.it/banners.gif</code>.</p>
+<p>Un client visita per la prima volta la pagina web <code>zappe.it/index.html</code>. Questa pagina contiene al suo interno un'immagine ospitata su un server di terze parti, <code>foo.it/img1.png</code>. Dopo una settimana, lo stesso utente visita un sito di scarpe, <code>scarpe.it/index.html</code>, all'interno del quale è presente un banner ospitato sempre dal server di tracciamento <code>foo.it/banners.gif</code>.</p>
 <p>Descrivere lo scambio di messaggi HTTP tra client e server, illustrando come il server <code>foo.it</code> utilizzi i cookie per tracciare l'utente attraverso siti differenti e fornire contenuti personalizzati.</p>
 
 <div class="box formula">
@@ -900,10 +900,10 @@ N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
 
 <p>Il protocollo HTTP è intrinsecamente <strong>senza stato (stateless)</strong>. I cookie rappresentano un artificio tecnico che permette al server di ricordare le interazioni passate dell'utente. Tramite questo meccanismo, il server attribuisce un identificativo anonimo al client durante la prima interazione, e il client lo riutilizzerà in seguito per farsi riconoscere. Affinché funzioni, il server deve possedere un database dove salvare tutti gli identificativi assegnati.</p>
 
-<h5>Fase 1: Prima interazione (Client senza cookie su zeppe.it)</h5>
+<h5>Fase 1: Prima interazione (Client senza cookie su zappe.it)</h5>
 <ul>
     <li>Nella primissima richiesta verso <code>foo.it</code>, il client non invia alcun cookie poiché non gli è stato ancora assegnato.</li>
-    <li>Il client invia la richiesta iniziale per la pagina base a <code>zeppe.it</code>, che risponde con il file HTML (200 OK) contenente il riferimento all'oggetto <code>img1.png</code> ospitato su <code>foo.it</code>.</li>
+    <li>Il client invia la richiesta iniziale per la pagina base a <code>zappe.it</code>, che risponde con il file HTML (200 OK) contenente il riferimento all'oggetto <code>img1.png</code> ospitato su <code>foo.it</code>.</li>
     <li>Il client effettua quindi una richiesta al server di terze parti <code>foo.it</code>:
 <pre><code>GET /img1.png HTTP/1.1
 Host: foo.it
@@ -930,7 +930,7 @@ Host: foo.it
 Connection: open
 Cookie: 1518</code></pre>
     </li>
-    <li>Il server <code>foo.it</code> legge l'header <code>Cookie: 1518</code> e consulta il proprio database per risalire allo storico della sessione dell'utente, sapendo che aveva già visitato <code>zeppe.it</code> in precedenza.</li>
+    <li>Il server <code>foo.it</code> legge l'header <code>Cookie: 1518</code> e consulta il proprio database per risalire allo storico della sessione dell'utente, sapendo che aveva già visitato <code>zappe.it</code> in precedenza.</li>
     <li>Riconoscendo il profilo dell'utente, il server elabora una risposta mirata, proponendo ad esempio una pubblicità personalizzata come "un dondolo da giardino".</li>
 </ul>
 <div class="imgbox"><img src="./reti_cyber/ese_cookie.jpg" alt="Funzionamento GET condizionale" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
