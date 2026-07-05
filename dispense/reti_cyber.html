@@ -1200,6 +1200,79 @@ T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,
 <p><b>Database distribuito e gerarchico</b>: Server DNS radice → Server DNS com / org / edu (TLD = Top-Level Domain) → Server DNS autoritativi (3 livelli).</p>
 <p><b>Auto-relativi</b>: il client vuole l'IP di <code>www.amazon.com</code>; il client interroga il server radice per trovare il server DNS com; il client interroga il server DNS com per ottenere l'indirizzo IP di <code>www.amazon.com</code>.</p>
 
+<h3>Server DNS locale</h3>
+<ul>
+  <li>Non appartiene strettamente alla gerarchia dei server</li>
+  <li>Ciascun ISP (università, società, ISP residenziale) ha un server DNS locale, detto anche "default name server"</li>
+  <li>Quando un host effettua una richiesta DNS, la query viene inviata al suo server DNS locale: il server DNS locale opera da proxy e inoltra la query in una gerarchia di server DNS</li>
+</ul>
+
+<h3>DNS: server DNS radice</h3>
+<ul>
+  <li>Contattato da un server DNS locale che non può tradurre il nome</li>
+  <li>Il server DNS radice contatta un server DNS autorizzato se non conosce la corrispondenza, ottiene la corrispondenza e la restituisce al server DNS locale</li>
+</ul>
+<p>Esistono 13 server DNS radice nel mondo (13 cluster di server), gestiti da diverse organizzazioni: tra queste Verisign (Dulles, VA e altre 11 locazioni), Cogent (Herndon, VA e Los Angeles), University of Maryland (College Park, MD), US DoD (Vienna, VA), ARL (Aberdeen, MD), NASA (Mt View, CA), Internet Software Consortium (Palo Alto, CA, e altre 17 locazioni), USC-ISI (Marina del Rey, CA), ICANN (Los Angeles, CA), RIPE (Londra, Amsterdam, Francoforte), Autonomica (Stoccolma e altre 3 locazioni), WIDE (Tokyo).</p>
+
+<h3>Server TLD e server di competenza</h3>
+<ul>
+  <li><b>Server TLD (top-level domain)</b>: si occupano dei domini com, org, net, edu, ecc. e di tutti i domini locali di alto livello, quali uk, fr, ca e jp. Ad esempio, Network Solutions gestisce i server TLD per il dominio .com, mentre Educause gestisce quelli per il dominio .edu</li>
+  <li><b>Server di competenza (authoritative server)</b>: ogni organizzazione dotata di host Internet pubblicamente accessibili (quali i server web e i server di posta) deve fornire i record DNS di pubblico dominio che mappano i nomi di tali host in indirizzi IP; possono essere mantenuti dall'organizzazione stessa o dal service provider</li>
+</ul>
+
+<h3>Esempio: risoluzione di gaia.cs.umass.edu</h3>
+<p>L'host <code>cis.poly.edu</code> vuole l'indirizzo IP di <code>gaia.cs.umass.edu</code>. Sono possibili due modalità di interrogazione:</p>
+
+<div class="box def">
+<b>Query iterativa</b>: il server contattato risponde con il nome del server da contattare successivamente ("io non conosco questo nome, ma puoi chiederlo a questo server"). Il percorso tipico è: Host richiedente → server DNS locale → server DNS radice → server DNS locale → server DNS TLD → server DNS locale → server DNS di competenza → server DNS locale → Host richiedente. In questo modo è il client (tramite il proprio server DNS locale) a ripetere la richiesta a ciascun server indicato, passo dopo passo.
+</div>
+
+<div class="box def">
+<b>Query ricorsiva</b>: il compito di tradurre il nome viene affidato al server DNS contattato, che si occupa lui stesso di interrogare gli altri server della gerarchia (radice, TLD, di competenza) e restituisce direttamente la risposta finale al server DNS locale, che poi la inoltra all'host richiedente. È un compito più oneroso per i server intermedi, motivo per cui in pratica viene usato soprattutto tra host e server DNS locale, mentre tra i server della gerarchia si preferisce la modalità iterativa.
+</div>
+
+<h3>DNS: caching e aggiornamento dei record</h3>
+<ul>
+  <li>Una volta che un server DNS impara la corrispondenza, la mette nella cache: le informazioni nella cache vengono invalidate (spariscono) dopo un certo periodo di tempo</li>
+  <li>Tipicamente un server DNS locale memorizza nella cache gli indirizzi IP dei server TLD, quindi i server DNS radice non vengono visitati spesso</li>
+  <li>I meccanismi di aggiornamento/notifica sono progettati da IETF (RFC 2136)</li>
+</ul>
+
+<h3>Record DNS</h3>
+<p>Il DNS è un <b>database distribuito</b> che memorizza i record di risorsa (RR). Formato di un RR: <code>(name, value, type, ttl)</code>.</p>
+<table class="dati">
+<tr><th>Type</th><th>Significato di <i>name</i></th><th>Significato di <i>value</i></th></tr>
+<tr><td><b>A</b></td><td>nome dell'host</td><td>indirizzo IP</td></tr>
+<tr><td><b>NS</b></td><td>dominio (es. foo.com)</td><td>nome del server di competenza di questo dominio</td></tr>
+<tr><td><b>CNAME</b></td><td>nome alias di qualche nome "canonico" (nome vero); es. <code>www.ibm.com</code> è in realtà <code>servereast.backup2.ibm.com</code></td><td>nome canonico</td></tr>
+<tr><td><b>MX</b></td><td>nome dell'host/dominio</td><td>nome del server di posta associato a <i>name</i></td></tr>
+</table>
+
+<h3>Messaggi DNS</h3>
+<p>Il protocollo DNS prevede messaggi di domanda (query) e di risposta, entrambi con lo stesso formato.</p>
+<p><b>Intestazione del messaggio</b>:</p>
+<ul>
+  <li><b>Identificazione</b>: numero di 16 bit per la domanda; la risposta alla domanda usa lo stesso numero</li>
+  <li><b>Flag</b>: indicano se il messaggio è una domanda o una risposta, se è richiesta la ricorsione, se la ricorsione è disponibile, e se la risposta è di competenza</li>
+</ul>
+<p>Oltre all'intestazione, il messaggio contiene: i campi per il nome richiesto e il tipo di domanda; gli RR nella risposta alla domanda; i record per i server di competenza; ed eventuali informazioni extra che possono essere usate.</p>
+
+<h3>Inserire record nel database DNS</h3>
+<div class="box esercizio">
+<h4>Esempio: registrazione di un nuovo dominio</h4>
+<p>Supponiamo di aver appena avviato la nuova società "Network Utopia". Occorre registrare il nome <code>networkutopia.com</code> presso un registrar (ad esempio, Network Solutions):</p>
+<ul>
+  <li>Si forniscono al registrar i nomi e gli indirizzi IP dei server DNS di competenza (primario e secondario)</li>
+  <li>Il registrar inserisce due RR nel server TLD <code>com</code>:
+    <ul>
+      <li><code>(networkutopia.com, dns1.networkutopia.com, NS)</code></li>
+      <li><code>(dns1.networkutopia.com, 212.212.212.1, A)</code></li>
+    </ul>
+  </li>
+  <li>Si inserisce poi nel server di competenza un record di tipo A per <code>www.networkutopia.com</code> e un record di tipo MX per <code>networkutopia.com</code></li>
+</ul>
+</div>
+
 <h3>Esercitazione 4 — Risoluzione DNS gerarchica</h3>
 <h4>Esercizio (DNS e HTTP)</h4>
 <div class="box esercizio">
