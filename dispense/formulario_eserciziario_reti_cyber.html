@@ -550,11 +550,11 @@
       <div class="formule-grid">
         <div class="f">
           <div class="name">Tempo di trasmissione</div>
-          <div class="formula">T<sub>trasm</sub> = L / R</div>
-          <div class="note">L in <b>bit</b>, R in <b>bps</b>. Se L è dato in byte, moltiplica ×8; se R è dato in Mbps/Gbps, moltiplica ×10⁶/×10⁹ per averlo in bps.</div>
+          <div class="formula">T<sub>trasm</sub> = D / R</div>
+          <div class="note">D è la dimensione totale del file trasmesso in <b>bit</b> D<sub>tot</sub> = S<sub>mss</sub> + (N · 8), R in <b>bps</b>. Se L è dato in byte, moltiplica ×8; se R è dato in Mbps/Gbps, moltiplica ×10⁶/×10⁹ per averlo in bps.</div>
         </div>
         <div class="f wide">
-          <div class="name">Tempo di trasmissione (con overhead)</div>
+          <div class="name">Tempo di trasmissione singolo pachetto (con overhead)</div>
           <div class="formula">T<sub>trasm</sub> = MTU · 8 / R &nbsp;&nbsp;con&nbsp;&nbsp; MTU = MSS + overhead</div>
           <div class="note"><b>MSS è il payload</b> (dati utili del segmento, senza header), <b>MTU</b> è la dimensione totale realmente trasmessa sul link (payload + overhead/header). Quindi T<sub>trasm</sub> = (MSS + overhead) · 8 / R è la stessa cosa scritta in termini di MSS invece di MTU. Se le dimensioni sono in byte, ·8 converte in bit; se R è in Mbps ricorda 1 Mbps = 10⁶ bps.<br>
           <i>Es.: MSS = 256 B, overhead ≈ 0 → MTU = 256 B, R = 200 Mbps &nbsp;→&nbsp; L = 256·8 = 2048 bit; R = 200·10⁶ = 200.000.000 bps &nbsp;→&nbsp; T<sub>trasm</sub> = 2048/200.000.000 = 1,024·10⁻⁵ s = 0,01024 ms.</i></div>
@@ -607,12 +607,16 @@
           <i>Es. (MB): S<sub>mess</sub> = 3 MB, PL = 536 B &nbsp;→&nbsp; S<sub>mess</sub> in byte = 3 · 1024 · 1024 = 3.145.728 B &nbsp;→&nbsp; N = ⌈3.145.728/536⌉ = ⌈5868,9⌉ = 5869 pacchetti.</i></div>
         </div>
         <div class="f">
+          <div class="name">Dimensione trasmessa totale</div>
+          <div class="formula">D<sub>tot</sub> = S<sub>mess</sub> + (N·OH)</div>
+        </div>
+        <div class="f">
           <div class="name">Dimensione ultimo pacchetto</div>
           <div class="formula">S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL</div>
         </div>
         <div class="f">
           <div class="name">Payload utile</div>
-          <div class="formula">PL = MTU − overhead</div>
+          <div class="formula">PL = MTU − overhead; MSS = PL</div>
           <div class="note">es. MTU 1500 B − 40 B header = 1460 B. PL è lo stesso concetto di MSS (il payload/dati utili): MTU = PL + overhead = MSS + overhead.</div>
         </div>
         <div class="f wide">
