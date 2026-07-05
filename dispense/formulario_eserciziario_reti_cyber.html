@@ -762,7 +762,7 @@
               <div class="ex-statement"><p>Si vuole trasmettere un messaggio di dimensione <b>3 MB</b> attraverso la rete a commutazione di pacchetto schematizzata in figura (Host A — R1 — R2 — Host B). I 3 link sono lunghi rispettivamente 100 m, 50 m e 80 m, ed ognuno ha un'ampiezza di banda pari a 512 kbps e velocità di propagazione 2,8×10⁸ m/s. Si calcoli il tempo necessario a trasmettere l'intero messaggio assumendo pacchetti di 536 byte di payload, con overhead di 28 byte.</p>
 <p><i>Nota: per le dimensioni dei file si usano potenze di 2; per i tassi di trasmissione potenze di 10.</i></p>
 <p>Domande aggiuntive: (a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto? (b) Dopo quanto tempo riceve interamente il secondo pacchetto? (c) Tempo totale per l'intero messaggio.</p>
-<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 1" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 1" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-1">Il tuo procedimento</label>
                 <textarea id="ta-1" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -781,7 +781,7 @@ Numero di pacchetti:
 N = ⌈S<sub>mess</sub> / PL⌉ = ⌈3 MB / 536 byte⌉ = ⌈5868,89⌉ = 5869 pacchetti<br/>
 Come calcoliamo la dimensione dell'ultimo pacchetto?<br/>
 S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 3·2²⁰ − 5868·536 = 480 byte
-<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2.jpg?v=2"/></div>
 <p class="caption">Calcolo dei tempi di propagazione T<sub>prop1,2,3</sub>, del tempo di trasmissione T<sub>Tras</sub>, e risposte ai punti a) b) c).</p>
 T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 100m / 2,8·10<sup>8</sup> m/s = 3,57·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,357 μs<br/>
 T<sub>prop2</sub> = L<sub>2</sub> / V<sub>p</sub> = 50m / 2,8·10<sup>8</sup> m/s = 1,78·10<sup>-7</sup> s ≈ 0,178 μs<br/>
@@ -810,7 +810,7 @@ T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)�
                 </label>
               </div>
               <div class="ex-statement"><p>Si vuole trasmettere un messaggio di dimensione <b>2 KB</b> attraverso la stessa topologia. Ogni link è lungo 200 m, 100 m e 160 m, ed ha velocità di propagazione 2,8×10⁸ m/s. I 3 link hanno ampiezza di banda rispettivamente pari a 200 Mbps, 20 Mbps e 2 Gbps. Si assumano pacchetti di 536 byte di payload, con overhead di 28 byte. Si calcolino gli eventuali ritardi di accodamento subiti dai pacchetti lungo il percorso e il tempo necessario a trasmettere l'intero messaggio.</p>
-<div class="imgbox"><img alt="Esercizio 2 - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio 2 - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-2">Il tuo procedimento</label>
                 <textarea id="ta-2" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -824,7 +824,7 @@ T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)�
                 <div class="solution-panel" id="sol-2" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body"><p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1026byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br/>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 392 byte<br/>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p>
-<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2_2.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio 1 - svolgimento parte 2" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_2_2.jpg?v=2"/></div>
 <p>
 T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 200m / 2,8·10<sup>8</sup> m/s = 7,14·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,714 μs<br/>
 T<sub>prop2</sub> = L<sub>2</sub> / V<sub>p</sub> = 100m / 2,8·10<sup>8</sup> m/s = 3,57·10<sup>-7</sup> s ≈ 0,357 μs<br/>
@@ -856,7 +856,7 @@ T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 160m / 2,8·10<sup>8</sup> m
                 </label>
               </div>
               <div class="ex-statement"><p>Data la configurazione indicata in figura si supponga che l'host1 richieda al web server remoto tramite protocollo HTTP/1.1 una pagina web di dimensione 3 kB contenente al suo interno una immagine di 1.5 MB. Successivamente anche l'host2 richiede la stessa pagina. Supponendo che entrambi gli host siano configurati per utilizzare il proxy e che la pagina sia statica, si calcolino i tempi per entrambe le trasmissioni. Si assuma che il RTT tra due host della LAN sia pari in media a 10 μs, che il link L sia lungo 500 m e abbia velocità di propagazione 2,8×10⁸ m/s e che le ampiezze di banda per la LAN e per il link L siano di 100 Mbps. Si assuma inoltre una MTU pari a 1500 byte e un overhead complessivo di pacchetto pari a 48 byte e si considerino i canali privi di errori o perdite.</p>
-<div class="imgbox"><img alt="Esercizio 3 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_3.jpg"/>
+<div class="imgbox"><img alt="Esercizio 3 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_3.jpg?v=2"/>
 </div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-3">Il tuo procedimento</label>
@@ -923,7 +923,7 @@ sia pari a 48 byte.<br/><b>Note:</b><br/> Per le dimensioni relative ai file si 
 Per le dimensioni relative ai tassi di trasmissione e alle ampiezze di banda si considerino le grandezze 
 come potenze di 10 e quindi in particolare:<br/> 
 1 kbps = 1.000 bps; 1 Mbps = 1.000.000 bps </p>
-<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_html.jpg"/></div></div>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_html.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-4">Il tuo procedimento</label>
                 <textarea id="ta-4" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -938,7 +938,7 @@ come potenze di 10 e quindi in particolare:<br/>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body"><p><b>Prima richiesta della pagina (oggetti non ancora in cache)</b></p>
 <p>Scambio di messaggi (connessione persistente, HTTP/1.1): il client apre la connessione (handshake TCP, 1 RTT), richiede <code>/index.html</code> e riceve il file base — FB (200 OK); non appena ricevuto, invia in pipeline le due richieste per <code>img1</code> (50 kB) e <code>img2</code> (80 kB), che il server serve in sequenza sulla stessa connessione; infine la connessione viene chiusa.</p>
-<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_1_html.jpg"/></div>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_1_html.jpg?v=2"/></div>
 <p><b>① Richiesta del file base</b></p>
 <pre><code>GET /index.html HTTP/1.1
 Host: unipa.it
@@ -975,7 +975,7 @@ Content-Length: 81920
 Last-Modified: Z
 (DATI)</code></pre>
 <p>(80 kB = 80·1024 = 81920 B)</p>
-<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_2_html.jpg"/></div>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio1_2_html.jpg?v=2"/></div>
 <p>RTT = 2·T<sub>prop</sub> (tempo di andata e ritorno). Il tempo totale della prima richiesta è quindi:</p>
 <p>T<sub>1</sub> = <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>handshake</sub></span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich./risp. ①②</sub></span> + <span style="border-bottom: 2px solid blue; padding-bottom: 2px;">T<sub>trasm</sub>(FB)</span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich. pipeline ③⑤</sub></span> + <span style="border-bottom: 2px solid purple; padding-bottom: 2px;">T<sub>trasm</sub>(IMG1)</span> + <span style="border-bottom: 2px solid darkorange; padding-bottom: 2px;">T<sub>trasm</sub>(IMG2)</span><br/>
 T<sub>1</sub> = 3·RTT + T<sub>trasm</sub>(FB) + T<sub>trasm</sub>(IMG1) + T<sub>trasm</sub>(IMG2)</p>
@@ -1050,10 +1050,10 @@ T<sub>tot</sub> = T<sub>1</sub> + T<sub>1→2</sub> ≈ 16,58 ms + 3 ms ≈ <b>1
                   <span>fatto</span>
                 </label>
               </div>
-              <div class="ex-statement"><p>Data la configurazione schematizzata in figura, si assuma che l'host H richieda una pagina web al server <code>www.ebay.com</code>, costituita da un file HTML di 12 kB e dall'immagine <code>www.foo.it/pics/img1.jpg</code> di 4 MB, e che, successivamente, lo stesso host richieda una pagina web al server <code>www.amazon.it</code>, costituita da un file HTML di 10 kB e dall'immagine <code>www.foo.it/pics/img2.jpg</code> di 3 MB.<br/>
+              <div class="ex-statement"><p>Data la configurazione schematizzata in figura, si assuma che l'host H richieda una pagina web al server <code>www.ebay.com</code>, costituita da un file HTML di 12 kB e dall'immagine <code>www.foo.it/pics/img1.jpg?v=2</code> di 4 MB, e che, successivamente, lo stesso host richieda una pagina web al server <code>www.amazon.it</code>, costituita da un file HTML di 10 kB e dall'immagine <code>www.foo.it/pics/img2.jpg?v=2</code> di 3 MB.<br/>
 Assumendo che tutte le interazioni avvengano con HTTP/1.1 e che il server <code>www.foo.it</code> utilizzi cookie di 100 byte, si calcoli il tempo totale necessario ad ottenere le due pagine.<br/>
 Si considerino tutti i collegamenti caratterizzati da ampiezza di banda di 200 Mbps, tempo di propagazione medio pari a 0,1 ms, MTU pari a 1500 byte e overhead di 40 byte.</p>
-<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio2_html.jpg"/></div></div>
+<div class="imgbox"><img alt="Cifratura con chiave pubblica" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio2_html.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-5">Il tuo procedimento</label>
                 <textarea id="ta-5" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1071,7 +1071,7 @@ Si considerino tutti i collegamenti caratterizzati da ampiezza di banda di 200 M
 
 <p><i>Per il funzionamento e la struttura dell'header <code>Set-Cookie</code>/<code>Cookie</code> si veda il paragrafo <b>"Cookie"</b> trattato in precedenza in questa dispensa; qui ci si limita a considerarne il peso (100 B) nel calcolo dei dati trasmessi.</i></p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizio2_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio2_1_html.jpg?v=2" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <p><b>① Richiesta del file base a www.ebay.com</b></p>
 <pre><code>GET /index.html HTTP/1.1
@@ -1083,17 +1083,17 @@ Connection: open</code></pre>
 Connection: open
 Content-Type: text/html
 Content-Length: 12288</code></pre>
-<p>(12 kB = 12·1024 = 12288 B; il file base referenzia l'immagine <code>www.foo.it/pics/img1.jpg</code>)</p>
+<p>(12 kB = 12·1024 = 12288 B; il file base referenzia l'immagine <code>www.foo.it/pics/img1.jpg?v=2</code>)</p>
 
 <p><b>③ Richiesta dell'immagine a www.foo.it</b> (attraverso R1 e R2)</p>
-<pre><code>GET /pics/img1.jpg HTTP/1.1
+<pre><code>GET /pics/img1.jpg?v=2 HTTP/1.1
 Host: www.foo.it
 Connection: open</code></pre>
 
 <p><b>④ Risposta con l'immagine, frammentata su più pacchetti, con cookie impostato dal server</b></p>
 <pre><code>HTTP/1.1 200 OK
 Connection: open
-Content-Type: image/jpg
+Content-Type: image/jpg?v=2
 Content-Length: 4194304
 Set-Cookie: XYZ</code></pre>
 <p>IMG1 = 4 MB = 4·1024·1024 = <b>4.194.304 B</b>; cookie = <b>100 B</b></p>
@@ -1103,7 +1103,7 @@ Size(msg<sub>IMG1</sub>) = Size(IMG1) + Size(cookie) = 4.194.304 + 100 = <b>4.19
 N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
   
 <b>Parte 2: Seconda pagina (Amazon + img2)</b>
-<div class="imgbox"><img src="./reti_cyber/esercizio2_1_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio2_1_1_html.jpg?v=2" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p><b>⑤ Richiesta del file base a www.amazon.it</b></p>
 <pre><code>GET /index.html HTTP/1.1
 Host: www.amazon.it
@@ -1120,7 +1120,7 @@ Dati(FB2) = 10240 + (8·40) = <b>10.560 B</b><br>
 T<sub>trasm</sub>(FB2) = (10560·8) / (200·10<sup>6</sup>) ≈ <b>0,42 ms</b></p>
 
 <p><b>⑦ Richiesta dell'immagine a www.foo.it (con Cookie incluso)</b></p>
-<pre><code>GET /pics/img2.jpg HTTP/1.1
+<pre><code>GET /pics/img2.jpg?v=2 HTTP/1.1
 Host: www.foo.it
 Connection: open
 Cookie: XYZ</code></pre>
@@ -1129,13 +1129,13 @@ Cookie: XYZ</code></pre>
 <p><b>⑧ Risposta con l'immagine 2, frammentata su più pacchetti</b></p>
 <pre><code>HTTP/1.1 200 OK
 Connection: open
-Content-Type: image/jpg
+Content-Type: image/jpg?v=2
 Content-Length: 3145728</code></pre>
 <p>IMG2 = 3 MB = 3·1024·1024 = <b>3.145.728 B</b><br>
 N(msg<sub>IMG2</sub>) = ⌈3.145.728/1460⌉ = <b>2155 pacchetti</b><br>
 Dati(msg<sub>IMG2</sub>) = 3145728 + (2155·40) = <b>3.231.928 B</b><br>
 T<sub>trasm</sub>(IMG2) = (3.231.928·8) / (200·10<sup>6</sup>) ≈ <b>129,28 ms</b></p>
-<p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p>
+<p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg?v=2</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p>
 <p>Calcoliamo il Round Trip Time (RTT) per i vari percorsi, sapendo che T<sub>p</sub> = 0,1 ms per collegamento:</p>
 <ul>
   <li><b>RTT</b> = (2 · 0,1) = <b>0,2 ms</b></li>
@@ -1216,7 +1216,7 @@ Cookie: 1518</code></pre>
 <li>Il server <code>foo.it</code> legge l'header <code>Cookie: 1518</code> e consulta il proprio database per risalire allo storico della sessione dell'utente, sapendo che aveva già visitato <code>zappe.it</code> in precedenza.</li>
 <li>Riconoscendo il profilo dell'utente, il server elabora una risposta mirata, proponendo ad esempio una pubblicità personalizzata come "un dondolo da giardino".</li>
 </ul>
-<div class="imgbox"><img alt="Funzionamento GET condizionale" class="ex-figure" loading="lazy" src="./reti_cyber/ese_cookie.jpg"/></div>
+<div class="imgbox"><img alt="Funzionamento GET condizionale" class="ex-figure" loading="lazy" src="./reti_cyber/ese_cookie.jpg?v=2"/></div>
 </p></div>
                 </div>
             </article>
@@ -1236,7 +1236,7 @@ Cookie: 1518</code></pre>
                 </label>
               </div>
               <div class="ex-statement"><p>Data la configurazione indicata in figura, si supponga che l'utente <b>marco.rossi@unipa.it</b> spedisca una email contenente un testo di 4 KB e un allegato di 100KB agli utenti <b>piero.neri@unipa.it</b> e <b>carlo.verdi@gmail.com.</b> Si calcoli il tempo necessario alla trasmissione della email fino alla ricezione, assumendo che non vi siano tempi morti tra le due fasi e che i destinatari utilizzino entrambi il protocollo POP3. Si assuma che la LAN-UNIPA e tutti i link siano caratterizzati dalle seguenti caratteristiche: un'ampiezza di banda pari a 100 Mbps, un tempo medio di propagazione pari a 1 ms, MTU 1500 byte e che l'overhead complessivo di pacchetto sia pari a 48 byte.</p>
-<div class="imgbox"><img alt="Esercizio 4 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_4.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio 4 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_4.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-7">Il tuo procedimento</label>
                 <textarea id="ta-7" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1251,7 +1251,7 @@ Cookie: 1518</code></pre>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body"><p>
 <b>Dati e calcoli preliminari:</b><br/>
-<div class="imgbox"><img alt="Esercizio 4 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_4_svolgimento.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio 4 - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione1_4_svolgimento.jpg?v=2"/></div>
 Dimensione Email + Allegato = 4 KB + 100 KB = 104 KB = 104 · 1024 = 106.496 byte<!-- --><br/>
 Banda = 100 Mbps = 10<sup>8</sup> bps<!-- --><br/>
 T<sub>prop</sub> = 1 ms per ogni singolo link<!-- --><br/>
@@ -1303,7 +1303,7 @@ T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,
                 </label>
               </div>
               <div class="ex-statement"><p>Si consideri una rete in cui l'host H deve scaricare una Pagina Web (file base) di 300 KB situata sul server s1.foo.it e una successiva Immagine di 1 MB situata sul server s2.foo.it. La rete è caratterizzata da una larghezza di banda R di 100 Mbps, una MTU di 1500 B e un overhead trascurabile. Prima dello scaricamento dei file tramite protocollo HTTP, l'host deve effettuare la risoluzione dei nomi a dominio tramite protocollo DNS. Si calcolino i tempi necessari per ottenere il file base e l'immagine, considerando che per la seconda richiesta il DNS locale utilizza i dati in cache per contattare direttamente il DNS Autorevole.</p>
-<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-8">Il tuo procedimento</label>
                 <textarea id="ta-8" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1318,13 +1318,13 @@ T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body"><p><b>Dati preliminari:</b><br/>
 Pagina Web (s1.foo.it/index.htm) = 300 KB<br/>
-Immagine (s2.foo.it/pics/img.jpg) = 1 MB<br/>
+Immagine (s2.foo.it/pics/img.jpg?v=2) = 1 MB<br/>
 Banda (R) = 100 Mbps, MTU = 1500 B, Overhead = 0 B</p>
 <hr style="border: 1px solid #ddd; margin: 15px 0;"/>
 <p><b>FASE 1: Risoluzione DNS e scaricamento Pagina Web (s1.foo.it)</b></p>
 <p><i>H.-&gt;DNS LOCALE-&gt;DNS ROOT-&gt;DNS LOCALE-&gt;DNS TDL-&gt;DNS LOCALE-&gt;DNS AUT-&gt;DNS LOCALE-&gt;H.-&gt;S<sub>1</sub></i></p>
 <p><i>L'Host H non conosce l'IP di s1.foo.it. Il DNS Locale interroga iterativamente la gerarchia DNS. Di seguito la tabella dettagliata dei messaggi scambiati:</i></p>
-<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia1.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia1.jpg?v=2"/></div>
 <table border="1" style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
 <tr style="background-color: #f2f2f2;">
 <th style="padding: 5px; width: 5%;">#</th>
@@ -1408,13 +1408,13 @@ Host: s1.foo.it</pre>
 Content-Type: text/html
 Content-Length: 300 KB
 Connection: open</pre>
-<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia1_html.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia1_html.jpg?v=2"/></div>
 <p><i>Tempo calcolato per il File Base: 20 propagazioni DNS + 12 propagazioni per i link + 2 trasmissioni pacchetto + 1 trasmissione pagina.</i><br/>
 <b>T<sub>FB</sub> = 12(T<sub>prop</sub>) + 2(T<sub>trasm_pac</sub>) + 1(T<sub>trasm_pag</sub>) + 20(T<sub>prop_dns</sub>)</b></p>
 <hr style="border: 1px solid #ddd; margin: 15px 0;"/>
 <p><b>FASE 2: Risoluzione DNS e scaricamento Immagine (s2.foo.it)</b></p>
 <p><i>L'Host H deve scaricare l'immagine. Il DNS Locale ha memorizzato in cache l'IP del Server Autorevole (dns.foo.it). Salta quindi i server Root e TLD, interrogando direttamente l'AUT.</i></p>
-<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia2.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia2.jpg?v=2"/></div>
 <table border="1" style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
 <tr style="background-color: #f2f2f2;">
 <th style="padding: 5px; width: 5%;">#</th>
@@ -1459,14 +1459,14 @@ Connection: open</pre>
 </table>
 <p><b>Trasmissione HTTP (Immagine):</b><br/>
 L'Host H invia la richiesta HTTP GET al server S2:</p>
-<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">GET /pics/img.jpg HTTP/1.1
+<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">GET /pics/img.jpg?v=2 HTTP/1.1
 Host: s2.foo.it</pre>
 <p>Il server S2 risponde (Immagine, 1 MB):</p>
 <pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">HTTP/1.1 200 OK
 Content-Type: image/jpeg
 Content-Length: 1 MB
 Connection: open</pre>
-<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia2_html.jpg"/></div>
+<div class="imgbox"><img alt="Esercizio DNS - traccia" class="ex-figure" loading="lazy" src="./reti_cyber/esercitazione_dns_traccia2_html.jpg?v=2"/></div>
 <p><i>Tempo calcolato per l'Immagine: 8 propagazioni DNS (grazie alla cache si riducono da 10 a 8) + 12 propagazioni per i link + 2 trasmissioni pacchetto + 1 trasmissione immagine.</i><br/>
 <b>T<sub>IMG</sub> = 12(T<sub>prop</sub>) + 2(T<sub>trasm_pac</sub>) + 1(T<sub>trasm_immag</sub>) + 8(T<sub>prop_dns</sub>)</b></p></div>
                 </div>
@@ -1495,7 +1495,7 @@ Connection: open</pre>
                 </label>
               </div>
               <div class="ex-statement"><p>Considerando la configurazione Host A — Router — Host B, l'host A deve trasferire un file di dimensione 4 kB all'host B utilizzando il protocollo TCP. Entrambi i link sono privi di errori, ampiezza di banda 10 Mbps, RTT = 2 ms, MSS = 512 byte; si trascurino gli overhead. Si calcoli il tempo necessario all'intero trasferimento, includendo l'instaurazione della connessione, supponendo non ci sia ulteriore traffico né congestione.</p>
-<div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-9">Il tuo procedimento</label>
                 <textarea id="ta-9" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1509,7 +1509,7 @@ Connection: open</pre>
                 <div class="solution-panel" id="sol-9" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body">File = 4KB<br/>R = 10Mbs<br/>RTT = 2ms<br/>MSS = 512byte<br/><br/>N = 4·1024/512 = 8 pacchetti.
-<div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1_grafico.jpg"/>
+<div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1_grafico.jpg?v=2"/>
 </div>
 T<sub>F</sub> = 5RTT + 4·T<sub>trans1</sub> + 4·T<sub>tras2</sub> &lt; 5RTT + 8·T<sub>trans</sub><br/>
 T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br/>
@@ -1545,7 +1545,7 @@ T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br/>
                 <div class="solution-panel" id="sol-10" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body">File = 5KB<br/>R = 10Mbs<br/>RTT = 2ms<br/>MSS = 512byte<br/>W = 4<br/>Overhead = 0<br/>3°segmento perso<br/><br/>N = 5·1024/512 = 10 pacchetti
-<div class="imgbox"><img alt="Esercizio 2 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp2.jpg"/>
+<div class="imgbox"><img alt="Esercizio 2 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp2.jpg?v=2"/>
 </div>
 3·T<sub>Trans</sub> + T<sub>out</sub> &lt; 2RTT + 3·T<sub>Tras</sub><br/>4,5 &lt; 4 ? No avviene prima il triplice ACK<br/><br/>
 T<sub>Tras</sub> = (MSS+Overhead)·8/R = 512·8/10 = 409,6 µs<br/>
@@ -1580,7 +1580,7 @@ T = 5·RTT + 7·T<sub>Tras</sub> ≈ 12,87 ms</div>
                 <div class="solution-panel" id="sol-11" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body">B = 10Mbps<br/>RTT = 2ms<br/>MSS = 5KB<br/>Blocco applicativo = 12ms<br/>Payload = 1ms<br/>W = 5<br/>Overhead 0 0<br/><br/>N = 5·1024/512 = 10 pacchetti
-<div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_sr2.jpg"/>
+<div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_sr2.jpg?v=2"/>
 </div>
 Slow start con RcvWindow che limita la crescita della finestra (CW≤RcvWin); blocco applicativo di 12 ms.<br/>
 T<sub>Trasm</sub> = MTU/R = (MSS+Overhead)·8/R = (512·8)/10 Mbps = 409,6 µs = 0,409 ms<br/>
@@ -1603,7 +1603,7 @@ T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <
                 </label>
               </div>
               <div class="ex-statement"><p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5 kB, usando il protocollo <b>GoBackN</b>. Si assuma un RTT tra i due host pari a 0,2 ms ed ampiezze di banda per i due collegamenti rispettivamente pari a R1=200 Mbps e R2=100 Mbps, MSS=256 byte, overhead di pacchetto trascurabili e timeout pari ad 1 ms. Ipotizzando che si perda il <b>quinto segmento</b>, e che la dimensione statica della finestra di spedizione sia pari a 4MSS, si calcolino il <i>throughput</i> e il <i>goodput</i>.</p>
-<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-12">Il tuo procedimento</label>
                 <textarea id="ta-12" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1619,7 +1619,7 @@ T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <
                   <div class="solution-body">File=2,5KB<br/>MSS = 256byte<br/>W = 4<br/><br/>
 2,5KB · 1024 = 2560 byte<br/>
 N = File/MSS = 2560/256 = 10 pacchetti<br/>
-<div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_gbn1.jpg"/>
+<div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_gbn1.jpg?v=2"/>
 </div>
 T<sub>tot</sub> = RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> + T<sub>trasm1</sub>  + T<sub>timeout</sub> + RTT + T<sub>trasm1</sub>  + T<sub>trasm2</sub> +RTT + T<sub>trasm1</sub>  +T<sub>trasm2</sub><br/><br/>
 Throughput = Dati<sub>totali mandati</sub>/Tempo<sub>tot</sub> = Dati<sub>trasm</sub>/Tempo<sub>tot</sub> = 14·MTU (Mbps)/Tempo<sub>tot</sub> &lt; <i>"collo di bottiglia 100Mbps"</i><br/>
@@ -1641,7 +1641,7 @@ Goodpout = File/Tempo<sub>tot</sub></div>
                 </label>
               </div>
               <div class="ex-statement"><p>Stesso scenario, ma si ipotizza che si perda il <b>riscontro del quinto segmento</b> (non il segmento stesso), con timeout pari a 1 ms.</p>
-<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-13">Il tuo procedimento</label>
                 <textarea id="ta-13" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1654,7 +1654,7 @@ Goodpout = File/Tempo<sub>tot</sub></div>
               
                 <div class="solution-panel" id="sol-13" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
-                  <div class="solution-body"><div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_gbn2.jpg"/>
+                  <div class="solution-body"><div class="imgbox"><img alt="placeholder corretto sotto" class="ex-figure" loading="lazy" src="./reti_cyber/esercizio_gbn2.jpg?v=2"/>
 </div>
 Diagramma con perdita del 5° pacchetto e ritrasmissione GBN dei pacchetti 5-8<br/>
 File = 2,5KB<br/>MSS = 256byte<br/>W = 4<br/><br/>
@@ -1683,7 +1683,7 @@ Goodpout = File/Tempo<sub>tot</sub> = 2560·8/0,00073312 = 27,94Mbps</div>
               </div>
               <div class="ex-statement"><p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5kB, usando il protocollo <b>Selective Repeat</b>. RTT = 0,2 ms, L1=100 Mbps, L2=200 Mbps, MSS=256 byte, overhead trascurabile, timeout = 1 ms. Si perde il <b>quarto segmento</b>, finestra statica = 4MSS. Si calcolino throughput e goodput.<br/>
 </p>
-<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-14">Il tuo procedimento</label>
                 <textarea id="ta-14" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1699,7 +1699,7 @@ Goodpout = File/Tempo<sub>tot</sub> = 2560·8/0,00073312 = 27,94Mbps</div>
                   <div class="solution-body">Diagramma Selective Repeat con buffer dei segmenti 5,6 in attesa del segmento 4, timeout e ritrasmissione del solo segmento 4; calcolo finale di throughput (~16,3 Mbps) e goodput (~15,96 Mbps).<br/><br/>
 File = 2,5kB = 2,5kB · 1024 = 2560 byte<br/>MSS = 256byte<br/>W = 4<br/><br/>
 N = File/MSS = 2560/256 = 10 pacchetti
-<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_selective1.jpg"/>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_selective1.jpg?v=2"/>
 </div>
 1 Mbs = 10<sup>6</sup> bps<br/>
 1 Byte = 8 bit<br/>
@@ -1725,7 +1725,7 @@ Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 1
                 </label>
               </div>
               <div class="ex-statement"><p>Stesso scenario, ma con perdita del <b>riscontro del quarto segmento</b> (non del segmento), Selective Repeat.</p>
-<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg"/></div></div>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1.jpg?v=2"/></div></div>
               <div class="ex-workarea">
                 <label class="workarea-label" for="ta-15">Il tuo procedimento</label>
                 <textarea id="ta-15" class="workarea" rows="4" placeholder="Scrivi qui i passaggi e il risultato prima di controllare la soluzione..."></textarea>
@@ -1739,7 +1739,7 @@ Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 1
                 <div class="solution-panel" id="sol-15" hidden>
                   <div class="solution-tag">$ svolgimento --verbose</div>
                   <div class="solution-body">NOTA BENE: Il diagramma analogo all'esercizio 3, con la differenza che il segmento 4 arriva correttamente a destinazione ma il relativo ACK4 viene perso; il mittente ritrasmette il segmento 4 dopo il timeout, il ricevente lo riconosce come duplicato già bufferizzato e rinvia semplicemente ACK4.
-<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_selective2.jpg"/>
+<div class="imgbox"><img alt="Esercizio GBN - diagramma e calcoli" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_selective2.jpg?v=2"/>
 </div>
 1 Mbs = 10<sup>6</sup> bps<br/>
 1 Byte = 8 bit<br/>
