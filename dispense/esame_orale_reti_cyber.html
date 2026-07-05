@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Esame Orale — Domande e Risposte — Reti e Cyber-Sicurezza</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #222;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    background: #fdfdfb;
+  }
+  h1, h2, h3 { font-family: 'Helvetica Neue', Arial, sans-serif; color: #0b3d62; }
+  h1 { font-size: 1.9em; border-bottom: 3px solid #0b3d62; padding-bottom: 8px; margin-top: 40px; text-align: center; }
+  .subtitle { text-align: center; color: #666; font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: -10px; margin-bottom: 20px; }
+  h2 {
+    font-size: 1.35em; color: #fff; margin-top: 55px;
+    background: linear-gradient(120deg,#0b3d62,#1b5e8a);
+    padding: 12px 18px; border-radius: 8px;
+  }
+  .intro-box {
+    background: #eef6ff; border-left: 5px solid #2b76a8;
+    padding: 14px 20px; border-radius: 6px; margin: 20px 0 30px;
+    font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.95em;
+  }
+  details.qa {
+    background: #fff;
+    border: 1px solid #cdd9e2;
+    border-radius: 8px;
+    margin: 12px 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  details.qa summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 14px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: bold;
+    color: #0b3d62;
+    background: #f0f5f9;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  details.qa summary::-webkit-details-marker { display: none; }
+  details.qa summary::before {
+    content: "▸";
+    color: #1b5e8a;
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+  details.qa[open] summary::before { transform: rotate(90deg); }
+  details.qa[open] summary { border-bottom: 1px solid #cdd9e2; }
+  .qnum { color: #1b5e8a; font-weight: bold; margin-right: 2px; }
+  .answer {
+    padding: 16px 22px 18px 40px;
+    text-align: justify;
+    background: #fffdf7;
+  }
+  .answer p { margin: 8px 0; }
+  .answer b { color: #0b3d62; }
+  code, .f {
+    font-family: 'Cambria Math', 'Courier New', monospace;
+    background: #f1f1f1;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .tag {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.72em;
+    font-weight: normal;
+    color: #1b7a4f;
+    background: #eafaf1;
+    border: 1px solid #bfe8d3;
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .controls {
+    text-align: center;
+    margin: 25px 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .controls button {
+    background: #1b5e8a;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin: 0 6px;
+  }
+  .controls button:hover { background: #0b3d62; }
+  hr.sep { border: none; border-top: 1px dashed #c0c8d0; margin: 40px 0; }
+  .footer-note { font-size: 0.85em; color: #888; text-align: center; margin-top: 60px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  table.dati { border-collapse: collapse; margin: 10px 0; width: 100%; }
+  table.dati td, table.dati th { border: 1px solid #ccc; padding: 6px 12px; font-size: 0.92em; }
+  table.dati th { background: #e8eef3; }
+  #toc { background: #f0f5f9; border: 1px solid #cdd9e2; border-radius: 10px; padding: 20px 30px; margin: 25px 0 40px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  #toc h3 { margin-top: 0; }
+  #toc ul { columns: 2; -webkit-columns: 2; list-style: none; padding-left: 0; }
+  #toc li { margin: 5px 0; }
+  #toc a { color: #0b3d62; text-decoration: none; font-size: 0.95em; }
+  #toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>Esame Orale — Reti e Cyber-Sicurezza</h1>
+<p class="subtitle">Oltre 70 domande e risposte per il ripasso orale — clicca su ogni domanda per vedere la risposta</p>
+
+<div class="intro-box">
+Le domande sono organizzate per argomento, seguendo la struttura della dispensa. Prova a rispondere a voce prima di aprire la risposta.
+</div>
+
+<div id="toc">
+<h3>Indice degli argomenti</h3>
+<ul>
+  <li><a href="#s0">0. Fondamenti di Internet</a></li>
+  <li><a href="#s1">1. Livello Applicazione: HTTP</a></li>
+  <li><a href="#s2">2. Livello Applicazione: DNS</a></li>
+  <li><a href="#s3">3. Livello di Trasporto: TCP e UDP</a></li>
+  <li><a href="#s4">4. Livello di Rete: IP, routing, DHCP, NAT</a></li>
+  <li><a href="#s5">5. Sicurezza Informatica di Base</a></li>
+  <li><a href="#s6">6. Reti Sotto Attacco</a></li>
+  <li><a href="#s7">7. Crittografia Digitale</a></li>
+</ul>
+</div>
+
+<div class="controls">
+  <button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Apri tutte</button>
+  <button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Chiudi tutte</button>
+</div>
+
+<h2 id="s0">0. Fondamenti di Internet</h2>
+
+<details class="qa">
+<summary><span class="qnum">1.</span> Cos'è un protocollo e dove sono definiti gli standard di Internet?</summary>
+<div class="answer">
+<p>Un <b>protocollo</b> è un insieme di regole ben definito che stabilisce il formato dei messaggi scambiati tra due o più entità, il loro significato, l'ordine in cui vengono inviati/ricevuti e le azioni intraprese alla trasmissione o alla ricezione (es. TCP, IP, HTTP, Ethernet). Gli standard sono pubblicati come <b>RFC (Request for Comments)</b>, scritte e curate dall'<b>IETF (Internet Engineering Task Force)</b>.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">2.</span> Che differenza c'è tra commutazione di pacchetto e commutazione di circuito?</summary>
+<div class="answer">
+<p>Nella <b>commutazione di circuito</b> (tipica della rete telefonica) le risorse (banda, capacità dei commutatori) vengono riservate in modo dedicato per tutta la durata della sessione: le prestazioni sono garantite, ma serve una fase di impostazione della chiamata e le risorse restano inutilizzate se non sfruttate appieno.</p>
+<p>Nella <b>commutazione di pacchetto</b> i dati vengono suddivisi in pacchetti che condividono le risorse di rete "su richiesta": non c'è riserva dedicata, quindi più utenti possono condividere efficientemente lo stesso collegamento (statisticamente conviene con traffico "a raffica"), ma si può incorrere in <b>congestione</b>, ritardo di accodamento e perdita di pacchetti quando la domanda supera la capacità disponibile.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">3.</span> Cos'è la tecnica store-and-forward?</summary>
+<div class="answer">
+<p>È la modalità con cui un commutatore di pacchetto (router) gestisce l'inoltro: deve ricevere <b>l'intero pacchetto</b> prima di poter cominciare a trasmetterlo sul collegamento in uscita. Per un pacchetto di L bit su un collegamento a R bps, il tempo di trasmissione è L/R secondi (ipotizzando ritardo di propagazione nullo); questo tempo si somma per ogni "salto" (hop) attraversato dal pacchetto lungo il percorso.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">4.</span> Quali sono i cinque livelli del modello di riferimento e cosa trasportano?</summary>
+<div class="answer">
+<p><b>Applicazione</b> (messaggi), <b>Trasporto</b> (segmenti), <b>Rete</b> (datagrammi), <b>Collegamento/Link</b> (frame), <b>Fisico</b> (simboli/bit). Ogni livello aggiunge la propria intestazione (header) ai dati ricevuti dal livello superiore: questo processo si chiama <b>incapsulamento</b>. Il destinatario, ricevendo i dati, rimuove via via ogni intestazione risalendo dal livello fisico fino a quello applicativo.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">5.</span> Cos'è il "collo di bottiglia" (bottleneck) nel calcolo del throughput?</summary>
+<div class="answer">
+<p>È il collegamento, lungo un percorso punto-punto, con la capacità più bassa: è quello che <b>vincola</b> il throughput end-to-end complessivo della connessione, indipendentemente dalla capacità degli altri collegamenti attraversati. In uno scenario con più utenti che condividono una dorsale, il throughput per connessione è tipicamente <code>min(R_client, R_server, R_dorsale/numero_utenti)</code>.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">6.</span> Che differenza c'è tra ritardo di trasmissione e ritardo di propagazione?</summary>
+<div class="answer">
+<p><b>Ritardo di trasmissione (d<sub>trans</sub> = L/R)</b>: è il tempo necessario per "spingere" tutti i bit del pacchetto sul collegamento in uscita. Dipende dalla <b>lunghezza del pacchetto (L)</b> e dalla <b>frequenza di trasmissione/ampiezza di banda del collegamento (R)</b>: più banda c'è, minore è questo ritardo. Non ha nulla a che fare con la distanza fisica tra i due nodi.</p>
+<p><b>Ritardo di propagazione (d<sub>prop</sub> = d/s)</b>: è il tempo necessario a un singolo bit per viaggiare fisicamente da un router all'altro. Dipende dalla <b>distanza (d)</b> tra i due router e dalla <b>velocità di propagazione del mezzo (s)</b> — non dipende invece dalla capacità del collegamento né dalla dimensione del pacchetto.</p>
+<p>In sintesi: <b>l'ampiezza di banda influenza il ritardo di trasmissione</b>, mentre <b>il ritardo di propagazione dipende dalla distanza tra i due router e dalla velocità di propagazione</b>. Il ritardo totale di nodo è dato dalla somma di questi due ritardi con il ritardo di elaborazione (d<sub>proc</sub>) e il ritardo di accodamento (d<sub>queue</sub>): d<sub>nodo</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub>.</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s1">1. Livello di Applicazione: HTTP</h2>
+
+<details class="qa">
+<summary><span class="qnum">7.</span> Che differenza c'è tra HTTP persistente e non persistente?</summary>
+<div class="answer">
+<p>Nell'<b>HTTP non persistente</b> (HTTP/1.0) ogni oggetto richiede una connessione TCP separata: si apre la connessione, si scambiano richiesta e risposta, e la connessione si chiude. Questo comporta 2 RTT per oggetto (1 per l'handshake TCP, 1 per richiesta/risposta) più l'overhead di sistema operativo per ogni nuova connessione.</p>
+<p>Nell'<b>HTTP persistente</b> (HTTP/1.1) il server lascia la connessione TCP aperta dopo la risposta: le richieste successive verso lo stesso server viaggiano sulla stessa connessione, spesso inviate "back-to-back" senza aspettare la risposta precedente (<b>pipelining</b>), riducendo drasticamente il numero di RTT necessari. La connessione si chiude solo dopo un periodo di inattività (timeout).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">8.</span> Perché HTTP è definito un protocollo "stateless" (senza stato)?</summary>
+<div class="answer">
+<p>Perché il server <b>non mantiene alcuna informazione</b> sulle richieste precedenti fatte da un client: ogni richiesta viene trattata in modo indipendente, come se fosse la prima volta che il server la riceve. Questo semplifica molto la progettazione del protocollo (i protocolli stateful sono più complessi: bisogna gestire la cronologia e riconciliare eventuali incoerenze in caso di blocco di client o server), ma richiede meccanismi aggiuntivi, come i <b>cookie</b>, per implementare funzionalità che richiedono di "ricordare" l'utente.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">9.</span> Come funzionano i cookie e a cosa servono?</summary>
+<div class="answer">
+<p>Il cookie è un identificatore (spesso casuale) che il server assegna al client alla prima interazione, inviandolo con l'header <code>Set-Cookie</code>. Il client lo memorizza e lo re-invia nelle richieste successive con l'header <code>Cookie</code>, permettendo al server di riconoscerlo. Il server mantiene un proprio database che associa ogni identificativo allo stato dell'utente (es. contenuto del carrello, preferenze, sessione di login). Nella primissima richiesta, ovviamente, il client non invia alcun cookie perché non gli è ancora stato assegnato.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">10.</span> A cosa serve una cache Web (server proxy) e perché conviene usarla?</summary>
+<div class="answer">
+<p>Una cache Web (proxy) si interpone tra i client di una rete e Internet: riceve tutte le richieste HTTP dei client, e se possiede già l'oggetto richiesto lo restituisce direttamente, altrimenti lo richiede al server d'origine, lo salva e poi lo inoltra al client. Funziona quindi sia da server (verso i client) sia da client (verso il server d'origine).</p>
+<p>Conviene perché: riduce il tempo di risposta percepito dai client (il collo di bottiglia è spesso il collegamento di accesso a Internet, non quello verso la cache); riduce il traffico complessivo sul collegamento d'accesso; permette a reti con accesso a Internet limitato di fornire comunque un buon servizio, grazie all'<b>hit rate</b> della cache (tipicamente tra 0,2 e 0,7).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">11.</span> Basta che un server proxy sia presente nella rete perché i client lo usino?</summary>
+<div class="answer">
+<p>No. Un client comunica con il server proxy <b>solo se è esplicitamente configurato</b> per farlo (indicando l'indirizzo della cache come proxy nelle impostazioni del browser/sistema). Una cache può quindi essere fisicamente presente e raggiungibile all'interno della rete, ma se i client non sono configurati per inoltrarle le proprie richieste HTTP, continueranno a contattare direttamente i server d'origine, senza alcun beneficio in termini di riduzione del traffico o dei tempi di risposta.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">12.</span> Cosa indicano i principali codici di stato HTTP? <span class="tag">200, 301, 404...</span></summary>
+<div class="answer">
+<p><b>200 OK</b>: la richiesta è andata a buon fine, l'oggetto è incluso nella risposta.<br>
+<b>301 Moved Permanently</b>: l'oggetto è stato spostato, la nuova posizione è indicata nell'header <code>Location</code>.<br>
+<b>400 Bad Request</b>: il messaggio di richiesta non è stato compreso dal server.<br>
+<b>404 Not Found</b>: il documento richiesto non esiste su quel server.<br>
+<b>505 HTTP Version Not Supported</b>: il server non supporta la versione del protocollo richiesta dal client.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">13.</span> Che differenza c'è tra i metodi GET e POST?</summary>
+<div class="answer">
+<p>Con <b>GET</b> i parametri di input vengono inseriti direttamente nel campo URL della riga di richiesta (visibili nell'indirizzo). Con <b>POST</b> i dati inseriti dall'utente (tipicamente tramite un form) vengono trasportati nel <b>corpo dell'entità</b> del messaggio di richiesta, non nell'URL. Esiste anche <b>HEAD</b>, che chiede al server di rispondere senza includere l'oggetto richiesto (utile per verificarne l'esistenza o i metadati), e in HTTP/1.1 anche <b>PUT</b> e <b>DELETE</b>.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">14.</span> Cosa cambia con HTTP/2 e HTTP/3 rispetto a HTTP/1.1?</summary>
+<div class="answer">
+<p><b>HTTP/2</b> introduce il <b>multiplexing</b>: più richieste/risposte possono viaggiare in parallelo sulla stessa connessione TCP, suddivise in frame, con la possibilità per il server di assegnare priorità diverse ai frame di client differenti — superando il limite delle richieste sequenzialmente bloccanti di HTTP/1.1.</p>
+<p><b>HTTP/3</b> si basa sul protocollo di trasporto <b>QUIC</b>, costruito sopra UDP ma che integra a livello applicativo affidabilità, controllo di congestione e cifratura (funzioni tipiche di TCP+TLS). Il vantaggio principale è l'eliminazione dell'<b>head-of-line blocking a livello di trasporto</b>: la perdita di un pacchetto relativo a un singolo oggetto non blocca più la consegna degli altri oggetti multiplexati sulla stessa connessione, cosa che invece accadeva con TCP.</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s2">2. Livello di Applicazione: DNS</h2>
+
+<details class="qa">
+<summary><span class="qnum">15.</span> Cos'è il DNS e perché è organizzato come database distribuito e gerarchico, invece che centralizzato?</summary>
+<div class="answer">
+<p>Il <b>DNS (Domain Name System)</b> è un servizio che traduce nomi simbolici (es. <code>www.esempio.it</code>) in indirizzi IP. È organizzato in una <b>gerarchia di server</b> (radice → TLD → autoritativi) invece che come un unico database centralizzato perché un <b>singolo punto di fallimento</b> non sarebbe scalabile: un solo server che gestisse tutte le richieste del mondo sarebbe un collo di bottiglia enorme e, se andasse giù, bloccherebbe l'intero servizio.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">16.</span> Quali servizi offre il DNS oltre alla traduzione nome→IP?</summary>
+<div class="answer">
+<p><b>Host aliasing</b>: un host può avere più nomi (es. <code>www.unipa.it</code>, <code>portale.unipa.it</code>), con un nome canonico "vero" a cui gli alias puntano. <b>Mail server discovery</b>: individuare il server di posta associato a un dominio (record MX). <b>Bilanciamento del carico</b>: un nome canonico può essere associato a un insieme di indirizzi IP di server replicati, distribuendo le richieste tra le varie macchine.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">17.</span> Che differenza c'è tra i tre livelli di server DNS (radice, TLD, autoritativi)?</summary>
+<div class="answer">
+<p>I <b>server radice</b> (13 cluster nel mondo, gestiti da diverse organizzazioni) sono contattati dal server DNS locale quando non sa a chi rivolgersi, e indicano quale server TLD contattare. I <b>server TLD (Top-Level Domain)</b> gestiscono i domini di primo livello come .com, .org, .edu o i domini nazionali come .it, .uk; ad esempio Network Solutions gestisce i TLD .com. I <b>server autoritativi (di competenza)</b> sono gestiti dalle singole organizzazioni (o dal loro provider) e contengono i record DNS effettivi che mappano i nomi dei loro host in indirizzi IP.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">18.</span> Che differenza c'è tra query DNS iterativa e ricorsiva?</summary>
+<div class="answer">
+<p>Nella <b>query iterativa</b>, il server contattato non fa lui stesso ulteriori richieste, ma risponde indicando "non conosco questo nome, prova a chiedere a questo altro server": è il client (tramite il proprio server DNS locale) a proseguire l'interrogazione passo dopo passo verso radice, TLD e autoritativo.</p>
+<p>Nella <b>query ricorsiva</b>, il server contattato si assume l'onere di interrogare a sua volta gli altri server della gerarchia e restituisce direttamente la risposta finale. È più oneroso per i server intermedi, per cui in pratica si usa quasi solo tra host e server DNS locale, mentre tra i server della gerarchia (radice, TLD, autoritativo) si preferisce la modalità iterativa.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">19.</span> Quali sono i principali tipi di record DNS (RR)?</summary>
+<div class="answer">
+<p>Ogni record ha il formato <code>(name, value, type, ttl)</code>. I principali tipi: <b>A</b> (name = nome host, value = indirizzo IP); <b>NS</b> (name = dominio, value = nome del server autoritativo di quel dominio); <b>CNAME</b> (name = alias, value = nome canonico "vero" a cui punta); <b>MX</b> (name = dominio, value = nome del server di posta associato).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">20.</span> A cosa serve il caching nel DNS e cosa determina quanto a lungo un'informazione resta in cache?</summary>
+<div class="answer">
+<p>Quando un server DNS apprende una corrispondenza nome↔IP (anche di passaggio, rispondendo per conto di altri), la memorizza in cache per un certo periodo, evitando di dover ripetere l'intera risoluzione gerarchica ad ogni richiesta. Ad esempio, un server DNS locale tipicamente tiene in cache gli indirizzi dei server TLD, per cui i server radice vengono contattati raramente. La durata di validità della cache è determinata dal campo <b>TTL (Time To Live)</b> presente in ogni record: un TTL breve rende le informazioni più aggiornate ma aumenta il carico sui server autoritativi; un TTL lungo riduce il carico ma rende il sistema più lento ad aggiornarsi.</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s3">3. Livello di Trasporto: TCP e UDP</h2>
+
+<details class="qa">
+<summary><span class="qnum">21.</span> Qual è la differenza fondamentale tra TCP e UDP? <span class="tag">domanda classica</span></summary>
+<div class="answer">
+<p><b>TCP</b> è un protocollo <b>orientato alla connessione</b> e offre un servizio <b>affidabile</b>: prevede handshake iniziale (three-way handshake), numerazione e riscontro (ACK) dei byte trasmessi, ritrasmissione dei segmenti persi, controllo di flusso (per non saturare il buffer del destinatario) e controllo di congestione (per non saturare la rete). È full-duplex e fornisce un flusso di byte in sequenza.</p>
+<p><b>UDP</b> è invece un protocollo <b>senza connessione</b> che offre un trasferimento dati <b>inaffidabile</b>: non c'è handshake, non ci sono riscontri, non c'è controllo di flusso né di congestione, e i pacchetti possono arrivare fuori ordine o andare persi senza che il protocollo se ne occupi.</p>
+<p><b>Perché usare comunque UDP?</b> Perché, non avendo l'overhead di setup della connessione, affidabilità e controllo di congestione, è più adatto ad applicazioni sensibili al ritardo che tollerano qualche perdita (streaming, telefonia via Internet/VoIP, giochi online). La sicurezza o l'affidabilità, se servono, possono essere aggiunte a un livello superiore (es. tramite SSL/TLS o, come fa QUIC, direttamente nel protocollo applicativo).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">22.</span> Cosa sono l'MSS e il "flusso di byte affidabile" del TCP?</summary>
+<div class="answer">
+<p>L'<b>MSS (Maximum Segment Size)</b> è la dimensione massima del payload dati che può contenere un singolo segmento TCP. TCP fornisce alle applicazioni un <b>flusso di byte affidabile e in sequenza</b>: le applicazioni scrivono e leggono byte come se ci fosse un canale continuo, mentre TCP si occupa di suddividerli in segmenti, numerarli, riscontrarli e riordinarli in ricezione, nascondendo questa complessità all'applicazione.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">23.</span> Cos'è il Three-Way Handshake del TCP?</summary>
+<div class="answer">
+<p>È la procedura in tre passi con cui si stabilisce una connessione TCP:</p>
+<p><b>Passo 1</b>: il client invia un segmento <code>SYN</code> al server, specificando il proprio numero di sequenza iniziale, senza dati.<br>
+<b>Passo 2</b>: il server risponde con un segmento <code>SYNACK</code>, alloca i buffer necessari e specifica il proprio numero di sequenza iniziale.<br>
+<b>Passo 3</b>: il client risponde con un segmento <code>ACK</code>, che può già contenere dati applicativi.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">24.</span> Come vengono numerati i segmenti TCP e a cosa serve l'ACK?</summary>
+<div class="answer">
+<p>Il <b>numero di sequenza</b> di un segmento è il numero del primo byte del segmento all'interno del flusso di byte trasmesso (non un contatore di segmenti). L'<b>ACK</b> indica il numero di sequenza del prossimo byte atteso dall'altro lato ed è <b>cumulativo</b>: un ACK conferma implicitamente la ricezione di tutti i byte precedenti.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">25.</span> Come si stima il valore di RTT (EstimatedRTT) in TCP?</summary>
+<div class="answer">
+<p>Si misura <b>SampleRTT</b>: il tempo tra la trasmissione di un segmento e la ricezione del relativo ACK (ignorando i segmenti ritrasmessi, per non falsare la misura). Poiché SampleRTT varia molto, si calcola una stima "livellata" tramite una <b>media mobile esponenziale ponderata</b>:</p>
+<div class="f">EstimatedRTT(t) = (1 − α)·EstimatedRTT(t−1) + α·SampleRTT(t)</div>
+<p>con un valore tipico α = 0,125. È chiamata "esponenziale" perché, espandendo la formula ricorsivamente rispetto a t−1, t−2, ecc., il peso dato ai campioni più vecchi decresce in modo esponenziale.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">26.</span> Come viene impostato il timeout del TCP, e perché non si può usare direttamente l'RTT stimato?</summary>
+<div class="answer">
+<p>Il timeout deve essere maggiore dell'RTT medio, ma con un margine di sicurezza legato alla variabilità dell'RTT stesso. Si calcola prima <b>DevRTT</b>, cioè quanto SampleRTT si discosta da EstimatedRTT:</p>
+<div class="f">DevRTT(t) = (1 − β)·DevRTT(t−1) + β·|SampleRTT(t) − EstimatedRTT(t)| &nbsp; (tipicamente β = 0,25)</div>
+<p>e poi l'intervallo di timeout come:</p>
+<div class="f">TimeoutInterval = EstimatedRTT + 4·DevRTT</div>
+<p>Un timeout troppo piccolo causa ritrasmissioni inutili (timeout prematuri); uno troppo grande rallenta la reazione alla perdita di segmenti.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">27.</span> Cosa sono gli ACK duplicati e a cosa serve la "ritrasmissione rapida"?</summary>
+<div class="answer">
+<p>Se il destinatario riceve un segmento fuori sequenza (con un numero maggiore di quello atteso), rileva un "buco" e invia immediatamente un <b>ACK duplicato</b> indicando il numero di sequenza del byte che sta ancora aspettando. Se il mittente riceve <b>3 ACK duplicati</b> per lo stesso byte, deduce che il segmento successivo è andato perso e lo ritrasmette subito, senza aspettare lo scadere del timer: questo meccanismo si chiama <b>ritrasmissione rapida (fast retransmit)</b>, ed è più veloce del semplice timeout perché il periodo di timeout è tipicamente piuttosto lungo.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">28.</span> Come funziona il controllo di flusso in TCP?</summary>
+<div class="answer">
+<p>Serve ad evitare che il mittente saturi il buffer di ricezione del destinatario, ad esempio quando l'applicazione destinataria preleva i dati più lentamente di quanto arrivino. Il destinatario comunica nei segmenti il valore <b>RcvWindow</b>, cioè lo spazio libero rimasto nel proprio buffer di ricezione; il mittente si impegna a non avere più di RcvWindow byte non ancora riscontrati "in volo", evitando così l'overflow del buffer.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">29.</span> Che differenza c'è tra controllo di flusso e controllo di congestione?</summary>
+<div class="answer">
+<p>Il <b>controllo di flusso</b> protegge il <b>destinatario</b>: evita che il suo buffer di ricezione vada in overflow, tramite il valore RcvWindow. Il <b>controllo di congestione</b> protegge la <b>rete</b>: evita che il mittente immetta più traffico di quanto la rete (router e collegamenti intermedi) possa gestire, tramite la finestra di congestione CongWin. La finestra effettiva usata dal mittente è il minimo tra le due.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">30.</span> Quali sono i due eventi che fanno scattare la reazione del TCP alla congestione, e come si comporta la finestra in assenza/presenza di perdita?</summary>
+<div class="answer">
+<p>Il TCP considera un <b>evento di perdita</b> uno di questi due casi: <b>(1) il timeout</b>, cioè lo scadere del timer senza aver ricevuto l'ACK atteso; <b>(2) la ricezione di 3 ACK duplicati</b> (triplice ACK duplicato), che segnala che un segmento successivo è andato perso mentre i seguenti sono comunque arrivati.</p>
+<p>Il comportamento della finestra di congestione è governato dal principio <b>AIMD (Additive Increase, Multiplicative Decrease)</b>: in <b>assenza di perdite</b> (rete "libera") la finestra CongWin <b>aumenta</b> gradualmente — in modo esponenziale durante lo Slow Start, poi in modo additivo (+1 MSS per RTT) in Congestion Avoidance, "accelerando" per sfruttare al meglio la banda disponibile; al verificarsi di un <b>evento di perdita</b> (rete congestionata) la finestra viene invece <b>diminuita</b> drasticamente in modo moltiplicativo — dimezzata (TCP Reno, con 3 ACK duplicati) o riportata a 1 MSS (in caso di timeout), "decelerando" per alleviare il carico sulla rete.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">31.</span> Cosa sono lo Slow Start e la Congestion Avoidance (AIMD)?</summary>
+<div class="answer">
+<p><b>Slow Start</b>: all'inizio della connessione la finestra di congestione (CongWin) parte da 1 MSS e <b>raddoppia ad ogni RTT</b> (crescita esponenziale), fino a raggiungere una soglia (ssthresh) o fino a un evento di perdita.</p>
+<p><b>Congestion Avoidance (AIMD)</b>: superata la soglia, la finestra cresce in modo <b>additivo</b> (circa +1 MSS per RTT, "sondando" gradualmente la rete) finché non si verifica una perdita, e viene poi <b>dimezzata</b> in modo moltiplicativo. Questo genera il tipico andamento "a dente di sega" del grafico della finestra di congestione nel tempo.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">32.</span> Che differenza c'è tra TCP Tahoe e TCP Reno?</summary>
+<div class="answer">
+<p>Entrambi dimezzano la soglia (ssthresh) a metà di CongWin quando rilevano una perdita. La differenza sta nella reazione a una perdita rilevata tramite <b>3 ACK duplicati</b>: <b>TCP Tahoe</b> riporta sempre CongWin a 1 MSS e ricomincia con lo Slow Start; <b>TCP Reno</b>, invece, dimezza CongWin e prosegue direttamente in Congestion Avoidance tramite il meccanismo di <b>Fast Recovery</b>, evitando di ripartire da zero. In caso di perdita rilevata da timeout, invece, entrambi riportano CongWin a 1 MSS.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">33.</span> Cosa sono Go-Back-N e Selective Repeat, e perché non sono "il TCP"?</summary>
+<div class="answer">
+<p>Sono due protocolli per il trasferimento dati affidabile con pipelining (invio di più pacchetti senza aspettare il riscontro di ciascuno prima di inviare il successivo).</p>
+<p>In <b>Go-Back-N</b> il mittente può avere fino a N pacchetti non riscontrati in volo; se un pacchetto viene perso o scade il timer, il mittente <b>ritrasmette tutti</b> i pacchetti da quello perso in poi, anche se alcuni erano già arrivati correttamente al destinatario (che scarta i pacchetti fuori sequenza).</p>
+<p>In <b>Selective Repeat</b> il destinatario riscontra individualmente ogni pacchetto correttamente ricevuto (anche fuori sequenza) e li bufferizza; il mittente ritrasmette <b>solo</b> i singoli pacchetti effettivamente persi o scaduti, riducendo la banda sprecata rispetto a Go-Back-N.</p>
+<p><b>Perché non sono "il TCP"?</b> Perché Go-Back-N e Selective Repeat sono modelli teorici/didattici di protocollo a finestra scorrevole (sliding window), usati per introdurre in modo semplificato i principi del trasferimento dati affidabile con pipelining. Il <b>TCP reale</b> non implementa in modo puro nessuno dei due, ma adotta una soluzione <b>ibrida</b>: usa un riscontro cumulativo come Go-Back-N (un ACK conferma tutti i byte fino a quel numero di sequenza), ma allo stesso tempo, come Selective Repeat, il destinatario può bufferizzare i segmenti arrivati fuori sequenza invece di scartarli, ed è in grado di reagire in modo mirato grazie ai meccanismi di ACK duplicati e fast retransmit. In più, il TCP aggiunge elementi che GBN e SR di base non hanno affatto, come il controllo di flusso e il controllo di congestione.</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s4">4. Livello di Rete: IP, Routing, DHCP, NAT</h2>
+
+<details class="qa">
+<summary><span class="qnum">34.</span> Che differenza c'è tra forwarding e routing?</summary>
+<div class="answer">
+<p>Il <b>forwarding (inoltro)</b> è un'operazione locale del singolo router: trasferisce un pacchetto dalla porta di ingresso alla porta di uscita appropriata, consultando la propria tabella d'inoltro. Il <b>routing (instradamento)</b> è invece il processo, distribuito su più router, che determina il percorso complessivo che i pacchetti devono seguire dall'origine alla destinazione, e serve a costruire le tabelle d'inoltro di ciascun router.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">35.</span> Cos'è il "longest prefix matching" e perché serve?</summary>
+<div class="answer">
+<p>Poiché rappresentare esplicitamente tutti i possibili indirizzi IP a 32 bit (4 miliardi di combinazioni) in una tabella d'inoltro non è praticabile, si usano intervalli di indirizzi rappresentati come <b>prefissi</b>. Quando un indirizzo di destinazione corrisponde a più prefissi presenti nella tabella, vince quello <b>più lungo</b> (più specifico), secondo la regola del longest prefix matching: un prefisso più lungo identifica un intervallo più ristretto e quindi un'informazione più precisa su dove instradare quel pacchetto.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">36.</span> Cos'è l'Head-of-the-Line (HOL) blocking?</summary>
+<div class="answer">
+<p>È un fenomeno che si verifica nelle code di ingresso di un router: se il datagramma in cima alla coda deve essere inoltrato verso una porta d'uscita occupata (contesa), resta bloccato in attesa, e con lui restano bloccati anche tutti i pacchetti dietro di lui nella stessa coda, <b>anche se</b> la loro porta d'uscita di destinazione è libera. Si tratta quindi di un ritardo "ingiustificato" causato dalla struttura della coda, non dalla reale disponibilità delle risorse.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">37.</span> Quali sono i tre tipi principali di struttura di commutazione (switching fabric) in un router?</summary>
+<div class="answer">
+<p><b>Commutazione in memoria</b>: i pacchetti vengono copiati nella memoria del router sotto il controllo diretto della CPU; è il metodo più lento (i primi router erano computer tradizionali).<br>
+<b>Commutazione tramite bus</b>: le porte di ingresso trasferiscono i pacchetti alle porte di uscita su un bus condiviso; la banda della commutazione è limitata da quella del bus, con contesa tra le porte.<br>
+<b>Commutazione tramite rete d'interconnessione (crossbar)</b>: usa una rete con 2n bus per collegare n porte di ingresso a n porte di uscita, superando il limite di banda di un singolo bus condiviso; è la soluzione più performante.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">38.</span> Perché un router può frammentare un datagramma IP?</summary>
+<div class="answer">
+<p>Un router deve frammentare un datagramma quando la sua dimensione supera l'<b>MTU (Maximum Transmission Unit)</b> del collegamento in uscita, cioè la dimensione massima di frame supportata da quel collegamento. Ogni frammento viene poi riassemblato solo alla destinazione finale, usando le informazioni di identificatore, flag e offset di frammentazione presenti nell'header IP.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">39.</span> A cosa serve il campo Time To Live (TTL) nell'header IP?</summary>
+<div class="answer">
+<p>Viene decrementato di 1 ogni volta che il datagramma viene elaborato ed inoltrato da un router. Quando raggiunge 0, il datagramma viene scartato (tipicamente generando un messaggio ICMP di errore): serve ad evitare che un pacchetto rimanga a circolare indefinitamente nella rete in presenza di loop di routing.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">40.</span> Come funziona il DHCP e a cosa serve?</summary>
+<div class="answer">
+<p>Il <b>DHCP (Dynamic Host Configuration Protocol)</b> permette a un host di ottenere automaticamente ("plug-and-play") un indirizzo IP e altri parametri di rete, senza bisogno di configurazione manuale. La sequenza tipica è: l'host invia un messaggio broadcast <b>DHCP Discover</b>; il server risponde con <b>DHCP Offer</b> proponendo un indirizzo; l'host lo accetta con <b>DHCP Request</b>; il server conferma con <b>DHCP ACK</b>. Permette anche di rinnovare o riutilizzare gli indirizzi e di supportare utenti mobili.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">41.</span> Cos'è il NAT e quali vantaggi offre?</summary>
+<div class="answer">
+<p>Il <b>NAT (Network Address Translation)</b> permette a una rete privata di usare un unico indirizzo IP pubblico verso l'esterno. Quando un host interno invia un pacchetto, il router NAT sostituisce l'indirizzo IP sorgente (privato) con il proprio indirizzo pubblico e assegna un nuovo numero di porta, memorizzando la corrispondenza per instradare correttamente le risposte in arrivo.</p>
+<p><b>Vantaggi</b>: risparmio di indirizzi IP pubblici (ne basta uno per l'intera rete); possibilità di cambiare gli indirizzi interni o l'ISP senza dover rinegoziare nulla con l'esterno; i dispositivi interni non sono direttamente indirizzabili né visibili dall'esterno, il che offre anche un beneficio in termini di sicurezza.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">42.</span> Che ruolo ha il protocollo ICMP?</summary>
+<div class="answer">
+<p><b>ICMP (Internet Control Message Protocol)</b> è usato dagli host e dai router per scambiarsi informazioni di controllo a livello di rete: segnalazione di errori (es. destinazione irraggiungibile), diagnostica (ping, echo request/reply) e notifiche come "source quench" (il destinatario è saturo). È incapsulato direttamente nei pacchetti IP. Ad esempio, quando un segmento UDP arriva a una porta su cui non è in ascolto alcuna applicazione, l'host restituisce un messaggio ICMP di tipo 3 codice 3 (porta non raggiungibile).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">43.</span> Che differenza c'è tra algoritmi di routing a stato del collegamento (link-state) e a vettore distanza (distance-vector)?</summary>
+<div class="answer">
+<p>Negli algoritmi <b>a stato del collegamento (link-state)</b>, come Dijkstra, ogni nodo dispone dell'informazione <b>globale</b> sull'intera topologia della rete e sui costi di tutti i collegamenti (ottenuta tramite un "link-state broadcast"), e calcola in autonomia il cammino minimo verso tutte le destinazioni.</p>
+<p>Negli algoritmi <b>a vettore distanza (distance-vector)</b>, ogni nodo conosce solo i costi verso i propri vicini diretti e scambia periodicamente con essi il proprio vettore di stime delle distanze verso tutte le destinazioni; il cammino minimo viene calcolato in modo <b>distribuito e iterativo</b>, senza che nessun nodo abbia una visione globale della rete.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">44.</span> In cosa consiste, a grandi linee, l'algoritmo di Dijkstra?</summary>
+<div class="answer">
+<p>È un algoritmo <b>iterativo</b> che, partendo da un nodo origine, calcola il cammino a costo minimo verso tutti gli altri nodi della rete conoscendo l'intera topologia e i costi di tutti i collegamenti. Ad ogni iterazione si aggiunge all'insieme N' (nodi il cui cammino minimo è ormai noto in modo definitivo) il nodo w non ancora in N' con la distanza D(w) più piccola, e si aggiornano le distanze stimate verso i nodi adiacenti a w. L'algoritmo termina quando N' contiene tutti i nodi della rete, e ha complessità O(n²) nella versione base (O(n log n) nelle implementazioni più efficienti).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">45.</span> Che differenza c'è tra RIP, OSPF e BGP?</summary>
+<div class="answer">
+<p><b>RIP (Routing Information Protocol)</b> è un protocollo a <b>distance vector</b>, usato all'interno di un singolo sistema autonomo, che si appoggia su UDP (porta 520). Esiste in più versioni; RIPv1 non prevede autenticazione ed è molto vulnerabile.</p>
+<p><b>OSPF</b> è anch'esso usato all'interno di un sistema autonomo, ma è basato su <b>link-state</b>; i messaggi vengono trasportati direttamente da IP (non da TCP/UDP), quindi OSPF deve implementare da solo i propri meccanismi di affidabilità. È più difficile da attaccare rispetto a RIP, soprattutto se l'autenticazione è attiva.</p>
+<p><b>BGP (Border Gateway Protocol)</b> è il protocollo usato per l'instradamento <b>tra</b> sistemi autonomi diversi (instradamento inter-dominio), ed è quello che permette a Internet nel suo complesso di funzionare come rete di reti.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">46.</span> Cosa sono i "reami di indirizzi privati" definiti dalla RFC 1918?</summary>
+<div class="answer">
+<p>Sono intervalli di indirizzi IP riservati per l'uso all'interno di reti private, non instradabili su Internet pubblica: <code>10.0.0.0/8</code> (classe A), <code>172.16.0.0 – 172.31.0.0/12</code> (classe B), <code>192.168.0.0 – 192.168.255.0/16</code> (classe C). Sono gli indirizzi tipicamente usati dietro un router NAT.</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s5">5. Sicurezza Informatica di Base</h2>
+
+<details class="qa">
+<summary><span class="qnum">47.</span> Quali sono i tre obiettivi fondamentali della sicurezza informatica (triade CIA)?</summary>
+<div class="answer">
+<p><b>Riservatezza (Confidentiality)</b>: le informazioni non devono essere accessibili a soggetti non autorizzati; comprende sia la riservatezza dei dati sia la privacy degli individui.</p>
+<p><b>Integrità (Integrity)</b>: i dati e i programmi devono poter essere modificati solo in modo autorizzato (data integrity); il sistema deve funzionare come previsto, senza manipolazioni non autorizzate (system integrity).</p>
+<p><b>Disponibilità (Availability)</b>: i sistemi e i servizi devono restare accessibili e funzionanti per gli utenti legittimi.</p>
+<p>A questi si aggiungono spesso <b>autenticità</b> (verificare che un utente o un dato provenga davvero da chi dichiara) e <b>accountability</b> (poter ricondurre ogni azione a chi l'ha compiuta, fondamentale per l'analisi forense, dato che una sicurezza perfetta non è raggiungibile).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">48.</span> Che differenza c'è tra attacco passivo e attacco attivo?</summary>
+<div class="answer">
+<p>Un <b>attacco passivo</b> cerca di scoprire o sfruttare informazioni riservate <b>senza alterare</b> le risorse del sistema: rientrano qui l'intercettazione delle trasmissioni e l'analisi del traffico (traffic analysis). È un attacco difficile da rilevare, perché non modifica nulla.</p>
+<p>Un <b>attacco attivo</b> tenta invece di <b>alterare</b> le risorse del sistema o di influenzarne il funzionamento: rientrano qui il mascheramento (masquerade), la modifica dei dati, il denial of service e il replay di messaggi già trasmessi.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">49.</span> Perché la sicurezza di una rete è "asimmetrica" tra attaccante e difensore?</summary>
+<div class="answer">
+<p>Perché l'attaccante ha bisogno di trovare <b>una sola</b> debolezza sfruttabile per violare il sistema, mentre chi progetta o amministra il sistema deve individuare ed eliminare <b>tutte</b> le debolezze possibili per ottenere una sicurezza perfetta: uno svantaggio strutturale a favore di chi attacca.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">50.</span> Cosa rende una rete intrinsecamente vulnerabile?</summary>
+<div class="answer">
+<p>Diversi fattori: l'<b>anonimato</b> (un attaccante può colpire da qualsiasi punto della rete senza essere identificato); i <b>molti punti di origine e destinazione</b> possibili per un attacco; la <b>complessità del sistema e il perimetro sconosciuto</b> (un host può appartenere a più reti con regole di sicurezza diverse); i <b>percorsi non noti a priori</b>, dato che tra due nodi possono esistere più cammini di cui l'utente non è consapevole.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">51.</span> Cos'è Wireshark?</summary>
+<div class="answer">
+<p><b>Wireshark</b> è un <b>packet sniffer</b>: un software che intercetta e visualizza in dettaglio tutti i pacchetti che transitano su un'interfaccia di rete, mostrandone i contenuti (intestazioni e, se non cifrati, anche i dati) a tutti i livelli del modello di rete. È uno strumento molto usato sia a scopo legittimo (analisi e diagnostica del traffico di rete, didattica, sicurezza difensiva) sia, se usato senza autorizzazione sul traffico altrui, come strumento di attacco per il <b>packet sniffing</b>: su un mezzo broadcast (Ethernet condivisa, Wi-Fi) può leggere tutti i pacchetti che attraversano l'interfaccia, incluse eventuali password in chiaro. <i>N.B.</i> Intercettare comunicazioni altrui senza autorizzazione è un reato informatico.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">52.</span> Cosa sono port scanning, packet sniffing e social engineering?</summary>
+<div class="answer">
+<p><b>Port scanning</b>: uso di uno strumento (es. <code>nmap</code>) che, per un dato indirizzo IP, individua quali porte rispondono, per capire quali servizi/applicazioni girano sul sistema target e quale sistema operativo è installato, così da individuare vulnerabilità note.</p>
+<p><b>Packet sniffing (analisi dei pacchetti)</b>: su mezzi broadcast (Ethernet condivisa, wireless), un'interfaccia di rete può leggere/registrare tutti i pacchetti in transito, incluse eventuali password; strumenti tipici sono Wireshark. Intercettare comunicazioni altrui senza autorizzazione è un reato.</p>
+<p><b>Ingegneria sociale</b>: sfrutta capacità sociali e interazione umana per indurre gli utenti a rivelare informazioni sensibili, tipicamente impersonando figure di autorità o di fiducia (es. un finto tecnico IT che chiede l'indirizzo IP di un dipendente).</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s6">6. Reti Sotto Attacco</h2>
+
+<details class="qa">
+<summary><span class="qnum">53.</span> Che differenza c'è tra virus, worm e cavallo di Troia?</summary>
+<div class="answer">
+<p>Il <b>cavallo di Troia</b> è una componente dannosa nascosta all'interno di un software apparentemente utile (es. plugin, ActiveX); non è necessariamente auto-replicante.</p>
+<p>Il <b>virus</b> è codice malevolo contenuto in un oggetto che l'utente riceve e manda in esecuzione volontariamente (es. un allegato email); è auto-replicante.</p>
+<p>Il <b>worm</b> si auto-esegue a partire da un oggetto ricevuto passivamente, senza bisogno che l'utente lo apra, e si propaga da solo verso altri host.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">54.</span> Cos'è un attacco Denial of Service (DoS) e in cosa differisce da un DDoS?</summary>
+<div class="answer">
+<p>Un <b>Denial of Service (DoS)</b> mira a esaurire le risorse di un sistema (banda, CPU, connessioni) per impedire l'erogazione del servizio agli utenti legittimi, tipicamente da una singola sorgente.</p>
+<p>Un <b>DDoS (Distributed DoS)</b> è la stessa tipologia di attacco condotta simultaneamente da <b>molte sorgenti distribuite</b> (una botnet di host compromessi, detti "zombie"), il che lo rende molto più difficile da contrastare perché il traffico malevolo arriva da migliaia di indirizzi IP diversi, spesso indistinguibile dal traffico legittimo.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">55.</span> Come funziona un attacco SYN Flood e perché è pericoloso?</summary>
+<div class="answer">
+<p>Sfrutta la natura orientata alla sessione del TCP: l'attaccante invia moltissime richieste <code>SYN</code> ma non risponde mai con il terzo <code>ACK</code> dell'handshake. Il server mantiene una coda (di dimensione tipicamente ridotta, 10-20 entry) delle connessioni nello stato <b>SYN_RECV</b>, in attesa dell'ACK finale; è sufficiente inviare periodicamente nuovi SYN per mantenere questa coda sempre piena, impedendo così l'instaurazione di nuove connessioni legittime. Spesso l'attaccante usa un IP sorgente diverso per ogni SYN (spoofing). A differenza di altri attacchi, esaurisce la <b>memoria</b> della vittima, non la sua banda.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">56.</span> Cosa sono i SYN cookie e come si difendono dal SYN Flood?</summary>
+<div class="answer">
+<p>È una contromisura al SYN Flood: il server risponde comunque con un segmento <code>SYNACK</code>, ma <b>non memorizza</b> lo stato della connessione (il messaggio SYN ricevuto) fino a che non riceve l'ACK finale del client. Le informazioni necessarie vengono codificate in modo crittografico nel numero di sequenza iniziale del SYNACK stesso; se il client risponde con l'ACK, il server può ricostruire la connessione da quel valore, senza aver dovuto tenere occupata memoria per connessioni potenzialmente mai completate.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">57.</span> Cos'è uno Smurf Attack?</summary>
+<div class="answer">
+<p>È una variante del ping attack in cui l'attaccante invia un pacchetto ICMP echo request all'indirizzo di <b>broadcast</b> di una rete (impostando tutti 1 nella parte host dell'indirizzo), falsificando l'indirizzo IP sorgente con quello della vittima. Tutti gli host della sottorete rispondono al ping, ma le risposte vengono inviate alla vittima (non all'attaccante), inondandola di traffico non richiesto: la rete usata come "amplificatore" è composta da vittime inconsapevoli.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">58.</span> Cosa sono il Teardrop Attack e il Land Attack?</summary>
+<div class="answer">
+<p><b>Teardrop</b>: l'attaccante invia frammenti IP con payload sovrapposti o sovradimensionati; a causa di bug nella routine di riassemblaggio dei frammenti presenti in alcuni sistemi operativi, la vittima può subire un arresto anomalo del sistema.</p>
+<p><b>Land Attack</b>: l'attaccante invia un SYN TCP in cui indirizzo IP e porta sorgente coincidono con indirizzo IP e porta di destinazione; alcuni sistemi operativi con bug specifici vanno in crash nel gestire questa situazione anomala.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">59.</span> Che differenza c'è tra Direct DDoS e Reflector DDoS?</summary>
+<div class="answer">
+<p>Nel <b>Direct DDoS</b> l'attaccante controlla direttamente (spesso tramite una struttura a due livelli: master zombie e slave zombie) gli host compromessi, che inviano traffico malevolo direttamente verso la vittima.</p>
+<p>Nel <b>Reflector DDoS</b> si aggiunge un livello ulteriore di "riflettori": gli zombie slave costruiscono pacchetti che richiedono una risposta (es. TCP, ICMP), inserendo come indirizzo IP sorgente quello della vittima (spoofing), e li inviano a macchine <b>non infette</b>, che rispondono ignare inviando le risposte alla vittima. Questo approccio genera più traffico complessivo ed è più difficile da individuare e bloccare rispetto al Direct DDoS, perché il traffico proviene da host legittimi che non fanno parte della botnet.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">60.</span> Quali sono le quattro fasi di un attacco DDoS con codice malevolo e chi sono gli attori coinvolti?</summary>
+<div class="answer">
+<p>Gli attori sono: l'<b>attaccante</b>; gli <b>handler</b>, host compromessi che controllano più agenti; gli <b>agenti (zombie)</b>, che fanno parte di una <b>botnet</b> e generano il traffico malevolo; l'<b>host vittima</b>.</p>
+<p>Le quattro fasi: <b>(1) Selezione</b> — l'attaccante individua agenti vulnerabili; <b>(2) Compromissione</b> — sfrutta le vulnerabilità, installa il codice malevolo e lo nasconde; <b>(3) Comunicazione</b> — gli agenti segnalano all'attaccante di essere pronti; <b>(4) Attacco</b> — l'attaccante invia i comandi per sferrare l'attacco vero e proprio.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">61.</span> Cos'era il malware Mirai e perché è stato particolarmente rilevante?</summary>
+<div class="answer">
+<p><b>Mirai</b>, scoperto nel 2016 (con codice sorgente reso pubblico su GitHub), è un malware auto-replicante che prende di mira dispositivi <b>IoT</b> vulnerabili (webcam, smart TV, stampanti...) tramite un modulo di replicazione che usa Telnet e attacchi a dizionario con credenziali di default comuni. Il suo modulo di attacco combina flooding HTTP, UDP e diverse varianti di flooding TCP. È rilevante perché ha dimostrato la pericolosità di una botnet composta da dispositivi IoT scarsamente protetti, ed è stato alla base di attacchi di enorme portata come quello a DYN nel 2016.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">62.</span> Cos'è un attacco DNS Amplification/Reflection e perché è così difficile da contrastare?</summary>
+<div class="answer">
+<p>L'attaccante invia molte query DNS falsificando l'indirizzo IP sorgente, che imposta uguale a quello della vittima (spoofing); i server DNS rispondono quindi inviando le risposte (spesso molto più grandi delle query, da qui "amplification") direttamente alla vittima, saturandone la banda e le risorse. È difficile da arginare perché le query dell'attacco sono indistinguibili da query legittime, e i sistemi di filtraggio basati su semplice pattern matching non sono efficaci.</p>
+<p>Tra le contromisure: aumentare il TTL dei record DNS (per rendere i server autoritativi meno esposti, senza però eccedere, dato che TTL troppo lunghi rendono il DNS troppo statico) e filtrare le richieste in base all'indirizzo IP di provenienza, dando priorità bassa a query da indirizzi anomali che non corrispondono a resolver ricorsivi noti.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">63.</span> Cosa successe nell'attacco a DYN nell'ottobre 2016?</summary>
+<div class="answer">
+<p>Fu un attacco DDoS su larga scala condotto principalmente tramite una botnet di dispositivi IoT compromessi (come telecamere IP con credenziali di default hardcoded nel firmware), organizzato in più ondate: la prima ha colpito tre data center DYN (Chicago, Washington D.C., New York), la seconda ha colpito 20 data center in tutto il mondo, ciascuno attaccato dagli zombie della propria regione. Alcuni clienti di DYN reagirono spostandosi su un provider DNS di backup già attivo (come Amazon), altri attivarono un nuovo contratto DNS durante l'attacco (come PayPal), altri ancora ridussero il TTL dei propri record.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">64.</span> Cosa rese l'attacco a GitHub del 2018 il più grande DDoS della storia fino ad allora?</summary>
+<div class="answer">
+<p>Il traffico generato raggiunse un picco di <b>1,35 Tbps</b>, con 126,9 milioni di pacchetti al secondo. Nonostante l'entità dell'attacco, GitHub restò completamente offline solo per circa 5 minuti (dalle 17:21 alle 17:26 UTC) e parzialmente indisponibile fino alle 17:30 UTC, grazie ai sistemi di mitigazione già predisposti.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">65.</span> Cos'è un BGP hijacking? Fai un esempio.</summary>
+<div class="answer">
+<p>È un annuncio fraudolento (o erroneo) di rotte BGP verso prefissi IP che non appartengono realmente all'entità che li annuncia, che porta gli altri router di Internet a instradare il traffico verso la destinazione sbagliata, rendendo la destinazione legittima irraggiungibile o intercettando il traffico.</p>
+<p>Un caso noto è l'episodio del <b>febbraio 2008</b>: Pakistan Telecom, nel tentativo di bloccare YouTube solo all'interno del Pakistan, annunciò una rotta più specifica (prefisso /24) verso gli indirizzi di YouTube; l'annuncio si propagò a livello globale e YouTube risultò irraggiungibile in tutto il mondo per circa un'ora e mezza, finché le grandi società di telecomunicazioni non bloccarono gli annunci provenienti dalla rete di Pakistan Telecom.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">66.</span> Quali sono i possibili attacchi al protocollo RIP e le relative contromisure?</summary>
+<div class="answer">
+<p>Poiché RIPv1 non prevede autenticazione, un attaccante può fare <b>spoofing</b> dell'indirizzo sorgente per diffondere informazioni di instradamento false, oppure annunciare un percorso a distanza 0 verso tutti i nodi della rete, facendo convergere su di sé (come un "buco nero") tutto il traffico — il cosiddetto <b>black hole attack</b>. Con RIPv2, che prevede autenticazione tramite password, un attaccante può comunque tentare di individuare la password per inviare messaggi di routing fraudolenti ma autenticati.</p>
+<p><b>Contromisure</b>: disabilitare RIPv1 e usare RIPv2 con autenticazione, oppure abbandonare RIP a favore di OSPF.</p>
+</div>
+</details>
+
+<hr class="sep">
+<h2 id="s7">7. Crittografia Digitale</h2>
+
+<details class="qa">
+<summary><span class="qnum">67.</span> Quali funzionalità di sicurezza si ottengono con la crittografia?</summary>
+<div class="answer">
+<p><b>Autenticazione</b> (attestare l'identità dei partecipanti), <b>segretezza/riservatezza</b> (solo il destinatario desiderato può leggere il messaggio), <b>integrità</b> (nessuno può alterare il messaggio senza che sia rilevato), <b>non ripudiabilità</b> (chi invia un messaggio non può negare di averlo fatto).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">68.</span> Che differenza c'è tra crittografia simmetrica e asimmetrica?</summary>
+<div class="answer">
+<p>Nella <b>crittografia simmetrica</b> (a chiave singola, es. AES, 3DES) mittente e destinatario condividono la <b>stessa chiave segreta</b>, usata sia per cifrare sia per decifrare. Il problema principale è la <b>distribuzione sicura della chiave</b>: N utenti che vogliono comunicare a coppie hanno bisogno di N·(N−1)/2 chiavi diverse.</p>
+<p>Nella <b>crittografia asimmetrica</b> (a chiave doppia, es. RSA) ogni utente ha una coppia di chiavi: una <b>pubblica</b>, nota a tutti, e una <b>privata</b>, segreta. Cifrando con la chiave pubblica del destinatario si ottiene <b>segretezza</b> (solo lui può decifrare con la propria chiave privata); cifrando invece con la propria chiave privata si ottiene <b>autenticazione/firma</b> (chiunque può verificare con la chiave pubblica corrispondente che il messaggio proviene proprio da quel mittente).</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">69.</span> Perché nella pratica si usa la crittografia asimmetrica solo per scambiare la chiave di sessione, e non per cifrare tutto il messaggio?</summary>
+<div class="answer">
+<p>Per motivi di <b>efficienza</b>: la crittografia asimmetrica è computazionalmente molto più onerosa di quella simmetrica. Si genera quindi una chiave di sessione simmetrica casuale (es. usata con AES o DES) per cifrare i dati veri e propri, e si cifra <b>solo la chiave di sessione</b> con la crittografia asimmetrica (es. RSA), usando la chiave pubblica del destinatario. Il destinatario decifra prima la chiave di sessione con la propria chiave privata, poi usa quella chiave per decifrare il messaggio.</p>
+</div>
+</details>
+
+<details class="qa">
+<summary><span class="qnum">70.</span> Come funziona, in sintesi, la cifratura end-to-end di WhatsApp?</summary>
+<div class="answer">
+<p>Ogni dispositivo possiede una coppia di <b>Identity Keys (IK)</b> permanenti, che restano valide finché non si cambia dispositivo o si reinstalla l'app. Per ogni sessione: (1) viene generata una <b>nuova chiave simmetrica</b>; (2) questa chiave viene trasmessa cifrata con crittografia asimmetrica usando la chiave pubblica del destinatario; (3) il messaggio vero e proprio viene cifrato con crittografia simmetrica <b>AES</b> usando la chiave appena generata. In questo modo la chiave di sessione cambia ad ogni sessione, migliorando la sicurezza complessiva.</p>
+</div>
+</details>
+
+<hr class="sep">
+<p class="footer-note">Domande di ripasso basate sulla dispensa del corso di Reti e Cyber-Sicurezza — Prof.ssa Alessandra De Paola — Università degli Studi di Palermo, Facoltà di Ingegneria, A.A. 2025/2026.</p>
+
+</body>
+</html>
