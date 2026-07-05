@@ -966,8 +966,57 @@ Set-Cookie: XYZ</code></pre>
 <p><b>Peso del messaggio con cookie</b><br>
 Size(msg<sub>IMG1</sub>) = Size(IMG1) + Size(cookie) = 4.194.304 + 100 = <b>4.194.404 B</b><br>
 N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
+  
+<b>Parte 2: Seconda pagina (Amazon + img2)</b>
+<p><b>⑤ Richiesta del file base a www.amazon.it</b></p>
+<pre><code>GET /index.html HTTP/1.1
+Host: www.amazon.it
+Connection: open</code></pre>
 
+<p><b>⑥ Risposta con il file base (FB2), frammentata su più pacchetti</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: text/html
+Content-Length: 10240</code></pre>
+<p>FB2 = 10 kB = 10·1024 = <b>10.240 B</b><br>
+N(FB2) = ⌈10240/1460⌉ = <b>8 pacchetti</b><br>
+Dati(FB2) = 10240 + (8·40) = <b>10.560 B</b><br>
+T<sub>trasm</sub>(FB2) = (10560·8) / (200·10<sup>6</sup>) ≈ <b>0,42 ms</b></p>
+
+<p><b>⑦ Richiesta dell'immagine a www.foo.it (con Cookie incluso)</b></p>
+<pre><code>GET /pics/img2.jpg HTTP/1.1
+Host: www.foo.it
+Connection: open
+Cookie: XYZ</code></pre>
+<p><i>Nota: Il client possiede già il cookie fornito al passo ④, per cui lo include nell'header. La connessione TCP verso foo.it è già aperta (persistente).</i></p>
+
+<p><b>⑧ Risposta con l'immagine 2, frammentata su più pacchetti</b></p>
+<pre><code>HTTP/1.1 200 OK
+Connection: open
+Content-Type: image/jpg
+Content-Length: 3145728</code></pre>
+<p>IMG2 = 3 MB = 3·1024·1024 = <b>3.145.728 B</b><br>
+N(msg<sub>IMG2</sub>) = ⌈3.145.728/1460⌉ = <b>2155 pacchetti</b><br>
+Dati(msg<sub>IMG2</sub>) = 3145728 + (2155·40) = <b>3.231.928 B</b><br>
+T<sub>trasm</sub>(IMG2) = (3.231.928·8) / (200·10<sup>6</sup>) ≈ <b>129,28 ms</b></p>
 <p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p>
+<p>Calcoliamo il Round Trip Time (RTT) per i vari percorsi, sapendo che T<sub>p</sub> = 0,1 ms per collegamento:</p>
+<ul>
+  <li><b>RTT</b> = (2 · 0,1) = <b>0,2 ms</b></li>
+</ul>
+
+<p><b>Tempo Totale Pagina 1:</b><br>
+Le interazioni HTTP/1.1 avvengono su nuove connessioni (Handshake TCP + GET = 2 RTT):<br>
+T<sub>P1</sub> = [2·RTT<sub>ebay</sub> + T<sub>pk</sub> + T<sub>trasm</sub>(FB1)] + [2·RTT<sub>foo</sub> + T<sub>pk</sub> + T<sub>pk</sub> + T<sub>trasm</sub>(IMG1)]<br>
+T<sub>P1</sub> = [0,4 + 0,06 + 0,51] + [0,4 + + 0,06 + 0,06 + 172,37] = 0,97 + 173,37 = <b>173,89 ms</b></p>
+
+<p><b>Tempo Totale Pagina 2:</b><br>
+Verso Amazon si apre una nuova connessione (2 RTT), ma verso foo.it la connessione è già attiva grazie a HTTP/1.1 persistente (solo 1 RTT per la GET):<br>
+T<sub>P2</sub> = [2·RTT<sub>amazon</sub> + T<sub>pk</sub> + T<sub>trasm</sub>(FB2)] + [1·RTT<sub>foo</sub> + T<sub>pk</sub> + T<sub>pk</sub> + T<sub>trasm</sub>(IMG2)]<br>
+T<sub>P2</sub> = [0,4 + 0,06 + 0,42] + [0,4 + 0.06 + 0.06 + 129,28] = 0,88 + 129,8 = <b>130,68 ms</b></p>
+
+<p><b>Tempo Totale Complessivo:</b><br>
+T<sub>TOT</sub> = 173,89 + 130,68 = <b>304,57 ms</b></p>
 </div>
 </div>
 
