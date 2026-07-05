@@ -1148,7 +1148,7 @@ Tempo Trasmissione intera email (T<sub>trasm_tot</sub>) = (110.048 · 8) / 10<su
 
 <b>Fase 1: Marco -> mail.unipa.it (SMTP)</b><br>
 <i>Attraversa solo la LAN (T<sub>prop</sub> = 1 ms). Nessun router intermedio per l'accodamento.</i><br>
-T<sub>1</sub> = 12(T<sub>prop</sub>) + (T<sub>prop</sub> + T<sub>trasm_tot</sub>) + 3(T<sub>prop</sub>) = 12(1) + (1 + 8,88) + 3(1) = 12 + 9,88 + 3 = <b>24,88 ms</b><!-- --><br><br>
+T<sub>1</sub> = 12(T<sub>prop</sub>) + (T<sub>prop</sub> + T<sub>trasm_tot</sub>) + 3(T<sub>prop</sub>) = 12(1) + (1 + 8,80) + 3(1) = 12 + 9,88 + 3 = <b>24,80 ms</b><!-- --><br><br>
 
 <b>Fase 2: mail.unipa.it -> mail.google.com (SMTP)</b><br>
 <i>Attraversa LAN, L<sub>1</sub>, L<sub>2</sub> (T<sub>prop_tot</sub> = 1 + 1 + 1 = 3 ms). Ci sono 2 router di mezzo (R<sub>1</sub> e R<sub>2</sub>), che aggiungono tempi di ritrasmissione/accodamento del primo pacchetto.</i><br>
@@ -1157,7 +1157,7 @@ T<sub>2</sub> = 12(3) + (3 + 2(0,12) + 8,80) + 3(3) = 36 + 12,04 + 9 = <b>57,04 
 
 <b>Fase 3: Ricezione piero.neri (POP3 da mail.unipa.it)</b><br>
 <i>Attraversa solo la LAN (T<sub>prop</sub> = 1 ms).</i><br>
-T<sub>3</sub> = 11(T<sub>prop</sub>) + (T<sub>prop</sub> + T<sub>trasm_tot</sub>) + 2(T<sub>prop</sub>) = 11(1) + (1 + 8,80) + 2(1) = 11 + 9,80 + 2 = <b>22,88 ms</b><!-- --><br><br>
+T<sub>3</sub> = 11(T<sub>prop</sub>) + (T<sub>prop</sub> + T<sub>trasm_tot</sub>) + 2(T<sub>prop</sub>) = 11(1) + (1 + 8,80) + 2(1) = 11 + 9,8 + 2 = <b>22,8 ms</b><!-- --><br><br>
 
 <b>Fase 4: Ricezione carlo.verdi (POP3 da mail.google.com)</b><br>
 <i>Attraversa L<sub>3</sub> e L<sub>2</sub> (T<sub>prop_tot</sub> = 1 + 1 = 2 ms). C'è 1 router di mezzo (R<sub>2</sub>).</i><br>
@@ -1166,8 +1166,8 @@ T<sub>4</sub> = 11(2) + (2 + 0,12 + 8,80) + 2(2) = 22 + 10,92 + 4 = <b>36,92 ms<
 
 <b>Tempo Totale Finale:</b><br>
 <i>Poiché le operazioni di ricezione avvengono in parallelo sui due server, il tempo totale per far sì che la mail giunga a *tutti* i destinatari è dettato dal percorso più lungo (ovvero quello verso Carlo):</i><br>
-T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,04 + 36,92 = <b>118,76 ms</b><!-- -->
-</p>
+T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,04 + 36,92 = <b>118,76 ms</b>
+<!-- --></p>
 </div>
 </div>
 <hr class="sep">
