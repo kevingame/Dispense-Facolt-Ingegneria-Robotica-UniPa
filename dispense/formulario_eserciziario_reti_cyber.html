@@ -1511,7 +1511,7 @@ Connection: open</pre>
                   <div class="solution-body">File = 4KB<br/>R = 10Mbs<br/>RTT = 2ms<br/>MSS = 512byte<br/><br/>N = 4·1024/512 = 8 pacchetti.
 <div class="imgbox"><img alt="Esercizio 1 TCP - svolgimento" class="ex-figure" loading="lazy" src="./reti_cyber/esercizi_tcp1_grafico.jpg"/>
 </div>
-T<sub>F</sub> = SRTT + 4·T<sub>trans1</sub> + 4·T<sub>tras2</sub> &lt; SRTT + 8·T<sub>trans</sub><br/>
+T<sub>F</sub> = 5RTT + 4·T<sub>trans1</sub> + 4·T<sub>tras2</sub> &lt; 5RTT + 8·T<sub>trans</sub><br/>
 T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br/>
 409,6 µs = 0,04096 ms<br/>
 5·(2) + 8·(0,4096) ≈ 10 + 3,2768 = 13,28 ms</div>
