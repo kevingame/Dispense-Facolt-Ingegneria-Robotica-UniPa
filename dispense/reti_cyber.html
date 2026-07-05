@@ -238,7 +238,7 @@
 <p>Internet è una struttura gerarchica composta da una "rete di reti". Un <b>protocollo</b> è un insieme di regole ben definito che stabilisce il formato dei messaggi, il significato, l'ordine e l'azione che ne consegue (es. TCP, IP, HTTP, Ethernet). Gli standard sono definiti in pubblicazioni note come <b>RFC</b> (Request for Comments), scritte dall'<b>IETF</b> (Internet Engineering Task Force).</p>
 <p><b>API</b>: insieme di regole utilizzate nei sistemi terminali per l'accesso ai servizi per la ricezione/invio dei dati.</p>
 
-<div class="imgbox"><img src="./reti_cyber/intro_internet.jpg" alt="Introduzione a Internet" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/intro_internet.jpg?v=2?v=2" alt="Introduzione a Internet" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 
 <p class="caption">Struttura di rete: confini, sistemi terminali (host), collegamenti, router; accesso punto-punto e tipologie di accesso residenziale (Dial-up, DSL).</p>
@@ -300,7 +300,7 @@ Tempo per ricevere 3 pacchetti = 4L/R
 <h2>1.3 Internet Service Provider e IXP</h2>
 <p>Un nodo si dice <b>non scalabile</b> se all'aumentare delle dimensioni del sistema esso non funziona più. Gli ISP devono stabilire un accordo economico, connettendo ogni ISP di accesso con un ISP globale. Un unico ISP non è realistico: se conveniente economicamente, nascono sottoinsiemi degli ISP consorziati. Gli ISP consorziati devono essere interconnessi tramite gli <b>Internet eXchange Point (IXP)</b>. Gli ISP globali non sono presenti in tutte le città: ISP regionali connettono le reti di accesso agli ISP globali.</p>
 
-<div class="imgbox"><img src="./reti_cyber/isp_router.jpg" alt="ISP, IXP e comportamento del router" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/isp_router.jpg?v=2?v=2" alt="ISP, IXP e comportamento del router" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 <p class="caption">Architettura di rete a livelli (Access ISP, Regional ISP, Tier-1 ISP, IXP) e comportamento di un router.</p>
 
@@ -352,7 +352,7 @@ L·a/R &gt; 1: più "lavoro" in arrivo di quanto possa essere effettivamente svo
 <h3>Ritardi e percorsi in Internet</h3>
 <p>Cosa significano effettivamente ritardi e perdite nella "vera" Internet? Il <b>traceroute</b> è un programma diagnostico che fornisce una misura del ritardo end-to-end dalla sorgente al router lungo i percorsi Internet punto-punto verso la destinazione: invia tre pacchetti che raggiungeranno il router <i>i</i> sul percorso verso la destinazione; il router <i>i</i> restituisce i pacchetti al mittente, che calcola l'intervallo tra trasmissione e risposta.</p>
 
-<div class="imgbox"><img src="./reti_cyber/ritardo_propagazione.jpg" alt="Ritardo di accodamento e propagazione" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/ritardo_propagazione.jpg?v=2?v=2" alt="Ritardo di accodamento e propagazione" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 <p class="caption">Confronto qualitativo dei ritardi end-to-end al variare di R₁ &gt; R₂ e R₁ &lt; R₂.</p>
 
@@ -370,7 +370,7 @@ Throughput end-to-end per ciascuna connessione (scenario Internet):
 <br>In pratica R è spesso il collo di bottiglia.
 </div>
 
-<div class="imgbox"><img src="./reti_cyber/throughput_livelli.jpg" alt="Throughput e livelli di protocollo" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/throughput_livelli.jpg?v=2?v=2" alt="Throughput e livelli di protocollo" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 
 <p class="caption">Modello "tubo" del throughput e livelli del modello a 5 livelli con incapsulamento dei dati.</p>
@@ -385,7 +385,7 @@ Throughput end-to-end per ciascuna connessione (scenario Internet):
   <li><b>Fisico</b>: trasferimento dei simboli bit</li>
 </ul>
 <p><b>Intestazione (header)</b> = informazioni aggiunte (es. lettura in busta, con mittente e destinatario). Il messaggio + intestazione = segmento. Il trasporto chiede alla rete di aggiungere un'intestazione H<sub>n</sub> "n=net" e così via fino al livello fisico. All'arrivo, il destinatario toglie tutte le intestazioni e se tutto corrisponde estrae il messaggio e lo passa al livello applicativo.</p>
-<div class="imgbox"><img src="./reti_cyber/incapsulamento.jpg" alt="Throughput e livelli di protocollo" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
+<div class="imgbox"><img src="./reti_cyber/incapsulamento.jpg?v=2?v=2" alt="Throughput e livelli di protocollo" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
 
 <hr class="sep">
 
@@ -396,7 +396,7 @@ Throughput end-to-end per ciascuna connessione (scenario Internet):
 <p>Si vuole trasmettere un messaggio di dimensione <b>3 MB</b> attraverso la rete a commutazione di pacchetto schematizzata in figura (Host A — R1 — R2 — Host B). I 3 link sono lunghi rispettivamente 100 m, 50 m e 80 m, ed ognuno ha un'ampiezza di banda pari a 512 kbps e velocità di propagazione 2,8×10⁸ m/s. Si calcoli il tempo necessario a trasmettere l'intero messaggio assumendo pacchetti di 536 byte di payload, con overhead di 28 byte.</p>
 <p><i>Nota: per le dimensioni dei file si usano potenze di 2; per i tassi di trasmissione potenze di 10.</i></p>
 <p>Domande aggiuntive: (a) Dopo quanto tempo l'host B riceve interamente il primo pacchetto? (b) Dopo quanto tempo riceve interamente il secondo pacchetto? (c) Tempo totale per l'intero messaggio.</p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_1.jpg" alt="Esercizio 1 - svolgimento parte 1" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_1.jpg?v=2?v=2" alt="Esercizio 1 - svolgimento parte 1" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
 
 <div class="box formula">
 informazione di intestazione: Overhead  OH 28byte</br>
@@ -408,7 +408,7 @@ N = ⌈S<sub>mess</sub> / PL⌉ = ⌈(3 MB · 1024 · 1024)byte/ 536 byte⌉ = �
 Come calcoliamo la dimensione dell'ultimo pacchetto?<br>
 S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 3·2²⁰ − 5868·536 = 480 byte
 
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_2.jpg" alt="Esercizio 1 - svolgimento parte 2" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_2.jpg?v=2?v=2" alt="Esercizio 1 - svolgimento parte 2" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
 <p class="caption">Calcolo dei tempi di propagazione T<sub>prop1,2,3</sub>, del tempo di trasmissione T<sub>Tras</sub>, e risposte ai punti a) b) c).</p>
 
 
@@ -427,12 +427,12 @@ T<sub>TOT</sub> = T<sub>prop1</sub>+T<sub>prop2</sub>+T<sub>prop3</sub> + (N+1)�
 <h4>Esercizio 2</h4>
 <div class="box esercizio">
 <p>Si vuole trasmettere un messaggio di dimensione <b>2 KB</b> attraverso la stessa topologia. Ogni link è lungo 200 m, 100 m e 160 m, ed ha velocità di propagazione 2,8×10⁸ m/s. I 3 link hanno ampiezza di banda rispettivamente pari a 200 Mbps, 20 Mbps e 2 Gbps. Si assumano pacchetti di 536 byte di payload, con overhead di 28 byte. Si calcolino gli eventuali ritardi di accodamento subiti dai pacchetti lungo il percorso e il tempo necessario a trasmettere l'intero messaggio.</p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_1.jpg" alt="Esercizio 2 - svolgimento"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_1.jpg?v=2?v=2" alt="Esercizio 2 - svolgimento"></div>
 
 <div class="box formula">
 <p>N = ⌈S<sub>mess</sub>/ PL⌉ = ⌈2KB/536 byte⌉ = ⌈2KB·1024byte/536 byte⌉ = ⌈3,82⌉ ≈ 4 pacchetti (ultimo più piccolo);<br>S<sub>last</sub> = S<sub>mess</sub> − (N−1)·PL = 2048 − (4-1)·536 = 440 byte<br>diagramma con accodamento al link più lento (10× più lento); tempi di propagazione T<sub>prop1,2,3</sub>.</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_2_2.jpg" alt="Esercizio 1 - svolgimento parte 2" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_2_2.jpg?v=2?v=2" alt="Esercizio 1 - svolgimento parte 2" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;" ></div>
 
 <p>
 T<sub>prop1</sub> = L<sub>1</sub> / V<sub>p</sub> = 200m / 2,8·10<sup>8</sup> m/s = 7,14·10<sup>-7</sup> s = 3,57·10<sup>-1</sup>μs ≈ 0,714 μs<br>
@@ -455,7 +455,7 @@ T<sub>prop3</sub> = L<sub>3</sub> / V<sub>p</sub> = 160m / 2,8·10<sup>8</sup> m
   <li><b>P2P (peer-to-peer)</b></li>
 </ul>
 
-<div class="imgbox"><img src="./reti_cyber/livello_applicazione.jpg" alt="Architetture Client-Server e P2P, socket, processo di indirizzamento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/livello_applicazione.jpg?v=2?v=2" alt="Architetture Client-Server e P2P, socket, processo di indirizzamento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 <p class="caption">Architettura client-server e P2P; concetto di socket come "porta" tra applicazione e trasporto; processo di indirizzamento tramite indirizzo IP a 32 bit.</p>
 
@@ -557,7 +557,7 @@ HTTP è un protocollo <b>"senza stato" (stateless)</b>: il server non mantiene i
 Tempo di risposta totale = 2·RTT + tempo di trasmissione del file
 </div>
 <p><i>N.B.</i> Il RTT include i ritardi di propagazione, di accodamento e di elaborazione.</p>
-<div class="imgbox"><img src="./reti_cyber/rtt.jpg" alt="Funzionamento dei cookie" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/rtt.jpg?v=2?v=2" alt="Funzionamento dei cookie" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 
 <h4>Connessioni persistenti</h4>
@@ -570,11 +570,11 @@ Tempo di risposta totale = 2·RTT + tempo di trasmissione del file
 
 <div style="display: flex; gap: 20px; align-items: flex-start;">
   <div class="imgbox" style="flex: 1;">
-    <img src="./reti_cyber/http.jpg" alt="Formato dei messaggi HTTP" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+    <img src="./reti_cyber/http.jpg?v=2?v=2" alt="Formato dei messaggi HTTP" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
   </div>
   
   <div class="imgbox" style="flex: 1;">
-    <img src="./reti_cyber/http_richiesta.jpg" alt="Formato dei messaggi HTTP" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+    <img src="./reti_cyber/http_richiesta.jpg?v=2?v=2" alt="Formato dei messaggi HTTP" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
   </div>
 </div>
 <p class="caption">Riga di richiesta (metodo/URL/versione), righe di intestazione, corpo dell'entità; metodi GET/POST/HEAD; differenze HTTP/1.0 e HTTP/1.1.</p>
@@ -591,7 +591,7 @@ Tempo di risposta totale = 2·RTT + tempo di trasmissione del file
 <p><b>Metodo POST</b>: la pagina web spesso include un form per l'input dell'utente; l'input arriva al server nel corpo dell'entità; si tratta sempre di una richiesta, ma a seconda dell'input.<br>
 <b>Corpo URL</b>: usa il metodo GET; l'input arriva al server nel campo URL della riga di richiesta.</p>
 
-<div class="imgbox"><img src="./reti_cyber/http_risposta.jpg" alt="Formato dei messaggi HTTP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/http_risposta.jpg?v=2?v=2" alt="Formato dei messaggi HTTP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 <p class="caption">Riga di risposta (stato, versione,codice nuemrico, codifica), righe di intestazione</p>
 
@@ -619,7 +619,7 @@ HTTP è un protocollo senza stato: non ricorda i messaggi che sono stati scambia
 <p>Per far funzionare questo meccanismo, il server deve salvare gli identificativi generati all'interno di un proprio database, associandoli allo stato dell'utente. Allo stesso tempo, anche il client deve memorizzare l'identificativo che gli è stato assegnato.
 <i>N.B.</i> Nella primissima richiesta HTTP verso il server, il client non invia alcun cookie, poiché non gli è ancora stato rilasciato.</p>
 
-<div class="imgbox"><img src="./reti_cyber/cookie.jpg" alt="Funzionamento dei cookie" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/cookie.jpg?v=2?v=2" alt="Funzionamento dei cookie" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 <p class="caption">Scambio Set-Cookie / Cookie tra client e server in richieste successive; il server consulta il database per specifiche del cookie.</p>
 
@@ -630,7 +630,7 @@ HTTP è un protocollo senza stato: non ricorda i messaggi che sono stati scambia
 <h3>Cache Web (server proxy)</h3>
 <p>Obiettivo: soddisfare la richiesta del client senza coinvolgere il server d'origine. L'utente configura il browser affinché acceda al Web tramite la cache: il browser trasmette tutte le richieste HTTP alla cache; se l'oggetto è nella cache, la cache lo fornisce direttamente, altrimenti la cache richiede l'oggetto al server d'origine e poi lo inoltra al client. La cache opera quindi sia come client (verso il server d'origine) sia come server (verso il client). Tipicamente la cache è installata da un ISP (università, aziende o ISP residenziali).</p>
 <p><b>Perché il caching web?</b> Riduce i tempi di risposta alle richieste dei client (es. il collo di bottiglia tra client e server è tipicamente maggiore di quello tra client e cache); riduce il traffico sul collegamento di accesso a Internet; una rete arricchita di cache consente ai provider "scadenti" di fornire comunque dati con efficacia.</p>
-<div class="imgbox"><img src="./reti_cyber/proxy.jpg" alt="Funzionamento dei cookie" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/proxy.jpg?v=2?v=2" alt="Funzionamento dei cookie" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 
 <h4>Esercizio 1</h4>
@@ -643,20 +643,20 @@ HTTP è un protocollo senza stato: non ricorda i messaggi che sono stati scambia
 <div class="box formula">
 Ritardo totale medio = 0,6·(2,01 sec) + 0,4·(0,01 sec) &lt; 1,4 sec
 </div>
-<div class="imgbox"><img src="./reti_cyber/proxy_2.jpg" alt="Funzionamento dei cookie" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/proxy_2.jpg?v=2?v=2" alt="Funzionamento dei cookie" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 </div>
 
 <h4>Esercizio 2</h4>
 <div class="box esercizio">
 <p>Data la configurazione indicata in figura si supponga che l'host1 richieda al web server remoto tramite protocollo HTTP/1.1 una pagina web di dimensione 3 kB contenente al suo interno una immagine di 1.5 MB. Successivamente anche l'host2 richiede la stessa pagina. Supponendo che entrambi gli host siano configurati per utilizzare il proxy e che la pagina sia statica, si calcolino i tempi per entrambe le trasmissioni. Si assuma che il RTT tra due host della LAN sia pari in media a 10 μs, che il link L sia lungo 500 m e abbia velocità di propagazione 2,8×10⁸ m/s e che le ampiezze di banda per la LAN e per il link L siano di 100 Mbps. Si assuma inoltre una MTU pari a 1500 byte e un overhead complessivo di pacchetto pari a 48 byte e si considerino i canali privi di errori o perdite.</p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_3.jpg" alt="Esercizio 3 - traccia"style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"</div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_3.jpg?v=2?v=2" alt="Esercizio 3 - traccia"style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"</div>
 </div>
 
 <div class="box formula">
 <p>
 <b>Dati e calcoli preliminari:</b><br>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_3_svolgimento.jpg" alt="Esercizio 3 - svolgimento" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_3_svolgimento.jpg?v=2?v=2" alt="Esercizio 3 - svolgimento" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 Pagina = 3 kB = 3 · 1024 = 3072 Byte<br>
 IMG = 1,5 MB = 1,5 · 1024 · 1024 = 1.572.864 Byte<br>
 L = 500 m<br>
@@ -683,7 +683,7 @@ Last-Modified: Data_X
 <p><i>conversione: (3 kB in Byte: 3 * 1024 = 3072 Byte)</i></p>
 
 <p><b>③ Richiesta immagine</b></p>
-<pre><code>GET /img.jpg HTTP/1.1
+<pre><code>GET /img.jpg?v=2?v=2 HTTP/1.1
 Host: server-remoto.it
 Connection: open</code></pre>
 
@@ -722,12 +722,12 @@ Last-Modified: Data_X
 (DATI DEL FILE BASE DALLA CACHE)</code></pre>
 
 <p><b>⑨ Richiesta dell'immagine da Host 2 a Proxy</b></p>
-<pre><code>GET /img.jpg HTTP/1.1
+<pre><code>GET /img.jpg?v=2?v=2 HTTP/1.1
 Host: server-remoto.it
 Connection: open</code></pre>
 
 <p><b>⑩ GET Condizionale dal Proxy verso il Server (per l'immagine)</b></p>
-<pre><code>GET /img.jpg HTTP/1.1
+<pre><code>GET /img.jpg?v=2?v=2 HTTP/1.1
 Host: server-remoto.it
 Connection: open
 If-Modified-Since: Data_Y</code></pre>
@@ -780,7 +780,7 @@ T<sub>tot_H2</sub> = 0,03 + 0,01071 + 0,257 + 130 = <b>130,297 ms</b>
   <p>Obiettivo: non inviare un oggetto se la cache ne possiede già una copia aggiornata. La cache specifica nella richiesta HTTP la data della copia dell'oggetto in suo possesso, tramite l'intestazione <code>If-modified-since: &lt;data&gt;</code>. Il server risponde senza includere l'oggetto se la copia nella cache è ancora aggiornata (<code>HTTP/1.0 304 Not Modified</code>); se invece l'oggetto è stato modificato, il server invia la risposta completa (<code>HTTP/1.0 200 OK</code> con i dati).</p>
   
   <div class="imgbox">
-    <img src="./reti_cyber/get_condizionale.jpg" alt="Funzionamento GET condizionale" style="border: 1px solid #ccc; border-radius: 8px;">
+    <img src="./reti_cyber/get_condizionale.jpg?v=2?v=2" alt="Funzionamento GET condizionale" style="border: 1px solid #ccc; border-radius: 8px;">
   </div>
 
 </div>
@@ -805,13 +805,13 @@ Per le dimensioni relative ai tassi di trasmissione e alle ampiezze di banda si 
 come potenze di 10 e quindi in particolare:<br> 
 1 kbps = 1.000 bps; 1 Mbps = 1.000.000 bps </p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizio1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio1_html.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <div class="box formula">
 <p><b>Prima richiesta della pagina (oggetti non ancora in cache)</b></p>
 <p>Scambio di messaggi (connessione persistente, HTTP/1.1): il client apre la connessione (handshake TCP, 1 RTT), richiede <code>/index.html</code> e riceve il file base — FB (200 OK); non appena ricevuto, invia in pipeline le due richieste per <code>img1</code> (50 kB) e <code>img2</code> (80 kB), che il server serve in sequenza sulla stessa connessione; infine la connessione viene chiusa.</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizio1_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio1_1_html.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <p><b>① Richiesta del file base</b></p>
 <pre><code>GET /index.html HTTP/1.1
@@ -852,7 +852,7 @@ Last-Modified: Z
 (DATI)</code></pre>
 <p>(80 kB = 80·1024 = 81920 B)</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizio1_2_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio1_2_html.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 80%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <p>RTT = 2·T<sub>prop</sub> (tempo di andata e ritorno). Il tempo totale della prima richiesta è quindi:</p>
 <p>T<sub>1</sub> = <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>handshake</sub></span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich./risp. ①②</sub></span> + <span style="border-bottom: 2px solid blue; padding-bottom: 2px;">T<sub>trasm</sub>(FB)</span> + <span style="border-bottom: 2px solid red; padding-bottom: 2px;">(T<sub>prop</sub>+T<sub>prop</sub>)<sub>rich. pipeline ③⑤</sub></span> + <span style="border-bottom: 2px solid purple; padding-bottom: 2px;">T<sub>trasm</sub>(IMG1)</span> + <span style="border-bottom: 2px solid darkorange; padding-bottom: 2px;">T<sub>trasm</sub>(IMG2)</span><br>
@@ -924,11 +924,11 @@ T<sub>tot</sub> = T<sub>1</sub> + T<sub>1→2</sub> ≈ 16,58 ms + 3 ms ≈ <b>1
 
 <div class="box esercizio">
 <h4>Esercizio 2</h4>
-<p>Data la configurazione schematizzata in figura, si assuma che l'host H richieda una pagina web al server <code>www.ebay.com</code>, costituita da un file HTML di 12 kB e dall'immagine <code>www.foo.it/pics/img1.jpg</code> di 4 MB, e che, successivamente, lo stesso host richieda una pagina web al server <code>www.amazon.it</code>, costituita da un file HTML di 10 kB e dall'immagine <code>www.foo.it/pics/img2.jpg</code> di 3 MB.<br>
+<p>Data la configurazione schematizzata in figura, si assuma che l'host H richieda una pagina web al server <code>www.ebay.com</code>, costituita da un file HTML di 12 kB e dall'immagine <code>www.foo.it/pics/img1.jpg?v=2?v=2</code> di 4 MB, e che, successivamente, lo stesso host richieda una pagina web al server <code>www.amazon.it</code>, costituita da un file HTML di 10 kB e dall'immagine <code>www.foo.it/pics/img2.jpg?v=2?v=2</code> di 3 MB.<br>
 Assumendo che tutte le interazioni avvengano con HTTP/1.1 e che il server <code>www.foo.it</code> utilizzi cookie di 100 byte, si calcoli il tempo totale necessario ad ottenere le due pagine.<br>
 Si considerino tutti i collegamenti caratterizzati da ampiezza di banda di 200 Mbps, tempo di propagazione medio pari a 0,1 ms, MTU pari a 1500 byte e overhead di 40 byte.</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizio2_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio2_html.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <div class="box formula">
 <p>Topologia: H — R1 — www.ebay.com, con R2 e www.amazon.com a valle di R1; il server <code>www.foo.it</code>, che ospita le immagini, è raggiungibile da H attraverso R1 e R2 (non è collocato sugli stessi host di ebay/amazon), quindi le immagini vanno recuperate con richieste separate verso <code>www.foo.it</code>. Il tempo di attraversamento dei router R1/R2 è considerato trascurabile; le risposte contenenti il file base e le immagini vengono frammentate su più pacchetti (in base a MTU e overhead) per il loro invio.</p>
@@ -936,7 +936,7 @@ Si considerino tutti i collegamenti caratterizzati da ampiezza di banda di 200 M
 
 <p><i>Per il funzionamento e la struttura dell'header <code>Set-Cookie</code>/<code>Cookie</code> si veda il paragrafo <b>"Cookie"</b> trattato in precedenza in questa dispensa; qui ci si limita a considerarne il peso (100 B) nel calcolo dei dati trasmessi.</i></p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizio2_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio2_1_html.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <p><b>① Richiesta del file base a www.ebay.com</b></p>
 <pre><code>GET /index.html HTTP/1.1
@@ -948,17 +948,17 @@ Connection: open</code></pre>
 Connection: open
 Content-Type: text/html
 Content-Length: 12288</code></pre>
-<p>(12 kB = 12·1024 = 12288 B; il file base referenzia l'immagine <code>www.foo.it/pics/img1.jpg</code>)</p>
+<p>(12 kB = 12·1024 = 12288 B; il file base referenzia l'immagine <code>www.foo.it/pics/img1.jpg?v=2?v=2</code>)</p>
 
 <p><b>③ Richiesta dell'immagine a www.foo.it</b> (attraverso R1 e R2)</p>
-<pre><code>GET /pics/img1.jpg HTTP/1.1
+<pre><code>GET /pics/img1.jpg?v=2?v=2 HTTP/1.1
 Host: www.foo.it
 Connection: open</code></pre>
 
 <p><b>④ Risposta con l'immagine, frammentata su più pacchetti, con cookie impostato dal server</b></p>
 <pre><code>HTTP/1.1 200 OK
 Connection: open
-Content-Type: image/jpg
+Content-Type: image/jpg?v=2?v=2
 Content-Length: 4194304
 Set-Cookie: XYZ</code></pre>
 <p>IMG1 = 4 MB = 4·1024·1024 = <b>4.194.304 B</b>; cookie = <b>100 B</b></p>
@@ -968,7 +968,7 @@ Size(msg<sub>IMG1</sub>) = Size(IMG1) + Size(cookie) = 4.194.304 + 100 = <b>4.19
 N(msg<sub>IMG1</sub>) = ⌈Size(msg<sub>IMG1</sub>)/Payload⌉</p>
   
 <b>Parte 2: Seconda pagina (Amazon + img2)</b>
-<div class="imgbox"><img src="./reti_cyber/esercizio2_1_1_html.jpg" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizio2_1_1_html.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p><b>⑤ Richiesta del file base a www.amazon.it</b></p>
 <pre><code>GET /index.html HTTP/1.1
 Host: www.amazon.it
@@ -985,7 +985,7 @@ Dati(FB2) = 10240 + (8·40) = <b>10.560 B</b><br>
 T<sub>trasm</sub>(FB2) = (10560·8) / (200·10<sup>6</sup>) ≈ <b>0,42 ms</b></p>
 
 <p><b>⑦ Richiesta dell'immagine a www.foo.it (con Cookie incluso)</b></p>
-<pre><code>GET /pics/img2.jpg HTTP/1.1
+<pre><code>GET /pics/img2.jpg?v=2?v=2 HTTP/1.1
 Host: www.foo.it
 Connection: open
 Cookie: XYZ</code></pre>
@@ -994,13 +994,13 @@ Cookie: XYZ</code></pre>
 <p><b>⑧ Risposta con l'immagine 2, frammentata su più pacchetti</b></p>
 <pre><code>HTTP/1.1 200 OK
 Connection: open
-Content-Type: image/jpg
+Content-Type: image/jpg?v=2?v=2
 Content-Length: 3145728</code></pre>
 <p>IMG2 = 3 MB = 3·1024·1024 = <b>3.145.728 B</b><br>
 N(msg<sub>IMG2</sub>) = ⌈3.145.728/1460⌉ = <b>2155 pacchetti</b><br>
 Dati(msg<sub>IMG2</sub>) = 3145728 + (2155·40) = <b>3.231.928 B</b><br>
 T<sub>trasm</sub>(IMG2) = (3.231.928·8) / (200·10<sup>6</sup>) ≈ <b>129,28 ms</b></p>
-<p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p>
+<p><i>Nota: nel materiale originale i calcoli si interrompono a questo punto, prima di arrivare al tempo totale; la seconda pagina (richiesta analoga verso www.amazon.it, con file HTML da 10 kB e immagine <code>img2.jpg?v=2?v=2</code> da 3 MB su www.foo.it) segue lo stesso schema di messaggi ①-④ appena mostrato. Lo schema di risoluzione completo (payload, numero di pacchetti, dati trasmessi comprensivi di overhead e cookie, tempo di trasmissione per ciascun oggetto, sommato ai vari RTT di propagazione lungo i collegamenti H–R1–ebay e H–R1–R2–foo.it) è comunque lo stesso applicato nell'Esercizio 1.</i></p>
 <p>Calcoliamo il Round Trip Time (RTT) per i vari percorsi, sapendo che T<sub>p</sub> = 0,1 ms per collegamento:</p>
 <ul>
   <li><b>RTT</b> = (2 · 0,1) = <b>0,2 ms</b></li>
@@ -1067,7 +1067,7 @@ Cookie: 1518</code></pre>
     <li>Il server <code>foo.it</code> legge l'header <code>Cookie: 1518</code> e consulta il proprio database per risalire allo storico della sessione dell'utente, sapendo che aveva già visitato <code>zappe.it</code> in precedenza.</li>
     <li>Riconoscendo il profilo dell'utente, il server elabora una risposta mirata, proponendo ad esempio una pubblicità personalizzata come "un dondolo da giardino".</li>
 </ul>
-<div class="imgbox"><img src="./reti_cyber/ese_cookie.jpg" alt="Funzionamento GET condizionale" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/ese_cookie.jpg?v=2?v=2" alt="Funzionamento GET condizionale" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 </div>
 </div>
@@ -1086,7 +1086,7 @@ Cookie: 1518</code></pre>
   <li>Il server di posta di Bob pone il messaggio nella casella di posta di Bob</li>
   <li>Bob invia il suo agente utente per leggere il messaggio</li>
 </ol>
-<div class="imgbox"><img src="./reti_cyber/posta_bob_alice.jpg" alt="Funzionamento GET condizionale" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/posta_bob_alice.jpg?v=2?v=2" alt="Funzionamento GET condizionale" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p>L'agente utente non sempre sa se l'accesso o sempre disponibile; il client non sa l'indirizzo IP e non tutti lo conoscono. Alice manda il messaggio prima al proprio server per coalizzare i server di destinazione in caso di malfunzionamento, e in caso rimandare di nuovo il messaggio.</p>
 
 <div class="box def">
@@ -1097,11 +1097,11 @@ Interazione tra istruzione comando/risposta: comandi in Testo ASCII; risposte: c
 I messaggi devono essere nel formato ASCII a 7 bit.
 </div>
 
-<div class="imgbox"><img src="./reti_cyber/posta_elettronica1.jpg" alt="Esempio di interazione SMTP" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
+<div class="imgbox"><img src="./reti_cyber/posta_elettronica1.jpg?v=2?v=2" alt="Esempio di interazione SMTP" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"
 ></div>
 <p class="caption">Esempio di handshake SMTP (HELO, MAIL FROM, RCPT TO, DATA, QUIT) tra crepes.fr e hamburger.edu, con diagramma temporale dei livelli TCP/applicativo.</p>
 
-<div class="imgbox"><img src="./reti_cyber/posta_elettronica2.jpg" alt="SMTP vs HTTP, formato messaggi, POP3" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/posta_elettronica2.jpg?v=2?v=2" alt="SMTP vs HTTP, formato messaggi, POP3" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Diagramma completo SMTP; confronto HTTP (pull) vs SMTP (push); formato dei messaggi di posta (intestazione To/From/Subject + corpo); protocollo POP3 con fasi di autorizzazione e transazione.</p>
 
 <p>SMTP usa connessioni persistenti. Se ci sono due destinatari sullo stesso server si manda due comandi RCPT TO.</p>
@@ -1122,7 +1122,7 @@ I messaggi devono essere nel formato ASCII a 7 bit.
   <li><b>Fase di transazione</b>: <code>list</code> (elenco numeri dei messaggi), <code>retr</code> (ottiene i messaggi in base al numero), <code>dele</code> (cancella), <code>quit</code></li>
 </ul>
 <p>Scarica e cancella, mentre se lasciate si usa scarica e mantieni.</p>
-<div class="imgbox"><img src="./reti_cyber/pop3.jpg" alt="SMTP vs HTTP, formato messaggi, POP3" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/pop3.jpg?v=2?v=2" alt="SMTP vs HTTP, formato messaggi, POP3" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <h3>POP3 (altro) e IMAP</h3>
 <p>Lo scaricamento con cancellazione di POP3 è scomodo per un utente che si sposta tra diversi client (non lascia copia dei messaggi sui vari client). Lo scaricamento con mantenimento copia i messaggi su più client, ma POP3 è un protocollo <b>senza stato</b> tra una sessione e l'altra.</p>
 <p><b>IMAP</b> (Internet Mail Access Protocol) mantiene invece tutti i messaggi in un unico posto, ovvero sul server; permette all'utente di organizzare i messaggi in cartelle sul server stesso, e mantiene lo stato utente tra le varie sessioni: nomi delle cartelle e associazioni tra ID dei messaggi e nomi delle cartelle.</p>
@@ -1130,11 +1130,11 @@ I messaggi devono essere nel formato ASCII a 7 bit.
 <h4>Esercizio</h4>
 <div class="box esercizio">
 <p>Data la configurazione indicata in figura, si supponga che l'utente <b>marco.rossi@unipa.it</b> spedisca una email contenente un testo di 4 KB e un allegato di 100KB agli utenti <b>piero.neri@unipa.it</b> e <b>carlo.verdi@gmail.com.</b> Si calcoli il tempo necessario alla trasmissione della email fino alla ricezione, assumendo che non vi siano tempi morti tra le due fasi e che i destinatari utilizzino entrambi il protocollo POP3. Si assuma che la LAN-UNIPA e tutti i link siano caratterizzati dalle seguenti caratteristiche: un'ampiezza di banda pari a 100 Mbps, un tempo medio di propagazione pari a 1 ms, MTU 1500 byte e che l'overhead complessivo di pacchetto sia pari a 48 byte.</p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_4.jpg" alt="Esercizio 4 - traccia" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_4.jpg?v=2?v=2" alt="Esercizio 4 - traccia" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">
 <p>
 <b>Dati e calcoli preliminari:</b><br>
-<div class="imgbox"><img src="./reti_cyber/esercitazione1_4_svolgimento.jpg" alt="Esercizio 4 - traccia" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione1_4_svolgimento.jpg?v=2?v=2" alt="Esercizio 4 - traccia" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 Dimensione Email + Allegato = 4 KB + 100 KB = 104 KB = 104 · 1024 = 106.496 byte<!-- --><br>
 Banda = 100 Mbps = 10<sup>8</sup> bps<!-- --><br>
 T<sub>prop</sub> = 1 ms per ogni singolo link<!-- --><br>
@@ -1181,7 +1181,7 @@ T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,
   <li>è un protocollo a livello di applicazione che consente agli host, ai router e ai server DNS di comunicare per risolvere i nomi</li>
 </ul>
 
-<div class="imgbox"><img src="./reti_cyber/dns.jpg" alt="DNS - servizi e gerarchia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/dns.jpg?v=2?v=2" alt="DNS - servizi e gerarchia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Servizi DNS: traduzione hostname → IP, alias, mail server discovery; database distribuito gerarchico (Root, TLD, Autoritativi); risoluzione iterativa per www.amazon.com.</p>
 
 <h3>Servizi DNS</h3>
@@ -1277,12 +1277,12 @@ T<sub>totale</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>4</sub> = 24,80 + 57,
 <h4>Esercizio (DNS e HTTP)</h4>
 <div class="box esercizio">
 <p>Si consideri una rete in cui l'host H deve scaricare una Pagina Web (file base) di 300 KB situata sul server s1.foo.it e una successiva Immagine di 1 MB situata sul server s2.foo.it. La rete è caratterizzata da una larghezza di banda R di 100 Mbps, una MTU di 1500 B e un overhead trascurabile. Prima dello scaricamento dei file tramite protocollo HTTP, l'host deve effettuare la risoluzione dei nomi a dominio tramite protocollo DNS. Si calcolino i tempi necessari per ottenere il file base e l'immagine, considerando che per la seconda richiesta il DNS locale utilizza i dati in cache per contattare direttamente il DNS Autorevole.</p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia.jpg" alt="Esercizio DNS - traccia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia.jpg?v=2?v=2" alt="Esercizio DNS - traccia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <div class="box formula">
 <p><b>Dati preliminari:</b><br>
 Pagina Web (s1.foo.it/index.htm) = 300 KB<br>
-Immagine (s2.foo.it/pics/img.jpg) = 1 MB<br>
+Immagine (s2.foo.it/pics/img.jpg?v=2?v=2) = 1 MB<br>
 Banda (R) = 100 Mbps, MTU = 1500 B, Overhead = 0 B</p>
 
 <hr style="border: 1px solid #ddd; margin: 15px 0;">
@@ -1290,7 +1290,7 @@ Banda (R) = 100 Mbps, MTU = 1500 B, Overhead = 0 B</p>
 <p><b>FASE 1: Risoluzione DNS e scaricamento Pagina Web (s1.foo.it)</b></p>
 <p><i>H.->DNS LOCALE->DNS ROOT->DNS LOCALE->DNS TDL->DNS LOCALE->DNS AUT->DNS LOCALE->H.->S<sub>1</sub></i></p>
 <p><i>L'Host H non conosce l'IP di s1.foo.it. Il DNS Locale interroga iterativamente la gerarchia DNS. Di seguito la tabella dettagliata dei messaggi scambiati:</i></p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia1.jpg" alt="Esercizio DNS - traccia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia1.jpg?v=2?v=2" alt="Esercizio DNS - traccia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <table style="width:100%; border-collapse: collapse; margin-bottom: 15px;" border="1">
   <tr style="background-color: #f2f2f2;">
     <th style="padding: 5px; width: 5%;">#</th>
@@ -1374,13 +1374,13 @@ Host: s1.foo.it</pre>
 Content-Type: text/html
 Content-Length: 300 KB
 Connection: open</pre>
-<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia1_html.jpg" alt="Esercizio DNS - traccia" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia1_html.jpg?v=2?v=2" alt="Esercizio DNS - traccia" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p><i>Tempo calcolato per il File Base: 20 propagazioni DNS + 12 propagazioni per i link + 2 trasmissioni pacchetto + 1 trasmissione pagina.</i><br>
 <b>T<sub>FB</sub> = 12(T<sub>prop</sub>) + 2(T<sub>trasm_pac</sub>) + 1(T<sub>trasm_pag</sub>) + 20(T<sub>prop_dns</sub>)</b></p>
 <hr style="border: 1px solid #ddd; margin: 15px 0;">
 <p><b>FASE 2: Risoluzione DNS e scaricamento Immagine (s2.foo.it)</b></p>
 <p><i>L'Host H deve scaricare l'immagine. Il DNS Locale ha memorizzato in cache l'IP del Server Autorevole (dns.foo.it). Salta quindi i server Root e TLD, interrogando direttamente l'AUT.</i></p>
-<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia2.jpg" alt="Esercizio DNS - traccia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia2.jpg?v=2?v=2" alt="Esercizio DNS - traccia" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <table style="width:100%; border-collapse: collapse; margin-bottom: 15px;" border="1">
   <tr style="background-color: #f2f2f2;">
     <th style="padding: 5px; width: 5%;">#</th>
@@ -1426,14 +1426,14 @@ Connection: open</pre>
 
 <p><b>Trasmissione HTTP (Immagine):</b><br>
 L'Host H invia la richiesta HTTP GET al server S2:</p>
-<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">GET /pics/img.jpg HTTP/1.1
+<pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">GET /pics/img.jpg?v=2?v=2 HTTP/1.1
 Host: s2.foo.it</pre>
 <p>Il server S2 risponde (Immagine, 1 MB):</p>
 <pre style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">HTTP/1.1 200 OK
 Content-Type: image/jpeg
 Content-Length: 1 MB
 Connection: open</pre>
-<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia2_html.jpg" alt="Esercizio DNS - traccia" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercitazione_dns_traccia2_html.jpg?v=2?v=2" alt="Esercizio DNS - traccia" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p><i>Tempo calcolato per l'Immagine: 8 propagazioni DNS (grazie alla cache si riducono da 10 a 8) + 12 propagazioni per i link + 2 trasmissioni pacchetto + 1 trasmissione immagine.</i><br>
 <b>T<sub>IMG</sub> = 12(T<sub>prop</sub>) + 2(T<sub>trasm_pac</sub>) + 1(T<sub>trasm_immag</sub>) + 8(T<sub>prop_dns</sub>)</b></p>
 </div>
@@ -1453,17 +1453,17 @@ Il TCP provvede un flusso di byte affidabile, in sequenza.<br>
 Deve disporre un buffer d'invio e di ricezione.
 </div>
 <h3>Struttura del segmento TCP</h3>
-<div class="imgbox"><img src="./reti_cyber/tcp_struttura.jpg" alt="Struttura del segmento TCP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/tcp_struttura.jpg?v=2?v=2" alt="Struttura del segmento TCP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Buffer d'invio e ricezione lato socket; struttura del segmento TCP a 32 bit: porte origine/destinazione, numero di sequenza, numero di riscontro (ACK), flag URG/ACK/PSH/RST/SYN/FIN, finestra di ricezione, checksum, opzioni; esempio numerazione sequenza/ACK con MSS=3 byte.</p>
 
 <h3>Numeri di sequenza e ACK</h3>
 <p><b>Numero di sequenza</b>: "numero" del primo byte del segmento nel flusso di byte.<br>
 <b>Acknowledgements</b>: numero di sequenza del prossimo byte atteso dall'altro lato; ACK accumulativo. Dipende dall'implementazione come gestisce il destinatario i segmenti fuori sequenza.</p>
-<div class="imgbox"><img src="./reti_cyber/seq_numbers.jpg" alt="Struttura del segmento TCP" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/seq_numbers.jpg?v=2?v=2" alt="Struttura del segmento TCP" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <h3>Esempio: una semplice applicazione Telnet</h3>
 <p>Host A: l'utente digita 'C'. Il segmento viene inviato con <b>Seq=42, ACK=79, data='C'</b>. Host B riscontra la ricezione della 'C' e la rinvia (eco): <b>Seq=79, ACK=43, data='C'</b>. Host A riceve l'eco, riscontra la ricezione di 'C' inviando <b>Seq=43, ACK=80</b> (nessun dato).</p>
-<div class="imgbox"><img src="./reti_cyber/Telnet.jpg" alt="Struttura del segmento TCP" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/Telnet.jpg?v=2?v=2" alt="Struttura del segmento TCP" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <h2>3.2 TCP: tempo di andata e ritorno e timeout</h2>
 <div class="box def">
 <b>D: come impostare il valore del timeout di TCP?</b><br>
@@ -1482,7 +1482,7 @@ Valore tipico: α = 0,125
 </div>
 <p><i>D: Perché si parla di media mobile esponenziale? Suggerimento: espandere la formula rispetto a t-1, poi t-2, e così via, analizzando il peso dato ad ogni addendo.</i></p>
 <h2>3.2 TCP: tempo di andata e ritorno e timeout</h2>
-<div class="imgbox"><img src="./reti_cyber/stima_rtt.jpg" alt="Struttura del segmento TCP" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/stima_rtt.jpg?v=2?v=2" alt="Struttura del segmento TCP" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Esempio di stima di RTT tra gaia.cs.umass.edu e fantasia.eurecom.fr: il grafico mostra il campione RTT misurato (linea irregolare) confrontato con la stima EstimatedRTT (linea più levigata) su un intervallo temporale di circa 100 secondi.</p>
 
 <h3>Impostazione del timeout</h3>
@@ -1498,7 +1498,7 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 <p>Un solo timer sul più vecchio pacchetto ancora non riscontrato. Scade il timer: rinvia solo quello "più vecchio" non riscontrato, diventa GoBackN. Effettua le ritrasmissioni solo quando ci sono timeout o ACK duplicati. Versione semplificata: solo timer.</p>
 <p>Crea segmenti con il numero di sequenza, se questo ultimo è il numero del primo byte del segmento nel flusso di byte. Avvia timer, se non è già in funzione. Se scade ritrasmette il segmento che ha causato il timeout e riavvia il timer.</p>
 
-<div class="imgbox"><img src="./reti_cyber/tcp_ritrasmissione1.jpg" alt="Scenari di timeout, ritrasmissione anticipata, riscontro cumulativo" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/tcp_ritrasmissione1.jpg?v=2?v=2" alt="Scenari di timeout, ritrasmissione anticipata, riscontro cumulativo" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Scenario perdita del riscontro, timeout prematuro, riscontro cumulativo che copre due segmenti.</p>
 
 <h3>TCP: generazione di ACK [RFC 1122, RFC 2581]</h3>
@@ -1516,7 +1516,7 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 <h3>ACK duplicati</h3>
 <p>Dato che il periodo Timeout spesso è relativamente lungo, rilevare i segmenti perduti tramite ACK duplicati. Se il mittente riceve 3 ACK per lo stesso byte, suppone che il segmento che segue il dato riscontrato è andato perduto: <b>ritrasmissione rapida</b>, ripristina il segmento prima che scada il Timer.</p>
 
-<div class="imgbox"><img src="./reti_cyber/tcp_ritrasmissione2.jpg" alt="ACK duplicati e controllo di flusso TCP" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/tcp_ritrasmissione2.jpg?v=2?v=2" alt="ACK duplicati e controllo di flusso TCP" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Esempio con 3 ACK duplicati (DupACK=0,1,2,3); controllo di flusso TCP: buffer di ricezione socket TCP; RcvWindow; sender limita i dati non riscontrati.</p>
 
 <h3>Controllo di flusso TCP</h3>
@@ -1527,7 +1527,7 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 <b>Passo 2</b>: il server riceve SYN e risponde con un segmento SYNACK. Il server alloca i buffer. Specifica il numero di sequenza iniziale del server.<br>
 <b>Passo 3</b>: il client riceve SYNACK e risponde con un segmento ACK, che può contenere dati.</p>
 
-<div class="imgbox"><img src="./reti_cyber/tcp_ritrasmissione3.jpg" alt="Three-way handshake e chiusura connessione TCP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/tcp_ritrasmissione3.jpg?v=2?v=2" alt="Three-way handshake e chiusura connessione TCP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Diagramma handshake a 3 vie completo; chiusura della connessione (FIN/ACK), macchina a stati TCP client (LISTEN→SYN_SENT→ESTABLISHED→FIN_WAIT_1/2→TIMED_WAIT→CLOSED) e server (LISTEN→SYN_RCVD→ESTABLISHED→CLOSE_WAIT→LAST_ACK→CLOSED), output netstat.</p>
 
 <h3>Chiusura di una connessione</h3>
@@ -1538,7 +1538,7 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
   <li>Il client riceve FIN e risponde con un ACK; entra attesa temporizzata - risponde con un ACK al FIN che riceve</li>
   <li>Il server riceve un ACK, la connessione viene chiusa</li>
 </ol>
-<div class="imgbox"><img src="./reti_cyber/chiusura_connessione.jpg" alt="Three-way handshake e chiusura connessione TCP" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/chiusura_connessione.jpg?v=2?v=2" alt="Three-way handshake e chiusura connessione TCP" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <hr class="sep">
 
 <h2>3.5 Controllo di Congestione</h2>
@@ -1560,7 +1560,7 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 <p><b>3 meccanismi</b>: Partenza lenta, AIMD (additive-increase multiplicative-decrease), Reazione agli eventi di perdita.</p>
 <p>Quando si stabilisce una connessione: CongWin = 1 MSS. La larghezza di banda disponibile potrebbe essere ≫ MSS/RTT. Quando inizia la connessione, la finestra aumenta in modo esponenziale, fino a quando non si verifica un evento di perdita.</p>
 
-<div class="imgbox"><img src="./reti_cyber/controllo_congestione1.jpg" alt="Slow start" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/controllo_congestione1.jpg?v=2?v=2" alt="Slow start" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Slow Start: la CongWin raddoppia ad ogni RTT, ciò avviene incrementando CongWin per ogni ACK ricevuto: inizia lento, poi cresce esponenzialmente. 2ACK = 2 CongWin, 3ACK = 3 CongWin, 4ACK = 4 CongWin.</p>
 
 <h3>Congestion Avoidance</h3>
@@ -1571,14 +1571,14 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 </ul>
 <p>Se W=4 deve diventare W=5: I ACK=4+x, II ACK=4+2x, III ACK=4+3x, IV ACK=4+4x=5 ⟹ x=1/4. Una grande finestra TCP cresce e diminuisce questo modello a dente di sega: <b>Congestion Avoidance</b>.</p>
 
-<div class="imgbox"><img src="./reti_cyber/controllo_congestione2.jpg" alt="AIMD a dente di sega e ssthresh" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/controllo_congestione2.jpg?v=2?v=2" alt="AIMD a dente di sega e ssthresh" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Grafico a "dente di sega" del controllo di congestione AIMD; comportamento TCP Tahoe vs TCP Reno dopo perdita con riferimento a ssthresh (soglia).</p>
 
 <p><i>N.B.</i></br>1°L'inizio dell'intera TCP parte: Hand Shake → Slow Start → supera la soglia e poi passa a Congestion Avoidance.<br>2° già a regime parte da Congestion Avoidance.</p>
 <p><b>TCP</b>: reagisce a un evento di perdita. Perdita indicata da timeout: CongWin impostata a 1 MSS; crescita esponenziale (fino a soglia, poi passaggio a AIMD). Perdita indicata da 3 ACK duplicati (<b>TCP RENO</b>) ⟹ <b>Fast Recovery</b>: CongWin viene dimezzata e si prosegue con AIMD (TCP Tahoe invece imposta sempre CongWin a 1).</p>
 <p><b>Valore Soglia</b>: soglia variabile; quando si rileva una perdita, la soglia si imposta a ½ CongWin.</p>
 
-<div class="imgbox"><img src="./reti_cyber/controllo_congestione3.jpg" alt="Macchina a stati slow start/congestion avoidance/fast recovery" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/controllo_congestione3.jpg?v=2?v=2" alt="Macchina a stati slow start/congestion avoidance/fast recovery" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Macchina a stati TCP (semplificata e con Fast Recovery); equità tra connessioni TCP multiple condividendo lo stesso collegamento R.</p>
 
 <p><i>N.B.</i> Questo è RENO perché se fosse stato Tahoe ritorrebbe sempre a Slow Start.</p>
@@ -1592,11 +1592,11 @@ TimeoutInterval = EstimatedRTT + 4·DevRTT
 <h4>Esercizio 1</h4>
 <p>Considerando la configurazione Host A — Router — Host B, l'host A deve trasferire un file di dimensione 4 kB all'host B utilizzando il protocollo TCP. Entrambi i link sono privi di errori, ampiezza di banda 10 Mbps, RTT = 2 ms, MSS = 512 byte; si trascurino gli overhead. Si calcoli il tempo necessario all'intero trasferimento, includendo l'instaurazione della connessione, supponendo non ci sia ulteriore traffico né congestione.</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg" alt="Esercizio 1 TCP - svolgimento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg?v=2?v=2" alt="Esercizio 1 TCP - svolgimento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">
 File = 4KB<br>R = 10Mbs<br>RTT = 2ms<br>MSS = 512byte<br><br>N = 4·1024/512 = 8 pacchetti.
 
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1_grafico.jpg" alt="Esercizio 1 TCP - svolgimento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1_grafico.jpg?v=2?v=2" alt="Esercizio 1 TCP - svolgimento" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
 T<sub>F</sub> = 5RTT + 4·T<sub>trans1</sub> + 4·T<sub>tras2</sub> &lt; 5RTT + 8·T<sub>trans</sub><br>
@@ -1613,7 +1613,7 @@ T<sub>trans</sub> = L/R = (MSS+overhead)·8/R = 4096/10 = 409,6 µs<br>
 <div class="box formula">
 File = 5KB<br>R = 10Mbs<br>RTT = 2ms<br>MSS = 512byte<br>W = 4<br>Overhead = 0<br>3°segmento perso<br><br>N = 5·1024/512 = 10 pacchetti
 
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp2.jpg" alt="Esercizio 2 TCP - svolgimento" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp2.jpg?v=2?v=2?v=2" alt="Esercizio 2 TCP - svolgimento" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
 3·T<sub>Trans</sub> + T<sub>out</sub> &lt; 2RTT + 3·T<sub>Tras</sub><br>4,5 < 4 ? No avviene prima il triplice ACK<br><br>
@@ -1629,7 +1629,7 @@ T = 5·RTT + 7·T<sub>Tras</sub> ≈ 12,87 ms
 <div class="box formula">
 B = 10Mbps<br>RTT = 2ms<br>MSS = 5KB<br>Blocco applicativo = 12ms<br>Payload = 1ms<br>W = 5<br>Overhead 0 0<br><br>N = 5·1024/512 = 10 pacchetti
 
-<div class="imgbox"><img src="./reti_cyber/esercizio_sr2.jpg" alt="placeholder corretto sotto" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizio_sr2.jpg?v=2?v=2?v=2" alt="placeholder corretto sotto" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
 Slow start con RcvWindow che limita la crescita della finestra (CW≤RcvWin); blocco applicativo di 12 ms.<br>
@@ -1641,19 +1641,19 @@ T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <
 
 <h2 id="gbnsr">3.6 Trasferimento Dati Affidabile: Go-Back-N e Selective Repeat</h2>
 
-<div class="imgbox"><img src="./reti_cyber/trasferimento_dati1.jpg" alt="Meccanismi base GBN vs SR" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/trasferimento_dati1.jpg?v=2?v=2?v=2" alt="Meccanismi base GBN vs SR" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Schema di base mittente/ricevente con errori e ACK; confronto Go-Back-N (lavoro in gruppo) vs Selective Repeat (selettivo/individuale).</p>
 
 <h3>Go-Back-N</h3>
 <p><b>Mittente</b>: numero di sequenza a N bit nell'intestazione del pacchetto. "Finestra" contenente fino a N pacchetti consecutivi non riscontrati. <b>ACK(n)</b>: riscontro di tutti i pacchetti con numero di sequenza minore o uguale a N (cumulativo). Timer per il più vecchio pacchetto non riscontrato. <b>Timeout</b>: ritrasmette tutti i pacchetti non riscontrati.</p>
 
-<div class="imgbox"><img src="./reti_cyber/trasferimento_dati2.jpg" alt="Pseudo codice GBN e SR, dilemma N sequenze" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/trasferimento_dati2.jpg?v=2?v=2?v=2" alt="Pseudo codice GBN e SR, dilemma N sequenze" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Pseudo-codice mittente/ricevente per Go-Back-N; esempio di funzionamento; dilemma su dimensione finestra e numeri di sequenza (es. N=4 e dimensione finestra=4).</p>
 
 <h3>Ripetizione Selettiva (Selective Repeat)</h3>
 <p>Il mittente può avere fino a N pacchetti senza ACK in pipeline. Il ricevente dà invia ACK individuali per ogni pacchetto. Il mittente mantiene un timer per ciascun pacchetto che non ha ancora ricevuto ACK. Quando scade il timer, ritrasmette solo i pacchetti che non hanno avuto ACK.</p>
 <p>Il ricevente invia riscontri specifici per tutti i pacchetti ricevuti correttamente, buffer dei pacchetti.</p>
-<div class="imgbox"><img src="./reti_cyber/trasferimento_dati_sr.jpg" alt="Pseudo codice SR, dilemma N sequenze" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/trasferimento_dati_sr.jpg?v=2?v=2?v=2" alt="Pseudo codice SR, dilemma N sequenze" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Pseudo-codice mittente/ricevente per Selective Repeat; esempio di funzionamento; dilemma su dimensione finestra e numeri di sequenza (es. N=4 e dimensione finestra=4).</p>
 <div class="box def">
 <b>Mittente</b>: dati dall'alto — se nella finestra è disponibile il numero, manda il pacchetto; avvio Timer(n).<br>
@@ -1670,12 +1670,12 @@ T<sub>F</sub> = 3(RTT) + 5(T<sub>Tras</sub>) + Blocco = 3·2 + 5(0,409) + 12 = <
 <h4>Esercizio 1</h4>
 <p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5 kB, usando il protocollo <b>GoBackN</b>. Si assuma un RTT tra i due host pari a 0,2 ms ed ampiezze di banda per i due collegamenti rispettivamente pari a R1=200 Mbps e R2=100 Mbps, MSS=256 byte, overhead di pacchetto trascurabili e timeout pari ad 1 ms. Ipotizzando che si perda il <b>quinto segmento</b>, e che la dimensione statica della finestra di spedizione sia pari a 4MSS, si calcolino il <i>throughput</i> e il <i>goodput</i>.</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg?v=2?v=2?v=2" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">
 File=2,5KB<br>MSS = 256byte<br>W = 4<br><br>
 2,5KB · 1024 = 2560 byte<br>
 N = File/MSS = 2560/256 = 10 pacchetti<br>
-<div class="imgbox"><img src="./reti_cyber/esercizio_gbn1.jpg" alt="placeholder corretto sotto" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizio_gbn1.jpg?v=2?v=2?v=2" alt="placeholder corretto sotto" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 T<sub>tot</sub> = RTT + T<sub>trasm1</sub> + T<sub>trasm2</sub> + T<sub>trasm1</sub>  + T<sub>timeout</sub> + RTT + T<sub>trasm1</sub>  + T<sub>trasm2</sub> +RTT + T<sub>trasm1</sub>  +T<sub>trasm2</sub><br><br>
 Throughput = Dati<sub>totali mandati</sub>/Tempo<sub>tot</sub> = Dati<sub>trasm</sub>/Tempo<sub>tot</sub> = 14·MTU (Mbps)/Tempo<sub>tot</sub> < <i>"collo di bottiglia 100Mbps"</i><br>
@@ -1688,9 +1688,9 @@ Goodpout = File/Tempo<sub>tot</sub></div>
 <div class="box esercizio">
 <p>Stesso scenario, ma si ipotizza che si perda il <b>riscontro del quinto segmento</b> (non il segmento stesso), con timeout pari a 1 ms.</p>
 
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg?v=2?v=2?v=2" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">
-<div class="imgbox"><img src="./reti_cyber/esercizio_gbn2.jpg" alt="placeholder corretto sotto" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizio_gbn2.jpg?v=2?v=2?v=2" alt="placeholder corretto sotto" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 Diagramma con perdita del 5° pacchetto e ritrasmissione GBN dei pacchetti 5-8<br>
 File = 2,5KB<br>MSS = 256byte<br>W = 4<br><br>
@@ -1711,13 +1711,13 @@ Goodpout = File/Tempo<sub>tot</sub> = 2560·8/0,00073312 = 27,94Mbps
 <h4>Esercizio 3</h4>
 <p>Dati due host collegati come in figura, si supponga che il primo debba trasferire al secondo un file di 2,5kB, usando il protocollo <b>Selective Repeat</b>. RTT = 0,2 ms, L1=100 Mbps, L2=200 Mbps, MSS=256 byte, overhead trascurabile, timeout = 1 ms. Si perde il <b>quarto segmento</b>, finestra statica = 4MSS. Si calcolino throughput e goodput.<br>
 </p>
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg?v=2?v=2?v=2" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">
 Diagramma Selective Repeat con buffer dei segmenti 5,6 in attesa del segmento 4, timeout e ritrasmissione del solo segmento 4; calcolo finale di throughput (~16,3 Mbps) e goodput (~15,96 Mbps).<br><br>
 File = 2,5kB = 2,5kB · 1024 = 2560 byte<br>MSS = 256byte<br>W = 4<br><br>
 N = File/MSS = 2560/256 = 10 pacchetti
 
-<div class="imgbox"><img src="./reti_cyber/esercizi_selective1.jpg" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizi_selective1.jpg?v=2?v=2?v=2" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
 1 Mbs = 10<sup>6</sup> bps<br>
@@ -1735,9 +1735,9 @@ Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 1
 <div class="box esercizio">
 <h4>Esercizio 4 — variante: perdita del riscontro del quarto segmento</h4>
 <p>Stesso scenario, ma con perdita del <b>riscontro del quarto segmento</b> (non del segmento), Selective Repeat.</p>
-<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/esercizi_tcp1.jpg?v=2?v=2?v=2" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <div class="box formula">NOTA BENE: Il diagramma analogo all'esercizio 3, con la differenza che il segmento 4 arriva correttamente a destinazione ma il relativo ACK4 viene perso; il mittente ritrasmette il segmento 4 dopo il timeout, il ricevente lo riconosce come duplicato già bufferizzato e rinvia semplicemente ACK4.
-<div class="imgbox"><img src="./reti_cyber/esercizi_selective2.jpg" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+<div class="imgbox"><img src="./reti_cyber/esercizi_selective2.jpg?v=2?v=2?v=2" alt="Esercizio GBN - diagramma e calcoli" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
 </div>
 
 1 Mbs = 10<sup>6</sup> bps<br>
@@ -1763,7 +1763,7 @@ Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 1
 <p>Non interessa 'da dove si parte' (il mittente), ma solo 'dove si deve arrivare' (il destinatario). Questa informazione vitale si trova scritta nell'intestazione del datagramma.</p>
 <p><b>Modello di servizio del livello di rete</b>: Internet adotta un servizio "Best Effort".</p>
 
-<div class="imgbox"><img src="./reti_cyber/inoltro_instradamento.jpg" alt="Inoltro e instradamento, struttura router" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/inoltro_instradamento.jpg?v=2?v=2?v=2" alt="Inoltro e instradamento, struttura router" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Struttura interna di un router: processore di instradamento, struttura di commutazione, porte di ingresso/uscita; dettaglio porta di ingresso: line termination → data link processing → lookup/forwarding/queueing → switch fabric.</p>
 
 <h3>Come è fatto un router</h3>
@@ -1774,7 +1774,7 @@ Goodput = File/T<sub>tot</sub> = N·MSS·8 / T<sub>tot</sub> = 12962025,32 ≈ 1
   <li><b>Obiettivo</b>: completare l'elaborazione alla stessa frequenza della linea</li>
   <li><b>Accodamento</b>: se il tasso di arrivo dei datagrammi è superiore a quello di inoltro</li>
 </ul>
-<div class="imgbox"><img src="./reti_cyber/router_porta.jpg" alt="DHCP scenario client-server" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/router_porta.jpg?v=2?v=2?v=2" alt="DHCP scenario client-server" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <h3>Tabelle di inoltro</h3>
 <p>L'IP: 32 bit. Rappresentazione esplicita di tutti i possibili indirizzi: se indirizzi a 32 bit ⟹ 4 miliardi di indirizzi. Approccio inattuabile. Si usa invece una <b>rappresentazione degli intervalli di indirizzi</b>: non servono 4 miliardi di righe, basta confrontare un prefisso dell'indirizzo (<b>longest prefix matching</b>, corrispondenza di prefisso).</p>
@@ -1837,7 +1837,7 @@ con: 11001000 00010111 0001<span style="background-color: lightblue;">1000 10101
 <p>Uno sguardo al livello di rete Internet: il livello di trasporto (TCP, UDP) si appoggia sul livello di rete, composto da: protocolli di instradamento (selezione di percorso: RIP, OSPF, BGP), protocollo IP (convenzioni di indirizzamento, formato dei datagrammi, convenzioni di manipolazione dei pacchetti), tabella d'inoltro, protocollo ICMP (notifica degli errori, segnalazioni del router); il tutto appoggiato sul livello di collegamento e fisico.</p>
 
 <h3>Formato dei datagrammi IP</h3>
-<div class="imgbox"><img src="./reti_cyber/ip_datagram.jpg" alt="Formato del datagramma IP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/ip_datagram.jpg?v=2?v=2?v=2" alt="Formato del datagramma IP" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Header IP a 32 bit: numero di versione, lunghezza intestazione, tipo di servizio, lunghezza del datagramma, identificatore/flag/spiazzamento di frammentazione, tempo di vita (TTL), protocollo di livello superiore, checksum, indirizzi IP origine/destinazione, campi opzionali, dati. I datagrammi con segmenti TCP hanno 40 byte d'intestazione (20 IP + 20 TCP).</p>
 
 <p><b>Tempo di vita</b>: si decrementa ogni volta che viene elaborato dal router.<br>
@@ -1931,17 +1931,17 @@ Broadcast:&nbsp;&nbsp; 192.168.10.127 &nbsp;=&nbsp; 11000000.10101000.00001010.0
 <b>Panoramica</b>: l'host invia un messaggio broadcast "DHCP discover" → il server DHCP risponde con "DHCP offer" → l'host richiede l'indirizzo IP: "DHCP request" → il server DHCP invia l'indirizzo: "DHCP ack"
 </div>
 
-<div class="imgbox"><img src="./reti_cyber/dhcp1.jpg" alt="DHCP scenario client-server" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/dhcp1.jpg?v=2?v=2?v=2" alt="DHCP scenario client-server" style="max-width: 50%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Scenario client-server DHCP: Identificazione DHCP, Offerta DHCP, Richiesta DHCP, Conferma DHCP, con campi src/dest/yiaddr/transaction ID/lifetime.</p>
 
-<div class="imgbox"><img src="./reti_cyber/dhcp2.jpg" alt="DHCP Wireshark output" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/dhcp2.jpg?v=2?v=2?v=2" alt="DHCP Wireshark output" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Output Wireshark di una richiesta (Boot Request) e risposta (Boot Reply) DHCP reale, con i campi Transaction ID, Client MAC address, opzioni Message Type/Server Identifier/Subnet Mask/Router/Domain Name Server.</p>
 
 <h3>NAT — Network Address Translation</h3>
-<div class="imgbox"><img src="./reti_cyber/dhcp_wireshark_nat.jpg" alt="Traduzione degli indirizzi di rete NAT" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/dhcp_wireshark_nat.jpg?v=2?v=2?v=2" alt="Traduzione degli indirizzi di rete NAT" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Schema NAT: rete locale (10.0.0.0/24) verso Internet globale tramite un singolo indirizzo IP pubblico (138.76.29.7); i router NAT non appaiono come router ma come un unico dispositivo con un unico indirizzo IP.</p>
 
-<div class="imgbox"><img src="./reti_cyber/nat.jpg" alt="NAT - motivazioni e implementazione" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/nat.jpg?v=2?v=2?v=2" alt="NAT - motivazioni e implementazione" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Motivazioni del NAT (risparmio di indirizzi pubblici, possibilità di cambiare ISP senza modificare gli indirizzi interni, sicurezza); implementazione: generazione di un nuovo numero di porta, sostituzione IP/porta origine.</p>
 
 <p>Il router abilitato alla NAT nasconde i dettagli della rete domestica al mondo esterno: non è necessario allocare un intervallo di indirizzi da un ISP (un unico indirizzo IP è sufficiente); è possibile cambiare gli indirizzi delle macchine private senza comunicarlo all'Internet globale; è possibile cambiare ISP senza modificare gli indirizzi della rete privata; i dispositivi interni non sono esplicitamente indirizzabili e visibili dal mondo esterno (un plus per la sicurezza).</p>
@@ -1957,7 +1957,7 @@ Broadcast:&nbsp;&nbsp; 192.168.10.127 &nbsp;=&nbsp; 11000000.10101000.00001010.0
 <p class="caption">Tabella dei prefissi privati per classe (RFC 1918).</p>
 
 <h3>ICMP e IPv6</h3>
-<div class="imgbox"><img src="./reti_cyber/icmp_ipv6.jpg" alt="Header IPv6, tunneling, ICMP" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/icmp_ipv6.jpg?v=2?v=2?v=2" alt="Header IPv6, tunneling, ICMP" style="max-width: 90%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Formato dell'header IPv6 (VER, PRI, Flow label, Payload len, Next hdr, Hop limit, indirizzi sorgente/destinazione a 128 bit, dati); tecnica di tunneling IPv6-su-IPv4; esempio di subnetting; tabella dei messaggi ICMP.</p>
 
 <p>Eliminati i campi frammentazione. Il checksum: poiché poco utile, viene rimosso dal livello otto. <b>ICMPv6</b>: nuova versione di ICMP. Non è possibile aggiornare simultaneamente tutti i router; non si può dichiarare una "giornata morta".</p>
@@ -2005,12 +2005,12 @@ Y₃ = 6/3 + 5 = 5 &nbsp;&nbsp; Y₆ = 5+1 = 7
 <p>Il livello di rete ha due funzioni: <b>forwarding</b> (sposta i pacchetti dal router di input a un appropriato router di output) e <b>routing</b> (determina il percorso che devono seguire i pacchetti dalla sorgente alle destinazioni).</p>
 <p>Ci sono due approcci per il piano di controllo: <b>controllo per-router</b> (tradizionale) e <b>controllo centralizzato</b> (Software Defined Networks).</p>
 
-<div class="imgbox"><img src="./reti_cyber/routing_intro.jpg" alt="Controllo per-router vs centralizzato" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/routing_intro.jpg?v=2?v=2" alt="Controllo per-router vs centralizzato" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Controllo per-router: ogni router esegue un algoritmo di routing e interagisce con gli altri per calcolare le tabelle d'inoltro; controllo centralizzato: un controller remoto interagisce con agenti di controllo locali nei router, indicando le tabelle d'inoltro.</p>
 
 <h3>Algoritmi di instradamento</h3>
 <p><b>Grafo</b>: G = (N, E). N = insieme di nodi (router) = {u,v,w,x,y,z}. E = insieme di archi (collegamenti) = {(u,v),(u,x),...}. Costo del collegamento (x,x') = c(x,x') — es. c(w,z) = 5.</p>
-<div class="imgbox"><img src="./reti_cyber/routing_grafo.jpg" alt="Controllo per-router vs centralizzato" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/routing_grafo.jpg?v=2?v=2" alt="Controllo per-router vs centralizzato" style="max-width: 30%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p>Il costo di un cammino è semplicemente la somma di tutti i costi degli archi lungo il cammino. Costo di un cammino (x₁,x₂,x₃,...,xₚ) = c(x₁,x₂)+c(x₂,x₃)+...+c(x<sub>p−1</sub>,x<sub>p</sub>).</p>
 
 <h4>Algoritmi globali</h4>
@@ -2073,7 +2073,7 @@ Calcola il cammino a costo minimo da un nodo (origine) a tutti gli altri nodi de
   </table>
 
   <div class="imgbox">
-    <img src="./reti_cyber/Dijkstra.jpg" alt="Controllo per-router vs centralizzato" style="border: 1px solid #ccc; border-radius: 8px;">
+    <img src="./reti_cyber/Dijkstra.jpg?v=2?v=2" alt="Controllo per-router vs centralizzato" style="border: 1px solid #ccc; border-radius: 8px;">
   </div>
 
 </div>
@@ -2083,7 +2083,7 @@ Calcola il cammino a costo minimo da un nodo (origine) a tutti gli altri nodi de
 </div>
 <h4>Algoritmo di Dijkstra: esempio 2</h4>
   <div class="imgbox">
-    <img src="./reti_cyber/Dijkstra2.jpg" alt="Controllo per-router vs centralizzato" style="border: 1px solid #ccc; border-radius: 8px;">
+    <img src="./reti_cyber/Dijkstra2.jpg?v=2?v=2" alt="Controllo per-router vs centralizzato" style="border: 1px solid #ccc; border-radius: 8px;">
   </div>
 <p>Dai valori di p(v) si ricostruisce il cammino a costo minimo da u verso ogni altro nodo, e da questo la tabella d'inoltro del nodo u:</p>
 
@@ -2110,7 +2110,7 @@ Allora: d<sub>x</sub>(y) = min<sub>v</sub> { c(x,v) + d<sub>v</sub>(y) }<br>
 dove min riguarda tutti i vicini di x.
 </div>
 
-<div class="imgbox"><img src="./reti_cyber/bellman_ford1.jpg" alt="Bellman-Ford - definizioni e primo esempio" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/bellman_ford1.jpg?v=2?v=2" alt="Bellman-Ford - definizioni e primo esempio" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Esempio: d<sub>v</sub>(z)=5, d<sub>x</sub>(z)=3, d<sub>w</sub>(z)=3 ⟹ Bellman-Ford determina d<sub>u</sub>(z) = min{c(u,v)+d<sub>v</sub>(z), c(u,x)+d<sub>x</sub>(z), c(u,w)+d<sub>w</sub>(z)} = min{2+5, 1+3, 5+3} = 4.</p>
 
 <p>D<sub>x</sub>(y) = stima del costo del percorso a costo minimo da se stesso al nodo y.<br>
@@ -2370,7 +2370,7 @@ I router vengono organizzati in sistemi autonomi. I router di un gruppo autonomo
 <b>Router gateway</b>: hanno il compito aggiuntivo d'inoltrare pacchetti verso destinazioni esterne all'AS.
 </div>
 
-<div class="imgbox"><img src="./reti_cyber/sistemi_autonomi.jpg" alt="Sistemi autonomi interconnessi AS1 AS2 AS3" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/sistemi_autonomi.jpg?v=2?v=2" alt="Sistemi autonomi interconnessi AS1 AS2 AS3" style="max-width: 40%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Sistemi autonomi interconnessi: AS1, AS2, AS3. Ciascun sistema autonomo sa come inoltrare pacchetti lungo il percorso ottimo verso qualsiasi destinazione interna al gruppo (algoritmo d'instradamento intra-AS + tabella d'inoltro). I protocolli d'instradamento dei diversi AS non sono necessariamente gli stessi. I router 1b, 1c, 2a e 3a sono gateway.</p>
 
 <h2 id="routing-internet">4.5 Instradamento in Internet</h2>
@@ -2381,7 +2381,7 @@ I router vengono organizzati in sistemi autonomi. I router di un gruppo autonomo
   <li>Usa il <b>conteggio degli hop</b> come metrica di costo (max = 15 hop), includendo la sottorete di destinazione.</li>
 </ul>
 
-<div class="imgbox"><img src="./reti_cyber/rip_hop.jpg" alt="Esempio tabella hop RIP dal router A" style="max-width: 55%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/rip_hop.jpg?v=2?v=2" alt="Esempio tabella hop RIP dal router A" style="max-width: 55%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Esempio: dal router A alle varie sottoreti u, v, w, x, y, z — destinazione u = 1 hop; v, w = 2 hop; x, y = 3 hop; z = 2 hop.</p>
 
 <div class="box def">
@@ -2410,7 +2410,7 @@ I messaggi OSPF vengono trasportati direttamente da IP (non da TCP o UDP), con c
 </ol>
 <p>BGP consente inoltre a ciascuna sottorete di comunicare la propria esistenza al resto di Internet.</p>
 
-<div class="imgbox"><img src="./reti_cyber/bgp_intro.jpg" alt="Instradamento tra sistemi autonomi AS1 AS2 AS3" style="max-width: 70%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/bgp_intro.jpg?v=2?v=2" alt="Instradamento tra sistemi autonomi AS1 AS2 AS3" style="max-width: 70%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Se un router in AS1 riceve un datagramma la cui destinazione ricade fuori da AS1, deve inoltrarlo verso uno dei due gateway — ma quale? AS1 deve: (1) sapere quali destinazioni sono raggiungibili attraverso AS2 e quali attraverso AS3; (2) informare tutti i router interni in modo che ciascuno configuri la propria tabella d'inoltro per le destinazioni esterne. Questo è il compito dell'instradamento inter-AS.</p>
 
 <h4>Sessioni eBGP e iBGP</h4>
@@ -2535,7 +2535,7 @@ Quando un segmento UDP arriva all'host di destinazione, quest'ultimo restituisce
 <p><b>Attacco passivo</b>: tenta di scoprire o utilizzare informazioni riservate, ma non influisce sulle risorse del sistema. Riguarda l'intercettazione o il monitoraggio delle trasmissioni; l'obiettivo è ottenere informazioni che vengono trasmesse. Due tipi: diffusione del contenuto dei messaggi e analisi del traffico.</p>
 <p><b>Attacco attivo</b>: tenta di alterare le risorse del sistema o di influenzarne il funzionamento.</p>
 
-<div class="imgbox"><img src="./reti_cyber/cyber_attacchi.jpg" alt="Riepilogo attacchi di sicurezza" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/cyber_attacchi.jpg?v=2?v=2" alt="Riepilogo attacchi di sicurezza" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Flusso normale Client↔Server; intercettazione (attacco passivo); modifica/mascheramento (active attack — masquerade, data modification); blocco (denial of service); replay.</p>
 
 <hr class="sep">
@@ -2741,7 +2741,7 @@ Botnet di dispositivi usati nell'attacco: in larga parte dispositivi IoT (es. IP
 <b>Schema</b>: Chiave segreta condivisa K → Testo in chiaro X → Algoritmo di cifratura → Y=E(K,X), blocco di dati cifrato → Algoritmo di decifratura (con la stessa K) → X=D(K,Y), testo in chiaro.
 </div>
 <p>Algoritmi standard di crittografia a chiave di accesso: <b>AES</b>, <b>3DES</b>.</p>
-<div class="imgbox"><img src="./reti_cyber/crittografia_simmetrica.jpg" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/crittografia_simmetrica.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 
 <h3>Distribuzione delle Chiavi</h3>
 <div class="box warn">
@@ -2751,7 +2751,7 @@ Botnet di dispositivi usati nell'attacco: in larga parte dispositivi IoT (es. IP
 <h3>Crittografia Asimmetrica</h3>
 <p>Utilizza due chiavi distinte: una chiave privata e una chiave pubblica. Il mittente e il destinatario non condividono alcuna chiave segreta. La chiave pubblica è conosciuta da tutti; la chiave privata è segreta ed è conosciuta solo dal destinatario.</p>
 
-<div class="imgbox"><img src="./reti_cyber/crittografia_asimmetrica.jpg" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="imgbox"><img src="./reti_cyber/crittografia_asimmetrica.jpg?v=2?v=2" alt="Cifratura con chiave pubblica" style="max-width: 60%; height: auto; border: 1px solid #ccc; border-radius: 8px;"></div>
 <p class="caption">Schema di cifratura a chiave pubblica: Bob cifra con la chiave pubblica PU<sub>a</sub> di Alice (Y = E[PU<sub>a</sub>, X]); solo Alice può decifrare con la sua chiave privata PR<sub>a</sub> (X = D[PR<sub>a</sub>, Y]). Esempio algoritmo: RSA.</p>
 
 <h4>Cifratura con la chiave pubblica</h4>
