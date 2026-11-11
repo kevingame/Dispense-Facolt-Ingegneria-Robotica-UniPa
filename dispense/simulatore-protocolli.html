@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulatore protocolli di rete</title>
+<style>
+:root{--bg:#fff;--fg:#1d2330;--mut:#667;--card:#f4f6fa;--bd:#d5dae3;--data:#1e66d0;--ack:#18854a;--ctl:#7a5cc4;--bad:#d03030;--tm:#c27a00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171d;--fg:#e6e9ef;--mut:#99a;--card:#1e232c;--bd:#343b48;--data:#5b9bff;--ack:#4cc283;--ctl:#a58cf0;--bad:#ff6b6b;--tm:#f0b04a}}
+:root[data-theme="dark"]{--bg:#14171d;--fg:#e6e9ef;--mut:#99a;--card:#1e232c;--bd:#343b48;--data:#5b9bff;--ack:#4cc283;--ctl:#a58cf0;--bad:#ff6b6b;--tm:#f0b04a}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,sans-serif;padding:12px}
+h1{font-size:20px;margin:0 0 10px}h2{font-size:14px;margin:14px 0 6px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+[hidden]{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px}
+label{display:flex;flex-direction:column;font-size:12px;color:var(--mut);gap:2px}
+label.ck{flex-direction:row;align-items:center;gap:6px;color:var(--fg)}
+input,select{font:inherit;padding:5px 7px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg);max-width:100%}
+button{font:inherit;font-weight:600;padding:9px 18px;margin-top:10px;border:0;border-radius:8px;background:var(--data);color:#fff;cursor:pointer}
+#out{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:12px;margin-top:12px}
+@media(max-width:760px){#out{grid-template-columns:1fr}}
+table{border-collapse:collapse;width:100%;font-size:13px}td{border-bottom:1px solid var(--bd);padding:4px 6px}td:first-child{color:var(--mut)}
+.sc{overflow:auto;max-height:78vh;border:1px solid var(--bd);border-radius:10px;background:var(--card)}
+pre{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;overflow:auto;max-height:320px;font-size:12px}
+svg text{fill:var(--fg)}.ln{font-weight:700;font-size:12px}.ls{stroke:var(--bd);stroke-dasharray:3 4}
+.a{stroke-width:1.6;fill:none}.data{stroke:var(--data)}.ack{stroke:var(--ack)}.ctl{stroke:var(--ctl)}.a.lost{stroke:var(--bad);stroke-dasharray:4 3}
+.lb{font-size:11px;font-weight:600;paint-order:stroke;stroke:var(--card);stroke-width:3px}.tm{font-size:9px;fill:var(--mut)!important}.nt{font-size:10px;fill:var(--tm)!important;font-weight:700;paint-order:stroke;stroke:var(--card);stroke-width:3px}.nt.to{fill:var(--bad)!important;font-size:11px}
+svg .xx{fill:var(--bad);font-weight:700;font-size:14px}
+.lg span{margin-right:12px;font-size:12px}.lg i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:4px}
+table{border-collapse:collapse;font-size:12.5px;margin:6px 0}td,th{border:1px solid var(--bd);padding:3px 7px;text-align:left}th{background:var(--card)}
+.ed{stroke:var(--mut);stroke-width:2}.rd{fill:var(--tm)}.dot{stroke:var(--bg);stroke-width:1}.dot.data{fill:var(--data)}.dot.ack{fill:var(--ack)}.dot.ctl{fill:var(--ctl)}.dot.lost{fill:var(--bad)}
+.dl{font-size:10px;font-weight:700;paint-order:stroke;stroke:var(--card);stroke-width:3px}.dl.d-data{fill:var(--data)}.dl.d-ack{fill:var(--ack)}.dl.d-ctl{fill:var(--ctl)}
+</style></head><body>
+<h1>Simulatore protocolli di rete</h1>
+<div class="grid">
+<label>Protocollo<select id="proto">
+<option value="http">HTTP (TCP, opz. proxy/cache)</option><option value="tcp">TCP (handshake + dati + chiusura)</option><option value="udp">UDP</option>
+<option value="gbn">Go-Back-N</option><option value="sr">Selective Repeat</option><option value="dns">DNS</option><option value="smtp">SMTP</option><option value="pop3">POP3</option></select></label>
+<label>Banda R (Mbit/s, opz.)<input id="R" type="number" value="100"></label>
+<label>RTT (ms, opz.)<input id="rtt" type="number" value="10"></label>
+<label>Distanza (km, se manca RTT)<input id="dist" type="number"></label>
+<label>Velocità propagazione (km/s)<input id="spd" type="number" value="200000"></label>
+<label>MSS / payload (B)<input id="mss" type="number" value="1000"></label>
+<label>MTU (B, opz. → ricava MSS)<input id="mtu" type="number"></label>
+<label>Header per pacchetto (B)<input id="hdr" type="number" placeholder="40 (UDP 28)"></label>
+<label class="ck"><input id="ovh" type="checkbox" checked>Overhead trascurabile</label>
+<label>Timer / timeout (ms)<input id="to" type="number" placeholder="2×RTT"></label>
+<label>Pacchetti persi (es. 3, 2.5, SYN, M4)<input id="loss" value="2" placeholder="n. pacchetto, trasf.pkt, SYN"></label>
+<label>ACK persi (es. 3, 2.5)<input id="lossA"></label>
+<label>Asse del tempo (diagramma)<select id="ax"><option value="e">Per eventi (non in scala, chiaro)</option><option value="c">Compatto (frecce uguali)</option><option value="p">Proporzionale (ms reali)</option></select></label>
+<label>Client (nome / IP)<input id="cli" value="Client 10.0.0.2"></label>
+<label data-g="data">Dimensione dati (es. 30Kb, 30000)<input id="dsize" value="10000"></label>
+<label data-g="w">Finestra N<input id="W" type="number" value="4"></label>
+<label data-g="tcp">Numerazione TCP<select id="tn"><option value="s">N. segmento (didattico)</option><option value="b">N. sequenza (byte)</option></select></label>
+<label data-g="rt" class="ck"><input id="rtr" type="checkbox">Router intermedio (store-and-forward)</label>
+<label data-g="tcp">cwnd iniziale (MSS)<input id="cw" type="number" value="1"></label>
+<label data-g="tcp">ssthresh (MSS)<input id="ssth" type="number" value="64"></label>
+<label data-g="tcp" class="ck"><input id="reg" type="checkbox">TCP già a regime (CA / cwnd fissa)</label>
+<label data-g="http">N. file base<input id="nb" type="number" value="1"></label>
+<div id="basew" data-g="http" style="display:contents"></div>
+<label data-g="http">N. immagini<input id="ni" type="number" value="1"></label>
+
+<div id="imgw" data-g="http" style="display:contents"></div>
+
+<label data-g="http">Modello trasporto<select id="tm"><option value="s">Semplificato: HS 2 vie</option><option value="t">TCP completo</option></select></label>
+<label data-g="http">Connessione<select id="pers"><option value="1">Persistente</option><option value="0">Non persistente</option></select></label>
+<label data-g="http">Cookie (vuoto = nessuno)<input id="ck" value="XYZ"></label>
+<label data-g="http" class="ck"><input id="px" type="checkbox">Proxy (web cache)</label>
+<label data-g="http" class="ck"><input id="hit" type="checkbox">Cache HIT sul proxy</label>
+<label data-g="http" class="ck"><input id="vld" type="checkbox">HIT con validazione</label>
+<label data-g="dns">Host da risolvere<input id="dh" value="www.ebay.com"></label>
+<label data-g="dns">IP risposta<input id="dip" value="93.184.216.34"></label>
+<label data-g="dns">IP TLD<input id="ipt" value="192.32.1.1"></label><label data-g="dns">IP autoritativo<input id="ipa" value="192.32.4.1"></label><label data-g="dns" class="ck"><input id="dh2" type="checkbox">Dopo il DNS: richiesta HTTP</label>
+<label data-g="dns">Query<select id="drec"><option value="i">Iterativa</option><option value="r">Ricorsiva</option></select></label>
+<label data-g="dns" class="ck"><input id="dc" type="checkbox">Già in cache nel DNS locale</label>
+<label data-g="mail">Mittente / utente<input id="mf" value="alice@a.it"></label>
+<label data-g="mail">Destinatario<input id="mt" value="bob@b.it"></label>
+<label data-g="mail" class="ck"><input id="mail_simp" type="checkbox">Trasporto dati sempl. (senza ACK)</label>
+</div>
+<button id="go">Simula</button><button id="play" style="background:var(--ack)">▶ Anima</button>
+<p class="lg"><span><i style="background:var(--data)"></i>dati</span><span><i style="background:var(--ack)"></i>ACK</span><span><i style="background:var(--ctl)"></i>controllo</span><span><i style="background:var(--bad)"></i>perso ✗</span><span style="color:var(--tm)">⏱ timer</span></p>
+<h2>Rete</h2><div class="sc" id="net" style="max-height:none"></div>
+<div id="dnst"></div>
+<div id="out"><div><h2>Calcoli</h2><div id="rep"></div></div><div><h2>Diagramma temporale (ms)</h2><div class="sc" id="dia"></div></div></div>
+<h2 id="th">Messaggi HTTP</h2><pre id="tx"></pre>
+<script>
+const $=i=>document.getElementById(i),sv=i=>$(i).value.trim(),nv=(i,d)=>{const v=parseFloat($(i).value);return isNaN(v)?d:v};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+let E,L,S,P,M,T,used,LS,AS,maxT,omit,jar,TX,RF={},NY=110,BEND=0;
+const pset=s=>new Set(s.toUpperCase().split(/[\s,;]+/).filter(Boolean).map(x=>/^\d+$/.test(x)?'1.'+x:x));
+const lane=n=>{let i=L.indexOf(n);if(i<0){L.push(n);i=L.length-1}return i};
+const ttx=b=>Math.max(P.R>0?b*8/(P.R*1e3):0,0.002);
+let ANI=[],NP={},raf=0;let LIM=1e9;
+const add=(t1,t2,a,b,l,k,x,v,tm,tq,tf,te,bd)=>{maxT=Math.max(maxT,t2);if(E.length<3000&&LIM-->0){if(v){tm=tm??(t1+t2)/2;tq=tq??tm;tf=tf??tm;te=te??t2}E.push({t1,t2,a,b,l,k,x,v,tm,tq,tf,te,bd})}else omit++};
+const note=(t,a,l)=>{if(E.length<3000&&LIM>0)E.push({t1:t,t2:t,a,b:a,l,k:'note'})};
+const rtr=(ts,x,key,keep)=>{const tm=ts+x+P.d/2,tq=Math.max(tm,RF[key]||0);if(keep)RF[key]=tq+x;return{tm,tq,ta:tq+x+P.d/2}};
+const short=l=>{l=l.replace(/^#\d+\s*/,'');if(/^GET modified/.test(l))return'GET mod';if(/^GET/.test(l))return'GET';const m=l.match(/^HTTP\/1\.1 (\d+ \w+)/);if(m)return m[1];return l.length>16?l.slice(0,15)+'…':l};
+const G={udp:['data','rt'],tcp:['data','tcp','rt'],gbn:['data','w','rt'],sr:['data','w','rt'],http:['http','tcp','rt'],dns:['dns','rt'],smtp:['data','tcp','mail','rt'],pop3:['data','tcp','mail','rt']};
+function parseSz(s){s=String(s).trim().toLowerCase().replace(/\s+/g,'');const m=s.match(/^([\d.,]+)(b|kb|k|mb|m|gb|g)?$/);if(!m)return 0;let n=m[1];
+ if(n.includes('.')&&n.includes(','))n=n.replace(/\./g,'').replace(',','.');
+ else if(/^\d{1,3}(\.\d{3})+$/.test(n)||/^\d{1,3}(,\d{3})+$/.test(n))n=n.replace(/[.,]/g,'');
+ else n=n.replace(',','.');
+ return Math.round(parseFloat(n)*({k:1024,kb:1024,m:1048576,mb:1048576,g:1073741824,gb:1073741824}[m[2]]||1))||0}
+const parseUrl=(v,dp,dh)=>{v=String(v||'').trim().replace(/^https?:\/\//i,'');const k=v.indexOf('/'),h=(k<0?v:v.slice(0,k))||dh||'www.ebay.com',p=k<0||k==v.length-1?dp:v.slice(k);return{h,p}};
+const bsrv=()=>{const e=document.querySelector('.bs');return parseUrl(e&&e.value,'/').h};
+function buildBase(){const n=Math.min(10,Math.max(1,nv('nb',1))),box=$('basew'),os=[...box.querySelectorAll('.bw')],ov=[...box.querySelectorAll('.bs')];let ps='12288',pv='www.ebay.com';
+ box.innerHTML='';for(let i=0;i<n;i++){const sz=os[i]?os[i].value:ps,sr=ov[i]?ov[i].value:pv;ps=sz;pv=parseUrl(sr,'/').h;
+  const l=document.createElement('label');l.innerHTML=`File base ${i+1}: dimensione (es. 12Kb, 12288)<input class="bw" value="${esc(sz)}">`;box.appendChild(l);
+  const m=document.createElement('label');m.innerHTML=`File base ${i+1}: server (opz. con percorso)<input class="bs" value="${esc(sr)}" placeholder="www.ebay.com${i?'/base'+(i+1)+'.html':'/index.html'}">`;box.appendChild(m)}}
+function buildImgs(){const n=Math.min(30,Math.max(0,nv('ni',0))),box=$('imgw'),os=[...box.querySelectorAll('.iw')],ov=[...box.querySelectorAll('.is2')];let ps='4194304',pv=bsrv();
+ box.innerHTML='';for(let i=0;i<n;i++){const sz=os[i]?os[i].value:ps,sr=ov[i]?ov[i].value:pv;ps=sz;pv=parseUrl(sr,'/').h;
+  const l=document.createElement('label');l.innerHTML=`Img ${i+1}: dimensione (es. 4Kb, 2Mb, 4096)<input class="iw" value="${esc(sz)}">`;box.appendChild(l);
+  const m=document.createElement('label');m.innerHTML=`Img ${i+1}: server (opz. con percorso)<input class="is2" value="${esc(sr)}" placeholder="www.ebay.com/pics/img${i+1}.jpg">`;box.appendChild(m)}}
+function vis(){const p=$('proto').value;document.querySelectorAll('[data-g]').forEach(e=>e.hidden=!G[p].includes(e.dataset.g))}
+
+function params(){
+ const p=$('proto').value,ovh=$('ovh').checked,h=nv('hdr',NaN),hdr=ovh?0:(isNaN(h)?(p=='udp'?28:40):h);
+ let mss=nv('mss',1460);const mtu=nv('mtu',NaN);if(!isNaN(mtu))mss=Math.max(1,mtu-hdr);
+ let rtt=nv('rtt',NaN);if(isNaN(rtt)){const d=nv('dist',NaN);rtt=isNaN(d)?40:2*d/nv('spd',200000)*1000}
+ const to=nv('to',NaN);
+ P={ax:sv('ax'),p,hdr,mss,R:nv('R',0),rtt,d:rtt/2,to:isNaN(to)?Math.max(2*rtt,1):to,W:Math.max(1,nv('W',4)),cw:Math.max(1,nv('cw',1)),ss:nv('ssth',64),reg:$('reg').checked,
+ pers:sv('pers')=='1',tm:sv('tm'),val:$('vld').checked,tn:sv('tn'),rt:$('rtr').checked,px:$('px').checked,hit:$('hit').checked,ck:sv('ck'),ds:parseSz($('dsize').value)||30000,
+ mail_simp:$('mail_simp')?$('mail_simp').checked:false};
+}
+const mt=(t,tx)=>P.rt?[t+tx+P.d/2,t+tx+P.d/2,t+P.d/2,t+tx+P.d]:[];
+function msg(a,b,txt,t,sz=60,ea){
+ const n=++M,tx=ttx(sz),ow0=(P.rt?2:1)*tx+P.d,ks=['M'+n,txt.split(' ')[0].toUpperCase()],l=`#${n} ${txt}`;
+ for(let k=0;k<8;k++){
+  const ow=ea!=null?Math.max(ow0,ea-t):ow0,key=ks.find(x=>LS.has(x)&&!used.has(x)),lab=k?l+' (rit.)':l;S.wire+=sz;
+  if(key){used.add(key);add(t,t+ow,a,b,lab,'ctl',1,P.rt);note(t+P.to,a,'timer scaduto');t+=P.to;continue}
+  add(t,t+ow,a,b,lab,'ctl',0,P.rt);return t+ow}
+ return t}
+const hs=(a,b,t,w)=>{t=msg(a,b,'SYN',t);t=msg(b,a,'SYN-ACK',t);const r=msg(a,b,'ACK',t);return w?r:t+0.01};
+const hs2=(a,b,t)=>{t=msg(a,b,'HS',t);return msg(b,a,'HS',t)};
+function blk(a,b,by,t0,src,arr){const n=Math.max(1,Math.ceil(by/P.mss));LIM=150;let t=t0,ar=t0,bf,bl;S.tr.push({nm:'blocco senza ACK',n,bytes:by});S.pay+=by;
+ for(let i=0;i<n;i++){const s=(i<n-1?P.mss:by-(n-1)*P.mss)+P.hdr,x=ttx(s);S.sent++;S.wire+=s;
+  if(src&&src[i]>t)t=src[i];let tm,tq,ta,tf,te;if(P.rt){const r=rtr(t,x,a+'>'+b,1);tm=r.tm;tq=r.tq;ta=r.ta;tf=tm-x;te=ta-x}else ta=t+x+P.d;
+  if(arr)arr.push(ta);ar=Math.max(ar,ta);const q={t1:t,tm:tm??ta,tq:tq??ta,t2:ta};if(i==0)bf=q;bl=q;add(t,ta,a,b,`PKT ${i+1}/${n}`,'data',0,P.rt,tm,tq,tf,te,1);t+=x}
+ BEND=t;LIM=1e9;E.push({k:'band',a,b,v:P.rt,f:bf,l:bl,n,t1:bf.t1,t2:bl.t2});note(ar,b,n+' pacchetti ricevuti (nessun ACK)');return ar+P.d}
+const seq=(a,b,t,st)=>{st.forEach(([d,x])=>{t=d?msg(a,b,x,t):msg(b,a,x,t)});return t};
+function arq(a,b,bytes,t0,mode,nm){
+ const id=++T,n=Math.max(1,Math.ceil(bytes/P.mss)),d=P.d,rt=P.rt?1:0,tcp=mode=='tcp',sr=mode=='sr',gbn=mode=='gbn';
+ const sz=i=>(i<n-1?P.mss:bytes-(n-1)*P.mss)+P.hdr,tx=i=>ttx(sz(i));
+ const lb=i=>tcp&&P.tn=='b'?`DATI seq=${i*P.mss+1}`:tcp?`${i+1}`:`PKT ${i+1}`;
+ const al=k=>tcp&&P.tn=='b'?`ACK=${k>=n?bytes+1:k*P.mss+1}`:tcp?`ack ${k}`:`ACK ${k}`;
+ let cw=P.reg?P.cw:1,ss=P.reg?0:P.ss,una=0,nxt=0,rcv=0,dup=0,fx=0,lf=t0,now=t0,g=0;const got=[],acked=[],ev=[],txc=[],sT=[];
+ S.tr.push({nm,n,bytes});S.pay+=bytes;LIM=150;
+ const fr=x=>{const k=Math.floor(x+1e-9),f=x-k;if(f<1e-6)return''+k;for(let q=2;q<=12;q++)if(Math.abs(f*q-Math.round(f*q))<1e-6)return`${k}+${Math.round(f*q)}/${q}`;return x.toFixed(2)};
+ const wsz=()=>tcp?Math.max(1,Math.floor(cw+1e-9)):P.W;
+ const win=()=>{const ak=[];if(sr)for(let i=una;i<nxt;i++)if(acked[i])ak.push(i);if(E.length<3000&&LIM>0)E.push({k:'win',t1:now,t2:now,a,b:a,u:una,w:wsz(),c:tcp?'cwnd = '+fr(cw):'N = '+P.W,n,ak})};
+ const snd=i=>{const ts=Math.max(now,lf),rx=txc[i]>0,x=tx(i);txc[i]=(txc[i]||0)+1;lf=ts+x;sT[i]=ts;
+  const key=id+'.'+(i+1),lost=LS.has(key)&&!used.has(key);if(lost)used.add(key);
+  let tm,tq,ta,tf,te;if(rt){const r=rtr(ts,x,a+'>'+b,!lost);tm=r.tm;tq=r.tq;ta=r.ta;tf=tm-x;te=ta-x}else ta=ts+x+d;
+  S.sent++;S.wire+=sz(i);if(rx)S.retx++;
+  add(ts,ta,a,b,lb(i)+(rx?' (rit.)':''),'data',lost,rt,tm,tq,tf,te);
+  if(lost)return;
+  let an;
+  if(gbn){
+   if(i==rcv){
+    rcv++;got[i]=1;
+    const buf=[];got.forEach((v,k)=>buf.push(k+1));
+    note(ta,b,'buffer RX: '+buf.join(' '));
+   } else {
+    note(ta,b,`scartato (atteso ${rcv+1})`);
+   }
+   an=rcv;
+   if(!an)return
+  }
+  else{got[i]=1;if(sr)an=i+1;else{while(got[rcv])rcv++;an=rcv}
+   const buf=[];got.forEach((v,k)=>buf.push(k+1));note(ta,b,'buffer RX: '+buf.join(' '))}
+  const ak='A'+key,xl=AS.has(key)&&!used.has(ak);if(xl)used.add(ak);
+  add(ta,ta+d,b,a,al(an),'ack',xl,rt);ev.push({t:ta+d,an,x:xl})};
+ const nt=()=>{let m=1e18,j=una;if(sr){for(let i=una;i<nxt;i++)if(!acked[i]&&sT[i]!=null&&sT[i]+P.to<m){m=sT[i]+P.to;j=i}}else if(una<nxt&&sT[una]!=null)m=sT[una]+P.to;return[m,j]};
+ const tryS=()=>{while(nxt<n&&nxt<una+wsz())snd(nxt++)};
+ win();
+ while(una<n&&g++<20000){
+  tryS();ev.sort((p,q)=>p.t-q.t);const e=ev[0],[tm,j]=nt();
+  if(e&&e.t<=tm){ev.shift();now=Math.max(now,e.t);if(e.x)continue;
+   if(sr){acked[e.an-1]=1;while(acked[una])una++;win()}
+   else if(e.an>una){
+    if(tcp) {
+     for(let k=una;k<e.an;k++) cw+=cw<ss?1:1/Math.floor(cw+1e-9);
+    }
+    una=e.an;dup=0;fx=0;win()
+   }
+   else if(tcp&&e.an==una&&una<nxt&&!fx){dup++;note(now,a,'count ack='+dup);
+    if(dup==3){ss=Math.max(cw/2,1);cw=ss;note(now,a,'fast retransmit (3 dup)');snd(una);fx=1;win()}}}
+  else if(tm<1e17){now=Math.max(now,tm);note(now,a,'timer scaduto'+(sr?' pkt '+(j+1):''));
+   if(tcp){ss=Math.max(cw/2,2);cw=1;dup=0;fx=0;snd(una)}
+   else if(gbn){for(let i=una;i<nxt;i++)snd(i)}
+   else snd(j);
+   win()}
+  else break}
+ LIM=1e9;return now}
+
+function udp(){L=['Client','Server'];const by=P.ds,n=Math.max(1,Math.ceil(by/P.mss));let t=0,lostB=0;S.tr.push({nm:'datagrammi',n,bytes:by});
+ for(let i=0;i<n;i++){const s=(i<n-1?P.mss:by-(n-1)*P.mss),x=ttx(s+P.hdr),key='1.'+(i+1),lost=LS.has(key);
+  S.sent++;S.wire+=s+P.hdr;if(lost)lostB+=s;let tm,tq,ta=t+x+P.d,tf,te;if(P.rt){const r=rtr(t,x,'0>1',!lost);tm=r.tm;tq=r.tq;ta=r.ta;tf=tm-x;te=ta-x}add(t,ta,0,1,`UDP DG ${i+1}`,'data',lost,P.rt,tm,tq,tf,te);t+=x}
+ S.pay=by-lostB;note(maxT,1,'nessun ACK / nessuna ritrasmissione')}
+
+function tcpP(){
+ L=['Client','Server'];
+ let t = P.reg ? 0.01 : hs(0,1,0); 
+ t=arq(0,1,P.ds,t,'tcp','dati');
+ seq(0,1,t,[[1,'FIN'],[0,'ACK-FIN'],[0,'FIN'],[1,'ACK']])
+}
+
+function gs(){L=['Mittente','Destinatario'];arq(0,1,P.ds,0,P.p,'dati')}
+function http(){
+ L=[sv('cli')||'Client'];if(P.px)lane('Proxy');const conn={};
+ const fetch=(a,b,o,t,up,nt)=>{
+  const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}
+  const ck=jar[o.h],sc=!ck&&P.ck;
+  t=msg(a,b,`GET ${o.p}${ck?' Cookie:'+ck:''}`,t,300);
+  if(up)t=up(t);
+  if(P.tm!='s')msg(b,a,`HTTP/1.1 200 OK (${o.ct}, ${o.s} B)${sc?' Set-Cookie:'+P.ck:''}`,t,250);
+  if(!nt)TX+=`── ${L[a]} → ${L[b]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: ${P.pers?'keep-alive':'close'}${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\nConnection: ${P.pers?'keep-alive':'close'}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n\n`;
+  if(sc)jar[o.h]=P.ck;
+  return (P.tm=='s'?blk(b,a,o.s,t):arq(b,a,o.s,t+ttx(250),'tcp',o.p))-P.d};
+ const val=(a,b,o,t)=>{const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}t=msg(a,b,`GET modified ${o.p}`,t,300);return msg(b,a,'304 Not Modified',t,250)};
+ const hsk=(a,b,t)=>{const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}return t};
+ const rel=(o,t)=>{const s=lane(o.h),ck=jar[o.h],sc=!ck&&P.ck,g=`GET ${o.p}${ck?' Cookie:'+ck:''}`;
+  t=hsk(0,1,t);t=msg(0,1,g,t,300);note(t,1,'cache MISS');
+  t=hsk(1,s,t);const tg=msg(1,s,g,t,300),hd=`HTTP/1.1 200 OK (${o.ct}, ${o.s} B)${sc?' Set-Cookie:'+P.ck:''}`;
+  const th=msg(s,1,hd,tg,250),arr=[];blk(s,1,o.s,tg+ttx(250),null,arr);
+  msg(1,0,hd,th,250);
+  TX+=`── ${L[0]} → Proxy → ${L[s]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n\n`;
+  if(sc)jar[o.h]=P.ck;
+  return blk(1,0,o.s,th+ttx(250),arr)-P.d};
+ const gl=g=>`GET ${g.map(o=>o.p.split('/').pop()).join(' + ')}`;
+ const cn=()=>P.pers?'keep-alive':'close';
+ const sec=(a,b,m)=>`── ${a} → ${b} ──\n${m.join('\n')}\n`;
+ const rq=(o,ck,x)=>`GET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: ${cn()}${ck?'\nCookie: '+ck:''}${x||''}\n`;
+ const rs=(o,sc,c)=>`HTTP/1.1 200 OK\n${c?'Connection: '+cn()+'\n':''}Content-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n`;
+ const txPP=(s,g)=>{const q=o=>{const ck=jar[o.h];return `GET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: keep-alive${ck?'\nCookie: '+ck:''}\n`};
+  TX+=sec(L[0],'Proxy (pipelining)',g.map(q))+sec('Proxy',L[s],g.flatMap(o=>[q(o),rs(o,0,0)]))+sec('Proxy',L[0],g.map(o=>rs(o,0,0)))};
+ const txP=(a,b,g)=>{TX+=`── ${L[a]} → ${L[b]} (pipelining) ──\n`+g.map(o=>{const ck=jar[o.h];return `GET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: keep-alive${ck?'\nCookie: '+ck:''}\n`}).join('\n')+'\n'+g.map(o=>`HTTP/1.1 200 OK\nContent-Type: ${o.ct}\nContent-Length: ${o.s}\n\n[DATI: ${o.s} byte]\n`).join('\n')+'\n'};
+ const nm=o=>'GET '+o.p.split('/').pop();
+ const pipeD=(g,t)=>{const s=lane(g[0].h);t=hsk(0,s,t);txP(0,s,g);let st=0,ar=t;
+  g.forEach((o,i)=>{const a=i?msg(0,s,nm(o),t,300,st):msg(0,s,nm(o),t,300);
+   ar=blk(s,0,o.s,Math.max(a,st))-P.d;st=BEND});
+  return ar};
+ const PC=new Set(),key=o=>o.h+o.p,isHit=o=>P.px&&(P.hit||PC.has(key(o)));
+ const pipeP=(g,t)=>{const s=lane(g[0].h);t=hsk(0,1,t);txPP(s,g);
+  const a1=msg(0,1,gl(g),t,300*g.length);note(a1,1,'cache MISS');
+  const dS=hsk(1,s,a1);let st=0;const ap=[];
+  g.forEach((o,i)=>{const aS=i?msg(1,s,nm(o),dS,300,st):msg(1,s,nm(o),dS,300);
+   ap.push(blk(s,1,o.s,Math.max(aS,st))-P.d);st=BEND});
+  let cs=0,last=t;g.forEach((o,i)=>{last=blk(1,0,o.s,Math.max(ap[i],cs))-P.d;cs=BEND});g.forEach(o=>PC.add(key(o)));return last};
+ const get=(o,t)=>{const s=lane(o.h);if(!P.px)return fetch(0,s,o,t);
+  const ck=jar[o.h],sc=!ck&&P.ck,C=L[0],S=L[s],hit=isHit(o),vl=P.hit?P.val:1;
+  const r=fetch(0,1,o,t,t1=>{note(t1,1,hit?(vl?'cache HIT (validazione)':'cache HIT'):'cache MISS');return hit?(vl?val(1,s,o,t1):t1):fetch(1,s,o,t1,null,1)},1);
+  if(!hit)PC.add(key(o));
+  TX+=sec(C,'Proxy',[rq(o,ck)])
+   +(hit?(vl?sec('Proxy',S,[rq(o,ck,'\nIf-modified-since: XYZ')])+sec(S,'Proxy',['HTTP/1.1 304 Not Modified\nConnection: '+cn()+'\n']):'')
+     :sec('Proxy',S,[rq(o,ck),rs(o,sc,1)]))
+   +sec('Proxy',C,[rs(o,sc,1)]);
+  return r};
+ const bw=[...document.querySelectorAll('.bw')],bs=[...document.querySelectorAll('.bs')];let t=0;
+ bw.forEach((e,i)=>{const u=parseUrl(bs[i]&&bs[i].value,i?`/base${i+1}.html`:'/index.html');t=get({p:u.p,h:u.h,s:parseSz(e.value)||12288,ct:'text/html'},t)});
+ const iv=[...document.querySelectorAll('.is2')];
+ const imgs=[...document.querySelectorAll('.iw')].map((e,i)=>{const u=parseUrl(iv[i]&&iv[i].value,`/pics/img${i+1}.jpg`,bsrv());return{p:u.p,h:u.h,s:parseSz(e.value),ct:'image/jpeg'}});
+ for(let i=0;i<imgs.length;){let j=i+1;if(P.pers&&P.tm=='s'&&!isHit(imgs[i])){const u=new Set([key(imgs[i])]);
+   while(j<imgs.length&&imgs[j].h==imgs[i].h&&!isHit(imgs[j])&&!(P.px&&u.has(key(imgs[j])))){u.add(key(imgs[j]));j++}}
+  const g=imgs.slice(i,j);t=g.length>1?(P.px?pipeP(g,t):pipeD(g,t)):get(g[0],t);i=j}}
+function dns(){
+ L=['Client','DNS locale','Root','TLD','Autoritativo'];const h=sv('dh'),ip=sv('dip'),tld='.'+h.split('.').pop();let t=0;
+ t=msg(0,1,`DNS-Q ${h} A?`,t,70);
+ if(P.dc)note(t,1,'cache HIT');else{note(t,1,'cache MISS');
+  const st=sv('drec')=='r'?[[1,2,`DNS-Q ${h}`],[2,3,`DNS-Q ${h}`],[3,4,`DNS-Q ${h}`],[4,3,`DNS-R A ${ip}`],[3,2,`DNS-R A ${ip}`],[2,1,`DNS-R A ${ip}`]]
+  :[[1,2,`DNS-Q ${h}`],[2,1,`DNS-R NS ${tld} (TLD)`],[1,3,`DNS-Q ${h}`],[3,1,'DNS-R NS autoritativo'],[1,4,`DNS-Q ${h}`],[4,1,`DNS-R A ${ip}`]];
+  st.forEach(([a,b,x])=>t=msg(a,b,x,t,70))}
+ t=msg(1,0,`DNS-R ${h} A ${ip}`,t,70);dnsTable(h,ip,tld);
+ if($('dh2').checked){const s=lane('Server '+h);t=hs2(0,s,t);t=msg(0,s,'GET /index.html',t,300);t=msg(s,0,'HTTP/1.1 200 OK',t,250);blk(s,0,P.ds,t);
+  TX+=`── Client → ${h} (${ip}) ──\nGET /index.html HTTP/1.1\nHost: ${h}\n\nHTTP/1.1 200 OK\nContent-Length: ${P.ds}\n\n[DATI: ${P.ds} byte]\n`}}
+function dnsTable(h,ip,tl){const dom=h.split('.').slice(1).join('.'),it=sv('ipt')||'?',ia=sv('ipa')||'?',tn='tld'+tl,an='dns.'+dom;
+ const q=[[[h,'/','A']],"Richiesta (H richiede l'IP di "+h+" al DNS locale)"];
+ const R=P.dc?[q,[[[h,ip,'A']],'Risposta (dalla cache del DNS locale)']]:[q,
+  [[[tl,'/','NS']],"Richiesta (il DNS locale chiede l'IP del DNS TLD al DNS Root)"],
+  [[[tl,tn,'NS'],[tn,it,'A']],"Risposta (il ROOT fornisce il NS e l'IP del TLD)"],
+  [[[dom,'/','NS']],"Richiesta (il DNS locale chiede l'IP del DNS AUT al server TLD)"],
+  [[[dom,an,'NS'],[an,ia,'A']],"Risposta (il TLD fornisce il NS e l'IP dell'AUT)"],
+  [[[h,'/','A']],"Richiesta (il DNS locale chiede l'IP del server all'autorevole)"],
+  [[[h,ip,'A']],"Risposta (l'autorevole restituisce l'IP finale)"],
+  [[[h,ip,'A']],"Risposta finale (il DNS locale inoltra l'IP all'host H)"]];
+ const c=(r,k)=>r.map(x=>x[k]).join('<br>');
+ $('dnst').innerHTML='<h2>Tabella DNS (name, value, type, TTL)</h2><table><tr><th>#</th><th>Name</th><th>Value</th><th>Type</th><th>TTL</th><th>Azione</th></tr>'+R.map(([r,az],i)=>`<tr><td>${i+1}</td><td>${c(r,0)}</td><td>${c(r,1)}</td><td>${c(r,2)}</td><td>${r.map(()=>'X').join('<br>')}</td><td><b>${az.split(' ')[0]}</b> ${az.slice(az.indexOf(' ')+1)}</td></tr>`).join('')+'</table>'}
+
+/* ============================================================== */
+/* AGGIORNAMENTI PER SMTP E POP3: TRASPORTO DATI SEMPLIFICATO      */
+/* ============================================================== */
+function smtp(){
+ L=['User Agent (mittente)','Mail server mittente','Mail server destinatario'];const f=sv('mf'),to=sv('mt');
+ const hop=(a,b,t)=>{t=hs(a,b,t,1);
+  t=seq(a,b,t,[[0,'220 SMTP ready'],[1,`HELO ${L[a].split(' ')[0]}`],[0,'250 Hello'],[1,`MAIL FROM:<${f}>`],[0,'250 OK'],[1,`RCPT TO:<${to}>`],[0,'250 OK'],[1,'DATA'],[0,'354 Start mail input']]);
+  if(P.mail_simp){ 
+      blk(a,b,P.ds,t);
+      t=BEND; // il '.' viene inviato immediatamente dopo l'ultimo pacchetto dati, senza aspettare ACK
+  } else {
+      t=arq(a,b,P.ds,t,'tcp','mail'); 
+  }
+  return seq(a,b,t,[[1,'. (fine messaggio)'],[0,'250 Queued'],[1,'QUIT'],[0,'221 Bye']])};
+ hop(1,2,hop(0,1,0))
+}
+
+function pop3(){
+ L=['User Agent','Mail server'];let t=hs(0,1,0,1);
+ t=seq(0,1,t,[[0,'+OK POP3 ready'],[1,`USER ${sv('mt').split('@')[0]}`],[0,'+OK'],[1,'PASS ****'],[0,'+OK logged in'],[1,'LIST'],[0,'+OK 1 messaggio'],[1,'RETR 1'],[0,`+OK ${P.ds} B`]]);
+ if(P.mail_simp){ 
+     t=blk(1,0,P.ds,t)-P.d; // Il client riceve la raffica e invia il comando DELE 1 nell'istante in cui arriva l'ultimo dato
+ } else {
+     t=arq(1,0,P.ds,t,'tcp','mail')-P.d; 
+ }
+ seq(0,1,t,[[1,'DELE 1'],[0,'+OK'],[1,'QUIT'],[0,'+OK bye']])
+}
+/* ============================================================== */
+
+function drawNet(){
+ const n=L.length,Wn=Math.max(560,n*190),gx=i=>n==1?Wn/2:80+i*(Wn-160)/(n-1),K=(a,b)=>Math.min(a,b)+'|'+Math.max(a,b);
+ const pr=new Set(ANI.map(e=>K(e.a,e.b))),rtp=new Set(E.filter(e=>e.v).map(e=>K(e.a,e.b)));NP={};
+ let mh=0;pr.forEach(k=>{const[a,b]=k.split('|').map(Number);mh=Math.max(mh,(b-a-1)*38)});
+ const y0=NY=Math.max(110,mh+60),Ht=y0+120;
+ let s=`<svg width="${Wn}" height="${Ht}" viewBox="0 0 ${Wn} ${Ht}" font-family="system-ui,sans-serif">`;
+ pr.forEach(k=>{const[a,b]=k.split('|').map(Number),xa=gx(a),xb=gx(b),h=(b-a-1)*38,m=(xa+xb)/2,rr=rtp.has(k);NP[k]={xa,xb,h};
+  s+=h?`<path d="M${xa} ${y0} Q${m} ${y0-2*h} ${xb} ${y0}" class="ed" fill="none"/>`:`<line x1="${xa}" y1="${y0}" x2="${xb}" y2="${y0}" class="ed"/>`;
+  s+=`<text x="${m}" y="${y0-h-18}" text-anchor="middle" class="lb">${nv('R',0)||'∞'} Mbit/s · ${+(P.d/(rr?2:1)).toFixed(3)} ms${rr?' per tratta':''}</text>`;
+  if(rr)s+=`<text x="${m}" y="${y0-h+8}" text-anchor="middle" font-size="22" style="paint-order:stroke;stroke:var(--bg);stroke-width:6px">🔀</text><text x="${m}" y="${y0-h+28}" text-anchor="middle" class="ln">Router R</text>`});
+ L.forEach((l,i)=>{const ic=/proxy|server|mail|www|srv|dns|root|tld|autor/i.test(l)?'🗄️':'🖥️';
+  s+=`<text x="${gx(i)}" y="${y0+9}" text-anchor="middle" font-size="28" style="paint-order:stroke;stroke:var(--bg);stroke-width:6px">${ic}</text><text x="${gx(i)}" y="${y0+36}" text-anchor="middle" class="ln">${esc(l)}</text>`});
+ $('net').innerHTML=s+'<g id="dots"></g></svg>'}
+
+function play(){
+ if(raf){cancelAnimationFrame(raf);raf=0;$('play').textContent='▶ Anima';return}
+ const cur=$('cur'),dots=$('dots'),y0=64,H=ANI.H-40,dur=Math.max(9000,(H-y0)*45);let t0=null;$('play').textContent='⏸ Stop';
+ const step=ts=>{if(t0==null)t0=ts;const p=(ts-t0)/dur,y=y0+p*(H-y0);
+  cur.setAttribute('y1',y);cur.setAttribute('y2',y);$('dia').scrollTop=Math.max(0,y-180);let g='';
+  ANI.forEach(e=>{if(y<e.ya||y>e.yb)return;let u;
+   if(e.v){
+    if(y<=e.yf)u=.5*(y-e.ya)/Math.max(1e-6,e.yf-e.ya);
+    else if(e.x)return;
+    else if(y<=e.yq)u=.5;
+    else u=Math.min(1,.5+.5*(y-e.yq)/Math.max(1e-6,e.ye-e.yq))}
+   else{u=e.yb>e.ya?(y-e.ya)/(e.yb-e.ya):.5;if(e.x&&u>.55)return}
+   const nd=NP[Math.min(e.a,e.b)+'|'+Math.max(e.a,e.b)];if(!nd)return;if(e.a>e.b)u=1-u;
+   const cx=nd.xa+(nd.xb-nd.xa)*u,cy=NY-4*nd.h*u*(1-u);
+   g+=`<circle cx="${cx}" cy="${cy}" r="5" class="dot ${e.k}${e.x?' lost':''}"/><text x="${cx}" y="${cy-14}" text-anchor="middle" class="dl d-${e.k}">${esc(e.s)}</text>`});
+  dots.innerHTML=g;if(p<1)raf=requestAnimationFrame(step);else{raf=0;$('play').textContent='▶ Anima'}};
+ raf=requestAnimationFrame(step)}
+
+function draw(){
+ const n=L.length,wn=E.some(e=>e.k=='win'),mg=wn?450:90,rm=wn?210:90;draw.st={};ANI=[];const W=Math.max(520,n*230)+mg+rm-180,X=i=>Math.round(n==1?W/2:mg+i*(W-mg-rm)/(n-1)),r=t=>Math.round(t*1e4)/1e4;
+ const ts=[...new Set(E.flatMap(e=>e.k=='band'?[e.f,e.l].flatMap(q=>[r(q.t1),r(q.tm),r(q.tq),r(q.t2)]):e.v?[r(e.t1),r(e.t2),r(e.tm),r(e.tq),r(e.tf),r(e.te)]:[r(e.t1),r(e.t2)]))].sort((a,b)=>a-b);let H;const Y=new Map();
+ {if(!E.some(e=>e.v)&&P.ax=='e'){ts.forEach((t,i)=>Y.set(t,64+i*24));H=64+ts.length*24+40}
+  else if(!E.some(e=>e.v)){
+   const sg=[];E.forEach(e=>{if(e.k=='note'||e.k=='win'||e.k=='band')return;sg.push([r(e.t1),r(e.t2)])});
+   let tc=0;ts.forEach((t,i)=>{if(i<ts.length-1&&sg.some(q=>q[0]<=t&&q[1]>=ts[i+1]))tc+=ts[i+1]-t});
+   const xs=Math.max(ttx(P.mss+P.hdr),.05),kx=Math.min(20/xs,P.ax=='p'?1e9:100/(P.d+xs),6000/Math.max(tc,1));let y=64;
+   ts.forEach((t,i)=>{Y.set(t,Math.round(y));if(i<ts.length-1){const g=ts[i+1]-t,cv=sg.some(q=>q[0]<=t&&q[1]>=ts[i+1]);y+=cv?Math.max(g*kx,16):Math.min(Math.max(g*kx,8),24)}});H=Math.round(y)+40}
+  else{
+   const sg=[];E.forEach(e=>{if(e.k=='note'||e.k=='win'||e.k=='band')return;if(e.v)sg.push([r(e.t1),r(e.tf)],[r(e.tq),r(e.te)]);else sg.push([r(e.t1),r(e.t2)])});
+   const ms=Math.max(.05,Math.min(1e9,...sg.map(q=>q[1]-q[0]).filter(v=>v>.05))),kx=Math.min(16/ms,100/Math.max(ttx(P.mss+P.hdr),.5));let y=64;
+   ts.forEach((t,i)=>{Y.set(t,Math.round(y));if(i<ts.length-1){const g=ts[i+1]-t,cv=sg.some(q=>q[0]<=t&&q[1]>=ts[i+1]);y+=cv?Math.max(g*kx,12):Math.min(Math.max(g*kx,6),24)}});H=Math.round(y)+40}}
+ let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="system-ui,sans-serif"><defs>`;
+ ['data','ack','ctl'].forEach(k=>s+=`<marker id="m${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--${k})"/></marker>`);
+ s+='<pattern id="hat" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" style="stroke:var(--mut)" stroke-width="1"/></pattern></defs>';
+ L.forEach((l,i)=>s+=`<text x="${X(i)}" y="22" text-anchor="middle" class="ln">${esc(l)}</text><line x1="${X(i)}" y1="34" x2="${X(i)}" y2="${H-14}" class="ls"/>`);
+ {const sp=new Set();E.filter(e=>e.v).forEach(ve=>{const kk=Math.min(ve.a,ve.b)+"|"+Math.max(ve.a,ve.b);if(sp.has(kk))return;sp.add(kk);const xm=Math.round((X(ve.a)+X(ve.b))/2);s+=`<text x="${xm}" y="22" text-anchor="middle" class="ln">Router R</text><line x1="${xm}" y1="34" x2="${xm}" y2="${H-14}" class="ls"/>`})}
+ let ly=-99;ts.forEach(t=>{const yy=Y.get(t);if(yy-ly<10)return;ly=yy;s+=`<text x="2" y="${yy+3}" class="tm">${t.toFixed(2)}</text>`});
+ E.forEach(e=>{const y1=Y.get(r(e.t1)),y2=Y.get(r(e.t2)),x1=X(e.a),x2=X(e.b);if(e.k!='note'&&e.k!='win'&&e.k!='band')ANI.push({ya:y1,yb:y2,a:e.a,b:e.b,k:e.k,x:e.x,v:e.v,ym:e.v?Y.get(r(e.tm)):0,yq:e.v?Y.get(r(e.tq)):0,yf:e.v?Y.get(r(e.tf)):0,ye:e.v?Y.get(r(e.te)):0,s:short(e.l)});
+  if(e.k=='band')return;
+  
+  if(e.k=='win'){const s0=e.u>14?e.u-2:0,N=Math.min(e.n-s0,18);s+=`<text x="44" y="${y1-10}" font-size="9" font-weight="700">${e.c}</text>`;
+   for(let i=0;i<N;i++)s+=`<text x="${46+i*18}" y="${y1+3}" font-size="9"${(e.ak||[]).includes(s0+i)?' style="fill:var(--ack);font-weight:700"':''}>${s0+i+1}</text>`;
+   s+=`<rect x="${44+(e.u-s0)*18}" y="${y1-8}" width="${Math.max(0,Math.min(e.w,N-(e.u-s0)))*18}" height="12" fill="none" style="stroke:var(--tm)" stroke-width="1.6"/>`;return}
+  if(e.v){
+   const xm=Math.round((x1+x2)/2),yf=Y.get(r(e.tf)),ym=Y.get(r(e.tm)),yq=Y.get(r(e.tq)),ye=Y.get(r(e.te)),c=`a ${e.k}${e.x?' lost':''}`;
+   s+=`<line x1="${x1}" y1="${y1}" x2="${xm}" y2="${yf}" class="${c}" ${e.x||!(e.tm>e.tf)?'':'marker-end="url(#m'+e.k+')"'}/>`;
+   if(e.x)s+=`<text x="${xm}" y="${yf+5}" text-anchor="middle" class="xx">✗</text>`;
+   else{if(ym>yf)s+=`<line x1="${xm}" y1="${yf}" x2="${xm}" y2="${ym}" style="stroke:var(--tm)" stroke-width="1" stroke-dasharray="2 2"/>`;if(yq>ym)s+=`<line x1="${xm}" y1="${ym}" x2="${xm}" y2="${yq}" style="stroke:var(--tm)" stroke-width="3" opacity=".5"/>`;
+    s+=`<line x1="${xm}" y1="${yq}" x2="${x2}" y2="${ye}" class="${c}" marker-end="url(#m${e.k})"/>`}
+   s+=`<circle cx="${xm}" cy="${yq}" r="2.6" class="rd"/><text x="${(x1+xm)/2}" y="${(y1+yf)/2-3}" text-anchor="middle" class="lb">${esc(e.l)}</text>`;return}
+  if(e.k=='note'){const kk=e.a+'|'+y1,o=draw.st[kk]=(draw.st[kk]??-1)+1,left=e.a==0&&mg>90,to=/timer/.test(e.l);s+=`<text x="${left?x1-8:x1+8}" y="${y1+3+o*10}" text-anchor="${left?'end':'start'}" class="nt${to?' to':''}">${to?'⏱ ':''}${esc(e.l)}</text>`;return}
+  const f=e.x?.55:1,xe=x1+(x2-x1)*f,ye=y1+(y2-y1)*f;
+  s+=`<line x1="${x1}" y1="${y1}" x2="${xe}" y2="${ye}" class="a ${e.k}${e.x?' lost':''}" ${e.x?'':`marker-end="url(#m${e.k})"`}/>`;
+  if(e.x)s+=`<text x="${xe}" y="${ye+5}" text-anchor="middle" class="xx">✗</text>`;
+  s+=`<text x="${(x1+x2)/2}" y="${(y1+y2)/2-3}" text-anchor="middle" class="lb">${esc(e.l)}</text>`});
+ if(omit)s+=`<text x="${W/2}" y="${H-12}" text-anchor="middle" class="nt">… altri ${omit} eventi non disegnati (i calcoli li includono)</text>`;
+ s+=`<line id="cur" x1="0" x2="${W}" y1="-9" y2="-9" style="stroke:var(--bad)" stroke-width="1.5" stroke-dasharray="5 3"/>`;ANI.H=H;$('dia').innerHTML=s+'</svg>'}
+
+function report(){
+ const f=(x,u)=>x.toFixed(x<10?3:1)+' '+u,sec=Math.max(maxT,1e-6);
+ const tr=S.tr.map(x=>`${esc(x.nm)}: ${x.bytes} B → <b>${x.n}</b> pacc.`).join('<br>')||'—';
+ const rows=[['Protocollo',P.p.toUpperCase()],['MSS (payload)',P.mss+' B'],['Header / pacchetto',P.hdr+' B'],['MTU = MSS + header',(P.mss+P.hdr)+' B'],
+ ['T<sub>tx</sub> pacchetto pieno',P.R>0?f(ttx(P.mss+P.hdr),'ms'):'trascurabile'],['RTT',P.rtt.toFixed(2)+' ms'],['T<sub>prop</sub> (1 via)',P.d.toFixed(2)+' ms'],['Timer',P.to.toFixed(1)+' ms'],
+ ['N. pacchetti',tr],['Segmenti trasmessi',S.sent],['Ritrasmissioni',S.retx],['Tempo totale',f(maxT,'ms')],
+ ['Throughput',f(S.wire*8/(sec*1000),'Mbit/s')],['Goodput',f(S.pay*8/(sec*1000),'Mbit/s')]];
+ $('rep').innerHTML='<table>'+rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')+'</table>'}
+
+function run(){
+ params();E=[];L=[];S={tr:[],sent:0,retx:0,wire:0,pay:0};M=0;T=0;used=new Set();maxT=0;omit=0;jar={};TX='';RF={};
+ LS=pset(sv('loss'));AS=pset(sv('lossA'));$('dnst').innerHTML='';LIM=1e9;
+ ({udp,tcp:tcpP,gbn:gs,sr:gs,http,dns,smtp,pop3}[P.p])();
+ if(raf){cancelAnimationFrame(raf);raf=0;$('play').textContent='▶ Anima'}draw();drawNet();report();$('tx').textContent=TX;$('tx').hidden=$('th').hidden=!TX}
+$('nb').oninput=buildBase;buildBase();$('ni').oninput=buildImgs;buildImgs();$('proto').onchange=()=>{vis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('go').onclick=run;$('play').onclick=play;vis();run();
+</script></body></html>
