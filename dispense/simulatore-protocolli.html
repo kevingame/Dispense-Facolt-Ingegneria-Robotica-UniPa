@@ -263,8 +263,6 @@ function http(){
  const iv=[...document.querySelectorAll('.is2')];
  const imgs=[...document.querySelectorAll('.iw')].map((e,i)=>{const u=parseUrl(iv[i]&&iv[i].value,`/pics/img${i+1}.jpg`,bsrv());return{p:u.p,h:u.h,s:parseSz(e.value),ct:'image/jpeg'}});
  for(let i=0;i<imgs.length;){let j=i+1;
-  /* MODIFICA: Accorpa in pipelining solo le immagini successive che hanno lo stesso server e che NON differiscono
-     in dimensione rispetto a quelle già elaborate/in cache, altrimenti interrompe il gruppo. */
   if(P.pers&&P.tm=='s'&&!isHit(imgs[i])){
     const u=new Map([[key(imgs[i]), imgs[i].s]]);
     while(j<imgs.length&&imgs[j].h==imgs[i].h&&!isHit(imgs[j])&&
