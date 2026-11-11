@@ -300,9 +300,9 @@ const ipOf=n=>{const r=[...document.querySelectorAll('.dip')].find(e=>e.dataset.
  const al=[...document.querySelectorAll('.dal')].find(e=>e.value.trim()==n);
  if(al){const q=[...document.querySelectorAll('.dip')].find(e=>e.dataset.h==al.dataset.h);if(q&&q.value.trim())return q.value.trim()}
  if(n==msnV()&&sv('msip'))return sv('msip');return autoIp(n)};
-const authRR=(n,qt)=>{if(qt=='MX')return[[n,msnV(),'MX']];const c=aliasOf(n);return c?[[n,c,'CNAME']]:[[n,ipOf(n),'A']]};
+const authRR=(n,qt)=>{if(qt=='MX')return[[n,msnV(),'MX'],[msnV(),ipOf(msnV()),'A']];const c=aliasOf(n);return c?[[n,c,'CNAME']]:[[n,ipOf(n),'A']]};
 const chainRR=(n,qt)=>{let r=authRR(n,qt);const l=r[r.length-1];return l[2]=='CNAME'?r.concat(chainRR(l[1],'A')):r};
-const rrLab=r=>`DNS-R ${r.map(x=>x[2]).join('+')} ${r[r.length-1][1]}`;
+const rrLab=r=>r[0][2]=='MX'?`DNS-R MX+A ${r[0][1]}`:`DNS-R ${r.map(x=>x[2]).join('+')} ${r[r.length-1][1]}`;
 const msgD=(a,b,txt,t,rows,az)=>{const t2=msg(a,b,txt,t,70);DCUR.items.push({n:M,rows,az});return t2};
 function lres(name,qt,t){
  const loc=lane('DNS locale'),dom=domOf(name),tld=tldOf(name),key=qt+':'+name,Q=[[name,'/',qt]],x=`DNS-Q ${name} ${qt}`,what=qt=='MX'?'il mail server':"l'IP";
@@ -329,9 +329,9 @@ function lres(name,qt,t){
  }
  const l=rows[rows.length-1];
  if(l[2]=='CNAME'){const r2=lres(l[1],'A',t);t=r2.t;rows=rows.concat(r2.rows)}
- DC.rr.set(key,rows);return{t,rows}}
+ DC.rr.set(key,rows);if(qt=='MX')DC.rr.set('A:'+msnV(),[rows[1]]);return{t,rows}}
 function resolve(req,name,qt,t){
- const k=req+'|'+qt+'|'+name;if(HK.has(k))return t;HK.add(k);
+ const k=req+'|'+qt+'|'+name;if(HK.has(k))return t;HK.add(k);if(qt=='MX')HK.add(req+'|A|'+msnV());
  const loc=lane('DNS locale'),what=qt=='MX'?'il mail server di':"l'IP di";
  DCUR={title:`${L[req]} risolve ${qt=='MX'?'MX di ':''}${name}`,items:[]};DT.push(DCUR);
  t=msgD(req,loc,`DNS-Q ${name} ${qt}`,t,[[name,'/',qt]],`Richiesta (${L[req]} chiede ${what} ${name} al DNS locale)`);
