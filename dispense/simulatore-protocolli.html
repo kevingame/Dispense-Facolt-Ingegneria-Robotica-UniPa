@@ -61,7 +61,8 @@ table{border-collapse:collapse;font-size:12.5px;margin:6px 0}td,th{border:1px so
 
 <label data-g="http">Modello trasporto<select id="tm"><option value="s">Semplificato: HS 2 vie</option><option value="t">TCP completo</option></select></label>
 <label data-g="http">Connessione<select id="pers"><option value="1">Persistente</option><option value="0">Non persistente</option></select></label>
-<label data-g="http">Cookie (vuoto = nessuno)<input id="ck" value="XYZ"></label>
+<label data-g="http">Cookie<select id="ck"><option value="">Nessuno</option><option value="a" selected>Automatico (numero per server)</option><option value="m">Manuale per ogni server</option></select></label>
+<div id="ckw" style="display:contents" hidden></div>
 <label data-g="http" class="ck"><input id="px" type="checkbox" checked>Proxy (web cache)</label>
 <label data-g="http" class="ck"><input id="hit" type="checkbox">Cache HIT sul proxy</label>
 <label data-g="http" class="ck"><input id="vld" type="checkbox">HIT con validazione</label>
@@ -208,6 +209,15 @@ function gs(){L=['Mittente','Destinatario'];arq(0,1,P.ds,0,P.p,'dati')}
 const CT={html:'text/html',htm:'text/html',css:'text/css',js:'application/javascript',json:'application/json',txt:'text/plain',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp',svg:'image/svg+xml',ico:'image/x-icon',pdf:'application/pdf',mp4:'video/mp4',mp3:'audio/mpeg'};
 const ctOf=(p,d)=>{const m=String(p).split(/[?#]/)[0].match(/\.([a-z0-9]+)$/i);return m&&CT[m[1].toLowerCase()]||d};
 const CN=()=>P.pers?'open':'close';
+/* cookie: numero a 4 cifre, diverso per ogni server (automatico) oppure scelto a mano */
+const autoCk=h=>{let a=5381;for(const c of h)a=(a*33^c.charCodeAt(0))>>>0;return String(1000+a%9000)};
+const CK=h=>{if(P.ck=='m'){const e=[...document.querySelectorAll('.ckv')].find(x=>x.dataset.h==h);if(e&&e.value.trim())return e.value.trim()}return autoCk(h)};
+const ckHosts=()=>{const out=[];const add=h=>{if(h&&!out.includes(h))out.push(h)};
+ document.querySelectorAll('.bs').forEach(e=>add(parseUrl(e.value,'/').h));
+ document.querySelectorAll('.is2').forEach(e=>add(parseUrl(e.value,'/',bsrv()).h));return out};
+function ckVis(){$('ckw').hidden=!($('proto').value=='http'&&$('ck').value=='m')}
+function buildCk(){const box=$('ckw'),old={};box.querySelectorAll('.ckv').forEach(e=>old[e.dataset.h]=e.value);box.innerHTML='';
+ ckHosts().forEach(h=>{const l=document.createElement('label');l.innerHTML=`Cookie di ${esc(h)}<input class="ckv" data-h="${esc(h)}" value="${esc(old[h]??autoCk(h))}">`;box.appendChild(l)});ckVis()}
 
 function http(){
  L=[sv('cli')||'Client'];if(P.px)lane('Proxy');const conn={},cn='Connection: '+CN();
@@ -216,16 +226,16 @@ function http(){
   const ck=jar[o.h],sc=!ck&&P.ck;
   t=msg(a,b,`GET${cond?' modified':''} ${o.p}${ck?' Cookie:'+ck:''}`,t,300);
   if(up)t=up(t);
-  if(P.tm!='s')msg(b,a,`HTTP/1.1 200 OK (${o.ct}, ${o.s} B)${sc?' Set-Cookie:'+P.ck:''}`,t,250);
-  if(!nt)TX+=`── ${L[a]} → ${L[b]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}\n${cn}${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\n${cn}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n\n`;
-  if(sc)jar[o.h]=P.ck;
+  if(P.tm!='s')msg(b,a,`HTTP/1.1 200 OK (${o.ct}, ${o.s} B)${sc?' Set-Cookie:'+CK(o.h):''}`,t,250);
+  if(!nt)TX+=`── ${L[a]} → ${L[b]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}\n${cn}${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\n${cn}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+CK(o.h):''}\n\n[DATI: ${o.s} byte]\n\n`;
+  if(sc)jar[o.h]=CK(o.h);
   return (P.tm=='s'?blk(b,a,o.s,t):arq(b,a,o.s,t+ttx(250),'tcp',o.p))-P.d};
  const hsk=(a,b,t)=>{const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}return t};
  const val=(a,b,o,t)=>{t=hsk(a,b,t);t=msg(a,b,`GET modified ${o.p}`,t,300);return msg(b,a,'304 Not Modified',t,250)};
  const gl=g=>`GET ${g.map(o=>o.p.split('/').pop()).join(' + ')}`;
  const sec=(a,b,m)=>`── ${a} → ${b} ──\n${m.join('\n')}\n`;
  const rq=(o,ck,x)=>`GET ${o.p} HTTP/1.1\nHost: ${o.h}\n${cn}${ck?'\nCookie: '+ck:''}${x||''}\n`;
- const rs=(o,sc)=>`HTTP/1.1 200 OK\n${cn}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n`;
+ const rs=(o,sc)=>`HTTP/1.1 200 OK\n${cn}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+CK(o.h):''}\n\n[DATI: ${o.s} byte]\n`;
  const q1=o=>rq(o,jar[o.h]);
  const txPP=(s,g)=>{TX+=sec(L[0],'Proxy (pipelining)',g.map(q1))+sec('Proxy',L[s],g.flatMap(o=>[q1(o),rs(o,0)]))+sec('Proxy',L[0],g.map(o=>rs(o,0)))};
  const txP=(a,b,g)=>{TX+=`── ${L[a]} → ${L[b]} (pipelining) ──\n`+g.map(q1).join('\n')+'\n'+g.map(o=>rs(o,0)).join('\n')+'\n'};
@@ -402,5 +412,5 @@ function run(){
  LS=pset(sv('loss'));AS=pset(sv('lossA'));$('dnst').innerHTML='';LIM=1e9;
  ({udp,tcp:tcpP,gbn:gs,sr:gs,http,dns,smtp,pop3}[P.p])();
  if(raf){cancelAnimationFrame(raf);raf=0;$('play').textContent='▶ Anima'}draw();drawNet();report();$('tx').textContent=TX;$('tx').hidden=$('th').hidden=!TX}
-$('nb').oninput=buildBase;buildBase();$('ni').oninput=buildImgs;buildImgs();$('proto').onchange=()=>{vis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('go').onclick=run;$('play').onclick=play;vis();run();
+$('nb').oninput=()=>{buildBase();buildCk()};buildBase();$('ni').oninput=()=>{buildImgs();buildCk()};buildImgs();$('basew').addEventListener('input',buildCk);$('imgw').addEventListener('input',buildCk);$('ck').onchange=()=>{ckVis();run()};buildCk();$('proto').onchange=()=>{vis();ckVis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('go').onclick=run;$('play').onclick=play;vis();run();
 </script></body></html>
