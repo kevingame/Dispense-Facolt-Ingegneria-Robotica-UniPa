@@ -75,6 +75,8 @@ table{border-collapse:collapse;font-size:12.5px;margin:6px 0}td,th{border:1px so
 <label data-g="mail" class="ck"><input id="mail_simp" type="checkbox">Trasporto dati sempl. (senza ACK)</label>
 <label data-g="mail">Mail server destinatario: nome (per DNS)<input id="msn" value="mail.b.it"></label>
 <label data-g="mail">Mail server destinatario: IP<input id="msip" value="192.0.2.25"></label>
+<label data-g="mails">Mail server mittente: nome (per DNS)<input id="msm" value="mail.a.it"></label>
+<label data-g="mails">Mail server mittente: IP<input id="msmip" value="192.0.2.10"></label>
 <label data-g="mailx" class="ck"><input id="mdns" type="checkbox">Includi risoluzione DNS (MX + A)</label>
 </div>
 <button id="go">Simula</button><button id="play" style="background:var(--ack)">▶ Anima</button>
@@ -95,7 +97,7 @@ const add=(t1,t2,a,b,l,k,x,v,tm,tq,tf,te,bd)=>{maxT=Math.max(maxT,t2);if(E.lengt
 const note=(t,a,l)=>{if(E.length<3000&&LIM>0)E.push({t1:t,t2:t,a,b:a,l,k:'note'})};
 const rtr=(ts,x,key,keep)=>{const tm=ts+x+P.d/2,tq=Math.max(tm,RF[key]||0);if(keep)RF[key]=tq+x;return{tm,tq,ta:tq+x+P.d/2}};
 const short=l=>{l=l.replace(/^#\d+\s*/,'');if(/^GET modified/.test(l))return'GET mod';if(/^GET/.test(l))return'GET';const m=l.match(/^HTTP\/1\.1 (\d+ \w+)/);if(m)return m[1];return l.length>16?l.slice(0,15)+'…':l};
-const G={udp:['data','rt'],tcp:['data','tcp','rt'],gbn:['data','w','rt'],sr:['data','w','rt'],http:['http','tcp','rt'],dns:['dns','rt'],smtp:['data','tcp','mail','mailx','rt'],pop3:['data','tcp','mail','mailx','rt']};
+const G={udp:['data','rt'],tcp:['data','tcp','rt'],gbn:['data','w','rt'],sr:['data','w','rt'],http:['http','tcp','rt'],dns:['dns','rt'],smtp:['data','tcp','mail','mails','mailx','rt'],pop3:['data','tcp','mail','mailx','rt']};
 function parseSz(s){s=String(s).trim().toLowerCase().replace(/\s+/g,'');const m=s.match(/^([\d.,]+)(b|kb|k|mb|m|gb|g)?$/);if(!m)return 0;let n=m[1];
  if(n.includes('.')&&n.includes(','))n=n.replace(/\./g,'').replace(',','.');
  else if(/^\d{1,3}(\.\d{3})+$/.test(n)||/^\d{1,3}(,\d{3})+$/.test(n))n=n.replace(/[.,]/g,'');
@@ -111,7 +113,7 @@ function buildImgs(){const n=Math.min(30,Math.max(0,nv('ni',0))),box=$('imgw'),o
  box.innerHTML='';for(let i=0;i<n;i++){const sz=os[i]?os[i].value:ps,sr=ov[i]?ov[i].value:pv;
   const l=document.createElement('label');l.innerHTML=`Img ${i+1}: dimensione (es. 4Kb, 2Mb, 4096)<input class="iw" value="${esc(sz)}">`;box.appendChild(l);
   const m=document.createElement('label');m.innerHTML=`Img ${i+1}: server (opz. con percorso)<input class="is2" value="${esc(sr)}" placeholder="www.ebay.com/pics/img${i+1}.jpg">`;box.appendChild(m)}}
-function vis(){const p=$('proto').value;let g=G[p];if(p=='dns')g=['dns','rt','tcp'].concat($('dapp').value=='http'?['http']:['data','mail']);document.querySelectorAll('[data-g]').forEach(e=>e.hidden=!g.includes(e.dataset.g));ckVis();dnsVis()}
+function vis(){const p=$('proto').value;let g=G[p];if(p=='dns')g=['dns','rt','tcp'].concat($('dapp').value=='http'?['http']:['data','mail'].concat($('dapp').value=='smtp'?['mails']:[]));document.querySelectorAll('[data-g]').forEach(e=>e.hidden=!g.includes(e.dataset.g));ckVis();dnsVis()}
 
 function params(){
  const p=$('proto').value,ovh=$('ovh').checked,h=nv('hdr',NaN),hdr=ovh?0:(isNaN(h)?(p=='udp'?28:40):h);
@@ -294,12 +296,12 @@ function http(){
 let DC,HK,DT,DCUR;
 const autoIp=h=>{let a=5381,b=7;for(const c of h){a=(a*33^c.charCodeAt(0))>>>0;b=(b*131+c.charCodeAt(0))>>>0}return`${20+a%200}.${b%250}.${(a>>>8)%250}.${1+(b>>>8)%253}`};
 const domOf=n=>n.split('.').slice(-2).join('.'),tldOf=n=>n.split('.').pop();
-const msnV=()=>sv('msn')||'mail.b.it';
+const msnV=()=>sv('msn')||'mail.b.it',msmV=()=>sv('msm')||'mail.a.it';
 const aliasOf=n=>{const e=[...document.querySelectorAll('.dal')].find(x=>x.dataset.h==n);return e?e.value.trim():''};
 const ipOf=n=>{const r=[...document.querySelectorAll('.dip')].find(e=>e.dataset.h==n);if(r&&r.value.trim())return r.value.trim();
  const al=[...document.querySelectorAll('.dal')].find(e=>e.value.trim()==n);
  if(al){const q=[...document.querySelectorAll('.dip')].find(e=>e.dataset.h==al.dataset.h);if(q&&q.value.trim())return q.value.trim()}
- if(n==msnV()&&sv('msip'))return sv('msip');return autoIp(n)};
+ if(n==msnV()&&sv('msip'))return sv('msip');if(n==msmV()&&sv('msmip'))return sv('msmip');return autoIp(n)};
 const authRR=(n,qt)=>{if(qt=='MX')return[[n,msnV(),'MX'],[msnV(),ipOf(msnV()),'A']];const c=aliasOf(n);return c?[[n,c,'CNAME']]:[[n,ipOf(n),'A']]};
 const chainRR=(n,qt)=>{let r=authRR(n,qt);const l=r[r.length-1];return l[2]=='CNAME'?r.concat(chainRR(l[1],'A')):r};
 const rrLab=r=>r[0][2]=='MX'?`DNS-R MX+A ${r[0][1]}`:`DNS-R ${r.map(x=>x[2]).join('+')} ${r[r.length-1][1]}`;
@@ -341,7 +343,7 @@ function renderDT(){if(!DT.length){$('dnst').innerHTML='';return}
  $('dnst').innerHTML='<h2>Tabelle DNS (name, value, type, TTL)</h2>'+DT.map(d=>`<h3 style="font-size:13px;margin:10px 0 2px">${esc(d.title)}</h3><table><tr><th>#</th><th>Name</th><th>Value</th><th>Type</th><th>TTL</th><th>Azione</th></tr>`+d.items.map(it=>{const c=k=>it.rows.map(x=>esc(x[k])).join('<br>');
   return`<tr><td>${it.n}</td><td>${c(0)}</td><td>${c(1)}</td><td>${c(2)}</td><td>${it.rows.map(()=>'X').join('<br>')}</td><td><b>${esc(it.az.split(' ')[0])}</b> ${esc(it.az.slice(it.az.indexOf(' ')+1))}</td></tr>`}).join('')+'</table>').join('')}
 function smtp(){
- L=P.dns?['User Agent (mittente)','Mail server mittente']:['User Agent (mittente)','Mail server mittente','Mail server destinatario'];const f=sv('mf'),to=sv('mt');
+ L=P.dns?['User Agent (mittente)']:['User Agent (mittente)','Mail server mittente','Mail server destinatario'];const f=sv('mf'),to=sv('mt');
  const hop=(a,b,t)=>{t=hs(a,b,t,1);
   t=seq(a,b,t,[[0,'220 SMTP ready'],[1,`HELO ${L[a].split(' ')[0]}`],[0,'250 Hello'],[1,`MAIL FROM:<${f}>`],[0,'250 OK'],[1,`RCPT TO:<${to}>`],[0,'250 OK'],[1,'DATA'],[0,'354 Start mail input']]);
   if(P.mail_simp){ 
@@ -351,9 +353,11 @@ function smtp(){
       t=arq(a,b,P.ds,t,'tcp','mail'); 
   }
   return seq(a,b,t,[[1,'. (fine messaggio)'],[0,'250 Queued'],[1,'QUIT'],[0,'221 Bye']])};
- let t=hop(0,1,0);
- if(P.dns){t=resolve(1,to.split('@')[1]||'b.it','MX',t);t=resolve(1,msnV(),'A',t)}
- hop(1,lane('Mail server destinatario'),t)
+ let t=0,m=1;
+ if(P.dns){t=resolve(0,msmV(),'A',t);m=lane('Mail server mittente')}
+ t=hop(0,m,t);
+ if(P.dns)t=resolve(m,to.split('@')[1]||'b.it','MX',t);
+ hop(m,lane('Mail server destinatario'),t)
 }
 
 function pop3(){
