@@ -6,7 +6,9 @@
 :root{--bg:#fff;--fg:#1d2330;--mut:#667;--card:#f4f6fa;--bd:#d5dae3;--data:#1e66d0;--ack:#18854a;--ctl:#7a5cc4;--bad:#d03030;--tm:#c27a00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171d;--fg:#e6e9ef;--mut:#99a;--card:#1e232c;--bd:#343b48;--data:#5b9bff;--ack:#4cc283;--ctl:#a58cf0;--bad:#ff6b6b;--tm:#f0b04a}}
 :root[data-theme="dark"]{--bg:#14171d;--fg:#e6e9ef;--mut:#99a;--card:#1e232c;--bd:#343b48;--data:#5b9bff;--ack:#4cc283;--ctl:#a58cf0;--bad:#ff6b6b;--tm:#f0b04a}
-body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,sans-serif;padding:12px}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,sans-serif;padding:12px 12px 40px}
+.ac button{background:var(--ctl);padding:9px 12px;margin-left:6px}.ac b{margin-left:8px;font-size:13px}
+#sig{position:fixed;right:10px;bottom:calc(6px + env(safe-area-inset-bottom,0px));font-size:11px;color:var(--mut);background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:2px 8px;opacity:.9;pointer-events:none;z-index:50}
 h1{font-size:20px;margin:0 0 10px}h2{font-size:14px;margin:14px 0 6px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
 [hidden]{display:none!important}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px}
@@ -80,6 +82,7 @@ table{border-collapse:collapse;font-size:12.5px;margin:6px 0}td,th{border:1px so
 <label data-g="mailx" class="ck"><input id="mdns" type="checkbox">Includi risoluzione DNS (MX + A)</label>
 </div>
 <button id="go">Simula</button><button id="play" style="background:var(--ack)">▶ Anima</button>
+<span id="actl" class="ac" hidden><button id="pp">⏸ Pausa</button><button id="slow">⏪ Rallenta</button><button id="fast">⏩ Velocizza</button><button id="rst">↺ Default</button><b id="spl">1×</b></span>
 <p class="lg"><span><i style="background:var(--data)"></i>dati</span><span><i style="background:var(--ack)"></i>ACK</span><span><i style="background:var(--ctl)"></i>controllo</span><span><i style="background:var(--bad)"></i>perso ✗</span><span style="color:var(--tm)">⏱ timer</span></p>
 <h2>Rete</h2><div class="sc" id="net" style="max-height:none"></div>
 <div id="dnst"></div>
@@ -383,23 +386,30 @@ function drawNet(){
   s+=`<text x="${gx(i)}" y="${y0+9}" text-anchor="middle" font-size="28" style="paint-order:stroke;stroke:var(--bg);stroke-width:6px">${ic}</text><text x="${gx(i)}" y="${y0+36}" text-anchor="middle" class="ln">${esc(l)}</text>`});
  $('net').innerHTML=s+'<g id="dots"></g></svg>'}
 
-function play(){
- if(raf){cancelAnimationFrame(raf);raf=0;$('play').textContent='▶ Anima';return}
- const cur=$('cur'),dots=$('dots'),y0=64,H=ANI.H-40,dur=Math.max(9000,(H-y0)*45);let t0=null;$('play').textContent='⏸ Stop';
- const step=ts=>{if(t0==null)t0=ts;const p=(ts-t0)/dur,y=y0+p*(H-y0);
-  cur.setAttribute('y1',y);cur.setAttribute('y2',y);$('dia').scrollTop=Math.max(0,y-180);let g='';
-  ANI.forEach(e=>{if(y<e.ya||y>e.yb)return;let u;
-   if(e.v){
-    if(y<=e.yf)u=.5*(y-e.ya)/Math.max(1e-6,e.yf-e.ya);
-    else if(e.x)return;
-    else if(y<=e.yq)u=.5;
-    else u=Math.min(1,.5+.5*(y-e.yq)/Math.max(1e-6,e.ye-e.yq))}
-   else{u=e.yb>e.ya?(y-e.ya)/(e.yb-e.ya):.5;if(e.x&&u>.55)return}
-   const nd=NP[Math.min(e.a,e.b)+'|'+Math.max(e.a,e.b)];if(!nd)return;if(e.a>e.b)u=1-u;
-   const cx=nd.xa+(nd.xb-nd.xa)*u,cy=NY-4*nd.h*u*(1-u);
-   g+=`<circle cx="${cx}" cy="${cy}" r="5" class="dot ${e.k}${e.x?' lost':''}"/><text x="${cx}" y="${cy-14}" text-anchor="middle" class="dl d-${e.k}">${esc(e.s)}</text>`});
-  dots.innerHTML=g;if(p<1)raf=requestAnimationFrame(step);else{raf=0;$('play').textContent='▶ Anima'}};
- raf=requestAnimationFrame(step)}
+const SPS=[.25,.5,1,2,4,8];let AN={on:false,paused:false,p:0,i:2,last:null};
+function animUI(){$('actl').hidden=!AN.on;$('pp').textContent=AN.paused?'▶ Riprendi':'⏸ Pausa';$('spl').textContent=SPS[AN.i]+'×';$('play').textContent=AN.on?'⏹ Stop':'▶ Anima';$('slow').disabled=AN.i==0;$('fast').disabled=AN.i==SPS.length-1}
+function stopAnim(){if(raf){cancelAnimationFrame(raf);raf=0}AN.on=false;AN.paused=false;AN.p=0;AN.last=null;AN.i=2;const d=$('dots');if(d)d.innerHTML='';animUI()}
+function frame(p){const cur=$('cur'),dots=$('dots');if(!cur||!dots)return;const y0=64,H=ANI.H-40,y=y0+p*(H-y0);
+ cur.setAttribute('y1',y);cur.setAttribute('y2',y);$('dia').scrollTop=Math.max(0,y-180);let g='';
+ ANI.forEach(e=>{if(y<e.ya||y>e.yb)return;let u;
+  if(e.v){
+   if(y<=e.yf)u=.5*(y-e.ya)/Math.max(1e-6,e.yf-e.ya);
+   else if(e.x)return;
+   else if(y<=e.yq)u=.5;
+   else u=Math.min(1,.5+.5*(y-e.yq)/Math.max(1e-6,e.ye-e.yq))}
+  else{u=e.yb>e.ya?(y-e.ya)/(e.yb-e.ya):.5;if(e.x&&u>.55)return}
+  const nd=NP[Math.min(e.a,e.b)+'|'+Math.max(e.a,e.b)];if(!nd)return;if(e.a>e.b)u=1-u;
+  const cx=nd.xa+(nd.xb-nd.xa)*u,cy=NY-4*nd.h*u*(1-u);
+  g+=`<circle cx="${cx}" cy="${cy}" r="5" class="dot ${e.k}${e.x?' lost':''}"/><text x="${cx}" y="${cy-14}" text-anchor="middle" class="dl d-${e.k}">${esc(e.s)}</text>`});
+ dots.innerHTML=g}
+function loop(ts){if(!AN.on){raf=0;return}if(AN.last==null)AN.last=ts;const dt=Math.min(ts-AN.last,100);AN.last=ts;
+ if(!AN.paused){const dur=Math.max(9000,(ANI.H-40-64)*45);AN.p=Math.min(1,AN.p+dt*SPS[AN.i]/dur);frame(AN.p);if(AN.p>=1){stopAnim();return}}
+ raf=requestAnimationFrame(loop)}
+function play(){if(AN.on){stopAnim();return}AN.on=true;AN.paused=false;AN.p=0;AN.last=null;animUI();raf=requestAnimationFrame(loop)}
+$('pp').onclick=()=>{if(!AN.on)return;AN.paused=!AN.paused;AN.last=null;animUI()};
+$('slow').onclick=()=>{if(AN.i>0)AN.i--;animUI()};
+$('fast').onclick=()=>{if(AN.i<SPS.length-1)AN.i++;animUI()};
+$('rst').onclick=()=>{AN.i=2;animUI()};
 
 function draw(){
  const n=L.length,wn=E.some(e=>e.k=='win'),mg=wn?450:90,rm=wn?210:90;draw.st={};ANI=[];const W=Math.max(520,n*230)+mg+rm-180,X=i=>Math.round(n==1?W/2:mg+i*(W-mg-rm)/(n-1)),r=t=>Math.round(t*1e4)/1e4;
@@ -454,6 +464,6 @@ function run(){
  params();E=[];L=[];S={tr:[],sent:0,retx:0,wire:0,pay:0};M=0;T=0;used=new Set();maxT=0;omit=0;jar={};TX='';RF={};
  LS=pset(sv('loss'));AS=pset(sv('lossA'));$('dnst').innerHTML='';LIM=1e9;DC={rr:new Map(),tld:new Set(),aut:new Set()};HK=new Set();DT=[];DCUR=null;
  ({udp,tcp:tcpP,gbn:gs,sr:gs,http,smtp,pop3}[P.app])();renderDT();
- if(raf){cancelAnimationFrame(raf);raf=0;$('play').textContent='▶ Anima'}draw();drawNet();report();$('tx').textContent=TX;$('tx').hidden=$('th').hidden=!TX}
+ stopAnim();draw();drawNet();report();$('tx').textContent=TX;$('tx').hidden=$('th').hidden=!TX}
 $('nb').oninput=()=>{buildBase();buildCk()};buildBase();$('ni').oninput=()=>{buildImgs();buildCk()};buildImgs();$('basew').addEventListener('input',buildCk);$('imgw').addEventListener('input',buildCk);$('ck').onchange=()=>{ckVis();run()};buildCk();$('proto').onchange=()=>{vis();ckVis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('dapp').onchange=()=>{vis();run()};$('go').onclick=run;$('play').onclick=play;vis();run();
-</script></body></html>
+</script><div id="sig">© Kevin Petrone 0774409</div></body></html>
