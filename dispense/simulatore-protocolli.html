@@ -204,73 +204,69 @@ function tcpP(){
 
 function gs(){L=['Mittente','Destinatario'];arq(0,1,P.ds,0,P.p,'dati')}
 
+/* Content-Type dall'estensione + Connection open/close */
+const CT={html:'text/html',htm:'text/html',css:'text/css',js:'application/javascript',json:'application/json',txt:'text/plain',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp',svg:'image/svg+xml',ico:'image/x-icon',pdf:'application/pdf',mp4:'video/mp4',mp3:'audio/mpeg'};
+const ctOf=(p,d)=>{const m=String(p).split(/[?#]/)[0].match(/\.([a-z0-9]+)$/i);return m&&CT[m[1].toLowerCase()]||d};
+const CN=()=>P.pers?'open':'close';
+
 function http(){
- L=[sv('cli')||'Client'];if(P.px)lane('Proxy');const conn={};
- const fetch=(a,b,o,t,up,nt)=>{
+ L=[sv('cli')||'Client'];if(P.px)lane('Proxy');const conn={},cn='Connection: '+CN();
+ const fetch=(a,b,o,t,up,nt,cond)=>{
   const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}
   const ck=jar[o.h],sc=!ck&&P.ck;
-  t=msg(a,b,`GET ${o.p}${ck?' Cookie:'+ck:''}`,t,300);
+  t=msg(a,b,`GET${cond?' modified':''} ${o.p}${ck?' Cookie:'+ck:''}`,t,300);
   if(up)t=up(t);
   if(P.tm!='s')msg(b,a,`HTTP/1.1 200 OK (${o.ct}, ${o.s} B)${sc?' Set-Cookie:'+P.ck:''}`,t,250);
-  if(!nt)TX+=`── ${L[a]} → ${L[b]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: open${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\nConnection: open\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n\n`;
+  if(!nt)TX+=`── ${L[a]} → ${L[b]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}\n${cn}${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\n${cn}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n\n`;
   if(sc)jar[o.h]=P.ck;
   return (P.tm=='s'?blk(b,a,o.s,t):arq(b,a,o.s,t+ttx(250),'tcp',o.p))-P.d};
- const val=(a,b,o,t)=>{const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}t=msg(a,b,`GET modified ${o.p}`,t,300);return msg(b,a,'304 Not Modified',t,250)};
  const hsk=(a,b,t)=>{const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}return t};
- const rel=(o,t)=>{const s=lane(o.h),ck=jar[o.h],sc=!ck&&P.ck,g=`GET ${o.p}${ck?' Cookie:'+ck:''}`;
-  t=hsk(0,1,t);t=msg(0,1,g,t,300);note(t,1,'cache MISS');
-  t=hsk(1,s,t);const tg=msg(1,s,g,t,300),hd=`HTTP/1.1 200 OK (${o.ct}, ${o.s} B)${sc?' Set-Cookie:'+P.ck:''}`;
-  const th=msg(s,1,hd,tg,250),arr=[];blk(s,1,o.s,tg+ttx(250),null,arr);
-  msg(1,0,hd,th,250);
-  TX+=`── ${L[0]} → Proxy → ${L[s]} ──\nGET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: open${ck?'\nCookie: '+ck:''}\n\nHTTP/1.1 200 OK\nConnection: open\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n\n`;
-  if(sc)jar[o.h]=P.ck;
-  return blk(1,0,o.s,th+ttx(250),arr)-P.d};
+ const val=(a,b,o,t)=>{t=hsk(a,b,t);t=msg(a,b,`GET modified ${o.p}`,t,300);return msg(b,a,'304 Not Modified',t,250)};
  const gl=g=>`GET ${g.map(o=>o.p.split('/').pop()).join(' + ')}`;
  const sec=(a,b,m)=>`── ${a} → ${b} ──\n${m.join('\n')}\n`;
- const rq=(o,ck,x)=>`GET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: open${ck?'\nCookie: '+ck:''}${x||''}\n`;
- const rs=(o,sc)=>`HTTP/1.1 200 OK\nConnection: open\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n`;
- const txPP=(s,g)=>{const q=o=>{const ck=jar[o.h];return `GET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: open${ck?'\nCookie: '+ck:''}\n`};
-  TX+=sec(L[0],'Proxy (pipelining)',g.map(q))+sec('Proxy',L[s],g.flatMap(o=>[q(o),`HTTP/1.1 200 OK\nConnection: open\nContent-Type: ${o.ct}\nContent-Length: ${o.s}\n\n[DATI: ${o.s} byte]\n`]))+sec('Proxy',L[0],g.map(o=>rs(o,0)))};
- const txP=(a,b,g)=>{TX+=`── ${L[a]} → ${L[b]} (pipelining) ──\n`+g.map(o=>{const ck=jar[o.h];return `GET ${o.p} HTTP/1.1\nHost: ${o.h}\nConnection: open${ck?'\nCookie: '+ck:''}\n`}).join('\n')+'\n'+g.map(o=>`HTTP/1.1 200 OK\nConnection: open\nContent-Type: ${o.ct}\nContent-Length: ${o.s}\n\n[DATI: ${o.s} byte]\n`).join('\n')+'\n'};
+ const rq=(o,ck,x)=>`GET ${o.p} HTTP/1.1\nHost: ${o.h}\n${cn}${ck?'\nCookie: '+ck:''}${x||''}\n`;
+ const rs=(o,sc)=>`HTTP/1.1 200 OK\n${cn}\nContent-Type: ${o.ct}\nContent-Length: ${o.s}${sc?'\nSet-Cookie: '+P.ck:''}\n\n[DATI: ${o.s} byte]\n`;
+ const q1=o=>rq(o,jar[o.h]);
+ const txPP=(s,g)=>{TX+=sec(L[0],'Proxy (pipelining)',g.map(q1))+sec('Proxy',L[s],g.flatMap(o=>[q1(o),rs(o,0)]))+sec('Proxy',L[0],g.map(o=>rs(o,0)))};
+ const txP=(a,b,g)=>{TX+=`── ${L[a]} → ${L[b]} (pipelining) ──\n`+g.map(q1).join('\n')+'\n'+g.map(o=>rs(o,0)).join('\n')+'\n'};
  const nm=o=>'GET '+o.p.split('/').pop();
  const pipeD=(g,t)=>{const s=lane(g[0].h);t=hsk(0,s,t);txP(0,s,g);let st=0,ar=t;
   g.forEach((o,i)=>{const a=i?msg(0,s,nm(o),t,300,st):msg(0,s,nm(o),t,300);
    ar=blk(s,0,o.s,Math.max(a,st))-P.d;st=BEND});
   return ar};
- 
- const PC=new Map(),key=o=>o.h+o.p,isHit=o=>P.px&&(P.hit||PC.get(key(o))===o.s);
- 
+ const PC=new Map(),key=o=>o.h+o.p;
+ // none | miss (URL nuovo) | hit (stessa dim.) | mod (stesso URL, dim. diversa)
+ const st=o=>{if(!P.px)return'none';if(P.hit)return'hit';const c=PC.get(key(o));return c===undefined?'miss':c===o.s?'hit':'mod'};
  const pipeP=(g,t)=>{const s=lane(g[0].h);t=hsk(0,1,t);txPP(s,g);
   const a1=msg(0,1,gl(g),t,300*g.length);note(a1,1,'cache MISS');
-  const dS=hsk(1,s,a1);let st=0;const ap=[];
-  g.forEach((o,i)=>{const aS=i?msg(1,s,nm(o),dS,300,st):msg(1,s,nm(o),dS,300);
-   ap.push(blk(s,1,o.s,Math.max(aS,st))-P.d);st=BEND});
+  const dS=hsk(1,s,a1);let sx=0;const ap=[];
+  g.forEach((o,i)=>{const aS=i?msg(1,s,nm(o),dS,300,sx):msg(1,s,nm(o),dS,300);
+   ap.push(blk(s,1,o.s,Math.max(aS,sx))-P.d);sx=BEND});
   let cs=0,last=t;g.forEach((o,i)=>{last=blk(1,0,o.s,Math.max(ap[i],cs))-P.d;cs=BEND});
-  g.forEach(o=>PC.set(key(o), o.s));
+  g.forEach(o=>PC.set(key(o),o.s));
   return last};
  const get=(o,t)=>{const s=lane(o.h);if(!P.px)return fetch(0,s,o,t);
-  const ck=jar[o.h],sc=!ck&&P.ck,C=L[0],S=L[s],hit=isHit(o),vl=P.hit?P.val:1;
-  const r=fetch(0,1,o,t,t1=>{note(t1,1,hit?(vl?'cache HIT (validazione)':'cache HIT'):'cache MISS');return hit?(vl?val(1,s,o,t1):t1):fetch(1,s,o,t1,null,1)},1);
-  if(!hit)PC.set(key(o), o.s);
+  const ck=jar[o.h],sc=!ck&&P.ck,C=L[0],S=L[s],q=st(o),hit=q=='hit',mod=q=='mod',vl=P.hit?P.val:1;
+  const r=fetch(0,1,o,t,t1=>{
+   note(t1,1,hit?(vl?'cache HIT (validazione)':'cache HIT'):mod?'cache STALE (file modificato)':'cache MISS');
+   if(hit)return vl?val(1,s,o,t1):t1;
+   return fetch(1,s,o,t1,null,1,mod)},1);
+  PC.set(key(o),o.s);
+  const ims='\nIf-Modified-Since: XYZ';
   TX+=sec(C,'Proxy',[rq(o,ck)])
-   +(hit?(vl?sec('Proxy',S,[rq(o,ck,'\nIf-modified-since: XYZ')])+sec(S,'Proxy',['HTTP/1.1 304 Not Modified\nConnection: open\n']):'')
-     :sec('Proxy',S,[rq(o,ck),rs(o,sc)]))
+   +(hit?(vl?sec('Proxy',S,[rq(o,ck,ims)])+sec(S,'Proxy',[`HTTP/1.1 304 Not Modified\n${cn}\n`]):'')
+     :sec('Proxy',S,[rq(o,ck,mod?ims:''),rs(o,sc)]))
    +sec('Proxy',C,[rs(o,sc)]);
   return r};
  const bw=[...document.querySelectorAll('.bw')],bs=[...document.querySelectorAll('.bs')];let t=0;
- bw.forEach((e,i)=>{const u=parseUrl(bs[i]&&bs[i].value,i?`/base${i+1}.html`:'/index.html');t=get({p:u.p,h:u.h,s:parseSz(e.value)||12288,ct:'text/html'},t)});
+ bw.forEach((e,i)=>{const u=parseUrl(bs[i]&&bs[i].value,i?`/base${i+1}.html`:'/index.html');t=get({p:u.p,h:u.h,s:parseSz(e.value)||12288,ct:ctOf(u.p,'text/html')},t)});
  const iv=[...document.querySelectorAll('.is2')];
- const imgs=[...document.querySelectorAll('.iw')].map((e,i)=>{const u=parseUrl(iv[i]&&iv[i].value,`/pics/img${i+1}.jpg`,bsrv());return{p:u.p,h:u.h,s:parseSz(e.value),ct:'image/jpeg'}});
+ const imgs=[...document.querySelectorAll('.iw')].map((e,i)=>{const u=parseUrl(iv[i]&&iv[i].value,`/pics/img${i+1}.jpg`,bsrv());return{p:u.p,h:u.h,s:parseSz(e.value),ct:ctOf(u.p,'image/jpeg')}});
  for(let i=0;i<imgs.length;){let j=i+1;
-  if(P.pers&&P.tm=='s'&&!isHit(imgs[i])){
-    const u=new Map([[key(imgs[i]), imgs[i].s]]);
-    while(j<imgs.length&&imgs[j].h==imgs[i].h&&!isHit(imgs[j])&&
-          !(P.px&&u.has(key(imgs[j]))&&u.get(key(imgs[j]))!==imgs[j].s) &&
-          !(P.px&&PC.has(key(imgs[j]))&&PC.get(key(imgs[j]))!==imgs[j].s)){
-      u.set(key(imgs[j]), imgs[j].s);
-      j++
-    }
-  }
+  if(P.px){ // proxy: URL diversi consecutivi e non in cache → pipelining automatico
+   if(st(imgs[i])=='miss'){const u=new Set([key(imgs[i])]);
+    while(j<imgs.length&&imgs[j].h==imgs[i].h&&st(imgs[j])=='miss'&&!u.has(key(imgs[j]))){u.add(key(imgs[j]));j++}}
+  }else if(P.pers&&P.tm=='s'){while(j<imgs.length&&imgs[j].h==imgs[i].h)j++}
   const g=imgs.slice(i,j);t=g.length>1?(P.px?pipeP(g,t):pipeD(g,t)):get(g[0],t);i=j}
 }
 function dns(){
@@ -282,7 +278,7 @@ function dns(){
   st.forEach(([a,b,x])=>t=msg(a,b,x,t,70))}
  t=msg(1,0,`DNS-R ${h} A ${ip}`,t,70);dnsTable(h,ip,tld);
  if($('dh2').checked){const s=lane('Server '+h);t=hs2(0,s,t);t=msg(0,s,'GET /index.html',t,300);t=msg(s,0,'HTTP/1.1 200 OK',t,250);blk(s,0,P.ds,t);
-  TX+=`── Client → ${h} (${ip}) ──\nGET /index.html HTTP/1.1\nHost: ${h}\nConnection: open\n\nHTTP/1.1 200 OK\nConnection: open\nContent-Length: ${P.ds}\n\n[DATI: ${P.ds} byte]\n`}}
+  TX+=`── Client → ${h} (${ip}) ──\nGET /index.html HTTP/1.1\nHost: ${h}\nConnection: ${CN()}\n\nHTTP/1.1 200 OK\nConnection: ${CN()}\nContent-Length: ${P.ds}\n\n[DATI: ${P.ds} byte]\n`}}
 function dnsTable(h,ip,tl){const dom=h.split('.').slice(1).join('.'),it=sv('ipt')||'?',ia=sv('ipa')||'?',tn='tld'+tl,an='dns.'+dom;
  const q=[[[h,'/','A']],"Richiesta (H richiede l'IP di "+h+" al DNS locale)"];
  const R=P.dc?[q,[[[h,ip,'A']],'Risposta (dalla cache del DNS locale)']]:[q,
