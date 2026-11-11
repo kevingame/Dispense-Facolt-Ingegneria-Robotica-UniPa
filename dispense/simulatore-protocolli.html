@@ -66,14 +66,16 @@ table{border-collapse:collapse;font-size:12.5px;margin:6px 0}td,th{border:1px so
 <label data-g="http" class="ck"><input id="px" type="checkbox" checked>Proxy (web cache)</label>
 <label data-g="http" class="ck"><input id="hit" type="checkbox">Cache HIT sul proxy</label>
 <label data-g="http" class="ck"><input id="vld" type="checkbox">HIT con validazione</label>
-<label data-g="dns">Host da risolvere<input id="dh" value="www.ebay.com"></label>
-<label data-g="dns">IP risposta<input id="dip" value="93.184.216.34"></label>
-<label data-g="dns">IP TLD<input id="ipt" value="192.32.1.1"></label><label data-g="dns">IP autoritativo<input id="ipa" value="192.32.4.1"></label><label data-g="dns" class="ck"><input id="dh2" type="checkbox">Dopo il DNS: richiesta HTTP</label>
+<label data-g="dns">Applicazione dopo il DNS<select id="dapp"><option value="http">Web (HTTP)</option><option value="smtp">Posta: invio (SMTP)</option><option value="pop3">Posta: lettura (POP3)</option></select></label>
 <label data-g="dns">Query<select id="drec"><option value="i">Iterativa</option><option value="r">Ricorsiva</option></select></label>
-<label data-g="dns" class="ck"><input id="dc" type="checkbox">Già in cache nel DNS locale</label>
+<label data-g="dns">Cache iniziale DNS locale<select id="dcm"><option value="v">Vuota</option><option value="a">TLD e AUT già noti (iterativa)</option><option value="h">Risposte già in cache (HIT)</option></select></label>
+<div id="dnsw" style="display:contents" hidden></div>
 <label data-g="mail">Mittente / utente<input id="mf" value="alice@a.it"></label>
 <label data-g="mail">Destinatario<input id="mt" value="bob@b.it"></label>
 <label data-g="mail" class="ck"><input id="mail_simp" type="checkbox">Trasporto dati sempl. (senza ACK)</label>
+<label data-g="mail">Mail server destinatario: nome (per DNS)<input id="msn" value="mail.b.it"></label>
+<label data-g="mail">Mail server destinatario: IP<input id="msip" value="192.0.2.25"></label>
+<label data-g="mailx" class="ck"><input id="mdns" type="checkbox">Includi risoluzione DNS (MX + A)</label>
 </div>
 <button id="go">Simula</button><button id="play" style="background:var(--ack)">▶ Anima</button>
 <p class="lg"><span><i style="background:var(--data)"></i>dati</span><span><i style="background:var(--ack)"></i>ACK</span><span><i style="background:var(--ctl)"></i>controllo</span><span><i style="background:var(--bad)"></i>perso ✗</span><span style="color:var(--tm)">⏱ timer</span></p>
@@ -93,7 +95,7 @@ const add=(t1,t2,a,b,l,k,x,v,tm,tq,tf,te,bd)=>{maxT=Math.max(maxT,t2);if(E.lengt
 const note=(t,a,l)=>{if(E.length<3000&&LIM>0)E.push({t1:t,t2:t,a,b:a,l,k:'note'})};
 const rtr=(ts,x,key,keep)=>{const tm=ts+x+P.d/2,tq=Math.max(tm,RF[key]||0);if(keep)RF[key]=tq+x;return{tm,tq,ta:tq+x+P.d/2}};
 const short=l=>{l=l.replace(/^#\d+\s*/,'');if(/^GET modified/.test(l))return'GET mod';if(/^GET/.test(l))return'GET';const m=l.match(/^HTTP\/1\.1 (\d+ \w+)/);if(m)return m[1];return l.length>16?l.slice(0,15)+'…':l};
-const G={udp:['data','rt'],tcp:['data','tcp','rt'],gbn:['data','w','rt'],sr:['data','w','rt'],http:['http','tcp','rt'],dns:['dns','rt'],smtp:['data','tcp','mail','rt'],pop3:['data','tcp','mail','rt']};
+const G={udp:['data','rt'],tcp:['data','tcp','rt'],gbn:['data','w','rt'],sr:['data','w','rt'],http:['http','tcp','rt'],dns:['dns','rt'],smtp:['data','tcp','mail','mailx','rt'],pop3:['data','tcp','mail','mailx','rt']};
 function parseSz(s){s=String(s).trim().toLowerCase().replace(/\s+/g,'');const m=s.match(/^([\d.,]+)(b|kb|k|mb|m|gb|g)?$/);if(!m)return 0;let n=m[1];
  if(n.includes('.')&&n.includes(','))n=n.replace(/\./g,'').replace(',','.');
  else if(/^\d{1,3}(\.\d{3})+$/.test(n)||/^\d{1,3}(,\d{3})+$/.test(n))n=n.replace(/[.,]/g,'');
@@ -109,7 +111,7 @@ function buildImgs(){const n=Math.min(30,Math.max(0,nv('ni',0))),box=$('imgw'),o
  box.innerHTML='';for(let i=0;i<n;i++){const sz=os[i]?os[i].value:ps,sr=ov[i]?ov[i].value:pv;
   const l=document.createElement('label');l.innerHTML=`Img ${i+1}: dimensione (es. 4Kb, 2Mb, 4096)<input class="iw" value="${esc(sz)}">`;box.appendChild(l);
   const m=document.createElement('label');m.innerHTML=`Img ${i+1}: server (opz. con percorso)<input class="is2" value="${esc(sr)}" placeholder="www.ebay.com/pics/img${i+1}.jpg">`;box.appendChild(m)}}
-function vis(){const p=$('proto').value;document.querySelectorAll('[data-g]').forEach(e=>e.hidden=!G[p].includes(e.dataset.g))}
+function vis(){const p=$('proto').value;let g=G[p];if(p=='dns')g=['dns','rt','tcp'].concat($('dapp').value=='http'?['http']:['data','mail']);document.querySelectorAll('[data-g]').forEach(e=>e.hidden=!g.includes(e.dataset.g));ckVis();dnsVis()}
 
 function params(){
  const p=$('proto').value,ovh=$('ovh').checked,h=nv('hdr',NaN),hdr=ovh?0:(isNaN(h)?(p=='udp'?28:40):h);
@@ -118,7 +120,8 @@ function params(){
  const to=nv('to',NaN);
  P={ax:sv('ax'),p,hdr,mss,R:nv('R',0),rtt,d:rtt/2,to:isNaN(to)?Math.max(2*rtt,1):to,W:Math.max(1,nv('W',4)),cw:Math.max(1,nv('cw',1)),ss:nv('ssth',64),reg:$('reg').checked,
  pers:sv('pers')=='1',tm:sv('tm'),val:$('vld').checked,tn:sv('tn'),rt:$('rtr').checked,px:$('px').checked,hit:$('hit').checked,ck:sv('ck'),ds:parseSz($('dsize').value)||30000,
- mail_simp:$('mail_simp')?$('mail_simp').checked:false};
+ mail_simp:$('mail_simp')?$('mail_simp').checked:false,
+ app:p=='dns'?$('dapp').value:p,dns:p=='dns'||($('mdns').checked&&(p=='smtp'||p=='pop3')),drec:sv('drec'),dcm:sv('dcm')};
 }
 const mt=(t,tx)=>P.rt?[t+tx+P.d/2,t+tx+P.d/2,t+P.d/2,t+tx+P.d]:[];
 function msg(a,b,txt,t,sz=60,ea){
@@ -215,12 +218,18 @@ const CK=h=>{if(P.ck=='m'){const e=[...document.querySelectorAll('.ckv')].find(x
 const ckHosts=()=>{const out=[];const add=h=>{if(h&&!out.includes(h))out.push(h)};
  document.querySelectorAll('.bs').forEach(e=>add(parseUrl(e.value,'/').h));
  document.querySelectorAll('.is2').forEach(e=>add(parseUrl(e.value,'/',bsrv()).h));return out};
-function ckVis(){$('ckw').hidden=!($('proto').value=='http'&&$('ck').value=='m')}
+const isWeb=()=>{const p=$('proto').value;return p=='http'||(p=='dns'&&$('dapp').value=='http')};
+function ckVis(){$('ckw').hidden=!(isWeb()&&$('ck').value=='m')}
+function dnsVis(){$('dnsw').hidden=!($('proto').value=='dns'&&$('dapp').value=='http')}
+function buildDns(){const box=$('dnsw'),oi={},oa={};box.querySelectorAll('.dip').forEach(e=>oi[e.dataset.h]=e.value);box.querySelectorAll('.dal').forEach(e=>oa[e.dataset.h]=e.value);box.innerHTML='';
+ ckHosts().forEach(h=>{const a=document.createElement('label');a.innerHTML=`IP di ${esc(h)}<input class="dip" data-h="${esc(h)}" value="${esc(oi[h]??autoIp(h))}">`;box.appendChild(a);
+  const b=document.createElement('label');b.innerHTML=`${esc(h)} è un CNAME di (opz.)<input class="dal" data-h="${esc(h)}" value="${esc(oa[h]??'')}" placeholder="es. server1.${esc(domOf(h))}">`;box.appendChild(b)});dnsVis()}
 function buildCk(){const box=$('ckw'),old={};box.querySelectorAll('.ckv').forEach(e=>old[e.dataset.h]=e.value);box.innerHTML='';
- ckHosts().forEach(h=>{const l=document.createElement('label');l.innerHTML=`Cookie di ${esc(h)}<input class="ckv" data-h="${esc(h)}" value="${esc(old[h]??autoCk(h))}">`;box.appendChild(l)});ckVis()}
+ ckHosts().forEach(h=>{const l=document.createElement('label');l.innerHTML=`Cookie di ${esc(h)}<input class="ckv" data-h="${esc(h)}" value="${esc(old[h]??autoCk(h))}">`;box.appendChild(l)});ckVis();buildDns()}
 
 function http(){
  L=[sv('cli')||'Client'];if(P.px)lane('Proxy');const conn={},cn='Connection: '+CN();
+ const dns1=(r,o,t)=>P.dns?resolve(r,o.h,'A',t):t;
  const fetch=(a,b,o,t,up,nt,cond)=>{
   const k=a+'-'+b;if(!(P.pers&&conn[k])){t=P.tm=='s'?hs2(a,b,t):hs(a,b,t);conn[k]=1}
   const ck=jar[o.h],sc=!ck&&P.ck;
@@ -240,27 +249,29 @@ function http(){
  const txPP=(s,g)=>{TX+=sec(L[0],'Proxy (pipelining)',g.map(q1))+sec('Proxy',L[s],g.flatMap(o=>[q1(o),rs(o,0)]))+sec('Proxy',L[0],g.map(o=>rs(o,0)))};
  const txP=(a,b,g)=>{TX+=`── ${L[a]} → ${L[b]} (pipelining) ──\n`+g.map(q1).join('\n')+'\n'+g.map(o=>rs(o,0)).join('\n')+'\n'};
  const nm=o=>'GET '+o.p.split('/').pop();
- const pipeD=(g,t)=>{const s=lane(g[0].h);t=hsk(0,s,t);txP(0,s,g);let st=0,ar=t;
+ const pipeD=(g,t)=>{t=dns1(0,g[0],t);const s=lane(g[0].h);t=hsk(0,s,t);txP(0,s,g);let st=0,ar=t;
   g.forEach((o,i)=>{const a=i?msg(0,s,nm(o),t,300,st):msg(0,s,nm(o),t,300);
    ar=blk(s,0,o.s,Math.max(a,st))-P.d;st=BEND});
   return ar};
  const PC=new Map(),key=o=>o.h+o.p;
  // none | miss (URL nuovo) | hit (stessa dim.) | mod (stesso URL, dim. diversa)
  const st=o=>{if(!P.px)return'none';if(P.hit)return'hit';const c=PC.get(key(o));return c===undefined?'miss':c===o.s?'hit':'mod'};
- const pipeP=(g,t)=>{const s=lane(g[0].h);t=hsk(0,1,t);txPP(s,g);
+ const pipeP=(g,t)=>{t=hsk(0,1,t);
   const a1=msg(0,1,gl(g),t,300*g.length);note(a1,1,'cache MISS');
-  const dS=hsk(1,s,a1);let sx=0;const ap=[];
+  const a2=dns1(1,g[0],a1),s=lane(g[0].h);txPP(s,g);
+  const dS=hsk(1,s,a2);let sx=0;const ap=[];
   g.forEach((o,i)=>{const aS=i?msg(1,s,nm(o),dS,300,sx):msg(1,s,nm(o),dS,300);
    ap.push(blk(s,1,o.s,Math.max(aS,sx))-P.d);sx=BEND});
   let cs=0,last=t;g.forEach((o,i)=>{last=blk(1,0,o.s,Math.max(ap[i],cs))-P.d;cs=BEND});
   g.forEach(o=>PC.set(key(o),o.s));
   return last};
- const get=(o,t)=>{const s=lane(o.h);if(!P.px)return fetch(0,s,o,t);
-  const ck=jar[o.h],sc=!ck&&P.ck,C=L[0],S=L[s],q=st(o),hit=q=='hit',mod=q=='mod',vl=P.hit?P.val:1;
+ const get=(o,t)=>{if(!P.px){t=dns1(0,o,t);return fetch(0,lane(o.h),o,t)}
+  const ck=jar[o.h],sc=!ck&&P.ck,C=L[0],q=st(o),hit=q=='hit',mod=q=='mod',vl=P.hit?P.val:1;
   const r=fetch(0,1,o,t,t1=>{
    note(t1,1,hit?(vl?'cache HIT (validazione)':'cache HIT'):mod?'cache STALE (file modificato)':'cache MISS');
-   if(hit)return vl?val(1,s,o,t1):t1;
-   return fetch(1,s,o,t1,null,1,mod)},1);
+   if(hit){if(!vl)return t1;t1=dns1(1,o,t1);return val(1,lane(o.h),o,t1)}
+   t1=dns1(1,o,t1);return fetch(1,lane(o.h),o,t1,null,1,mod)},1);
+  const s=lane(o.h),S=L[s];
   PC.set(key(o),o.s);
   const ims='\nIf-Modified-Since: XYZ';
   TX+=sec(C,'Proxy',[rq(o,ck)])
@@ -279,30 +290,58 @@ function http(){
   }else if(P.pers&&P.tm=='s'){while(j<imgs.length&&imgs[j].h==imgs[i].h)j++}
   const g=imgs.slice(i,j);t=g.length>1?(P.px?pipeP(g,t):pipeD(g,t)):get(g[0],t);i=j}
 }
-function dns(){
- L=['Client','DNS locale','Root','TLD','Autoritativo'];const h=sv('dh'),ip=sv('dip'),tld='.'+h.split('.').pop();let t=0;
- t=msg(0,1,`DNS-Q ${h} A?`,t,70);
- if(P.dc)note(t,1,'cache HIT');else{note(t,1,'cache MISS');
-  const st=sv('drec')=='r'?[[1,2,`DNS-Q ${h}`],[2,3,`DNS-Q ${h}`],[3,4,`DNS-Q ${h}`],[4,3,`DNS-R A ${ip}`],[3,2,`DNS-R A ${ip}`],[2,1,`DNS-R A ${ip}`]]
-  :[[1,2,`DNS-Q ${h}`],[2,1,`DNS-R NS ${tld} (TLD)`],[1,3,`DNS-Q ${h}`],[3,1,'DNS-R NS autoritativo'],[1,4,`DNS-Q ${h}`],[4,1,`DNS-R A ${ip}`]];
-  st.forEach(([a,b,x])=>t=msg(a,b,x,t,70))}
- t=msg(1,0,`DNS-R ${h} A ${ip}`,t,70);dnsTable(h,ip,tld);
- if($('dh2').checked){const s=lane('Server '+h);t=hs2(0,s,t);t=msg(0,s,'GET /index.html',t,300);t=msg(s,0,'HTTP/1.1 200 OK',t,250);blk(s,0,P.ds,t);
-  TX+=`── Client → ${h} (${ip}) ──\nGET /index.html HTTP/1.1\nHost: ${h}\nConnection: ${CN()}\n\nHTTP/1.1 200 OK\nConnection: ${CN()}\nContent-Length: ${P.ds}\n\n[DATI: ${P.ds} byte]\n`}}
-function dnsTable(h,ip,tl){const dom=h.split('.').slice(1).join('.'),it=sv('ipt')||'?',ia=sv('ipa')||'?',tn='tld'+tl,an='dns.'+dom;
- const q=[[[h,'/','A']],"Richiesta (H richiede l'IP di "+h+" al DNS locale)"];
- const R=P.dc?[q,[[[h,ip,'A']],'Risposta (dalla cache del DNS locale)']]:[q,
-  [[[tl,'/','NS']],"Richiesta (il DNS locale chiede l'IP del DNS TLD al DNS Root)"],
-  [[[tl,tn,'NS'],[tn,it,'A']],"Risposta (il ROOT fornisce il NS e l'IP del TLD)"],
-  [[[dom,'/','NS']],"Richiesta (il DNS locale chiede l'IP del DNS AUT al server TLD)"],
-  [[[dom,an,'NS'],[an,ia,'A']],"Risposta (il TLD fornisce il NS e l'IP dell'AUT)"],
-  [[[h,'/','A']],"Richiesta (il DNS locale chiede l'IP del server all'autorevole)"],
-  [[[h,ip,'A']],"Risposta (l'autorevole restituisce l'IP finale)"],
-  [[[h,ip,'A']],"Risposta finale (il DNS locale inoltra l'IP all'host H)"]];
- const c=(r,k)=>r.map(x=>x[k]).join('<br>');
- $('dnst').innerHTML='<h2>Tabella DNS (name, value, type, TTL)</h2><table><tr><th>#</th><th>Name</th><th>Value</th><th>Type</th><th>TTL</th><th>Azione</th></tr>'+R.map(([r,az],i)=>`<tr><td>${i+1}</td><td>${c(r,0)}</td><td>${c(r,1)}</td><td>${c(r,2)}</td><td>${r.map(()=>'X').join('<br>')}</td><td><b>${az.split(' ')[0]}</b> ${az.slice(az.indexOf(' ')+1)}</td></tr>`).join('')+'</table>'}
+/* ================= DNS ================= */
+let DC,HK,DT,DCUR;
+const autoIp=h=>{let a=5381,b=7;for(const c of h){a=(a*33^c.charCodeAt(0))>>>0;b=(b*131+c.charCodeAt(0))>>>0}return`${20+a%200}.${b%250}.${(a>>>8)%250}.${1+(b>>>8)%253}`};
+const domOf=n=>n.split('.').slice(-2).join('.'),tldOf=n=>n.split('.').pop();
+const msnV=()=>sv('msn')||'mail.b.it';
+const aliasOf=n=>{const e=[...document.querySelectorAll('.dal')].find(x=>x.dataset.h==n);return e?e.value.trim():''};
+const ipOf=n=>{const r=[...document.querySelectorAll('.dip')].find(e=>e.dataset.h==n);if(r&&r.value.trim())return r.value.trim();
+ const al=[...document.querySelectorAll('.dal')].find(e=>e.value.trim()==n);
+ if(al){const q=[...document.querySelectorAll('.dip')].find(e=>e.dataset.h==al.dataset.h);if(q&&q.value.trim())return q.value.trim()}
+ if(n==msnV()&&sv('msip'))return sv('msip');return autoIp(n)};
+const authRR=(n,qt)=>{if(qt=='MX')return[[n,msnV(),'MX']];const c=aliasOf(n);return c?[[n,c,'CNAME']]:[[n,ipOf(n),'A']]};
+const chainRR=(n,qt)=>{let r=authRR(n,qt);const l=r[r.length-1];return l[2]=='CNAME'?r.concat(chainRR(l[1],'A')):r};
+const rrLab=r=>`DNS-R ${r.map(x=>x[2]).join('+')} ${r[r.length-1][1]}`;
+const msgD=(a,b,txt,t,rows,az)=>{const t2=msg(a,b,txt,t,70);DCUR.items.push({n:M,rows,az});return t2};
+function lres(name,qt,t){
+ const loc=lane('DNS locale'),dom=domOf(name),tld=tldOf(name),key=qt+':'+name,Q=[[name,'/',qt]],x=`DNS-Q ${name} ${qt}`,what=qt=='MX'?'il mail server':"l'IP";
+ if(P.dcm=='h'||DC.rr.has(key)){note(t,loc,'cache HIT '+name);return{t,rows:DC.rr.get(key)||chainRR(name,qt)}}
+ note(t,loc,'cache MISS '+name);let rows=authRR(name,qt);
+ if(rows[0][2]=='CNAME'&&domOf(rows[0][1])==dom)rows=rows.concat(authRR(rows[0][1],'A'));
+ if(P.drec=='r'){
+  const R=lane('Root'),T=lane('TLD .'+tld),A=lane('Autoritativo '+dom);
+  t=msgD(loc,R,x,t,Q,'Richiesta (il DNS locale chiede al Root, ricorsiva)');
+  t=msgD(R,T,x,t,Q,'Richiesta (il Root inoltra al TLD .'+tld+')');
+  t=msgD(T,A,x,t,Q,"Richiesta (il TLD inoltra all'autoritativo di "+dom+')');
+  t=msgD(A,T,rrLab(rows),t,rows,"Risposta (l'autoritativo risponde al TLD)");
+  t=msgD(T,R,rrLab(rows),t,rows,'Risposta (il TLD inoltra al Root)');
+  t=msgD(R,loc,rrLab(rows),t,rows,'Risposta (il Root consegna al DNS locale)');
+ }else{
+  const kA=P.dcm=='a'||DC.aut.has(dom),kT=kA||DC.tld.has(tld);
+  if(!kT){const R=lane('Root');t=msgD(loc,R,x,t,Q,'Richiesta (il DNS locale chiede al Root)');
+   t=msgD(R,loc,'DNS-R NS .'+tld,t,[['.'+tld,'tld.'+tld,'NS'],['tld.'+tld,autoIp('tld.'+tld),'A']],'Risposta (il Root fornisce NS e IP del TLD .'+tld+')');DC.tld.add(tld)}
+  if(!kA){const T=lane('TLD .'+tld);t=msgD(loc,T,x,t,Q,'Richiesta (il DNS locale chiede al TLD .'+tld+')');
+   t=msgD(T,loc,'DNS-R NS '+dom,t,[[dom,'dns.'+dom,'NS'],['dns.'+dom,autoIp('dns.'+dom),'A']],"Risposta (il TLD fornisce NS e IP dell'autoritativo di "+dom+')');DC.aut.add(dom)}
+  const A=lane('Autoritativo '+dom);
+  t=msgD(loc,A,x,t,Q,"Richiesta (il DNS locale chiede all'autoritativo)");
+  t=msgD(A,loc,rrLab(rows),t,rows,"Risposta (l'autoritativo restituisce "+what+')');
+ }
+ const l=rows[rows.length-1];
+ if(l[2]=='CNAME'){const r2=lres(l[1],'A',t);t=r2.t;rows=rows.concat(r2.rows)}
+ DC.rr.set(key,rows);return{t,rows}}
+function resolve(req,name,qt,t){
+ const k=req+'|'+qt+'|'+name;if(HK.has(k))return t;HK.add(k);
+ const loc=lane('DNS locale'),what=qt=='MX'?'il mail server di':"l'IP di";
+ DCUR={title:`${L[req]} risolve ${qt=='MX'?'MX di ':''}${name}`,items:[]};DT.push(DCUR);
+ t=msgD(req,loc,`DNS-Q ${name} ${qt}`,t,[[name,'/',qt]],`Richiesta (${L[req]} chiede ${what} ${name} al DNS locale)`);
+ const r=lres(name,qt,t);
+ return msgD(loc,req,rrLab(r.rows),r.t,r.rows,`Risposta (il DNS locale risponde a ${L[req]})`)}
+function renderDT(){if(!DT.length){$('dnst').innerHTML='';return}
+ $('dnst').innerHTML='<h2>Tabelle DNS (name, value, type, TTL)</h2>'+DT.map(d=>`<h3 style="font-size:13px;margin:10px 0 2px">${esc(d.title)}</h3><table><tr><th>#</th><th>Name</th><th>Value</th><th>Type</th><th>TTL</th><th>Azione</th></tr>`+d.items.map(it=>{const c=k=>it.rows.map(x=>esc(x[k])).join('<br>');
+  return`<tr><td>${it.n}</td><td>${c(0)}</td><td>${c(1)}</td><td>${c(2)}</td><td>${it.rows.map(()=>'X').join('<br>')}</td><td><b>${esc(it.az.split(' ')[0])}</b> ${esc(it.az.slice(it.az.indexOf(' ')+1))}</td></tr>`}).join('')+'</table>').join('')}
 function smtp(){
- L=['User Agent (mittente)','Mail server mittente','Mail server destinatario'];const f=sv('mf'),to=sv('mt');
+ L=P.dns?['User Agent (mittente)','Mail server mittente']:['User Agent (mittente)','Mail server mittente','Mail server destinatario'];const f=sv('mf'),to=sv('mt');
  const hop=(a,b,t)=>{t=hs(a,b,t,1);
   t=seq(a,b,t,[[0,'220 SMTP ready'],[1,`HELO ${L[a].split(' ')[0]}`],[0,'250 Hello'],[1,`MAIL FROM:<${f}>`],[0,'250 OK'],[1,`RCPT TO:<${to}>`],[0,'250 OK'],[1,'DATA'],[0,'354 Start mail input']]);
   if(P.mail_simp){ 
@@ -312,18 +351,18 @@ function smtp(){
       t=arq(a,b,P.ds,t,'tcp','mail'); 
   }
   return seq(a,b,t,[[1,'. (fine messaggio)'],[0,'250 Queued'],[1,'QUIT'],[0,'221 Bye']])};
- hop(1,2,hop(0,1,0))
+ let t=hop(0,1,0);
+ if(P.dns){t=resolve(1,to.split('@')[1]||'b.it','MX',t);t=resolve(1,msnV(),'A',t)}
+ hop(1,lane('Mail server destinatario'),t)
 }
 
 function pop3(){
- L=['User Agent','Mail server'];let t=hs(0,1,0,1);
- t=seq(0,1,t,[[0,'+OK POP3 ready'],[1,`USER ${sv('mt').split('@')[0]}`],[0,'+OK'],[1,'PASS ****'],[0,'+OK logged in'],[1,'LIST'],[0,'+OK 1 messaggio'],[1,'RETR 1'],[0,`+OK ${P.ds} B`]]);
- if(P.mail_simp){ 
-     t=blk(1,0,P.ds,t)-P.d;
- } else {
-     t=arq(1,0,P.ds,t,'tcp','mail')-P.d; 
- }
- seq(0,1,t,[[1,'DELE 1'],[0,'+OK'],[1,'QUIT'],[0,'+OK bye']])
+ L=['User Agent'];let t=0;
+ if(P.dns)t=resolve(0,msnV(),'A',t);
+ const m=lane('Mail server');t=hs(0,m,t,1);
+ t=seq(0,m,t,[[0,'+OK POP3 ready'],[1,`USER ${sv('mt').split('@')[0]}`],[0,'+OK'],[1,'PASS ****'],[0,'+OK logged in'],[1,'LIST'],[0,'+OK 1 messaggio'],[1,'RETR 1'],[0,`+OK ${P.ds} B`]]);
+ if(P.mail_simp){t=blk(m,0,P.ds,t)-P.d}else{t=arq(m,0,P.ds,t,'tcp','mail')-P.d}
+ seq(0,m,t,[[1,'DELE 1'],[0,'+OK'],[1,'QUIT'],[0,'+OK bye']])
 }
 
 function drawNet(){
@@ -401,7 +440,7 @@ function draw(){
 function report(){
  const f=(x,u)=>x.toFixed(x<10?3:1)+' '+u,sec=Math.max(maxT,1e-6);
  const tr=S.tr.map(x=>`${esc(x.nm)}: ${x.bytes} B → <b>${x.n}</b> pacc.`).join('<br>')||'—';
- const rows=[['Protocollo',P.p.toUpperCase()],['MSS (payload)',P.mss+' B'],['Header / pacchetto',P.hdr+' B'],['MTU = MSS + header',(P.mss+P.hdr)+' B'],
+ const rows=[['Protocollo',P.p=='dns'?'DNS → '+P.app.toUpperCase():P.p.toUpperCase()],['MSS (payload)',P.mss+' B'],['Header / pacchetto',P.hdr+' B'],['MTU = MSS + header',(P.mss+P.hdr)+' B'],
  ['T<sub>tx</sub> pacchetto pieno',P.R>0?f(ttx(P.mss+P.hdr),'ms'):'trascurabile'],['RTT',P.rtt.toFixed(2)+' ms'],['T<sub>prop</sub> (1 via)',P.d.toFixed(2)+' ms'],['Timer',P.to.toFixed(1)+' ms'],
  ['N. pacchetti',tr],['Segmenti trasmessi',S.sent],['Ritrasmissioni',S.retx],['Tempo totale',f(maxT,'ms')],
  ['Throughput',f(S.wire*8/(sec*1000),'Mbit/s')],['Goodput',f(S.pay*8/(sec*1000),'Mbit/s')]];
@@ -409,8 +448,8 @@ function report(){
 
 function run(){
  params();E=[];L=[];S={tr:[],sent:0,retx:0,wire:0,pay:0};M=0;T=0;used=new Set();maxT=0;omit=0;jar={};TX='';RF={};
- LS=pset(sv('loss'));AS=pset(sv('lossA'));$('dnst').innerHTML='';LIM=1e9;
- ({udp,tcp:tcpP,gbn:gs,sr:gs,http,dns,smtp,pop3}[P.p])();
+ LS=pset(sv('loss'));AS=pset(sv('lossA'));$('dnst').innerHTML='';LIM=1e9;DC={rr:new Map(),tld:new Set(),aut:new Set()};HK=new Set();DT=[];DCUR=null;
+ ({udp,tcp:tcpP,gbn:gs,sr:gs,http,smtp,pop3}[P.app])();renderDT();
  if(raf){cancelAnimationFrame(raf);raf=0;$('play').textContent='▶ Anima'}draw();drawNet();report();$('tx').textContent=TX;$('tx').hidden=$('th').hidden=!TX}
-$('nb').oninput=()=>{buildBase();buildCk()};buildBase();$('ni').oninput=()=>{buildImgs();buildCk()};buildImgs();$('basew').addEventListener('input',buildCk);$('imgw').addEventListener('input',buildCk);$('ck').onchange=()=>{ckVis();run()};buildCk();$('proto').onchange=()=>{vis();ckVis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('go').onclick=run;$('play').onclick=play;vis();run();
+$('nb').oninput=()=>{buildBase();buildCk()};buildBase();$('ni').oninput=()=>{buildImgs();buildCk()};buildImgs();$('basew').addEventListener('input',buildCk);$('imgw').addEventListener('input',buildCk);$('ck').onchange=()=>{ckVis();run()};buildCk();$('proto').onchange=()=>{vis();ckVis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('dapp').onchange=()=>{vis();run()};$('go').onclick=run;$('play').onclick=play;vis();run();
 </script></body></html>
