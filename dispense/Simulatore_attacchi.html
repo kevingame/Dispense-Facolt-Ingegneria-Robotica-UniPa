@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Animazioni: attacchi di rete</title>
+<style>
+:root{--bg:#fff;--fg:#1d2330;--mut:#667;--card:#f4f6fa;--bd:#d5dae3;--data:#1e66d0;--ack:#18854a;--ctl:#7a5cc4;--bad:#d03030;--tm:#c27a00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171d;--fg:#e6e9ef;--mut:#99a;--card:#1e232c;--bd:#343b48;--data:#5b9bff;--ack:#4cc283;--ctl:#a58cf0;--bad:#ff6b6b;--tm:#f0b04a}}
+:root[data-theme="dark"]{--bg:#14171d;--fg:#e6e9ef;--mut:#99a;--card:#1e232c;--bd:#343b48;--data:#5b9bff;--ack:#4cc283;--ctl:#a58cf0;--bad:#ff6b6b;--tm:#f0b04a}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,sans-serif;padding:12px 12px 40px}
+h1{font-size:19px;margin:0 0 8px}
+select{font:inherit;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--fg);width:100%}
+.sc{border:1px solid var(--bd);border-radius:10px;background:var(--card);margin:10px 0}
+svg{display:block;width:100%;height:auto}svg text{fill:var(--fg);font-family:system-ui,sans-serif}
+.ct{display:flex;gap:6px;align-items:center}
+button{font:inherit;font-weight:600;min-height:44px;min-width:48px;padding:0 14px;border:0;border-radius:8px;background:var(--data);color:#fff}
+button.g{background:var(--ctl)}#spd{width:auto;min-height:44px}
+#cap{margin:10px 0;padding:10px;border-left:4px solid var(--ctl);background:var(--card);border-radius:6px;min-height:3em}
+ol{padding-left:22px;margin:6px 0}li{padding:4px 6px;border-radius:6px;color:var(--mut);cursor:pointer;font-size:13.5px}
+li.on{background:var(--card);color:var(--fg);font-weight:600;outline:1px solid var(--bd)}
+.tip{font-size:13px;color:var(--mut)}.lg{font-size:12px;color:var(--mut)}
+</style></head><body>
+<h1>🛡️ Attacchi di rete: animazioni</h1>
+<select id="sel"></select>
+<div class="sc"><svg id="svg" viewBox="0 0 360 300"></svg></div>
+<div class="ct"><button class="g" id="rs">⏮</button><button class="g" id="pv">◀</button><button id="pp">▶</button><button class="g" id="nx">▶|</button>
+<select id="spd"><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div>
+<div id="cap"></div>
+<p class="lg">● blu dati · verde ACK/risposta · viola controllo · rosso attacco · ✗ pacchetto perso/scartato</p>
+<ol id="lst"></ol>
+<p class="tip" id="tip"></p>
+<script>
+const $=i=>document.getElementById(i);
+const S=(g,n,d,nodes,s,tip)=>({g,n,d,nodes,s,tip});
+const SC=[
+S('Concetti di sicurezza','R · Riservatezza','Riservatezza dei dati e privacy.',
+[['A','👩','Alice',55,150],['B','🗄️','Sistema',305,150],['X','😈','Non autorizzato',180,50]],[
+['A>B','dati riservati','c','Riservatezza dei dati: le informazioni riservate non vengono rese disponibili né divulgate a chi non è autorizzato.'],
+['X>B','accesso non autorizzato','x','L’accesso a chi non è autorizzato viene negato.',[['X','accesso negato',1]]],
+['A>A','sue informazioni personali','c','Privacy: ogni individuo controlla o influenza quali informazioni che lo riguardano vengono raccolte e conservate, da chi e a chi possono essere comunicate.']],
+'Riservatezza = riservatezza dei dati + privacy.'),
+S('Concetti di sicurezza','I · Integrità','Integrità dei dati e integrità del sistema.',
+[['U','👩','Utente autorizzato',55,150],['S','🗄️','Sistema e dati',305,150],['X','😈','Attaccante',180,50]],[
+['U>S','modifica autorizzata','c','Integrità dei dati: informazioni e programmi cambiano solo in modo specificato e autorizzato.'],
+['S>S','funziona come previsto','a','Integrità del sistema: il sistema svolge la funzione prevista, senza manipolazioni non autorizzate, volontarie o involontarie.',[['S','integro']]],
+['X>S','modifica non autorizzata','e','Un’alterazione non autorizzata viola l’integrità.',[['S','dati alterati',1]]]],
+'Integrità = integrità dei dati + integrità del sistema.'),
+S('Concetti di sicurezza','D · Disponibilità','Il servizio resta accessibile agli utenti autorizzati.',
+[['U','👩','Utente autorizzato',55,150],['S','🗄️','Sistema',305,150],['X','😈','Attaccante',180,50]],[
+['U>S','richiesta','c','Disponibilità: il sistema funziona tempestivamente e il servizio non viene negato agli utenti autorizzati.'],
+['S>U','risposta','a','Il servizio risponde.'],
+['X>S','flood di richieste','e','Un attacco DoS esaurisce le risorse del sistema.',[['S','saturo',1]],4],
+['U>S','richiesta','c','Ora l’utente legittimo prova di nuovo.'],
+['S>U','nessuna risposta','x','Disponibilità violata.',[['U','servizio negato',1]]]],
+'Le minacce alla disponibilità sono gli attacchi Denial of Service.'),
+S('Concetti di sicurezza','Autenticità e accountability','Chi è davvero? Chi ha fatto cosa?',
+[['A','👩','Alice',55,150],['S','🗄️','Sistema',305,150],['X','😈','Impostore',180,50]],[
+['A>S','credenziali','c','Autenticità: verificare che utenti e messaggi siano genuini e provengano da fonti fidate.'],
+['X>S','identità falsa','e','Un impostore si finge un altro utente.'],
+['S>X','rifiutato','x','L’identità non è verificata: accesso negato.',[['X','respinto',1]]],
+['S>S','registra le azioni','c','Accountability: le azioni di un’entità devono poter essere ricondotte in modo univoco a quell’entità (non ripudio, deterrenza, audit).',[['S','log: chi ha fatto cosa']]]],
+'Autenticità e accountability completano riservatezza, integrità e disponibilità.'),
+S('Concetti di sicurezza','Attacco passivo','Si osserva senza alterare: minaccia alla riservatezza.',
+[['A','👩','Mittente',55,150],['B','👨','Destinatario',305,150],['X','😈','Intercettatore',180,250]],[
+['A>B','messaggio','d','Comunicazione normale.'],
+['A>X','copia','e','Intercettazione (es. packet sniffing): nessuna alterazione, né mittente né destinatario se ne accorgono.',[['X','legge il messaggio',1]]],
+['X>X','analisi del traffico','e','Anche con messaggi cifrati può osservare chi comunica, quando e quanto.']],
+'Difficile da rilevare; si previene soprattutto con la cifratura.'),
+S('Concetti di sicurezza','Attacco attivo','Si altera il flusso o si crea falso traffico.',
+[['A','👩','Mittente',45,150],['X','😈','Attaccante',180,150],['B','👨','Destinatario',315,150]],[
+['A>X,X>B','messaggio','d','Comunicazione normale che passa dall’attaccante.'],
+['X>B','si finge A','e','Masquerade: l’attaccante impersona un’altra entità.'],
+['X>B','messaggio già visto','e','Replay: ritrasmette dati catturati in precedenza.'],
+['X>B','messaggio alterato','e','Modifica dei messaggi.',[['B','dati alterati',1]]],
+['X>B','flood','e','Denial of service.',[['B','saturo',1]],4]],
+'Facile da rilevare ma difficile da prevenire del tutto: si punta a rilevare e a ripristinare.'),
+S('Ricognizione e malware','Port scan','Un programma sonda le porte di un IP per scoprire servizi, sistema operativo e versioni.',
+[['A','😈','Attaccante',60,150],['V','🗄️','Host target',300,150]],[
+['A>V',':22 SYN','c','Invia un SYN alla porta 22.'],
+['V>A','SYN-ACK','a','Porta aperta: c’è un servizio in ascolto.',[['A','aperte: 22']]],
+['A>V',':23 SYN','c','Prova la porta 23.'],
+['V>A','RST','c','Porta chiusa: il target risponde con un reset.'],
+['A>V',':80 SYN','c','Prova la porta 80.'],
+['V>A','SYN-ACK + banner','a','Aperta; dal banner ricava applicazione e versione, poi cerca le vulnerabilità note.',[['A','aperte 22, 80 · versioni',1]]]],
+'Strumenti: nmap, Nessus. Contromisure: firewall, chiudere i servizi inutili.'),
+S('Ricognizione e malware','Ingegneria sociale','L’attaccante inganna le persone, non i computer.',
+[['A','😈','Falso “Ing. Rossi”',60,150],['U','🖥️','Impiegato',300,150]],[
+['A>U','sono dell’IT…','e','Telefona fingendosi un utente di alto profilo (reparto IT).'],
+['U>A','il mio IP è…','a','L’impiegato rivela un’informazione rilevante per la sicurezza.',[['A','info per il prossimo attacco',1]]]],
+'Contromisura: formazione e procedure di verifica dell’identità.'),
+S('Ricognizione e malware','Cavallo di Troia','Parte nascosta di un software utile.',
+[['X','😈','Attaccante',55,50],['W','🗄️','Sito web',305,50],['U','🖥️','Utente',180,230]],[
+['X>W','nasconde codice','e','L’attaccante inserisce una parte nascosta in un software utile (oggi spesso su pagine web: ActiveX, plugin).'],
+['U>W','scarica software utile','c','L’utente scarica il programma.'],
+['W>U','programma + parte nascosta','d','Insieme al software utile arriva il codice nascosto.'],
+['U>U','esegue il programma','e','La parte nascosta compie azioni dannose.',[['U','infetto',1]]]],
+'Non si auto-replica, a differenza di virus e worm.'),
+S('Ricognizione e malware','Worm','Si auto-esegue e si propaga da solo.',
+[['X','😈','Attaccante',180,35],['H1','🖥️','Host 1',180,115],['H2','🖥️','Host 2',70,200],['H3','🖥️','Host 3',290,200],['H4','🖥️','Host 4',70,275],['H5','🖥️','Host 5',290,275]],[
+['X>H1','oggetto ricevuto','e','L’infezione proviene da un oggetto ricevuto passivamente, che si auto-esegue.',[['H1','infetto',1]]],
+['H1>H2,H1>H3','si propaga da solo','e','Auto-replicante: passa ad altri host e utenti senza intervento umano.',[['H2','infetto',1],['H3','infetto',1]]],
+['H2>H4,H3>H5','e di nuovo','e','La diffusione continua a catena.',[['H4','infetto',1],['H5','infetto',1]]]],
+'Esempio nelle slide: il worm Sapphire (scansioni al secondo nei primi 5 minuti).'),
+S('Ricognizione e malware','Virus','Richiede che l’utente esegua l’oggetto ricevuto.',
+[['X','😈','Attaccante',55,50],['A','🖥️','Utente A',180,150],['B','🖥️','Utente B',305,90],['C','🖥️','Utente C',305,230]],[
+['X>A','e-mail con allegato','d','L’infezione proviene da un oggetto ricevuto, ad esempio l’allegato di una e-mail.'],
+['A>A','apre l’allegato','e','L’oggetto viene mandato in esecuzione.',[['A','infetto',1]]],
+['A>B,A>C','si propaga','e','Auto-replicante: si propaga ad altri host e utenti.',[['B','infetto',1],['C','infetto',1]]]],
+'Differenza con il worm: il virus ha bisogno che l’oggetto venga eseguito; il worm si auto-esegue.'),
+S('Ricognizione e malware','Malware e botnet','Il malware si auto-replica e arruola gli host in una botnet.',
+[['A','😈','Attaccante',45,150],['U1','🖥️','Host 1',185,150],['U2','🖥️','Host 2',305,55],['U3','🖥️','Host 3',305,245]],[
+['A>U1','allegato e-mail','e','Il virus arriva come allegato e-mail.'],
+['U1>U1','si esegue','c','L’utente lo avvia: l’host è infetto.',[['U1','infetto',1]]],
+['U1>U2,U1>U3','si replica','e','Il malware si propaga ad altri host.',[['U2','infetto',1],['U3','infetto',1]]],
+['A>U1,A>U2,A>U3','comando: spam / DDoS','e','Gli host infetti, ora in una botnet, obbediscono all’attaccante.',[['U1','zombie',1]]]],
+'Antivirus, aggiornamenti, non aprire allegati sospetti.'),
+S('Ricognizione e malware','Packet sniffing','Su un mezzo condiviso un’interfaccia può leggere tutti i pacchetti.',
+[['B','🖥️','Utente',50,70],['SV','🗄️','Server',310,70],['E','😈','Sniffer',180,245]],[
+['B>SV','login + password','d','L’utente invia le credenziali in chiaro.'],
+['B>E','copia dei pacchetti','e','L’interfaccia dello sniffer (es. Wireshark) registra tutto ciò che passa.',[['E','legge la password',1]]]],
+'Cifrare le comunicazioni (vedi Crittografia). Intercettare comunicazioni altrui è reato.'),
+S('Ricognizione e malware','IP spoofing','Pacchetti con indirizzo sorgente falso.',
+[['A','😈','Attaccante',60,150],['V','🗄️','Vittima',300,60],['X','🖥️','Host reale (IP usato)',300,245]],[
+['A>V','pacchetto src=X','e','L’attaccante falsifica l’IP sorgente.'],
+['V>X','risposta','a','La risposta va all’host X, non all’attaccante.',[['X','riceve risposte mai chieste',1]]]],
+'Filtri anti-spoofing sui router.'),
+S('DoS','SYN Flood','Satura la coda SYN_RECV del server (esaurisce la memoria, non la banda).',
+[['A','😈','Attaccante',60,70],['V','🗄️','Server vittima',290,150],['U','🖥️','Utente legittimo',60,240]],[
+['A>V','SYN (IP falso)','c','L’attaccante invia un SYN con IP sorgente falso.',[['V','SYN_RECV 1/10']]],
+['V>A','SYN-ACK','x','Il SYN-ACK va a un IP inesistente: il 3° ACK non arriverà mai.'],
+['A>V','SYN SYN SYN…','c','Ne basta uno ogni pochi secondi per tenere piena la coda.',[['V','SYN_RECV 10/10 PIENA',1]],4],
+['U>V','SYN','c','Un utente legittimo prova a connettersi.'],
+['V>U','scartato','x','Coda piena: richiesta ignorata.',[['U','servizio negato',1]]]],
+'Timeout sulle connessioni pendenti, coda più grande, SYN cookies.'),
+S('DoS','Echo Chargen','Due host in un loop infinito di echo.',
+[['X','😈','Attaccante',180,50],['A','🗄️','Host A (chargen)',60,200],['B','🗄️','Host B',300,200]],[
+['X>A','attiva chargen (UDP 19)','c','L’attaccante avvia il processo chargen su A.'],
+['A>B','echo (src = B)','e','A genera echo con IP sorgente = B.'],
+['B>A','echo','d','B replica lo stesso echo ad A…',[['B','replica']]],
+['A>B','echo','d','…e A lo rimanda a B.'],
+['B>A','echo','d','Loop infinito: banda e CPU consumate.',[['A','loop',1],['B','loop',1]]]],
+'Disattivare i servizi chargen/echo inutili.'),
+S('DoS','Ping of Death','v1: ping oltre la dimensione massima IP. v2: flusso di ping.',
+[['A','😈','Attaccante',60,150],['V','🗄️','Vittima',300,150]],[
+['A>V','ping > 65535 B','e','v1: ping più grande del massimo consentito, frammentato.',null,3],
+['V>V','riassembla','c','Bug nel riassemblaggio.',[['V','💥 arresto / riavvio',1]]],
+['A>V','ping ping ping','e','v2: flusso di ping; efficace se il link della vittima è il collo di bottiglia.',[['V','link saturo',1]],5]],
+'Aggiornare il SO; filtrare ICMP.'),
+S('DoS','UDP Flood','UDP su porte casuali: la vittima risponde con ICMP a ogni pacchetto.',
+[['A','😈','Attaccante',60,150],['V','🗄️','Vittima',300,150]],[
+['A>V','UDP :4711','e','Pacchetti UDP verso porte di destinazione casuali.',null,3],
+['V>V','app in ascolto?','c','Il SO controlla se c’è un’applicazione sulla porta.'],
+['V>A','ICMP dest. unreachable','c','Nessuna app: genera un ICMP per ogni pacchetto.'],
+['A>V','UDP porte varie','e','Ripetuto su molte porte.',[['V','CPU satura → arresto',1]],5]],
+'Firewall; limitare le risposte ICMP.'),
+S('DoS','Teardrop','Frammenti IP sovrapposti mandano in crash il riassemblaggio.',
+[['A','😈','Attaccante',60,150],['V','🗄️','Vittima',300,150]],[
+['A>V','frammento 1 (0–100)','e','Primo frammento IP.'],
+['A>V','frammento 2 (50–150)','e','Secondo frammento con payload sovrapposto.'],
+['V>V','riassembla','c','Bug nella routine di riassemblaggio.',[['V','💥 arresto',1]]]],
+'Patch del SO.'),
+S('DoS','Land attack','SYN con sorgente = destinazione.',
+[['A','😈','Attaccante',60,150],['V','🗄️','Vittima',300,150]],[
+['A>V','SYN src=V:80 dst=V:80','e','IP e porta sorgente uguali a IP e porta destinazione.'],
+['V>V','risponde a sé','c','Il SO risponde a se stesso in un ciclo.',[['V','💥 arresto',1]]]],
+'Filtrare pacchetti con sorgente uguale a destinazione.'),
+S('DDoS','Smurf','Ping in broadcast con IP sorgente della vittima.',
+[['A','😈','Attaccante',45,50],['R','🔀','Rete (broadcast)',165,100],['H1','🖥️','Host',305,35],['H2','🖥️','Host',305,110],['H3','🖥️','Host',305,185],['V','🗄️','Vittima',45,240]],[
+['A>R','ping src=V, dst=bcast','e','Ping con IP sorgente della vittima, inviato al broadcast (bit host tutti a 1).'],
+['R>H1,R>H2,R>H3','ping','c','Il ping raggiunge tutti gli host della sottorete.'],
+['H1>V,H2>V,H3>V','echo reply','e','Tutti rispondono alla vittima, inondandola di datagrammi.',[['V','inondata',1]],3]],
+'Router che non inoltrano i broadcast diretti.'),
+S('DDoS','DDoS diretto','Attaccante → master zombie → slave zombie → vittima.',
+[['A','😈','Attaccante',35,150],['M1','🖥️','Master zombie',120,75],['M2','🖥️','Master zombie',120,225],['S1','🖥️','Slave',225,35],['S2','🖥️','Slave',225,115],['S3','🖥️','Slave',225,190],['S4','🖥️','Slave',225,268],['V','🗄️','Vittima',330,150]],[
+['A>M1,A>M2,A>S1,A>S2,A>S3,A>S4','sfrutta vulnerabilità','e','Selezione e compromissione: installa il codice malevolo su master e slave zombie.',[['M1','master',1],['M2','master',1],['S1','slave',1],['S2','slave',1],['S3','slave',1],['S4','slave',1]]],
+['S1>M1,S2>M1,S3>M2,S4>M2','pronto','c','Comunicazione: gli slave segnalano ai master di essere pronti.'],
+['A>M1,A>M2','trigger','e','Attacco: l’attaccante invia il trigger solo ai master (nasconde le tracce).'],
+['M1>S1,M1>S2,M2>S3,M2>S4','trigger','c','Ogni master coordina e attiva i propri slave.'],
+['S1>V,S2>V,S3>V,S4>V','pacchetti','e','Gli slave inondano la vittima contemporaneamente.',[['V','sommersa',1]],3]],
+'Difficile da bloccare: il traffico arriva da molte sorgenti e le tracce portano ai master, non all’attaccante.'),
+S('DDoS','DDoS reflector','Master e slave zombie usano macchine non infette come riflettori.',
+[['A','😈','Attaccante',35,40],['M','🖥️','Master zombie',35,150],['S1','🖥️','Slave',130,80],['S2','🖥️','Slave',130,235],['R1','🗄️','Reflector',230,40],['R2','🗄️','Reflector',230,150],['R3','🗄️','Reflector',230,260],['V','🗄️','Vittima',330,150]],[
+['A>M','trigger','c','L’attaccante invia il trigger al master zombie.'],
+['M>S1,M>S2','trigger','c','Il master attiva gli slave zombie.'],
+['S1>R1,S1>R2,S2>R2,S2>R3','richiesta src=V','e','Gli slave costruiscono pacchetti con IP sorgente = vittima (spoofing) e li inviano a macchine non infette.'],
+['R1>V,R2>V,R3>V','risposte','e','I reflector rispondono alla vittima: più traffico del DDoS diretto e attaccanti più difficili da individuare.',[['V','sommersa',1]],3]],
+'Anti-spoofing; limitare le risposte dei servizi esposti.'),
+S('DDoS','Le 4 fasi del DDoS','Selezione → Compromissione → Comunicazione → Attacco.',
+[['A','😈','Attaccante',35,150],['Z1','🖥️','Agente',160,50],['Z2','🖥️','Agente',160,150],['Z3','🖥️','Agente',160,250],['V','🗄️','Vittima',325,150]],[
+['A>Z1,A>Z2,A>Z3','scansione','c','Step 1 · Selezione: l’attaccante individua gli agenti vulnerabili.',[['Z1','vulnerabile'],['Z2','vulnerabile'],['Z3','vulnerabile']]],
+['A>Z1,A>Z2,A>Z3','installa codice','e','Step 2 · Compromissione: sfrutta le vulnerabilità, installa il codice malevolo e lo protegge da scoperta e disattivazione.',[['Z1','zombie',1],['Z2','zombie',1],['Z3','zombie',1]]],
+['Z1>A,Z2>A,Z3>A','pronto','c','Step 3 · Comunicazione: gli agenti, inconsapevolmente, avvisano l’attaccante di essere pronti.'],
+['A>Z1,A>Z2,A>Z3','comandi','e','Step 4 · Attacco: l’attaccante invia i comandi necessari.'],
+['Z1>V,Z2>V,Z3>V','pacchetti','e','Gli zombie sferrano l’attacco contemporaneamente.',[['V','sommersa',1]],3]],
+'Non è detto che gli zombie sferrino tutti lo stesso attacco (es. smurf e SYN flood insieme).'),
+S('DDoS','Trinoo','Il primo tool DDoS pubblico: UDP flooding.',
+[['A','😈','Attaccante',35,150],['H','🗄️','Master / handler',125,150],['Z1','🖥️','Zombie',225,55],['Z2','🖥️','Zombie',225,245],['V','🗄️','Vittima',325,150]],[
+['A>H','TCP, porte fisse','c','Comunicazione tra attaccante, master e host compromessi su numeri di porta fissi (TCP).'],
+['H>Z1,H>Z2','UDP, porte fisse','c','Il master comanda gli zombie con connessioni UDP.'],
+['Z1>V,Z2>V','UDP 1000 B, porta casuale','e','UDP flooding: datagrammi da 1000 byte verso porte casuali.',[['V','sommersa',1]],3]],
+'Le porte fisse del traffico di controllo lo rendono riconoscibile.'),
+S('DDoS','TFN (Tribe Flood Network)','Simile a Trinoo, ma con più tipi di attacco.',
+[['A','😈','Attaccante',35,150],['H','🗄️','Master / handler',125,150],['Z1','🖥️','Zombie',225,55],['Z2','🖥️','Zombie',225,245],['V','🗄️','Vittima',325,150]],[
+['A>H','comando','c','Simile a Trinoo.'],
+['H>Z1,H>Z2','ICMP Echo Reply','c','Handler e agenti comunicano con pacchetti ICMP_Echo_Reply, che di solito passavano facilmente i firewall.'],
+['Z1>V,Z2>V','UDP / SYN / ICMP / smurf','e','Consente UDP flooding, TCP SYN, ICMP flood e smurf.',[['V','sommersa',1]],3]],
+'Il canale di controllo ICMP passava inosservato ai firewall.'),
+S('DDoS','TFN2K','Estensione di TFN con messaggi cifrati e attacco TARGA.',
+[['A','😈','Attaccante',35,150],['H','🗄️','Master / handler',125,150],['Z1','🖥️','Zombie',225,55],['Z2','🖥️','Zombie',225,245],['V','🗄️','Vittima',325,150]],[
+['A>H','comando cifrato','c','Cifra i messaggi tra i componenti della rete di attacco.'],
+['H>Z1,H>Z2','ICMP / UDP / TCP','c','La comunicazione handler–agenti può usare ICMP, UDP o TCP.'],
+['Z1>V,Z2>V','attacchi misti + TARGA','e','UDP, SYN e ICMP flood in modo misto, più TARGA: pacchetti IP malformati che rallentano il livello rete.',[['V','sommersa',1]],3]],
+'La cifratura e i protocolli variabili rendono più difficile il filtraggio.'),
+S('DDoS','Stacheldraht','Basato sulle prime versioni di TFN.',
+[['A','😈','Attaccante',35,150],['H','🗄️','Master / handler',125,150],['Z1','🖥️','Zombie',225,55],['Z2','🖥️','Zombie',225,245],['V','🗄️','Vittima',325,150]],[
+['A>H','comando cifrato','c','Le comunicazioni sono cifrate.'],
+['H>Z1,H>Z2','aggiornamento automatico','c','Gli agenti possono aggiornarsi automaticamente.'],
+['Z1>V,Z2>V','flood (stile TFN)','e','Gli agenti sferrano l’attacco contro la vittima.',[['V','sommersa',1]],3]],
+'Mirai (2016) è trattato nell’animazione “DYN attack”.'),
+S('Attacchi al DNS','DNS cache poisoning','Un record falso nella cache dirotta gli utenti.',
+[['A','😈','Attaccante',50,50],['L','🗄️','DNS locale (cache)',180,150],['U','🖥️','Utente',50,250],['F','🗄️','Server falso 6.6.6.6',310,250]],[
+['A>L','bank.it = 6.6.6.6','e','Sfruttando un bug del demone DNS inserisce un record falso.',[['L','cache avvelenata',1]]],
+['U>L','DNS-Q bank.it','c','Un utente chiede l’IP di bank.it.'],
+['L>U','bank.it = 6.6.6.6','e','Risposta dalla cache: l’IP scelto dall’attaccante.'],
+['U>F','HTTP GET','d','L’utente si collega al server falso senza accorgersene.',[['F','sito contraffatto',1]]]],
+'Aggiornare il demone DNS, DNSSEC.'),
+S('Attacchi al DNS','DNS DDoS','Server DNS inondati di richieste (nessuna reflection).',
+[['Z1','🖥️','Zombie',45,55],['Z2','🖥️','Zombie',45,150],['Z3','🖥️','Zombie',45,245],['AUT','🗄️','Autoritativo',195,150],['U','🖥️','Utente',310,250]],[
+['Z1>AUT,Z2>AUT,Z3>AUT','DNS-Q','e','Gli zombie inondano il server (i più vulnerabili sono gli autoritativi).',[['AUT','saturo',1]],4],
+['U>AUT','DNS-Q legittima','c','Una richiesta vera arriva al server.'],
+['AUT>U','nessuna risposta','x','Il server non riesce a rispondere.',[['U','nome non risolto',1]]]],
+'Le query sono indistinguibili da quelle legittime: il pattern matching non funziona.'),
+S('Attacchi al DNS','Contromisura: più risorse','Assorbire l’attacco e rispondere comunque alle query legittime.',
+[['Z','🖥️','Zombie',45,150],['A1','🗄️','Autoritativo 1',195,55],['A2','🗄️','Autoritativo 2',195,150],['A3','🗄️','Autoritativo 3',195,245],['U','🖥️','Utente',325,150]],[
+['Z>A1,Z>A2,Z>A3','DNS-Q random.target','e','Il flood è distribuito su più server autoritativi, con più banda, CPU e memoria.',[['A1','assorbe'],['A2','assorbe'],['A3','assorbe']],4],
+['U>A2','DNS-Q legittima','c','Una richiesta vera arriva a un server che ha ancora risorse.'],
+['A2>U','risposta','a','Il nome viene risolto nonostante l’attacco.',[['U','nome risolto']]]],
+'Più server autoritativi, più banda e più risorse di calcolo e memoria.'),
+S('Attacchi al DNS','Contromisura: TTL più alto','Un TTL maggiore tiene validi i record in cache durante l’attacco.',
+[['Z','🖥️','Zombie',45,60],['AUT','🗄️','Autoritativo',195,150],['C','🗄️','Resolver (cache)',325,60],['U','🖥️','Utente',325,250]],[
+['Z>AUT','DNS-Q random.target','e','Il server autoritativo viene saturato.',[['AUT','irraggiungibile',1]],4],
+['U>C','DNS-Q','c','Un utente chiede un nome del dominio attaccato.'],
+['C>U','risposta dalla cache','a','Con TTL alto il record in cache non è scaduto: il nome si risolve ancora.',[['U','nome risolto'],['C','TTL non scaduto']]],
+['C>AUT','rinnovo record','x','Con TTL breve il record scadrebbe e non potrebbe essere rinnovato: l’attacco farebbe effetto subito.']],
+'Controindicazione: con TTL troppo lunghi il DNS diventa troppo statico (lungo ≈ 1 giorno, consigliato da Google 1 ora, breve ≈ 5 minuti).'),
+S('Attacchi al DNS','Contromisura: filtro per IP','Pochi IP generano la maggior parte delle query anomale.',
+[['Z','🖥️','Dispositivo infetto',45,60],['R','🗄️','Resolver ricorsivo',45,250],['AUT','🗄️','Autoritativo',250,150]],[
+['Z>AUT','random.target','e','Il dispositivo infetto interroga direttamente l’autoritativo.'],
+['R>AUT','DNS-Q','c','Il 2% degli IP chiede il 90% dei nomi, ma spesso sono resolver ricorsivi legittimi: si risponde.'],
+['AUT>R','risposta','a','Il resolver noto riceve risposta.'],
+['AUT>Z','lista a bassa priorità','x','Le richieste dagli altri IP vanno in una coda a bassa priorità.',[['Z','bassa priorità',1]]]],
+'Non è definitiva: i dispositivi infetti potrebbero passare le richieste ai resolver intermedi.'),
+S('Attacchi al routing','RIP black hole','RIPv1 non ha autenticazione.',
+[['R1','🔀','R1',55,60],['R2','🔀','R2',195,45],['R4','🔀','R4',315,110],['R3','🔀','R3',195,160],['X','😈','Router malevolo',195,255]],[
+['R1>R2,R2>R4,R4>R3,R3>R1','vettore distanze','c','Normale: i router si scambiano i distance vector (UDP 520).'],
+['X>R1,X>R3','dist = 0 verso tutti','e','X (IP sorgente falsificato) annuncia distanza 0 verso ogni nodo.',[['R1','tutto via X',1],['R3','tutto via X',1]]],
+['R1>X,R3>X','traffico','d','Il traffico converge su X.'],
+['X>X','assorbe tutto','c','X è un buco nero: scarta o intercetta tutto.',[['X','black hole',1]]]],
+'Usare RIPv2 con autenticazione, oppure OSPF.'),
+S('Attacchi al routing','OSPF','Difficile, ma facile senza autenticazione.',
+[['R1','🔀','R1',55,70],['R2','🔀','R2',305,70],['R3','🔀','R3',180,165],['X','😈','Attaccante',180,255]],[
+['R1>R3,R2>R3','LSA','c','Normale: i router annunciano lo stato dei link.'],
+['X>R3','LSA falso: link guasto','e','Senza autenticazione X invia messaggi di routing fraudolenti.',[['R3','tabella alterata',1]]],
+['R3>R1,R3>R2','LSA inoltrato','c','Il falso annuncio si propaga.',[['R1','percorsi errati',1],['R2','percorsi errati',1]]],
+['X>R3','pacchetti a raffica','e','Gli attacchi più semplici sono DoS ai router.',[['R3','saturo',1]],4]],
+'Abilitare l’autenticazione OSPF.'),
+S('Attacchi al routing','BGP route hijack','Un AS annuncia un prefisso che non possiede (YouTube/Pakistan Telecom, 2008).',
+[['PT','😈','Pakistan Telecom',55,55],['YT','🗄️','YouTube',315,55],['AS1','🔀','AS',185,140],['AS2','🔀','AS',185,235],['U','🖥️','Utente',55,250]],[
+['YT>AS1','annuncia /22','c','YouTube annuncia il proprio prefisso con lunghezza /22.'],
+['AS1>AS2','propaga /22','c','L’annuncio autentico si diffonde tra gli AS.'],
+['PT>AS1','annuncia /24 (falso)','e','Per bloccare YouTube in Pakistan, PT annuncia un prefisso più specifico (/24).',[['PT','route hijack',1]]],
+['AS1>AS2','propaga /24','e','L’annuncio fraudolento si propaga agli AS di tutto il mondo.',[['AS1','preferisce /24',1],['AS2','preferisce /24',1]]],
+['U>AS2,AS2>AS1,AS1>PT','richiesta YouTube','d','Il traffico segue il prefisso più specifico e finisce a PT.',[['YT','irraggiungibile',1]]],
+['YT>AS1','annuncia /24 e /25','c','YouTube risponde con annunci ancora più specifici; la soluzione definitiva è il ban degli annunci di PT.']],
+'Filtrare gli annunci provenienti da reti non fidate; i grandi operatori hanno bannato la rete di PT.'),
+S('DDoS','DYN attack (Mirai, 2016)','Botnet IoT con oltre 300000 dispositivi contro i DNS di DYN (620 Gbps).',
+[['X','😈','Attaccante / CnC',180,35],['Z1','📷','IP camera',45,110],['Z2','📷','IoT',45,185],['Z3','📷','IoT',45,260],['D','🗄️','DNS DYN',255,165],['U','🖥️','Utente',320,265]],[
+['X>Z1,X>Z2,X>Z3','Telnet root / xc3511','e','Mirai prova credenziali comuni (attacco a dizionario); la password è hardcoded nel firmware.',[['Z1','infetta',1],['Z2','infetta',1],['Z3','infetta',1]]],
+['Z1>X,Z2>X,Z3>X','pronto','c','Gli zombie avvisano i server Command and Control.'],
+['X>Z1,X>Z2,X>Z3','comando di attacco','e','L’attaccante ordina l’attacco, in ondate (prima 3 data center, poi 20).'],
+['Z1>D,Z2>D,Z3>D','SYN / ACK / GRE / DNS','e','Più tipi di attacco insieme, tra cui uno basato sul DNS.',[['D','saturo',1]],4],
+['U>D','DNS-Q airbnb.com','c','Un utente prova a risolvere il nome di un cliente di DYN.'],
+['D>U','nessuna risposta','x','Netflix, PayPal, Amazon, Spotify, GitHub… risultano irraggiungibili.',[['U','sito non raggiungibile',1]]]],
+'Clienti: provider DNS di backup (Amazon), nuovo provider (PayPal), TTL ridotto. Alla radice: cambiare le password di default.'),
+S('Crittografia','0 · Le 4 funzionalità','Segretezza, autenticazione, integrità, non ripudiabilità.',
+[['A','👩','Alice',55,150],['B','👨','Bob',305,150],['X','😈','Attaccante',180,50]],[
+['A>B','cifrato con chiave pubblica di Bob','c','Segretezza: solo il destinatario desiderato può leggere il messaggio.'],
+['X>A','tenta di leggere','x','L’attaccante intercetta ma non può decifrare.'],
+['A>B','firmato con chiave privata di Alice','a','Autenticazione: attesta l’identità del mittente. Non ripudiabilità: Alice non può negare di averlo inviato.'],
+['X>B','messaggio alterato','e','Integrità: nessuno può alterare il messaggio senza che il destinatario se ne accorga.',[['B','alterazione rilevata',1]]]],
+'Con la crittografia a chiave pubblica si ottengono tutte e quattro.'),
+S('Crittografia','Distribuzione chiavi: N(N−1)/2','Con la chiave simmetrica servono molte chiavi da scambiare in modo sicuro.',
+[['P1','🖥️','A',60,60],['P2','🖥️','B',300,60],['P3','🖥️','C',60,250],['P4','🖥️','D',300,250]],[
+['P1>P2,P1>P3,P1>P4,P2>P3,P2>P4,P3>P4','chiave K','c','N = 4 utenti → 4·3/2 = 6 chiavi, ciascuna da scambiare prima in modo sicuro.'],
+['P1>P1','N = 10 → 45 chiavi','e','Il numero cresce rapidamente: punto critico della crittografia simmetrica.']],
+'Soluzione: crittografia asimmetrica per lo scambio delle chiavi.'),
+S('Crittografia','1 · Chiave simmetrica','Una sola chiave segreta K cifra e decifra.',
+[['B','🖥️','Bob',55,60],['A','🖥️','Alice',305,60],['E','👁️','Intercettatore',180,250]],[
+['B>A','K (canale sicuro)','a','Prima Bob e Alice devono scambiarsi K in modo sicuro: è il punto critico.',[['B','K'],['A','K']]],
+['B>B','Y = E(K, X)','c','Bob cifra il testo in chiaro X con K.'],
+['B>A','Y (cifrato)','d','Invia il blocco cifrato Y.'],
+['B>E','copia','e','L’intercettatore vede Y ma non ha K.',[['E','illeggibile',1]]],
+['A>A','X = D(K, Y)','c','Alice decifra con la stessa K e ottiene X.',[['A','K + testo X']]]],
+'N utenti richiedono N·(N−1)/2 chiavi. Algoritmi: AES, 3DES.'),
+S('Crittografia','2 · Chiave asimmetrica','Due chiavi: pubblica (nota a tutti) e privata (segreta).',
+[['B','🖥️','Bob',55,60],['A','🖥️','Alice',305,60],['E','👁️','Intercettatore',180,250]],[
+['A>B','chiave pubblica di Alice','a','Alice pubblica la sua chiave pubblica; la chiave privata non la condivide con nessuno.',[['A','chiave privata segreta'],['B','conosce la chiave pubblica']]],
+['B>B','cifra con chiave pubblica di Alice','c','Bob cifra il messaggio X con la chiave pubblica di Alice.'],
+['B>A','Y (cifrato)','d','Invia Y.'],
+['B>E','copia','e','Anche conoscendo la chiave pubblica di Alice, l’intercettatore non può decifrare.',[['E','illeggibile',1]]],
+['A>A','decifra con chiave privata di Alice','c','Solo Alice, con la sua chiave privata, recupera X: segretezza garantita.',[['A','legge X']]]],
+'Nessuna chiave segreta condivisa. Esempio: RSA (più lento della simmetrica).'),
+S('Crittografia','3 · Scambio chiavi (ibrida)','La simmetrica cifra i dati, l’asimmetrica cifra la chiave di sessione.',
+[['B','🖥️','Mittente',55,60],['A','🖥️','Destinatario',305,60]],[
+['B>B','genera K','c','Si genera la chiave di sessione K.',[['B','K']]],
+['B>B','Sim(K, testo)','c','Il testo in chiaro è cifrato con la simmetrica (es. DES/AES): veloce.',[['B','K · testo cifrato']]],
+['B>B','cifra K con chiave pubblica destinatario','c','K è cifrata con la chiave pubblica del destinatario.',[['B','testo cifrato · K cifrata']]],
+['B>A','testo cifr. + K cifr.','d','Vengono inviati entrambi.',null,2],
+['A>A','decifra K con chiave privata destinatario','c','Il destinatario recupera K con la sua chiave privata.',[['A','K']]],
+['A>A','Sim: D(K, testo)','c','Con K decifra il testo: efficienza della simmetrica, sicurezza dello scambio dell’asimmetrica.',[['A','testo in chiaro']]]],
+'L’asimmetrica cifra solo K (poco dato): si evita di cifrare tutto con RSA.'),
+S('Crittografia','4 · WhatsApp end-to-end','Identity Key permanenti + nuova chiave simmetrica ad ogni sessione.',
+[['B','📱','Bob',50,55],['A','📱','Alice',310,55],['S','🗄️','Server WhatsApp',180,190]],[
+['B>B','Identity Key (IK)','c','Ogni dispositivo ha coppie di chiavi permanenti, finché non cambia dispositivo o reinstalla l’app.',[['B','IK pubb+priv'],['A','IK pubb+priv']]],
+['B>B','(1) nuova chiave K','c','Per ogni sessione si genera una nuova chiave simmetrica.',[['B','K']]],
+['B>S','(2) K cifrata con chiave pubblica di Alice','d','K viaggia cifrata con la chiave pubblica di Alice.'],
+['S>A','K cifrata con chiave pubblica di Alice','d','Il server inoltra soltanto: non può leggere K.',[['S','vede solo dati cifrati',1]]],
+['A>A','K decifrata con chiave privata di Alice','c','Alice recupera K con la sua chiave privata.',[['A','K']]],
+['B>S','(3) AES(K, msg)','d','Il messaggio è cifrato con AES e la chiave K.'],
+['S>A','AES(K, msg)','d','Inoltrato al destinatario, sempre cifrato.'],
+['A>A','AES: D(K, msg)','c','Alice decifra il messaggio.',[['A','legge il messaggio']]],
+['B>B','nuova sessione: K′','c','Alla sessione successiva si ripete tutto con una nuova chiave simmetrica.',[['B','K′ (nuova)'],['A','']]]],
+'Cifratura end-to-end: solo i due capi della comunicazione hanno le chiavi.'),
+S('Crittografia','Ibrida (versione breve)','Asimmetrica per scambiare la chiave, simmetrica (AES) per i dati.',
+[['B','🖥️','Bob',50,70],['A','🖥️','Alice',310,70],['E','👁️','Intercettatore',180,250]],[
+['A>B','chiave pubblica di Alice','a','La chiave pubblica di Alice è nota a tutti; la chiave privata solo a lei.'],
+['B>B','genera K','c','Bob genera una nuova chiave simmetrica di sessione K.',[['B','K']]],
+['B>A','K cifrata con chiave pubblica di Alice','d','Bob cifra K con la chiave pubblica di Alice: solo Alice può decifrarla.'],
+['B>E','copia','e','L’intercettatore vede solo dati cifrati.',[['E','illeggibile',1]]],
+['A>A','K decifrata con chiave privata di Alice','c','Alice decifra K con la sua chiave privata.',[['A','K']]],
+['B>A','AES(K, messaggio)','d','Il messaggio viaggia cifrato con K (veloce). A ogni sessione K cambia.']],
+'Segretezza garantita: serve la chiave privata per recuperare K.'),
+S('Crittografia','Firma (chiave privata)','Cifrare con la privata prova chi ha creato il messaggio.',
+[['B','🖥️','Bob',60,150],['A','🖥️','Alice',300,150]],[
+['B>B','cifra con chiave privata di Bob','c','Solo Bob possiede la sua chiave privata.'],
+['B>A','messaggio cifrato con chiave privata','d','Invia il messaggio cifrato.'],
+['A>A','decifra con chiave pubblica di Bob','c','Tutti possono decifrare con la chiave pubblica di Bob.',[['A','autentico: è di Bob']]]],
+'Garantisce autenticazione/firma, non segretezza.')
+];
+const K={d:'--data',a:'--ack',c:'--ctl',e:'--bad',x:'--bad'};
+let sc,pos,i,p,play,auto,sp=1,last=0,raf=0;
+const sel=$('sel');
+[...new Set(SC.map(s=>s.g))].forEach(g=>{const o=document.createElement('optgroup');o.label=g;SC.forEach((s,k)=>{if(s.g==g){const e=document.createElement('option');e.value=k;e.textContent=s.n;o.appendChild(e)}});sel.appendChild(o)});
+function load(k){
+ sc=SC[k];pos={};sc.nodes.forEach(n=>pos[n[0]]={x:n[3],y:n[4]});
+ const ls=new Set();sc.s.forEach(s=>s[0].split(',').forEach(e=>{const[a,b]=e.split('>');if(a!=b)ls.add([a,b].sort().join('>'))}));
+ let h='';ls.forEach(q=>{const[a,b]=q.split('>');h+=`<line x1="${pos[a].x}" y1="${pos[a].y}" x2="${pos[b].x}" y2="${pos[b].y}" stroke="var(--bd)" stroke-width="3"/>`});
+ sc.nodes.forEach(n=>h+=`<text x="${n[3]}" y="${n[4]+8}" text-anchor="middle" font-size="26">${n[1]}</text><text x="${n[3]}" y="${n[4]+26}" text-anchor="middle" font-size="10" font-weight="700">${n[2]}</text><text id="b_${n[0]}" x="${n[3]}" y="${n[4]+38}" text-anchor="middle" font-size="9.5" font-weight="700"></text>`);
+ $('svg').innerHTML=h+'<g id="dots"></g>';
+ $('lst').innerHTML=sc.s.map((s,j)=>`<li data-j="${j}">${s[3]}</li>`).join('');
+ $('tip').textContent='🛡️ '+sc.tip;
+ i=-1;p=0;play=false;auto=true;render()}
+function render(){
+ sc.nodes.forEach(n=>{$('b_'+n[0]).textContent=''});
+ for(let j=0;j<=i;j++)(sc.s[j][4]||[]).forEach(b=>{const e=$('b_'+b[0]);e.textContent=b[1];e.style.fill=b[2]?'var(--bad)':'var(--tm)'});
+ let g='';
+ if(i>=0){const s=sc.s[i],n=s[5]||1,lost=s[2]=='x',col=`var(${K[s[2]]})`;
+  s[0].split(',').forEach((e,ei)=>{const[a,b]=e.split('>'),A=pos[a],B=pos[b];
+   for(let k=0;k<n;k++){let u=p*(1+.25*(n-1))-.25*k;u=Math.max(0,Math.min(1,u));if(lost)u=Math.min(u,.55);
+    if(u<=0||(!lost&&(u>=1||p>=1)))continue;
+    let x,y;if(a==b){const t=u*6.283-1.57;x=A.x+22*Math.cos(t);y=A.y-8+22*Math.sin(t)}else{x=A.x+(B.x-A.x)*u;y=A.y+(B.y-A.y)*u}
+    if(lost&&u>=.55)g+=`<text x="${x}" y="${y+5}" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--bad)">✗</text>`;
+    else g+=`<circle cx="${x}" cy="${y}" r="5.5" fill="${col}" stroke="var(--bg)"/>`;
+    if(!ei&&!k)g+=`<text x="${Math.max(55,Math.min(305,x))}" y="${y-10}" text-anchor="middle" font-size="10" font-weight="700" style="fill:${col};paint-order:stroke;stroke:var(--card);stroke-width:3px">${s[1]}</text>`}})}
+ $('dots').innerHTML=g;
+ $('cap').innerHTML=i<0?sc.d+' Premi ▶.':`<b>${i+1}/${sc.s.length}</b> · ${sc.s[i][3]}`;
+ document.querySelectorAll('#lst li').forEach((e,j)=>e.className=j==i?'on':'');
+ $('pp').textContent=play?'⏸':'▶'}
+function tick(t){raf=0;if(!play)return;const dt=Math.min(t-last,80);last=t;p+=dt*sp/1500;
+ if(p>=1.2){if(auto&&i<sc.s.length-1){i++;p=0}else{play=false;p=1.2}}
+ render();if(play)raf=requestAnimationFrame(tick)}
+function start(){play=true;last=performance.now();if(!raf)raf=requestAnimationFrame(tick);render()}
+function go(j,a){i=Math.max(0,Math.min(sc.s.length-1,j));p=0;auto=a;start()}
+$('sel').onchange=()=>load(sel.value);
+$('pp').onclick=()=>{if(play){play=false;render()}else if(i<0||(p>=1.2&&i>=sc.s.length-1))go(0,true);else{auto=true;if(p>=1.2){i++;p=0}start()}};
+$('nx').onclick=()=>go(i+1,false);$('pv').onclick=()=>go(i-1,false);$('rs').onclick=()=>go(0,true);
+$('spd').onchange=e=>sp=parseFloat(e.target.value);
+$('lst').onclick=e=>{const l=e.target.closest('li');if(l)go(+l.dataset.j,false)};
+load(0);
+</script></body></html>
