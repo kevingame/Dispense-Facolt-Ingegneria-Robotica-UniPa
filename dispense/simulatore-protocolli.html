@@ -466,4 +466,150 @@ function run(){
  ({udp,tcp:tcpP,gbn:gs,sr:gs,http,smtp,pop3}[P.app])();renderDT();
  stopAnim();draw();drawNet();report();$('tx').textContent=TX;$('tx').hidden=$('th').hidden=!TX}
 $('nb').oninput=()=>{buildBase();buildCk()};buildBase();$('ni').oninput=()=>{buildImgs();buildCk()};buildImgs();$('basew').addEventListener('input',buildCk);$('imgw').addEventListener('input',buildCk);$('ck').onchange=()=>{ckVis();run()};buildCk();$('proto').onchange=()=>{vis();ckVis();run()};$('rtr').onchange=()=>{if($('rtr').checked){$('R').value=1;$('rtt').value=4}run()};$('ax').onchange=run;$('dapp').onchange=()=>{vis();run()};$('go').onclick=run;$('play').onclick=play;vis();run();
+/* ===== LIVELLO DI RETE: Link-State, Distance-Vector, Longest Prefix Match =====
+   INCOLLARE alla fine dello <script> esistente, subito dopo la riga "...vis();run();" */
+(()=>{
+const sel=$('proto');
+[['ls','Rete: Link-State (Dijkstra)'],['dv','Rete: Distance-Vector (Bellman-Ford)'],['lpm','Rete: Inoltro (longest prefix match)']].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o)});
+G.ls=['nl'];G.dv=['nl','nldv'];G.lpm=['nlpm'];
+
+$('go').insertAdjacentHTML('beforebegin',`<div id="nlp" class="grid" data-g="nl" style="margin-top:8px">
+<label style="grid-column:1/-1">Archi (nodo-nodo:costo, separati da virgola)<textarea id="nlE" rows="2" style="font:inherit;padding:5px 7px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)">a-b:1, b-c:2, c-d:1</textarea></label>
+<label>Nodo origine (LS) / tabelle di<input id="nlS" value="u"></label>
+<label data-g="nldv">Cambio costo dopo la convergenza (es. x-y:60)<input id="nlC" placeholder="vuoto = nessuno"></label>
+<label data-g="nldv">Max round dopo il cambio<input id="nlM" type="number" value="30"></label>
+<label data-g="nldv" class="ck"><input id="nlP" type="checkbox">Poisoned reverse</label></div>`);
+$('go').insertAdjacentHTML('beforebegin',`<div id="nlq" class="grid" data-g="nlpm" style="margin-top:8px">
+<label style="grid-column:1/-1">Tabella d'inoltro (prefisso/lunghezza interfaccia, una voce per riga; "altrimenti N" = default)<textarea id="lpT" rows="5" style="font:inherit;padding:5px 7px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)">200.23.16.0/21 0
+200.23.24.0/24 1
+200.23.24.0/21 2
+altrimenti 3</textarea></label>
+<label style="grid-column:1/-1">Indirizzi di destinazione (uno per riga o separati da virgola)<textarea id="lpA" rows="3" style="font:inherit;padding:5px 7px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)">200.23.22.161
+200.23.24.170
+8.8.8.8</textarea></label></div>`);
+$('dnst').insertAdjacentHTML('afterend','<div id="nlo"></div>');
+
+const f=x=>x==Infinity?'∞':x;
+const tb=(h,rows)=>'<table><tr>'+h.map(x=>`<th>${x}</th>`).join('')+'</tr>'+rows.map(r=>'<tr>'+r.map(x=>`<td>${x}</td>`).join('')+'</tr>').join('')+'</table>';
+const h3=t=>`<h3 style="font-size:14px;margin:14px 0 4px">${t}</h3>`;
+const cl=o=>{const r={};for(const k in o)r[k]={...o[k]};return r};
+const ek=(a,b)=>[a,b].sort().join('|');
+
+/* ---------- Dijkstra ---------- */
+function dijkstra(nodes,c,s){
+ const D={},p={},N=[s],rows=[];
+ nodes.forEach(v=>{D[v]=c[s][v]??Infinity;p[v]=c[s][v]!=null?s:null});D[s]=0;
+ const snap=()=>rows.push({N:N.join(''),r:nodes.filter(v=>v!=s).map(v=>N.includes(v)?null:[D[v],p[v]])});
+ snap();
+ while(N.length<nodes.length){
+  let w=null;nodes.forEach(v=>{if(!N.includes(v)&&D[v]<Infinity&&(w==null||D[v]<D[w]))w=v});
+  if(w==null)break;N.push(w);
+  nodes.forEach(v=>{if(!N.includes(v)&&c[w][v]!=null&&D[w]+c[w][v]<D[v]){D[v]=D[w]+c[w][v];p[v]=w}});
+  snap()}
+ return{D,p,rows}}
+const hop=(p,s,v)=>{if(p[v]==null)return null;let x=v;while(p[x]!=s)x=p[x];return x};
+const path=(p,s,v)=>{const a=[v];while(a[0]!=s&&p[a[0]]!=null)a.unshift(p[a[0]]);return a[0]==s?a.join('→'):'—'};
+
+/* ---------- Bellman-Ford distribuito (round sincroni) ---------- */
+function dvInit(nodes,c){const D={},NH={};nodes.forEach(x=>{D[x]={};NH[x]={};nodes.forEach(y=>{D[x][y]=x==y?0:(c[x][y]??Infinity);NH[x][y]=x==y?x:(c[x][y]!=null?y:null)})});return{D,NH}}
+function dvRun(nodes,c,pr,st,maxR){
+ const rounds=[];let D=st.D,NH=st.NH,conv=false;
+ for(let r=1;r<=maxR;r++){
+  const nD={},nN={};let chg=0;
+  nodes.forEach(x=>{nD[x]={};nN[x]={};nodes.forEach(y=>{
+   if(x==y){nD[x][y]=0;nN[x][y]=x;return}
+   let best=Infinity,bn=null;
+   for(const v in c[x]){let d=D[v][y];if(pr&&v!=y&&NH[v][y]==x)d=Infinity;const t=c[x][v]+d;
+    if(t<best||(t==best&&t<Infinity&&v==NH[x][y])){best=t;bn=v}}
+   nD[x][y]=best;nN[x][y]=bn;if(best!=D[x][y]||bn!=NH[x][y])chg++})});
+  if(!chg){conv=true;break}
+  rounds.push({D:nD,prev:D});D=nD;NH=nN}
+ return{rounds,st:{D,NH},conv}}
+const vt=(nodes,D,P0)=>tb(['da \\ verso',...nodes],nodes.map(x=>[`<b>${esc(x)}</b>`,...nodes.map(y=>{const t=f(D[x][y]);return P0&&P0[x][y]!=D[x][y]?`<b style="color:var(--bad)">${t}</b>`:t})]));
+const fwdDV=(nodes,st)=>'<div style="display:flex;flex-wrap:wrap;gap:14px">'+nodes.map(x=>`<div><b>Tabella d'inoltro di ${esc(x)}</b>`+tb(['Dest.','Collegamento','Costo'],nodes.filter(y=>y!=x).map(y=>[esc(y),st.NH[x][y]==null?'—':`(${esc(x)},${esc(st.NH[x][y])})`,f(st.D[x][y])]))+'</div>').join('')+'</div>';
+
+/* ---------- Disegno grafo ---------- */
+function gsvg(nodes,c,hl,bad){
+ const W=380,H=300,cx=W/2,cy=H/2,r=110,pos={};
+ nodes.forEach((n,i)=>{const a=2*Math.PI*i/nodes.length-Math.PI/2;pos[n]=[cx+r*Math.cos(a),cy+r*Math.sin(a)]});
+ let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="system-ui,sans-serif">`;const seen=new Set();
+ nodes.forEach(a=>Object.keys(c[a]).forEach(b=>{const k=ek(a,b);if(seen.has(k))return;seen.add(k);const[p,q]=[pos[a],pos[b]],col=bad==k?'var(--bad)':hl.has(k)?'var(--ack)':'var(--mut)';
+  s+=`<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" style="stroke:${col}" stroke-width="${hl.has(k)||bad==k?3.5:1.8}"/><text x="${(p[0]+q[0])/2}" y="${(p[1]+q[1])/2+4}" text-anchor="middle" class="lb">${c[a][b]}</text>`}));
+ nodes.forEach(n=>s+=`<circle cx="${pos[n][0]}" cy="${pos[n][1]}" r="16" style="fill:var(--card);stroke:var(--data)" stroke-width="2"/><text x="${pos[n][0]}" y="${pos[n][1]+4}" text-anchor="middle" class="ln">${esc(n)}</text>`);
+ return s+'</svg>'}
+
+/* ---------- Esecuzione ---------- */
+function nlRun(){
+ if(sel.value=='lpm')return lpmRun();
+ const out=$('nlo'),c={},nodes=[],add=n=>{if(!c[n]){c[n]={};nodes.push(n)}};
+ sv('nlE').split(/[\s,;]+/).filter(Boolean).forEach(t=>{const m=t.match(/^(\w+)-(\w+):(\d+(?:\.\d+)?)$/);if(m&&m[1]!=m[2]){add(m[1]);add(m[2]);c[m[1]][m[2]]=c[m[2]][m[1]]=+m[3]}});
+ if(nodes.length<2){out.innerHTML='<p>Inserisci almeno un arco nel formato <b>a-b:costo</b>.</p>';return}
+ let s=sv('nlS');if(!c[s])s=nodes[0];
+ if(sel.value=='ls'){
+  const r=dijkstra(nodes,c,s),oth=nodes.filter(v=>v!=s),hl=new Set();
+  oth.forEach(v=>{if(r.p[v]!=null&&r.D[v]<Infinity)hl.add(ek(v,r.p[v]))});
+  const dj=tb(['Passo','N\'',...oth.map(v=>`D(${esc(v)}),p(${esc(v)})`)],r.rows.map((x,i)=>[i,esc(x.N),...x.r.map((e,j)=>{if(!e)return'';const t=e[0]==Infinity?'∞':e[0]+','+esc(e[1]),pv=i&&r.rows[i-1].r[j],ch=!pv||pv[0]!=e[0]||pv[1]!=e[1];return ch?`<b>${t}</b>`:t})]));
+  const ft=(x,R)=>tb(['Dest.','Cammino','Costo','Collegamento'],nodes.filter(v=>v!=x).map(v=>{const h=hop(R.p,x,v);return[esc(v),esc(path(R.p,x,v)),f(R.D[v]),h?`(${esc(x)},${esc(h)})`:'—']}));
+  out.innerHTML=`<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start"><div class="sc" style="max-height:none">${gsvg(nodes,c,hl)}</div><div style="flex:1;min-width:280px">`
+   +h3(`Algoritmo di Dijkstra da ${esc(s)}`)+'<div class="sc" style="max-height:none;overflow:auto">'+dj+'</div><p style="font-size:12px;color:var(--mut)">In grassetto i valori aggiornati; a parità di costo si sceglie il primo nodo in ordine di inserimento. Archi verdi = albero dei cammini minimi.</p></div></div>'
+   +h3(`Tabella d'inoltro di ${esc(s)}`)+ft(s,r)
+   +`<details style="margin-top:10px"><summary><b>Tabelle d'inoltro di tutti gli altri router</b></summary><div style="display:flex;flex-wrap:wrap;gap:14px">`+oth.map(x=>`<div><b>Router ${esc(x)}</b>`+ft(x,dijkstra(nodes,c,x))+'</div>').join('')+'</div></details>'
+   +`<p style="font-size:12px;color:var(--mut)">Complessità: n=${nodes.length} nodi → al più n(n+1)/2 = ${nodes.length*(nodes.length+1)/2} confronti, O(n²).</p>`;
+  return}
+ /* DV */
+ const pr=$('nlP').checked;let st=dvInit(nodes,c);
+ const p1=dvRun(nodes,c,pr,st,nodes.length+10);
+ let html=`<div class="sc" style="max-height:none;display:inline-block">${gsvg(nodes,c,new Set())}</div>`+h3('t=0: vettori distanza iniziali (solo vicini diretti)')+vt(nodes,st.D);
+ p1.rounds.forEach((x,i)=>html+=h3(`Round ${i+1}`)+vt(nodes,x.D,x.prev));
+ html+=h3(p1.conv?`Convergenza raggiunta dopo ${p1.rounds.length} round`:'Nessuna convergenza')+fwdDV(nodes,p1.st);
+ st=p1.st;
+ const m=sv('nlC').match(/^(\w+)-(\w+):(\d+(?:\.\d+)?)$/);
+ if(m&&c[m[1]]&&c[m[1]][m[2]]!=null){
+  const c2={};nodes.forEach(n=>c2[n]={...c[n]});c2[m[1]][m[2]]=c2[m[2]][m[1]]=+m[3];
+  const maxR=Math.max(1,nv('nlM',30)),p2=dvRun(nodes,c2,pr,st,maxR);
+  html+=h3(`Cambio costo ${esc(m[1])}-${esc(m[2])}: ${c[m[1]][m[2]]} → ${m[3]}${pr?' (poisoned reverse attivo)':' (senza poisoned reverse)'}`)
+   +`<div class="sc" style="max-height:none;display:inline-block">${gsvg(nodes,c2,new Set(),ek(m[1],m[2]))}</div>`;
+  p2.rounds.forEach((x,i)=>html+=h3(`Round ${i+1} dopo il cambio`)+vt(nodes,x.D,x.prev));
+  html+=p2.conv?h3(`Riconvergenza dopo ${p2.rounds.length} round`)+fwdDV(nodes,p2.st)
+   :`<p style="color:var(--bad)"><b>Non converge entro ${maxR} round</b>: conteggio all'infinito.${pr?'':' Prova ad attivare la poisoned reverse.'}</p>`}
+ out.innerHTML=html}
+
+/* ---------- Longest prefix matching ---------- */
+const ip2n=x=>{const m=x.trim().match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/);if(!m)return null;const a=m.slice(1).map(Number);if(a.some(v=>v>255))return null;return(a[0]*16777216+a[1]*65536+a[2]*256+a[3])>>>0};
+const n2ip=n=>[n>>>24,(n>>>16)&255,(n>>>8)&255,n&255].join('.');
+const mask=l=>l==0?0:(0xFFFFFFFF<<(32-l))>>>0;
+const bh=(n,l)=>{const b=(n>>>0).toString(2).padStart(32,'0');let r='';for(let i=0;i<32;i++){if(i&&i%8==0)r+=' ';r+=i<l?`<b style="color:var(--ack)">${b[i]}</b>`:b[i]}return`<code>${r}</code>`};
+function lpmRun(){
+ const out=$('nlo'),R=[];
+ $('lpT').value.split(/[\n;]+/).forEach(l=>{l=l.trim();if(!l)return;let m=l.match(/^(\d+\.\d+\.\d+\.\d+)(?:\/(\d+))?\s+(\S+)$/),ip,len,ifc;
+  if(m){ip=ip2n(m[1]);len=m[2]==null?32:+m[2];ifc=m[3]}
+  else if((m=l.match(/^(?:altrimenti|default|otherwise)\s+(\S+)$/i))){ip=0;len=0;ifc=m[1]}
+  else return;
+  if(ip==null||len>32)return;const mk=mask(len),net=(ip&mk)>>>0;R.push({ip:net,len,mk,ifc,txt:n2ip(net)+'/'+len})});
+ if(!R.length){out.innerHTML='<p>Inserisci almeno una voce, es. <b>200.23.16.0/21 0</b>.</p>';return}
+ let html=h3("Tabella d'inoltro")+tb(['Prefisso','Prefisso in binario','Maschera','Intervallo','Interfaccia'],R.map(r=>[r.txt,bh(r.ip,r.len),n2ip(r.mk),n2ip(r.ip)+' – '+n2ip((r.ip|~r.mk)>>>0),esc(r.ifc)]));
+ $('lpA').value.split(/[\s,;]+/).filter(Boolean).forEach(x=>{
+  const a=ip2n(x);if(a==null){html+=h3(esc(x))+'<p style="color:var(--bad)">Indirizzo non valido.</p>';return}
+  const mt=R.filter(r=>((a&r.mk)>>>0)==r.ip),best=mt.reduce((b,r)=>!b||r.len>b.len?r:b,null);
+  html+=h3(`Destinazione ${esc(x)}`)+`<p style="margin:2px 0">${bh(a,0)}</p>`
+   +tb(['Prefisso','Bit corrispondenti (in verde)','Lungh.','Esito','Interfaccia'],R.map(r=>{const ok=((a&r.mk)>>>0)==r.ip;return[r.txt,bh(a,ok?r.len:0),r.len,r==best?'<b style="color:var(--ack)">✔ vince (prefisso più lungo)</b>':ok?'✔ match, ma più corto':'✗',esc(r.ifc)]}))
+   +(best?`<p>→ Interfaccia di uscita: <b>${esc(best.ifc)}</b> (prefisso /${best.len}${mt.length>1?`, ${mt.length} voci corrispondenti`:''})</p>`:'<p style="color:var(--bad)">→ Nessuna voce corrisponde e non c\'è default: pacchetto scartato.</p>');
+ });
+ out.innerHTML=html}
+
+/* ---------- Integrazione con il simulatore esistente ---------- */
+const hideSel='#net,#out,#tx,#th,.lg,#play,#actl';
+const isNL=()=>['ls','dv','lpm'].includes(sel.value);
+function nlShow(on){
+ document.querySelectorAll(hideSel).forEach(e=>e.style.display=on?'none':'');
+ $('net').previousElementSibling.style.display=on?'none':'';
+ $('nlo').style.display=on?'':'none';
+ [...document.querySelector('.grid').children].forEach(l=>{if(l.tagName=='LABEL'&&!l.dataset.g&&!l.contains(sel))l.style.display=on?'none':''})}
+const _run=run,_vis=vis;
+run=function(){if(isNL()){stopAnim();nlShow(true);nlRun()}else{nlShow(false);_run()}};
+vis=function(){_vis();nlShow(isNL())};
+$('go').onclick=run;$('nlp').addEventListener('change',()=>run());$('nlq').addEventListener('change',()=>run());
+vis();run();
+})();
+
 </script><div id="sig">© Kevin Petrone 0774409</div></body></html>
