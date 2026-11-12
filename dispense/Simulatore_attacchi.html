@@ -18,6 +18,7 @@ button.g{background:var(--ctl)}#spd{width:auto;min-height:44px}
 ol{padding-left:22px;margin:6px 0}li{padding:4px 6px;border-radius:6px;color:var(--mut);cursor:pointer;font-size:13.5px}
 li.on{background:var(--card);color:var(--fg);font-weight:600;outline:1px solid var(--bd)}
 .tip{font-size:13px;color:var(--mut)}.lg{font-size:12px;color:var(--mut)}
+#sig{position:fixed;right:10px;bottom:calc(6px + env(safe-area-inset-bottom,0px));font-size:11px;color:var(--mut);background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:2px 8px;opacity:.9;pointer-events:none;z-index:50}
 </style></head><body>
 <h1>🛡️ Attacchi di rete: animazioni</h1>
 <select id="sel"></select>
@@ -386,4 +387,4 @@ $('nx').onclick=()=>go(i+1,false);$('pv').onclick=()=>go(i-1,false);$('rs').oncl
 $('spd').onchange=e=>sp=parseFloat(e.target.value);
 $('lst').onclick=e=>{const l=e.target.closest('li');if(l)go(+l.dataset.j,false)};
 load(0);
-</script></body></html>
+</script><div id="sig">© Kevin Petrone 0774409</div></body></html>
